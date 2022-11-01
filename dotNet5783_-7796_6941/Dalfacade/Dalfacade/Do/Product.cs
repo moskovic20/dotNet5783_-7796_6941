@@ -1,19 +1,16 @@
 ﻿namespace Do;
+
 /// <summary>
-/// structor for all kinds of products in our book store
+/// structor for all kinds of structors in our book stor
 /// </summary>
 public struct Product
 {
     /// <summary>
-    /// uniqe name of the current book
+    /// 
     /// </summary>
-    public string? nameOfProduct { get; set; }
-
-    /// <summary>
-    /// ID of this product
-    /// </summary>
+    public string? nameOfBook { get; set; }
     public int ID { get; set; }
-
+   
     /// <summary>
     /// for category of this book or other items 
     /// </summary>

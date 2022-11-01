@@ -1,8 +1,7 @@
-﻿
-
-namespace DO;
+﻿namespace Do;
 
 public struct Enums
 {
-
+   
 }
+

@@ -1,11 +1,9 @@
-﻿
-
-using System.Security.Cryptography.X509Certificates;
-
-namespace DO;
+﻿namespace Do;
 
 public struct Product
 {
-   public string ? NameBook { get; set; } 
-    
+    public string? nameOfBook { get; set; }
+    public int ID { get; set; }
+   
+
 }

@@ -6,10 +6,14 @@
 public struct Product
 {
     /// <summary>
+    /// Unique identifier for item
+    /// </summary>
+    public int ID { get; set; }
+
+    /// <summary>
     /// 
     /// </summary>
     public string? nameOfBook { get; set; }
-    public int ID { get; set; }
    
     /// <summary>
     /// for category of this book or other items 

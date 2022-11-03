@@ -11,11 +11,11 @@ public struct OrderItems
     /// <summary>
     /// ID for the Order to connect all his product to the same costumer's order
     /// </summary>
-    public int? IDOfOrdet { get; set; }
+    public int? IdOfOrder { get; set; }
     /// <summary>
     /// ID of the product in store
     /// </summary>
-    public int? IDOfProduct { get; set; }
+    public int? IdOfProduct { get; set; }
     /// <summary>
     /// price of this current item on store
     /// </summary>

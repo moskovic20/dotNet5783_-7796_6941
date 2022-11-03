@@ -11,7 +11,7 @@ public struct Product
     public int ID { get; set; }
 
     /// <summary>
-    /// 
+    /// The name of this current book
     /// </summary>
     public string? nameOfBook { get; set; }
    
@@ -26,7 +26,20 @@ public struct Product
     public double? Price { get; set; }
 
     /// <summary>
-    /// amount of this product on shop
+    /// Number of books in stock
     /// </summary>
-    public double? Amount{get; set;}
+    public double? InStock{get; set;}
+
+    public override string ToString() => $@"
+
+        Product ID: {ID } 
+        Book title: {nameOfBook}
+        Category: {Category}
+        Price: {Price}
+        Number of books in stock: {InStock}
+
+"
+    ;
+        
 }
+

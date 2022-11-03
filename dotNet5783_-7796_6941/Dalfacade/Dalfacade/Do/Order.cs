@@ -31,17 +31,17 @@ public struct Order
     /// <summary>
     /// The date the order was created
     /// </summary>
-    public string? DateOrder { get; set; }
+    public DateTime? DateOrder { get; set; }
 
     /// <summary>
     /// The date the shipment was launched.
     /// התאריך שהמשלוח יצא לדרך
     /// </summary>
-    public string? ShippingDate { get; set; }
+    public DateTime? ShippingDate { get; set; }
 
     /// <summary>
     /// The date the shipment arrived at its destination
     /// תאריך הגעת המשלוח ליעד
     /// </summary>
-    public string? DeliveryDate { get; set; }
+    public DateTime? DeliveryDate { get; set; }
 }

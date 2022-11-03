@@ -18,15 +18,15 @@ public struct Product
     /// <summary>
     /// for category of this book or other items 
     /// </summary>
-    public string? Category { get; set; }
+    public Enum? Category { get; set; }
 
     /// <summary>
     /// price of this product
     /// </summary>
-    public float? Price { get; set; }
+    public double? Price { get; set; }
 
     /// <summary>
     /// amount of this product on shop
     /// </summary>
-    public int? Amount{get; set;}
+    public double? Amount{get; set;}
 }

@@ -11,9 +11,11 @@ public struct Product
     public int ID { get; set; }
 
     /// <summary>
-    /// The name of this current book
+    ///  Unique identifier for item
     /// </summary>
     public string? nameOfBook { get; set; }
+   
+    
    
     /// <summary>
     /// for category of this book or other items 

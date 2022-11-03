@@ -11,7 +11,7 @@ public struct Order
     /// <summary>
     /// Unique identifier for order
     /// </summary>
-    public int Id { get; set; }
+    public int ID { get; set; }
 
     /// <summary>
     /// The name of the customer
@@ -44,4 +44,16 @@ public struct Order
     /// תאריך הגעת המשלוח ליעד
     /// </summary>
     public DateTime? DeliveryDate { get; set; }
+
+
+    public override string ToString() => $@"
+	Order ID : {ID}, 
+	Name Customer : {NameCustomer}
+    Customer email : {Email}
+    Send the order to: {ShippingAddress}
+    The order was made on : {DateOrder}
+    The shipment started on: {ShippingDate}
+    The shipment reached its destination on : {DeliveryDate}
+	";
+
 }

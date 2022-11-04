@@ -24,7 +24,7 @@ public struct OrderItems
     /// <summary>
     /// number of this book in the order
     /// </summary>
-
+#region amount
 
     public int? amountOfItem { get; set; }
 
@@ -35,6 +35,6 @@ public struct OrderItems
     Price of one item : {priceOfOneItem}
     the amount of items : {amountOfItem}
 	";
-
+    #endregion
 }
 

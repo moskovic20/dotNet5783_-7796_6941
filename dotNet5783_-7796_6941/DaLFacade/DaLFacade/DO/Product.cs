@@ -15,8 +15,6 @@ public struct Product
     /// </summary>
     public string? nameOfBook { get; set; }
    
-    
-   
     /// <summary>
     /// for category of this book or other items 
     /// </summary>

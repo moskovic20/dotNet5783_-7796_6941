@@ -6,7 +6,7 @@ namespace Do;
 /// Structure for order that contains details about the customer
 /// and the items in the order.
 /// </summary>
-public struct Order
+public struct Order 
 {
     /// <summary>
     /// Unique identifier for order

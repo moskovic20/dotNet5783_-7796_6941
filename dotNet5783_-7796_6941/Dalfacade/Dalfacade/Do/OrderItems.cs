@@ -24,17 +24,17 @@ public struct OrderItems
     /// <summary>
     /// number of this book in the order
     /// </summary>
-
+#region amount
 
     public int? amountOfItem { get; set; }
 
     public override string ToString() => $@"
-	    Ordered product ID : {ID}, 
-	    Order ID (Customer and shipping details) : {IdOfOrder}
-        Product ID : {IdOfProduct}
-        Price of one item : {priceOfOneItem}
-        the amount of items : {amountOfItem}
+	Ordered product ID : {ID}, 
+	Order ID (Customer and shipping details) : {IdOfOrder}
+    Product ID : {IdOfProduct}
+    Price of one item : {priceOfOneItem}
+    the amount of items : {amountOfItem}
 	";
-
+    #endregion
 }
 

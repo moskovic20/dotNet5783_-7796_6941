@@ -6,13 +6,13 @@ using static Do.Enums;
 
 namespace DalApi;
 
-internal static class DataSource
+internal class DataSource
 {
     static readonly Random R = new Random();
 
-    static internal List <Order?> _Order { get; } = new List<Order?> { };
-    static internal List <OrderItems?> _OrderItems { get; } = new List <OrderItems?> { };
-    static internal List<Product?> _Product { get; } = new List<Product?> { };
+    internal List <Order?> _Order { get; } = new List<Order?> { };
+    internal List <OrderItems?> _OrderItems { get; } = new List <OrderItems?> { };
+    internal List<Product?> _Product { get; } = new List<Product?> { };
 
     static string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto", "Raspberry juice" };  
     internal static class Config
@@ -31,18 +31,22 @@ internal static class DataSource
 
     }
 
-    static private void s_Initialize()
+    public DataSource()
+    {
+        s_Initialize();
+    }
+
+    public void s_Initialize()
     {
         CreateProducts();
         CreateOrders();
         CreateOrderItems();
     }
 
-    static private void CreateProducts()
+    private void CreateProducts()
     {
         string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto", "Raspberry juice" };
-        //string[] Caterories = { "mystery", "fantasy", "history", "scinence", "childen", "romans", "cookingAndBaking", "psychology", "Kodesh" };
-        //Enums.CATEGORY tempCategory = new Enums.CATEGORY(R.Next(0,9);
+        
         for (int i = 0; i < 10; i++)
         {
             _Product.Add(
@@ -51,7 +55,7 @@ internal static class DataSource
                     ID = Config.NextProductNumber,
                     Price = R.Next(20, 150),
                     nameOfBook = NameOfBook[R.Next(0, 5)],//string
-                    Category = Enums.CATEGORY.fantasy,
+                    Category = (Enums.CATEGORY)(R.Next(0, 9)),
                     InStock = R.Next(25, 86)
 
                 }) ; 
@@ -61,7 +65,7 @@ internal static class DataSource
         }
     }
 
-    static private void CreateOrders()
+    private void CreateOrders()
     {
         #region arrays: customerNames,customerEmails and address.
         string[] customerNames = {"Hila","Moriya","Shay","Shira","Adel","Dan","Orly","Neta","Otral","Gil",
@@ -88,7 +92,6 @@ internal static class DataSource
                 ShippingAddress=address[R.Next(0,21)],
             };
 
-            myOrder.DateOrder = DateTime.Now-new TimeSpan();//לבדוק מה רשום בתוך
             myOrder.ShippingDate = myOrder.DateOrder - new TimeSpan(R.NextInt64(10L * 1000L * 3600L * 24L * 100L)); //להבין מה כתוב בתוך
             myOrder.DeliveryDate = myOrder.ShippingDate - new TimeSpan(R.NextInt64()); //לבדוק מה לרשום בתוך
             
@@ -96,7 +99,7 @@ internal static class DataSource
         }
     }
 
-    static private void CreateOrderItems()
+    private void CreateOrderItems()
     {
         Product? product = _Product[R.Next(_Product.Count)];
 

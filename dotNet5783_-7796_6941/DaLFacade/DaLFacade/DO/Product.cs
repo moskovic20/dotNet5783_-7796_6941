@@ -18,7 +18,7 @@ public struct Product
     /// <summary>
     /// for category of this book or other items 
     /// </summary>
-    public Enum? Category { get; set; }
+    public Enums.CATEGORY? Category { get; set; }
 
     /// <summary>
     /// price of this product

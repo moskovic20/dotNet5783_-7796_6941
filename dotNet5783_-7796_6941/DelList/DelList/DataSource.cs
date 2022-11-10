@@ -1,6 +1,6 @@
 ﻿using Do;
 
-namespace DalApi;
+namespace Dal;
 
 internal static class DataSource
 { 
@@ -16,11 +16,11 @@ internal static class DataSource
         private static int s_nextOrderNumber = s_startOrderNumber;
         internal static int NextOrderNumber { get => ++s_nextOrderNumber; }
 
-        internal const int s_startProductNumber = 0;
+        internal const int s_startProductNumber = 10000;
         private static int s_nextProductNumber = s_startOrderNumber;
         internal static int NextProductNumber { get => ++s_nextProductNumber; }
 
-        internal const int s_startOrderItem = 0;
+        internal const int s_startOrderItem = 100000;
         private static int s_nextOrderItem = s_startOrderItem;
         internal static int NextOrderItem { get => ++s_nextOrderItem; }
 
@@ -36,6 +36,16 @@ internal static class DataSource
        return _Order;
     }
 
+    public static List<OrderItems?> getOrderItemList()
+    {
+        return _OrderItems;
+    }
+
+    public static List<Product?> getProduct()
+    {
+        return _Product;
+    }
+
     private static void s_Initialize()
     {
         CreateProducts();
@@ -45,9 +55,8 @@ internal static class DataSource
 
     private static void CreateProducts()
     {
-        string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto"
-                , "Raspberry juice" };
-
+        string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto", "Raspberry juice" };
+        
         for (int i = 0; i < 10; i++)
         {
             _Product.Add(

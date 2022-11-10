@@ -30,6 +30,11 @@ public struct Product
     /// </summary>
     public double? InStock{get; set;}
 
+    /// <summary>
+    /// for correct delitions in DalList classes
+    /// </summary>
+    public bool IsDeleted{get; set;}
+
     public override string ToString() => $@"
 
         Product ID: {ID } 

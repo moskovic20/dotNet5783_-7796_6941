@@ -1,13 +1,29 @@
-﻿
-using DalApi;
+﻿using DalApi;
 using Do;
 
 namespace Dal;
 
 public class DalOrderItem : IOrderItem
 {
-    public int Add(OrderItem item)
+    public int Add(OrderItem myOrderItem)
     {
+       
+            int indexOfMyOrderItem = DataSource._OrderItems.FindIndex(x => x.GetValueOrDefault().ID == myOrderItem.ID);
+
+            if (indexOfMyOrderItem == -1) //myOrderItem.ID is not found in _OrderItems
+        {
+                myOrderItem.ID = DataSource.Config.NextOrderItem; 
+                DataSource._OrderItems.Add(myOrderItem);
+                return myOrderItem.ID;
+            }
+
+            if (DataSource._OrderItems[indexOfMyOrderItem].GetValueOrDefault().IsDeleted == false)
+                throw new Exception("The order item you wish to add is already exists");
+
+            DataSource._OrderItems.Add(myOrderItem);
+            return myOrderItem.ID;
+
+        
         throw new NotImplementedException();
     }
 
@@ -44,13 +60,22 @@ public class DalOrderItem : IOrderItem
                                                   && x.GetValueOrDefault().IsDeleted == false);
 
         if (OItem == null)
-            throw new Exception("The OrderItem is not found");
+            throw new Exception("The order item is not found");
 
         return (OrderItem)OItem;
     }
 
     public void Update(OrderItem item)
     {
-        throw new NotImplementedException();
+        try
+        {
+            GetById(item.ID);
+        }
+        catch
+        {
+            throw new Exception("the order item can't be update because he doesn't exist");
+        }
+        Delete(item.ID);
+        Add(item);
     }
 }

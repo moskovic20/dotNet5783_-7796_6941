@@ -1,13 +1,13 @@
 ﻿using Do;
 
 namespace DalApi;
-public interface IOrderItem : ICrud<OrderItems>
+public interface IOrderItem : ICrud<OrderItem>
 {
-    int Add(OrderItems item);
-    OrderItems GetById(int id);
-    void Update(OrderItems item);
-    void Delete(int id);
+    new int Add(OrderItem item);
+    new OrderItem GetById(int id);
+    new void Update(OrderItem item);
+    new void Delete(int id);
 
     //IEnumerable<T?> GetAll(Func<T?, bool>? filter = null);
-    IEnumerable<OrderItems> GetAll();
+    new IEnumerable<OrderItem> GetAll();
 }

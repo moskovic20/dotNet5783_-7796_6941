@@ -7,29 +7,43 @@ public class DalProduct : IProduct
 {
     //public static DataSource s_instance { get; } = new DataSource();
 
-    public int Add(Product item)
+    public int Add(Product P)
     {
-        if(true)/////////
-        {
+        Random random = new Random();
+        int indexOfMyP = DataSource._Products.FindIndex(x => x.GetValueOrDefault().ID == P.ID);
 
+        if (indexOfMyP == -1) //this product is not found in the data
+        {
+            while (!IdIsFound(P.ID)) //check if this id is not taken.
+            {
+                P.ID = random.Next(100000, 999999999);
+            }
+
+            DataSource._Products.Add(P);
+            return P.ID;
         }
-        throw new NotImplementedException();
+
+        if (DataSource._Products[indexOfMyP].GetValueOrDefault().IsDeleted == false)
+            throw new Exception("The product you wish to add is already exists");
+
+        DataSource._Products.Add(P);
+        return P.ID;
+
     }
 
     public void Delete(int id)
     {
-        int getIdOfProduct;
-        getIdOfProduct= DataSource._Product.FindIndex(x => x.GetValueOrDefault().ID == id);
+        int getIdOfProduct = DataSource._Products.FindIndex(x => x.GetValueOrDefault().ID == id);
 
         if (getIdOfProduct > 0)
         {
-            if (DataSource._Product[getIdOfProduct].GetValueOrDefault().IsDeleted == true)
+            if (DataSource._Products[getIdOfProduct].GetValueOrDefault().IsDeleted == true)
                 throw new Exception("the product doesn't exist");
             else
             {
-                Product ChangingStatusOfProductIsdeleted = DataSource._Product[getIdOfProduct].GetValueOrDefault();
+                Product ChangingStatusOfProductIsdeleted = DataSource._Products[getIdOfProduct].GetValueOrDefault();
                 ChangingStatusOfProductIsdeleted.IsDeleted = true;
-                DataSource._Product[getIdOfProduct] = (Product?) ChangingStatusOfProductIsdeleted;
+                DataSource._Products[getIdOfProduct] = (Product?)ChangingStatusOfProductIsdeleted;
             }
         }
         else
@@ -38,15 +52,21 @@ public class DalProduct : IProduct
 
     public IEnumerable<Product> GetAll()
     {
-        IEnumerable<Product?> allProduct = DataSource._Product.FindAll(x => true);
-            return (IEnumerable<Product>)allProduct;
+        if (DataSource._Products.FirstOrDefault() == null)
+            throw new Exception("there is not any product");
+
+        IEnumerable<Product?> allProduct = DataSource._Products.FindAll(x => true);
+        return (IEnumerable<Product>)allProduct;
     }
 
     public Product GetById(int id)
     {
-        Product? ProductById = DataSource._Product.Find(x=> x.GetValueOrDefault().ID==id);
-        if(ProductById==null)
-            throw new Exception( "the product is not found");///ok?
+        Product? ProductById = DataSource._Products.Find(x => x.GetValueOrDefault().ID == id
+                                                          && x.GetValueOrDefault().IsDeleted == false);
+
+        if (ProductById == null)
+            throw new Exception("the product is not found");///ok?
+
         return (Product)ProductById;
     }
 
@@ -61,6 +81,17 @@ public class DalProduct : IProduct
             throw new Exception("the product can't be update because he doesn't exist");
         }
         Delete(item.ID);
-        Add(item);  
+        Add(item);
+    }
+
+    private bool IdIsFound(int myID)
+    {
+        int indexOfSameId = DataSource._Products.FindIndex(x => x.GetValueOrDefault().ID == myID);
+
+        if (indexOfSameId == -1)
+            return true;
+
+        else
+            return false;
     }
 }

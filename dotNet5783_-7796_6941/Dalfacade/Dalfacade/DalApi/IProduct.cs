@@ -3,11 +3,11 @@
 namespace DalApi;
 public interface IProduct : ICrud<Product>
 {
-    int Add(Product item);
-    Product GetById(int id);
-    void Update(Product item);
-    void Delete(int id);
+    new int Add(Product item);
+    new Product GetById(int id);
+    new void Update(Product item);
+    new void Delete(int id);
 
     //IEnumerable<T?> GetAll(Func<T?, bool>? filter = null);
-    IEnumerable <Product> GetAll();
+    new IEnumerable <Product> GetAll();
 }

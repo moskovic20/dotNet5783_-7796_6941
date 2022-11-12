@@ -6,19 +6,15 @@ internal static class DataSource
 { 
     static readonly Random R = new Random();
 
-    static internal List<Order?> _Order { get; } = new List<Order?> { };
-    static internal List<OrderItems?> _OrderItems { get; } = new List<OrderItems?> { };
-    static internal List<Product?> _Product { get; } = new List<Product?> { };
+    static internal List<Order?> _Orders { get; } = new List<Order?> { };
+    static internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> { };
+    static internal List<Product?> _Products { get; } = new List<Product?> { };
 
     internal static class Config
     {
-        internal const int s_startOrderNumber = 1000;
+        internal const int s_startOrderNumber = 100000;
         private static int s_nextOrderNumber = s_startOrderNumber;
         internal static int NextOrderNumber { get => ++s_nextOrderNumber; }
-
-        internal const int s_startProductNumber = 10000;
-        private static int s_nextProductNumber = s_startOrderNumber;
-        internal static int NextProductNumber { get => ++s_nextProductNumber; }
 
         internal const int s_startOrderItem = 100000;
         private static int s_nextOrderItem = s_startOrderItem;
@@ -29,21 +25,6 @@ internal static class DataSource
     static DataSource()
     {
         s_Initialize();
-    }
-
-    public static List<Order?> getOrderList()
-    {
-       return _Order;
-    }
-
-    public static List<OrderItems?> getOrderItemList()
-    {
-        return _OrderItems;
-    }
-
-    public static List<Product?> getProduct()
-    {
-        return _Product;
     }
 
     private static void s_Initialize()
@@ -59,16 +40,28 @@ internal static class DataSource
         
         for (int i = 0; i < 10; i++)
         {
-            _Product.Add(
-                new Product
-                {
-                    ID = Config.NextProductNumber,
-                    Price = R.Next(20, 150),
-                    nameOfBook = NameOfBook[R.Next(0, 5)],//string
-                    Category = (Enums.CATEGORY)R.Next(0, 9),
-                    InStock = R.Next(25, 86)
+            Product myP = new Product
+            {
+                ID=R.Next(100000,1000000000),
+                Price = R.Next(20, 150),
+                nameOfBook = NameOfBook[R.Next(0, 5)],//string
+                Category = (Enums.CATEGORY)R.Next(0, 9),
+                InStock = R.Next(25, 86)
 
-                }) ;
+            };
+
+            #region Makes sure id is unique
+            int pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
+
+            while (pWithTheSameId != -1)//To make sure this ID is unique.
+            {
+                myP.ID = R.Next(100000, 1000000);
+                pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
+            }
+            #endregion
+
+            _Products.Add(myP);
+            
         }
     }
 
@@ -77,11 +70,6 @@ internal static class DataSource
         #region arrays: customerNames,customerEmails and address.
         string[] customerNames = {"Hila","Moriya","Shay","Shira","Adel","Dan","Orly","Neta","Otral","Gil",
             "Noam","Tal","David","Yehoda","Ariel","Harel","Reot","Adi","Yoav","Mikel"};
-
-        string[] customerEmails = {"a@gmail.com", "ab@gmail.com", "abc@gmail.com", "abcd@gmail.com",
-            "abcde@gmail.com","abcdef@gmail.com","abcdefg@gmail.com","aaa@gmail.com","sss@gmail.com","uuu@gmail.com",
-            "hhh@gmail.com","kkk@gmail.com","lll@gmail.com","ppp@gmail.com","rrr@gmail.com","www@gmail.com","893@gmail.com",
-            "pp@gmail.com","tt7@gmail.com","p99@gmail.com"};
 
         string[] address = {"a","v","b","bb","hj","nn","vo","dr","xc","ss","tt","we","ww","xx","pp","ss",
             "ty","io","sdf","ioj"};
@@ -93,17 +81,16 @@ internal static class DataSource
             Order myOrder = new Order
             {
                 ID = Config.NextOrderNumber,
-                DateOrder = DateTime.Now - new TimeSpan(R.NextInt64(10L * 1000L * 3600L * 24L * 100L)),
+                DateOrder = DateTime.Now - new TimeSpan(R.Next(11,41),R.Next(24),R.Next(60),R.Next(60)),
                 NameCustomer = customerNames[R.Next(0, 21)],
-                Email = customerEmails[R.Next(0, 21)],
                 ShippingAddress = address[R.Next(0, 21)],
             };
 
-            myOrder.DateOrder = DateTime.Now - new TimeSpan();//לבדוק מה רשום בתוך
-            myOrder.ShippingDate = myOrder.DateOrder - new TimeSpan(R.NextInt64(10L * 1000L * 3600L * 24L * 100L)); //להבין מה כתוב בתוך
-            myOrder.DeliveryDate = myOrder.ShippingDate - new TimeSpan(R.NextInt64()); //לבדוק מה לרשום בתוך
+            myOrder.Email = myOrder.NameCustomer + "@gmail.com";
+            myOrder.ShippingDate = myOrder.DateOrder - new TimeSpan(R.Next(6,11),R.Next(24), R.Next(6), R.Next(60)); //להבין מה כתוב בתוך
+            myOrder.DeliveryDate = myOrder.ShippingDate - new TimeSpan(R.Next(6), R.Next(24), R.Next(6), R.Next(60)); 
 
-            _Order.Add(myOrder);
+            _Orders.Add(myOrder);
         }
     }
 
@@ -111,14 +98,14 @@ internal static class DataSource
     {
         for (int i = 0; i < 40; i++)
         {
-            Product? product = _Product[R.Next(_Product.Count)];
+            Product? product = _Products[R.Next(_Products.Count)];
 
             _OrderItems.Add(
-            new OrderItems
+            new OrderItem
             {
                 ID = Config.NextOrderItem,
                 IdOfProduct = product?.ID ?? 0,
-                IdOfOrder = R.Next(Config.s_startOrderNumber, Config.s_startOrderNumber + _Order.Count),
+                IdOfOrder = R.Next(Config.s_startOrderNumber, Config.s_startOrderNumber + _Orders.Count),
                 priceOfOneItem = product?.Price ?? 0,
                 amountOfItem = R.Next(5)
 

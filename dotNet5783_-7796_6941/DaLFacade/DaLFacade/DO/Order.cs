@@ -45,6 +45,12 @@ public struct Order
     /// </summary>
     public DateTime? DeliveryDate { get; set; }
 
+    /// <summary>
+    /// Has the order been deleted?
+    /// האם ההזמנה נמחקה ממאגר הרשימות
+    /// </summary>
+    public bool? IsDeleted { get; set; }
+
 
     public override string ToString() => $@"
 	Order ID : {ID}, 

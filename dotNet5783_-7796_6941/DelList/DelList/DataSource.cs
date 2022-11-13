@@ -1,14 +1,16 @@
 ﻿using Do;
+using DalApi;
 
 namespace Dal;
 
 internal static class DataSource
 { 
     static readonly Random R = new Random();
+    //internal static DataSource s_instance { get; } = new DataSource();
 
-    static internal List<Order?> _Orders { get; } = new List<Order?> { };
-    static internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> { };
-    static internal List<Product?> _Products { get; } = new List<Product?> { };
+    static internal List<Order?> _Orders { get; } = new List<Order?> ();
+    static internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> ();
+    static internal List<Product?> _Products { get; } = new List<Product?> ();
 
     internal static class Config
     {
@@ -50,7 +52,7 @@ internal static class DataSource
                 nameOfBook = NameOfBook[i],
                 authorName = NamesOfWriters[R.Next(0, 6)],
                 Category = (Enums.CATEGORY)R.Next(0, 9),
-                InStock = R.Next(20, 100)
+                InStock =(i!=0)? R.Next(20, 100):0
 
             };
 
@@ -63,9 +65,6 @@ internal static class DataSource
                 pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
             }
             #endregion
-
-            if (i == 0)//To have a product that is not in stock
-                myP.InStock = 0;
 
             _Products.Add(myP);
             

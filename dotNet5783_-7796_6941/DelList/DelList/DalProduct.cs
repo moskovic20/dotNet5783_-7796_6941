@@ -4,9 +4,8 @@ using Do;
 namespace Dal;
 
 public class DalProduct : IProduct
-{
-    //public static DataSource s_instance { get; } = new DataSource();
-
+{  
+    
     public int Add(Product P)
     {
         Random random = new Random();

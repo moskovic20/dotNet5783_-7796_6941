@@ -12,7 +12,7 @@ public class DalOrder : IOrder
 
         if (indexOfMyOrder == -1) //myOrder.ID is not found in _OrderS
         {
-            myOrder.ID = DataSource.Config.NextOrderNumber;
+            myOrder.ID = DataSource.Config.NextOrderNumber; 
             DataSource._Orders.Add(myOrder);
             return myOrder.ID;
         }

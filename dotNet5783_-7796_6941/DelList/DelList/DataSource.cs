@@ -36,17 +36,21 @@ internal static class DataSource
 
     private static void CreateProducts()
     {
-        string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto", "Raspberry juice" };
-        
+        string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto", 
+            "Raspberry juice", "Tell no one","the candidate","Alone in the battle","the giver","Broken Heart" };
+        string[] NamesOfWriters = { "jeik.r", "mor.s", "noaa.f", "gaie.g", "noi.a", "doni.j", "rom.k" };
+
+
         for (int i = 0; i < 10; i++)
         {
             Product myP = new Product
             {
-                ID=R.Next(100000,1000000000),
-                Price = R.Next(20, 150),
-                nameOfBook = NameOfBook[R.Next(0, 5)],//string
+                ID = R.Next(100000, 999999999),
+                Price = R.Next(40, 150),
+                nameOfBook = NameOfBook[i],
+                authorName = NamesOfWriters[R.Next(0, 6)],
                 Category = (Enums.CATEGORY)R.Next(0, 9),
-                InStock = R.Next(25, 86)
+                InStock = R.Next(20, 100)
 
             };
 
@@ -55,10 +59,13 @@ internal static class DataSource
 
             while (pWithTheSameId != -1)//To make sure this ID is unique.
             {
-                myP.ID = R.Next(100000, 1000000);
+                myP.ID = R.Next(100000, 999999999);
                 pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
             }
             #endregion
+
+            if (i == 0)//To have a product that is not in stock
+                myP.InStock = 0;
 
             _Products.Add(myP);
             
@@ -87,8 +94,9 @@ internal static class DataSource
             };
 
             myOrder.Email = myOrder.NameCustomer + "@gmail.com";
-            myOrder.ShippingDate = myOrder.DateOrder - new TimeSpan(R.Next(6,11),R.Next(24), R.Next(6), R.Next(60)); //להבין מה כתוב בתוך
-            myOrder.DeliveryDate = myOrder.ShippingDate - new TimeSpan(R.Next(6), R.Next(24), R.Next(6), R.Next(60)); 
+
+            myOrder.ShippingDate = (i<16) ?  myOrder.DateOrder - new TimeSpan(R.Next(6,11),R.Next(24), R.Next(6), R.Next(60)):null;
+            myOrder.DeliveryDate = (i < 10) ? myOrder.ShippingDate - new TimeSpan(R.Next(6), R.Next(24), R.Next(6), R.Next(60)) : null;
 
             _Orders.Add(myOrder);
         }

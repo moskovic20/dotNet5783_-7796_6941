@@ -33,7 +33,7 @@ public struct Product
     /// <summary>
     /// Number of books in stock
     /// </summary>
-    public double? InStock{get; set;}
+    public int? InStock{get; set;}
 
     /// <summary>
     /// for correct delitions in DalList classes

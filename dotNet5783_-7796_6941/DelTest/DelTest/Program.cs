@@ -39,7 +39,7 @@ internal class Program
                     break;
 
                 case 3:
-                    subMenueOrder();
+                    subMenueOrderItem();
                     break;
             }
 
@@ -146,7 +146,7 @@ internal class Program
                 case 'd':
                     #region update an existing product
 
-                    Console.WriteLine("enter the id of the product yow want update: ");
+                    Console.WriteLine("enter the id of the product yow want to update: ");
 
                     if (!int.TryParse(Console.ReadLine(), out id))
                         throw new Exception("The conversion failed");
@@ -301,5 +301,150 @@ f: to finish the update");
 
     }
 
-    static void subMenueOrderItem() { }
+    static void subMenueOrderItem()
+    {
+        #region print menue for order item and user choose
+        Console.WriteLine(@"Choose the action you want:
+    a: add a new OrderItem
+    b: get OrderItem by id
+    c: get all the OrderItems
+    d: update OrderItem
+    e: delete OrderItem
+    
+    f: exit");
+
+        char choose = (char)Console.Read();
+        Console.ReadLine();
+        #endregion
+
+        OrderItem OI = new();//for use in the next loop
+        int id,idOrder,idProduct, numOfItem;
+        double price;
+
+        while (choose != 'f')
+        {
+            switch (choose)
+            {
+                case 'a':
+                    #region add new orderItem.input details from the user
+
+                    Console.WriteLine(@"Enter book's order details:id,IdOfOrder,IdOfProduct,priceOfOneItem and amountOfItem ");
+
+                    if (!int.TryParse(Console.ReadLine(), out id))
+                        throw new Exception("The conversion failed");
+                    OI.ID = id;
+
+                    if (!int.TryParse(Console.ReadLine(), out idOrder))
+                        throw new Exception("The conversion failed");
+                    OI.IdOfOrder = idOrder;
+
+                    if (!int.TryParse(Console.ReadLine(), out idProduct))
+                        throw new Exception("The conversion failed");
+                    OI.IdOfProduct = idProduct;
+
+                    if (!double.TryParse(Console.ReadLine(), out price))
+                        throw new Exception("The conversion failed");
+
+                    OI.priceOfOneItem = price;
+
+                    if (!int.TryParse(Console.ReadLine(), out numOfItem))
+                        throw new Exception("The conversion failed");
+
+                    OI.amountOfItem = numOfItem;
+
+                    myOI.Add(OI);
+                    break;
+                #endregion
+
+                case 'b':
+                    #region print orderItem by id
+                    Console.WriteLine("enter the the ID of the orderItem: ");
+                    if (!int.TryParse(Console.ReadLine(), out id))
+                        throw new Exception("The conversion failed");
+
+                    OI = myOI.GetById(id);
+                    Console.WriteLine(OI);
+                    break;
+                #endregion
+
+                case 'c':
+                    #region print all the orderItem
+                    IEnumerable<OrderItem> allOI = myOI.GetAll();
+                    foreach (OrderItem Oitem in allOI)
+                        Console.WriteLine("\n" + Oitem + "\n");
+                    break;
+                #endregion
+
+                case 'd':
+                    #region update an existing orderItem
+
+                    Console.WriteLine("enter the id of the orderItem yow want to update: ");
+
+                    if (!int.TryParse(Console.ReadLine(), out id))
+                        throw new Exception("The conversion failed");
+
+                    OI = myOI.GetById(id);
+
+                    Console.WriteLine(@"Which field do you want to update?
+o: IdOfOrder
+d: IdOfProduct
+p: price
+m: amount
+
+f: to finish the update");
+
+                    choose = (char)Console.Read(); //id,IdOfOrder,IdOfProduct,priceOfOneItem and amountOfItem
+                    Console.ReadLine();
+
+                    while (choose != 'f')
+                    {
+                        switch (choose)
+                        {
+                            case 'o':
+                                if (!int.TryParse(Console.ReadLine(), out idOrder))
+                                    throw new Exception("The conversion failed");
+                                OI.IdOfOrder = idOrder;
+                                break;
+
+                            case 'd':
+                                if (!int.TryParse(Console.ReadLine(), out idProduct))
+                                    throw new Exception("The conversion failed");
+                                OI.IdOfProduct = idProduct;
+                                break;
+
+                            case 'p':
+                                if (!double.TryParse(Console.ReadLine(), out price))
+                                    throw new Exception("The conversion failed");
+                                OI.priceOfOneItem = price;
+                                break;
+
+                            case 'm':
+                                if (!int.TryParse(Console.ReadLine(), out numOfItem))
+                                    throw new Exception("The conversion failed");
+                                OI.amountOfItem = numOfItem;
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+
+                    myOI.Update(OI);
+
+                    #endregion
+                    break;
+
+                case 'e':
+                    #region delete orderIrem by id
+                    Console.WriteLine("enter the the ID of the orderItem you want delete: ");
+
+                    if (int.TryParse(Console.ReadLine(), out id))
+                        myOI.Delete(id);
+                    break;
+                    #endregion
+            }
+        }
+
+
+    }
 }

@@ -14,7 +14,12 @@ public struct Product
     ///  Unique identifier for item
     /// </summary>
     public string? nameOfBook { get; set; }
-   
+
+    /// <summary>
+    /// The name of the author of the book
+    /// </summary>
+    public string? authorName { get; set; }
+
     /// <summary>
     /// for category of this book or other items 
     /// </summary>

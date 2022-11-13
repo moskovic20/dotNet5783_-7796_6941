@@ -42,6 +42,16 @@ internal class Program
                     subMenueOrder();
                     break;
             }
+
+            Console.WriteLine(@"Select one of the following data entities:
+    1: product
+    2: order
+    3: orderItem
+                                    
+    0: exit");
+
+            if (!int.TryParse(Console.ReadLine(), out number))
+                Console.WriteLine("the pars is not success");
         }
 
 

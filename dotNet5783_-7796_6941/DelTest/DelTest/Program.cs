@@ -62,6 +62,7 @@ internal class Program
     f: exit");
 
         char choose =(char)Console.Read();
+        Console.ReadLine();
         #endregion
 
         Product p =new Product();//for use in the next loop

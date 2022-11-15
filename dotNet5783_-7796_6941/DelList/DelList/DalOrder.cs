@@ -5,56 +5,57 @@ namespace Dal;
 
 public class DalOrder : IOrder
 {
+    DataSource _DS = DataSource.s_instance;
 
     public int Add(Order myOrder)
     {
-        int indexOfMyOrder = DataSource._Orders.FindIndex(x => x.GetValueOrDefault().ID == myOrder.ID);
+        int indexOfMyOrder = _DS._Orders.FindIndex(x => x.GetValueOrDefault().ID == myOrder.ID);
 
         if (indexOfMyOrder == -1) //myOrder.ID is not found in _OrderS
         {
-            myOrder.ID = DataSource.Config.NextOrderNumber; 
-            DataSource._Orders.Add(myOrder);
+            myOrder.ID = DataSource.Config.NextOrderNumber;
+            _DS._Orders.Add(myOrder);
             return myOrder.ID;
         }
 
-        if (DataSource._Orders[indexOfMyOrder].GetValueOrDefault().IsDeleted == false)
+        if (_DS._Orders[indexOfMyOrder].GetValueOrDefault().IsDeleted == false)
             throw new Exception("The order you wish to add is already exists");
 
-        DataSource._Orders.Add(myOrder);
+        _DS._Orders.Add(myOrder);
         return myOrder.ID;
 
     }
 
     public void Delete(int id)
     {
-        int indexOfOrderById = DataSource._Orders.FindIndex(x => x.GetValueOrDefault().ID == id);
+        int indexOfOrderById = _DS._Orders.FindIndex(x => x.GetValueOrDefault().ID == id);
 
         if (indexOfOrderById == -1)
             throw new Exception("The order you wanted to delete is not found");
 
 
-        Order myOrder = DataSource._Orders[indexOfOrderById].GetValueOrDefault();
+        Order myOrder = _DS._Orders[indexOfOrderById].GetValueOrDefault();
 
         if (myOrder.IsDeleted == true)
             throw new Exception("The order you wanted to delete has already been deleted");
 
 
         myOrder.IsDeleted = true;
-        DataSource._Orders[indexOfOrderById] = (Order?)myOrder;
+        _DS._Orders[indexOfOrderById] = (Order?)myOrder;
     }
 
     public IEnumerable<Order> GetAll()
     {
-        if (DataSource._Orders.FirstOrDefault() == null)
+        if (_DS._Orders.FirstOrDefault() == null)
             throw new Exception("there is not any orders");
 
-        IEnumerable<Order?> allOrders = DataSource._Orders.FindAll(x => true);
+        IEnumerable<Order?> allOrders = _DS._Orders.FindAll(x => true);
         return (IEnumerable<Order>)allOrders;
     }
 
     public Order GetById(int id)
     {
-        Order? myOrder = DataSource._Orders.Find(x => x.GetValueOrDefault().ID == id
+        Order? myOrder = _DS._Orders.Find(x => x.GetValueOrDefault().ID == id
                                                   && x.GetValueOrDefault().IsDeleted == false);
 
         if (myOrder == null)

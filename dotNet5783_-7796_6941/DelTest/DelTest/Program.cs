@@ -1,6 +1,5 @@
 ﻿using Do;
 using Dal;
-using DelList;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using static Do.Enums;
@@ -83,7 +82,7 @@ internal class Program
                 case 'a':
                     #region add new product.input details from the user
 
-                    Console.WriteLine(@"Enter book's details: id, titel ,author ,category ,price and amount");
+                    Console.WriteLine(@"Enter book's details: id, titel ,author price and amount");
 
                     if (!int.TryParse(Console.ReadLine(), out id))
                         throw new Exception("The conversion failed");
@@ -92,13 +91,6 @@ internal class Program
 
                     p.nameOfBook = Console.ReadLine();
                     p.authorName = Console.ReadLine();
-
-                    printCategories();
-
-                    if (!int.TryParse(Console.ReadLine(), out category))
-                        throw new Exception("The conversion failed");
-
-                    p.Category = (Enums.CATEGORY)category;
 
                     if (!double.TryParse(Console.ReadLine(), out price))
                         throw new Exception("The conversion failed");
@@ -109,6 +101,13 @@ internal class Program
                         throw new Exception("The conversion failed");
 
                     p.InStock = inStock;
+
+                    printCategories();
+
+                    if (!int.TryParse(Console.ReadLine(), out category))
+                        throw new Exception("The conversion failed");
+
+                    p.Category = (Enums.CATEGORY)category;
 
                     myP.Add(p);
                     break;
@@ -375,22 +374,6 @@ d: delivery date");
         } while (choose != 'f');
     }
 
-    
-
-    static void printCategories()
-    {
-        Console.WriteLine(@"Choose a category by the number:
- 1: mystery
- 2: fantasy
- 3: history
- 4: scinencechilden
- 5: romans
- 6: cookingAndBaking
- 7: psychology
- 8: Kodesh");
-
-    }
-
     static void subMenueOrderItem()
     {
         #region print menue for order item and user choose
@@ -515,6 +498,7 @@ f: to finish the update");
                                 break;
 
                             default:
+                                Console.WriteLine("ERROR");
                                 break;
                         }
                     }
@@ -530,11 +514,31 @@ f: to finish the update");
 
                     if (int.TryParse(Console.ReadLine(), out id))
                         myOI.Delete(id);
-                    break;
                     #endregion
+                    break;
+
+                default:
+                    Console.WriteLine("ERROR");
+                    break;
             }
         }
 
 
     }
+
+    static void printCategories()
+    {
+        Console.WriteLine(@"Choose a category by the number:
+ 1: mystery
+ 2: fantasy
+ 3: history
+ 4: scinencechilden
+ 5: romans
+ 6: cookingAndBaking
+ 7: psychology
+ 8: Kodesh");
+
+    }
+
+    
 }

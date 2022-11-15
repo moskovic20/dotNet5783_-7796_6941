@@ -3,14 +3,14 @@ using DalApi;
 
 namespace Dal;
 
-internal static class DataSource
+internal class DataSource
 { 
     static readonly Random R = new Random();
-    //internal static DataSource s_instance { get; } = new DataSource();
+    internal static DataSource s_instance { get; } = new DataSource();
 
-    static internal List<Order?> _Orders { get; } = new List<Order?> ();
-    static internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> ();
-    static internal List<Product?> _Products { get; } = new List<Product?> ();
+    internal List<Order?> _Orders { get; } = new List<Order?> ();
+    internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> ();
+    internal List<Product?> _Products { get; } = new List<Product?> ();
 
     internal static class Config
     {
@@ -24,19 +24,19 @@ internal static class DataSource
 
     }
 
-    static DataSource()
+    DataSource()
     {
         s_Initialize();
     }
 
-    private static void s_Initialize()
+    private void s_Initialize()
     {
         CreateProducts();
         CreateOrders();
         CreateOrderItems();
     }
 
-    private static void CreateProducts()
+    private void CreateProducts()
     {
         string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto", 
             "Raspberry juice", "Tell no one","the candidate","Alone in the battle","the giver","Broken Heart" };
@@ -71,7 +71,7 @@ internal static class DataSource
         }
     }
 
-    private static void CreateOrders()
+    private void CreateOrders()
     {
         #region arrays: customerNames,customerEmails and address.
         string[] customerNames = {"Hila","Moriya","Shay","Shira","Adel","Dan","Orly","Neta","Otral","Gil",
@@ -101,7 +101,7 @@ internal static class DataSource
         }
     }
 
-    private static void CreateOrderItems()
+    private void CreateOrderItems()
     {
         for (int i = 0; i < 40; i++)
         {

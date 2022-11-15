@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dal
+namespace Dal;
+
+sealed internal class DalList: IDal
 {
-    sealed internal class DalList//:IDal
-    {
-        public IOrder Order=> new DalOrder();
-        public IProduct Product=> new DalProduct();
-        public IOrderItem OrderItem=> new DalOrderItem();
-    }
+    public IOrder Order => new DalOrder();
+    public IProduct Product=> new DalProduct();
+    public IOrderItem OrderItem=> new DalOrderItem();
+
+    
 }
+

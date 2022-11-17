@@ -1,5 +1,5 @@
 ﻿using Do;
-using Dal;
+using DalApi;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using static Do.Enums;
@@ -9,12 +9,12 @@ namespace Dal;
 
 internal class Program
 {
-    private static DalProduct myP = new();
-    private static DalOrder myO = new();
-    private static DalOrderItem myOI = new();
+    public static DalProduct myP = new();
+    public static DalOrder myO = new();
+    public static DalOrderItem myOI = new();
 
     static void Main(string[] arg)
-    {
+    { 
         int choice;
         do
         {
@@ -54,6 +54,10 @@ internal class Program
 
     static void subMenueProduct()
     {
+        DalProduct myP = new DalProduct();
+        DalOrder myO = new DalOrder();
+        DalOrderItem myOI = new DalOrderItem();
+
         #region Variables we will use in the next loop
         char choose;
         Product p = new Product();
@@ -218,6 +222,9 @@ c: category");
 
     static void subMenueOrder()
     {
+        //DalProduct myP = new DalProduct();
+        //DalOrder myO = new DalOrder();
+        //DalOrderItem myOI = new DalOrderItem();
         #region Variables we will use in the next loop
         Order ord = new Order();//for use in the next loop
         char choose;
@@ -255,7 +262,7 @@ c: category");
                     ord.Email = Console.ReadLine();
                     ord.ShippingAddress = Console.ReadLine();
 
-                    if(!DateTime.TryParse(Console.ReadLine(),out dt))
+                    if (!DateTime.TryParse(Console.ReadLine(), out dt))
                         throw new Exception("The conversion failed");
                     ord.DateOrder = dt;
 
@@ -275,7 +282,7 @@ c: category");
                     #region print order by id
                     Console.WriteLine("enter the the ID of the order: ");
 
-                    if(!int.TryParse(Console.ReadLine(),out id))
+                    if (!int.TryParse(Console.ReadLine(), out id))
                         throw new Exception("The conversion failed");
 
                     ord = myO.GetById(id);
@@ -362,7 +369,7 @@ d: delivery date");
                     #region delete order by id
                     Console.WriteLine("enter the the ID of the order you want delete: ");
 
-                    if(!int.TryParse(Console.ReadLine(),out id))
+                    if (!int.TryParse(Console.ReadLine(), out id))
                         throw new Exception("The conversion failed");
 
                     myO.Delete(id);
@@ -376,6 +383,9 @@ d: delivery date");
 
     static void subMenueOrderItem()
     {
+        //DalProduct myP = new DalProduct();
+        //DalOrder myO = new DalOrder();
+        //DalOrderItem myOI = new DalOrderItem();
         #region print menue for order item and user choose
         Console.WriteLine(@"Choose the action you want:
     a: add a new OrderItem
@@ -391,7 +401,7 @@ d: delivery date");
         #endregion
 
         OrderItem OI = new();//for use in the next loop
-        int id,idOrder,idProduct, numOfItem;
+        int id, idOrder, idProduct, numOfItem;
         double price;
 
         while (choose != 'f')
@@ -528,6 +538,7 @@ f: to finish the update");
 
     static void printCategories()
     {
+
         Console.WriteLine(@"Choose a category by the number:
  1: mystery
  2: fantasy
@@ -540,5 +551,5 @@ f: to finish the update");
 
     }
 
-    
+
 }

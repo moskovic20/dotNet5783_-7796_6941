@@ -3,14 +3,31 @@ using DalApi;
 
 namespace Dal;
 
-internal class DataSource
-{ 
+public class DataSource
+{
     static readonly Random R = new Random();
-    internal static DataSource s_instance { get; } = new DataSource();
+    //internal static DataSource s_instance { get; } = new DataSource();
 
-    internal List<Order?> _Orders { get; } = new List<Order?> ();
-    internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> ();
-    internal List<Product?> _Products { get; } = new List<Product?> ();
+    private static DataSource? instance;
+    private static readonly object key = new();
+
+    public static DataSource GetInstance()
+    {
+        if (instance == null)
+        {
+            lock (key)
+            {
+                if(instance==null)
+                    instance = new DataSource();
+            }
+        }
+
+        return instance;
+    }
+
+    internal List<Order?> _Orders { get; } = new List<Order?> { };
+    internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> { };
+    internal List<Product?> _Products { get; } = new List<Product?> { };
 
     internal static class Config
     {
@@ -24,7 +41,7 @@ internal class DataSource
 
     }
 
-    DataSource()
+    private DataSource()
     {
         s_Initialize();
     }
@@ -38,7 +55,7 @@ internal class DataSource
 
     private void CreateProducts()
     {
-        string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto", 
+        string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto",
             "Raspberry juice", "Tell no one","the candidate","Alone in the battle","the giver","Broken Heart" };
         string[] NamesOfWriters = { "jeik.r", "mor.s", "noaa.f", "gaie.g", "noi.a", "doni.j", "rom.k" };
 
@@ -50,9 +67,9 @@ internal class DataSource
                 ID = R.Next(100000, 999999999),
                 Price = R.Next(40, 150),
                 nameOfBook = NameOfBook[i],
-                authorName = NamesOfWriters[R.Next(0, 6)],
+                authorName = NamesOfWriters[R.Next(0, 7)],
                 Category = (Enums.CATEGORY)R.Next(0, 9),
-                InStock =(i!=0)? R.Next(20, 100):0
+                InStock = (i != 0) ? R.Next(20, 100) : 0
 
             };
 
@@ -67,7 +84,7 @@ internal class DataSource
             #endregion
 
             _Products.Add(myP);
-            
+
         }
     }
 
@@ -87,14 +104,14 @@ internal class DataSource
             Order myOrder = new Order
             {
                 ID = Config.NextOrderNumber,
-                DateOrder = DateTime.Now - new TimeSpan(R.Next(11,41),R.Next(24),R.Next(60),R.Next(60)),
-                NameCustomer = customerNames[R.Next(0, 21)],
-                ShippingAddress = address[R.Next(0, 21)],
+                DateOrder = DateTime.Now - new TimeSpan(R.Next(11, 41), R.Next(24), R.Next(60), R.Next(60)),
+                NameCustomer = customerNames[R.Next(0, 20)],
+                ShippingAddress = address[R.Next(0, 20)],
             };
 
             myOrder.Email = myOrder.NameCustomer + "@gmail.com";
 
-            myOrder.ShippingDate = (i<16) ?  myOrder.DateOrder - new TimeSpan(R.Next(6,11),R.Next(24), R.Next(6), R.Next(60)):null;
+            myOrder.ShippingDate = (i < 16) ? myOrder.DateOrder - new TimeSpan(R.Next(6, 11), R.Next(24), R.Next(6), R.Next(60)) : null;
             myOrder.DeliveryDate = (i < 10) ? myOrder.ShippingDate - new TimeSpan(R.Next(6), R.Next(24), R.Next(6), R.Next(60)) : null;
 
             _Orders.Add(myOrder);

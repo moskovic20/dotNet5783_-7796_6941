@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using static Do.Enums;
 using System.Diagnostics;
+using System;
 
 namespace Dal;
 
@@ -436,8 +437,9 @@ d: delivery date");
     c: get all the OrderItems
     d: update OrderItem
     e: delete OrderItem
+    f: get OrderItem by id of order and id of product
     
-    f: exit");
+    g: exit");
 
         choose = (char)Console.Read();
         Console.ReadLine();
@@ -567,6 +569,20 @@ f: to finish the update");
                         break;
 
                     case 'f':
+                        #region Get OrderItem by Order and Product ID
+                        int OId, PId;
+                        Console.WriteLine("enter the id of the Order number corresponding to the product id: ");
+                        if (!int.TryParse(Console.ReadLine(), out OId))
+                            throw new Exception("The conversion failed");
+                        if (!int.TryParse(Console.ReadLine(), out PId))
+                            throw new Exception("The conversion failed");
+
+                        OI = myOI.GetByOrdetIDProductID(OId, PId);
+                        Console.WriteLine(OI);
+                        break;
+                        #endregion
+
+                    case 'g':
                         break;
 
                     default:
@@ -579,7 +595,7 @@ f: to finish the update");
                 Console.WriteLine(e.Message);
             }
         }
-        while (choose != 'f') ;
+        while (choose != 'g') ;
     }
 
     static void printCategories()

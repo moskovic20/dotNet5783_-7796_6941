@@ -19,7 +19,7 @@ internal class Program
         do
         {
             Console.WriteLine(@"Select one of the following data entities:
-    0: exit""
+    0: exit
     1: product
     2: order
     3: orderItem");
@@ -119,7 +119,8 @@ internal class Program
 
                         p.Category = (Enums.CATEGORY)category;
 
-                        myP.Add(p);
+                        id=myP.Add(p);
+                        Console.WriteLine("\n the id of this product is: {0}\n",id);
 
                         break;
                     #endregion
@@ -197,6 +198,8 @@ c: category");
                                         throw new Exception("The conversion failed");
 
                                     p.Category = (Enums.CATEGORY)category;
+                                    break;
+                                case 'e':
                                     break;
 
                                 default:
@@ -450,7 +453,7 @@ d: delivery date");
                     case 'a':
                         #region add new orderItem.input details from the user
 
-                        Console.WriteLine(@"Enter book's order details:id,IdOfOrder,IdOfProduct,priceOfOneItem and amountOfItem ");
+                        Console.WriteLine(@"Enter book's order details: IdOfOrder ,IdOfProduct and amountOfItem ");
 
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
@@ -464,17 +467,13 @@ d: delivery date");
                             throw new Exception("The conversion failed");
                         OI.IdOfProduct = idProduct;
 
-                        if (!double.TryParse(Console.ReadLine(), out price))
-                            throw new Exception("The conversion failed");
-
-                        OI.priceOfOneItem = price;
-
                         if (!int.TryParse(Console.ReadLine(), out numOfItem))
                             throw new Exception("The conversion failed");
 
                         OI.amountOfItem = numOfItem;
 
-                        myOI.Add(OI);
+                        id=myOI.Add(OI);
+                        Console.WriteLine("\n the id of this ordrr item is:{0}\n",id);
                         break;
                     #endregion
 

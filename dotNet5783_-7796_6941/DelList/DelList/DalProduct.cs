@@ -6,8 +6,10 @@ namespace Dal;
 
 public class DalProduct : IProduct
 {
+    
     DataSource _DS = DataSource.GetInstance();
 
+    
     public int Add(Product P)
     {
         Random random = new Random();

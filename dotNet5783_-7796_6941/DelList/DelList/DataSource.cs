@@ -59,7 +59,6 @@ public class DataSource
             "Raspberry juice", "Tell no one","the candidate","Alone in the battle","the giver","Broken Heart" };
         string[] NamesOfWriters = { "jeik.r", "mor.s", "noaa.f", "gaie.g", "noi.a", "doni.j", "rom.k" };
 
-
         for (int i = 0; i < 10; i++)
         {
             Product myP = new Product

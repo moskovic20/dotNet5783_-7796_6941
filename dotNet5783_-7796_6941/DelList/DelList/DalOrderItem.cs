@@ -19,7 +19,7 @@ public class DalOrderItem : IOrderItem
             return myOrderItem.ID;
         }
 
-        if (_DS._OrderItems[indexOfMyOrderItem].IsDeleted != true)
+        if (_DS._OrderItems[indexOfMyOrderItem].IsDeleted == false)
             throw new Exception("The order item you wish to add is already exists");
 
         _DS._OrderItems.Add(myOrderItem);

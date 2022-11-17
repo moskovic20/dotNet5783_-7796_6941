@@ -53,8 +53,9 @@ public struct Order
 
 
     public override string ToString() => $@"
-	Order ID : {ID}, 
-	Name Customer : {NameCustomer}
+
+    Order ID : {ID}, 
+    Name Customer : {NameCustomer}
     Customer email : {Email}
     Send the order to: {ShippingAddress}
     The order was made on : {DateOrder}

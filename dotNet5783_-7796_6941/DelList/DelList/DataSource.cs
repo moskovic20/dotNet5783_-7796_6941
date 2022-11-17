@@ -25,9 +25,9 @@ public class DataSource
         return instance;
     }
 
-    internal List<Order?> _Orders { get; } = new List<Order?> { };
-    internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> { };
-    internal List<Product?> _Products { get; } = new List<Product?> { };
+    internal List<Order>? _Orders { get; } = new List<Order> { };
+    internal List<OrderItem>? _OrderItems { get; } = new List<OrderItem> { };
+    internal List<Product>? _Products { get; } = new List<Product> { };
 
     internal static class Config
     {
@@ -69,17 +69,18 @@ public class DataSource
                 nameOfBook = NameOfBook[i],
                 authorName = NamesOfWriters[R.Next(0, 7)],
                 Category = (Enums.CATEGORY)R.Next(0, 9),
-                InStock = (i != 0) ? R.Next(20, 100) : 0
+                InStock = (i != 0) ? R.Next(20, 100) : 0,
+                IsDeleted = null;
 
             };
 
             #region Makes sure id is unique
-            int pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
+            int pWithTheSameId = _Products.FindIndex(x => x.ID == myP.ID);
 
             while (pWithTheSameId != -1)//To make sure this ID is unique.
             {
                 myP.ID = R.Next(100000, 999999999);
-                pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
+                pWithTheSameId = _Products.FindIndex(x => x.ID == myP.ID);
             }
             #endregion
 
@@ -107,12 +108,13 @@ public class DataSource
                 DateOrder = DateTime.Now - new TimeSpan(R.Next(11, 41), R.Next(24), R.Next(60), R.Next(60)),
                 NameCustomer = customerNames[R.Next(0, 20)],
                 ShippingAddress = address[R.Next(0, 20)],
+                IsDeleted = null
             };
 
             myOrder.Email = myOrder.NameCustomer + "@gmail.com";
 
-            myOrder.ShippingDate = (i < 16) ? myOrder.DateOrder - new TimeSpan(R.Next(6, 11), R.Next(24), R.Next(6), R.Next(60)) : null;
-            myOrder.DeliveryDate = (i < 10) ? myOrder.ShippingDate - new TimeSpan(R.Next(6), R.Next(24), R.Next(6), R.Next(60)) : null;
+            myOrder.ShippingDate = (i < 16) ? DateTime.Now - new TimeSpan(R.Next(6, 11), R.Next(24), R.Next(6), R.Next(60)) : null;
+            myOrder.DeliveryDate = (i < 10) ? DateTime.Now - new TimeSpan(R.Next(6), R.Next(24), R.Next(6), R.Next(60)) : null;
 
             _Orders.Add(myOrder);
         }

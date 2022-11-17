@@ -1,11 +1,12 @@
 ﻿using DalApi;
 using Do;
+using System.Collections.Generic;
 
 namespace Dal;
 
 public class DalProduct : IProduct
 {
-    DataSource _DS = DataSource.s_instance;
+    DataSource _DS = DataSource.GetInstance();
 
     public int Add(Product P)
     {
@@ -52,11 +53,14 @@ public class DalProduct : IProduct
 
     public IEnumerable<Product> GetAll()
     {
-        if (_DS._Products.FirstOrDefault() == null)
-            throw new Exception("there is not any product");
+        //if (_DS._Products.FirstOrDefault() == null)
+        //    throw new Exception("there is not any product");
 
-        IEnumerable<Product?> allProduct = _DS._Products.FindAll(x => true);
-        return (IEnumerable<Product>)allProduct;
+        List<Product?> temp = _DS._Products;
+        return (IEnumerable < Product > )temp;
+        
+        //IEnumerable<Product?> allProduct = _DS._Products.FindAll(x => true);
+        //return (IEnumerable<Product>)allProduct;
     }
 
     public Product GetById(int id)

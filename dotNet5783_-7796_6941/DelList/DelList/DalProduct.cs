@@ -65,10 +65,9 @@ public class DalProduct : IProduct
 
     public Product GetById(int id)
     {
-        Product? ProductById = _DS._Products.Find(x => x.ID == id
-                                                          && x.IsDeleted == false);
+        Product? ProductById = _DS._Products.Find(x => x.ID == id && x.IsDeleted == false);
 
-        if (ProductById == null)
+        if (ProductById.Value.ID == 0)
             throw new Exception("the product is not found");///ok?
 
         return (Product)ProductById;

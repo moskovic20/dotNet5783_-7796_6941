@@ -36,6 +36,8 @@ internal class Program
 
             switch (choice)
             {
+                case 0:
+                    break;
                 case 1:
                     subMenueProduct();
                     break;
@@ -217,6 +219,9 @@ c: category");
                             myP.Delete(id);
                         break;
                     #endregion
+
+                    case 'f':
+                        break;
 
                     default:
                         Console.WriteLine("ERROR");
@@ -559,6 +564,9 @@ f: to finish the update");
                         if (int.TryParse(Console.ReadLine(), out id))
                             myOI.Delete(id);
                         #endregion
+                        break;
+
+                    case 'f':
                         break;
 
                     default:

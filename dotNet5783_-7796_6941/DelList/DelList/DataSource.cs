@@ -69,7 +69,7 @@ public class DataSource
                 authorName = NamesOfWriters[R.Next(0, 7)],
                 Category = (Enums.CATEGORY)R.Next(0, 9),
                 InStock = (i != 0) ? R.Next(20, 100) : 0,
-                IsDeleted = null,
+                IsDeleted = null
 
             };
 
@@ -136,7 +136,6 @@ public class DataSource
 
             });
         }
-
 
     }
 }

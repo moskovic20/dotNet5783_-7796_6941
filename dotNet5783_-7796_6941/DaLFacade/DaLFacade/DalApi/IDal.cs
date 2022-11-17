@@ -1,6 +1,6 @@
 ﻿
-namespace DalApi
-{
+namespace DalApi;
+
     public interface IDal
     {
         IOrder Order { get; }
@@ -8,4 +8,4 @@ namespace DalApi
         IOrderItem OrderItem { get; }
 
     }
-}
+

@@ -25,13 +25,11 @@ public class DalOrderItem : IOrderItem
         _DS._OrderItems.Add(myOrderItem);
         return myOrderItem.ID;
 
-
-        throw new NotImplementedException();
     }
 
     public void Delete(int id)
     {
-        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x.ID == id);
+        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x.ID == id && x.IsDeleted!= true);  ///
 
         if (indexOfOItemById == -1)
             throw new Exception("The order item you wanted to delete is not found");
@@ -52,16 +50,15 @@ public class DalOrderItem : IOrderItem
         if (_DS._OrderItems == null)
             throw new Exception("there is not any orderItem");
 
-        IEnumerable<OrderItem>? allOrderItems = _DS._OrderItems.FindAll(x => true);
+        IEnumerable<OrderItem>? allOrderItems = _DS._OrderItems.FindAll(x => x.IsDeleted != true);
         return allOrderItems;
     }
 
     public OrderItem GetById(int id)
     {
-        OrderItem? OItem = _DS._OrderItems.Find(x => x.ID == id
-                                                  && x.IsDeleted == false);
+        OrderItem? OItem = _DS._OrderItems.Find(x => x.ID == id && x.IsDeleted != true); 
 
-        if (OItem == null)
+        if (OItem.Value.ID == 0)
             throw new Exception("The order item is not found");
 
         return (OrderItem)OItem;
@@ -79,5 +76,29 @@ public class DalOrderItem : IOrderItem
         }
         Delete(item.ID);
         Add(item);
+    }
+    public List<OrderItem> GetListByOrderID(int OrderID)
+    {
+        List<OrderItem>? list = new List<OrderItem>();
+
+        foreach (OrderItem OItem in _DS._OrderItems)
+        {
+            if (OItem.IdOfOrder == OrderID && OItem.IsDeleted != true)
+                list.Add(OItem);
+        }
+        if (list == null)
+                throw new Exception("The order items are not found or thr order is't exist");
+        return list;
+    }
+
+    public OrderItem GetByOrdetIDProductID(int OrderID, int ProductID)
+    {
+        OrderItem? OItem = _DS._OrderItems.Find(x => x.IdOfOrder == OrderID && x.IsDeleted != true && x.IdOfProduct== ProductID);
+
+        if (OItem == null)
+            throw new Exception("The order item is not found");
+
+        return (OrderItem)OItem;
+
     }
 }

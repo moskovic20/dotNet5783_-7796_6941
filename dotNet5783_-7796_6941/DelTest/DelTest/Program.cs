@@ -49,7 +49,7 @@ internal class Program
                     break;
 
                 default:
-                    Console.WriteLine("ErrorEventArgs");
+                    Console.WriteLine("ERROR");
                     break;
             }
 
@@ -253,6 +253,7 @@ c: category");
     f: exit");
 
             choose = (char)Console.Read();
+            Console.ReadLine();
             #endregion
 
             try
@@ -261,14 +262,13 @@ c: category");
                 {
                     case 'a':
                         #region add new order.input details from the user
-                        Console.WriteLine("Enter order details:id,name of costumer,email" +
+                        Console.WriteLine("Enter order details: name of costumer,email" +
                             ",address,creat order date,shipping date and delivery date");
-                        Console.ReadLine();
 
-                        if (!int.TryParse(Console.ReadLine(), out id))
-                            throw new Exception("The conversion failed");
-                        ord.ID = id;
-
+                        //if (!int.TryParse(Console.ReadLine(), out id))
+                        //    throw new Exception("The conversion failed");
+                        //ord.ID = id;
+                        ord.IsDeleted = null;
                         ord.NameCustomer = Console.ReadLine();
                         ord.Email = Console.ReadLine();
                         ord.ShippingAddress = Console.ReadLine();
@@ -285,19 +285,20 @@ c: category");
                             throw new Exception("The conversion failed");
                         ord.DeliveryDate = dt;
 
-                        myO.Add(ord);
+                        id=myO.Add(ord);
+                        Console.WriteLine("\n The id of this order will be :{0}\n",id);
                         break;
                     #endregion
 
                     case 'b':
                         #region print order by id
-                        Console.WriteLine("enter the the ID of the order: ");
-
+                        Console.WriteLine("enter the ID of the order: ");
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
                         ord = myO.GetById(id);
                         Console.WriteLine(ord);
+
                         break;
                     #endregion
 
@@ -305,7 +306,7 @@ c: category");
                         #region print all the order
                         IEnumerable<Order> allO = myO.GetAll();
                         foreach (Order order in allO)
-                            Console.WriteLine("\n" + order + "\n");
+                            Console.WriteLine(order);
                         break;
                     #endregion
 
@@ -320,8 +321,8 @@ c: category");
 
                         do
                         {
-                            Console.WriteLine(@"Which field do you want to update?
-e: exit
+                            Console.WriteLine("\n"+@"Which field do you want to update?
+e: end of update
 n: name of costumer
 m: email
 a: address
@@ -335,33 +336,42 @@ d: delivery date");
                             switch (choose)
                             {
                                 case 'n':
+                                    Console.WriteLine("enter the new name of customer:");
                                     ord.NameCustomer = Console.ReadLine();
                                     break;
 
                                 case 'm':
+                                    Console.WriteLine("enter the new email:");
                                     ord.Email = Console.ReadLine();
                                     break;
 
                                 case 'a':
+                                    Console.WriteLine("enter the new shipping address:");
                                     ord.ShippingAddress = Console.ReadLine();
                                     break;
 
                                 case 'c':
+                                    Console.WriteLine("enter the new date order:");
                                     if (!DateTime.TryParse(Console.ReadLine(), out dt))
                                         throw new Exception("The conversion failed");
                                     ord.DateOrder = dt;
                                     break;
 
                                 case 's':
+                                    Console.WriteLine("enter the new shipping date:");
                                     if (!DateTime.TryParse(Console.ReadLine(), out dt))
                                         throw new Exception("The conversion failed");
                                     ord.ShippingDate = dt;
                                     break;
 
                                 case 'd':
+                                    Console.WriteLine("enter the new delivery date:");
                                     if (!DateTime.TryParse(Console.ReadLine(), out dt))
                                         throw new Exception("The conversion failed");
                                     ord.DeliveryDate = dt;
+                                    break;
+
+                                case 'e':
                                     break;
 
                                 default:
@@ -385,7 +395,14 @@ d: delivery date");
 
                         myO.Delete(id);
                         break;
-                        #endregion
+                    #endregion
+
+                    case 'f':
+                        break;
+
+                    default:
+                        Console.WriteLine("ERROR");
+                        break;
                 }
             }
             catch(Exception e)

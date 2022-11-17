@@ -55,8 +55,7 @@ public class DalOrder : IOrder
 
     public Order GetById(int id)
     {
-        Order? myOrder = _DS._Orders.Find(x => x.ID == id
-                                                  && x.IsDeleted == null);
+        Order? myOrder = _DS._Orders.Find(x => x.ID == id && x.IsDeleted == null);
 
         if (myOrder.Value.ID==0)
             throw new Exception("The Order is not found\n");

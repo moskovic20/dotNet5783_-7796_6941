@@ -44,6 +44,7 @@ public struct Product
 
         Product ID: {ID } 
         Book title: {nameOfBook}
+        The author: {authorName}
         Category: {Category}
         Price: {Price}
         Number of books in stock: {InStock}

@@ -59,7 +59,6 @@ public class DataSource
             "Raspberry juice", "Tell no one","the candidate","Alone in the battle","the giver","Broken Heart" };
         string[] NamesOfWriters = { "jeik.r", "mor.s", "noaa.f", "gaie.g", "noi.a", "doni.j", "rom.k" };
 
-
         for (int i = 0; i < 10; i++)
         {
             Product myP = new Product
@@ -70,7 +69,7 @@ public class DataSource
                 authorName = NamesOfWriters[R.Next(0, 7)],
                 Category = (Enums.CATEGORY)R.Next(0, 9),
                 InStock = (i != 0) ? R.Next(20, 100) : 0,
-                IsDeleted = null;
+                IsDeleted = null,
 
             };
 

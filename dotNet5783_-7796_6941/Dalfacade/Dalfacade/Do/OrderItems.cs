@@ -33,7 +33,7 @@ public struct OrderItem
     /// <summary>
     /// Should this orderItem be considered deleted?
     /// </summary>
-    public bool IsDeleted { get; set; }
+    public bool? IsDeleted { get; set; }
 
     public override string ToString() => $@"
 	Ordered product ID : {ID}, 

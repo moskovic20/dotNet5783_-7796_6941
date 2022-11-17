@@ -6,8 +6,10 @@ namespace Dal;
 
 public class DalProduct : IProduct
 {
+    
     DataSource _DS = DataSource.GetInstance();
 
+    
     public int Add(Product P)
     {
         Random random = new Random();
@@ -63,8 +65,8 @@ public class DalProduct : IProduct
 
     public Product GetById(int id)
     {
-        Product? ProductById = _DS._Products.Find(x => x.GetValueOrDefault().ID == id
-                                                          && x.GetValueOrDefault().IsDeleted == false);
+        Product? ProductById = _DS._Products.Find(x => x.ID == id
+                                                          && x.IsDeleted == false);
 
         if (ProductById == null)
             throw new Exception("the product is not found");///ok?
@@ -88,7 +90,7 @@ public class DalProduct : IProduct
 
     private bool IdIsFound(int myID)
     {
-        int indexOfSameId = _DS._Products.FindIndex(x => x.GetValueOrDefault().ID == myID);
+        int indexOfSameId = _DS._Products.FindIndex(x => x.ID == myID);
 
         if (indexOfSameId == -1)
             return true;

@@ -26,7 +26,7 @@ public class DataSource
     }
 
     internal List<Order?> _Orders { get; } = new List<Order?> { };
-    internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> { };
+    internal List<OrderItem> _OrderItems { get; } = new List<OrderItem> { };
     internal List<Product?> _Products { get; } = new List<Product?> { };
 
     internal static class Config

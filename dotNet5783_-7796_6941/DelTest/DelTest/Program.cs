@@ -426,6 +426,7 @@ d: delivery date");
         int id, idOrder, idProduct, numOfItem;
         double price;
         char choose;
+        List<OrderItem>? listOrderItems = new List<OrderItem>();
         #endregion
 
         do
@@ -438,8 +439,8 @@ d: delivery date");
     d: update OrderItem
     e: delete OrderItem
     f: get OrderItem by id of order and id of product
-    
-    g: exit");
+    g: get list of all the items in requested order
+    h: exit");
 
         choose = (char)Console.Read();
         Console.ReadLine();
@@ -508,8 +509,9 @@ d: delivery date");
                             throw new Exception("The conversion failed");
 
                         OI = myOI.GetById(id);
-
-                        Console.WriteLine(@"Which field do you want to update?
+                        do
+                        {
+                            Console.WriteLine(@"Which field do you want to update?
 o: IdOfOrder
 d: IdOfProduct
 p: price
@@ -517,42 +519,43 @@ m: amount
 
 f: to finish the update");
 
-                        choose = (char)Console.Read(); //id,IdOfOrder,IdOfProduct,priceOfOneItem and amountOfItem
-                        Console.ReadLine();
+                            choose = (char)Console.Read(); //id,IdOfOrder,IdOfProduct,priceOfOneItem and amountOfItem
+                            Console.ReadLine();
 
-                        while (choose != 'f')
-                        {
-                            switch (choose)
+
                             {
-                                case 'o':
-                                    if (!int.TryParse(Console.ReadLine(), out idOrder))
-                                        throw new Exception("The conversion failed");
-                                    OI.IdOfOrder = idOrder;
-                                    break;
+                                switch (choose)
+                                {
+                                    case 'o':
+                                        if (!int.TryParse(Console.ReadLine(), out idOrder))
+                                            throw new Exception("The conversion failed");
+                                        OI.IdOfOrder = idOrder;
+                                        break;
 
-                                case 'd':
-                                    if (!int.TryParse(Console.ReadLine(), out idProduct))
-                                        throw new Exception("The conversion failed");
-                                    OI.IdOfProduct = idProduct;
-                                    break;
+                                    case 'd':
+                                        if (!int.TryParse(Console.ReadLine(), out idProduct))
+                                            throw new Exception("The conversion failed");
+                                        OI.IdOfProduct = idProduct;
+                                        break;
 
-                                case 'p':
-                                    if (!double.TryParse(Console.ReadLine(), out price))
-                                        throw new Exception("The conversion failed");
-                                    OI.priceOfOneItem = price;
-                                    break;
+                                    case 'p':
+                                        if (!double.TryParse(Console.ReadLine(), out price))
+                                            throw new Exception("The conversion failed");
+                                        OI.priceOfOneItem = price;
+                                        break;
 
-                                case 'm':
-                                    if (!int.TryParse(Console.ReadLine(), out numOfItem))
-                                        throw new Exception("The conversion failed");
-                                    OI.amountOfItem = numOfItem;
-                                    break;
+                                    case 'm':
+                                        if (!int.TryParse(Console.ReadLine(), out numOfItem))
+                                            throw new Exception("The conversion failed");
+                                        OI.amountOfItem = numOfItem;
+                                        break;
 
-                                default:
-                                    Console.WriteLine("ERROR");
-                                    break;
+                                    default:
+                                        Console.WriteLine("ERROR");
+                                        break;
+                                }
                             }
-                        }
+                        } while (choose != 'f');
 
                         myOI.Update(OI);
 
@@ -570,19 +573,30 @@ f: to finish the update");
 
                     case 'f':
                         #region Get OrderItem by Order and Product ID
-                        int OId, PId;
+                       
                         Console.WriteLine("enter the id of the Order number corresponding to the product id: ");
-                        if (!int.TryParse(Console.ReadLine(), out OId))
+                        if (!int.TryParse(Console.ReadLine(), out idOrder))
                             throw new Exception("The conversion failed");
-                        if (!int.TryParse(Console.ReadLine(), out PId))
+                        if (!int.TryParse(Console.ReadLine(), out idProduct))
                             throw new Exception("The conversion failed");
 
-                        OI = myOI.GetByOrdetIDProductID(OId, PId);
+                        OI = myOI.GetByOrdetIDProductID(idOrder, idProduct);
                         Console.WriteLine(OI);
                         break;
-                        #endregion
+                    #endregion
 
                     case 'g':
+
+                        Console.WriteLine("enter the id of Order for the list of all his items: ");
+                        if (!int.TryParse(Console.ReadLine(), out idOrder))
+                            throw new Exception("The conversion failed");
+
+                        listOrderItems = myOI.GetListByOrderID(idOrder);
+                        Console.WriteLine(listOrderItems);
+
+                        break;
+
+                    case 'h':
                         break;
 
                     default:
@@ -595,7 +609,7 @@ f: to finish the update");
                 Console.WriteLine(e.Message);
             }
         }
-        while (choose != 'g') ;
+        while (choose != 'h') ;
     }
 
     static void printCategories()

@@ -87,7 +87,7 @@ public class DalOrderItem : IOrderItem
                 list.Add(OItem);
         }
         if (list == null)
-                throw new Exception("The order items are not found or thr order is't exist");
+                throw new Exception("The items are not found or thr order is't exist");
         return list;
     }
 

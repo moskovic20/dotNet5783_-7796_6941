@@ -442,7 +442,7 @@ d: delivery date");
     d: update OrderItem
     e: delete OrderItem
     f: get OrderItem by id of order and id of product
-    g: get list of all the items in requested order
+    g: get all the items in requested order
     
     h: exit");
 
@@ -573,14 +573,13 @@ d: to finish the update");
 
                     case 'f':
                         #region Get OrderItem by Order and Product ID
-                       
                         Console.WriteLine("enter the id of the Order number corresponding to the product id: ");
                         if (!int.TryParse(Console.ReadLine(), out idOrder))
                             throw new Exception("The conversion failed");
                         if (!int.TryParse(Console.ReadLine(), out idProduct))
                             throw new Exception("The conversion failed");
 
-                        OI = myOI.GetByOrdetIDProductID(idOrder, idProduct);
+                        OI = myOI.GetByOrderIDProductID(idOrder, idProduct);
                         Console.WriteLine(OI);
                         break;
                     #endregion

@@ -40,7 +40,7 @@ public struct OrderItem
 	Order ID : {IdOfOrder}
     Product ID : {IdOfProduct}
     Price of one item : {priceOfOneItem}
-    the amount of items : {amountOfItem}
+    The amount of items : {amountOfItem}
 	";
   
 }

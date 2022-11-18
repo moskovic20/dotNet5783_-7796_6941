@@ -457,9 +457,9 @@ d: delivery date");
 
                         Console.WriteLine(@"Enter book's order details: IdOfOrder ,IdOfProduct and amountOfItem ");
 
-                        if (!int.TryParse(Console.ReadLine(), out id))
-                            throw new Exception("The conversion failed");
-                        OI.ID = id;
+                        //if (!int.TryParse(Console.ReadLine(), out id))
+                        //    throw new Exception("The conversion failed");
+                        //OI.ID = id;
 
                         if (!int.TryParse(Console.ReadLine(), out idOrder))
                             throw new Exception("The conversion failed");
@@ -576,7 +576,7 @@ f: to finish the update");
                         if (!int.TryParse(Console.ReadLine(), out PId))
                             throw new Exception("The conversion failed");
 
-                        OI = myOI.GetByOrdetIDProductID(OId, PId);
+                        OI = myOI.GetByOrderIDProductID(OId, PId);
                         Console.WriteLine(OI);
                         break;
                         #endregion

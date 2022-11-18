@@ -20,7 +20,7 @@ internal class Program
         do
         {
             Console.WriteLine(@"Select one of the following data entities:
-    0: exit""
+    0: exit
     1: product
     2: order
     3: orderItem");
@@ -120,7 +120,8 @@ internal class Program
 
                         p.Category = (Enums.CATEGORY)category;
 
-                        myP.Add(p);
+                        id=myP.Add(p);
+                        Console.WriteLine("\n the id of this product is: {0}\n",id);
 
                         break;
                     #endregion
@@ -198,6 +199,8 @@ c: category");
                                         throw new Exception("The conversion failed");
 
                                     p.Category = (Enums.CATEGORY)category;
+                                    break;
+                                case 'e':
                                     break;
 
                                 default:
@@ -424,7 +427,7 @@ d: delivery date");
         #region Variables we will use in the next loop
         OrderItem OI = new();//for use in the next loop
         int id, idOrder, idProduct, numOfItem;
-        double price;
+        //double price;
         char choose;
         List<OrderItem>? listOrderItems = new List<OrderItem>();
         #endregion
@@ -440,6 +443,7 @@ d: delivery date");
     e: delete OrderItem
     f: get OrderItem by id of order and id of product
     g: get list of all the items in requested order
+    
     h: exit");
 
         choose = (char)Console.Read();
@@ -453,11 +457,11 @@ d: delivery date");
                     case 'a':
                         #region add new orderItem.input details from the user
 
-                        Console.WriteLine(@"Enter book's order details:id,IdOfOrder,IdOfProduct,priceOfOneItem and amountOfItem ");
+                        Console.WriteLine(@"Enter book's order details: IdOfOrder ,IdOfProduct and amountOfItem ");
 
-                        if (!int.TryParse(Console.ReadLine(), out id))
-                            throw new Exception("The conversion failed");
-                        OI.ID = id;
+                        //if (!int.TryParse(Console.ReadLine(), out id))
+                        //    throw new Exception("The conversion failed");
+                        //OI.ID = id;
 
                         if (!int.TryParse(Console.ReadLine(), out idOrder))
                             throw new Exception("The conversion failed");
@@ -467,17 +471,13 @@ d: delivery date");
                             throw new Exception("The conversion failed");
                         OI.IdOfProduct = idProduct;
 
-                        if (!double.TryParse(Console.ReadLine(), out price))
-                            throw new Exception("The conversion failed");
-
-                        OI.priceOfOneItem = price;
-
                         if (!int.TryParse(Console.ReadLine(), out numOfItem))
                             throw new Exception("The conversion failed");
 
                         OI.amountOfItem = numOfItem;
 
-                        myOI.Add(OI);
+                        id=myOI.Add(OI);
+                        Console.WriteLine("\n the id of this ordrr item is:{0}\n",id);
                         break;
                     #endregion
 
@@ -509,53 +509,53 @@ d: delivery date");
                             throw new Exception("The conversion failed");
 
                         OI = myOI.GetById(id);
+
                         do
                         {
                             Console.WriteLine(@"Which field do you want to update?
-o: IdOfOrder
-d: IdOfProduct
-p: price
-m: amount
+a: IdOfOrder
+b: IdOfProduct
+c: amount
 
-f: to finish the update");
+d: to finish the update");
 
                             choose = (char)Console.Read(); //id,IdOfOrder,IdOfProduct,priceOfOneItem and amountOfItem
                             Console.ReadLine();
 
 
+
+                            switch (choose)
                             {
-                                switch (choose)
-                                {
-                                    case 'o':
-                                        if (!int.TryParse(Console.ReadLine(), out idOrder))
-                                            throw new Exception("The conversion failed");
-                                        OI.IdOfOrder = idOrder;
-                                        break;
+                                case 'a':
+                                    Console.WriteLine("enter the new ID: ");
+                                    if (!int.TryParse(Console.ReadLine(), out idOrder))
+                                        throw new Exception("The conversion failed");
+                                    OI.IdOfOrder = idOrder;
+                                    break;
 
-                                    case 'd':
-                                        if (!int.TryParse(Console.ReadLine(), out idProduct))
-                                            throw new Exception("The conversion failed");
-                                        OI.IdOfProduct = idProduct;
-                                        break;
+                                case 'b':
+                                    Console.WriteLine("enter the new ID: ");
+                                    if (!int.TryParse(Console.ReadLine(), out idProduct))
+                                        throw new Exception("The conversion failed");
+                                    OI.IdOfProduct = idProduct;
+                                    break;
 
-                                    case 'p':
-                                        if (!double.TryParse(Console.ReadLine(), out price))
-                                            throw new Exception("The conversion failed");
-                                        OI.priceOfOneItem = price;
-                                        break;
+                                case 'c':
+                                    Console.WriteLine("enter the new amount: ");
+                                    if (!int.TryParse(Console.ReadLine(), out numOfItem))
+                                        throw new Exception("The conversion failed");
+                                    OI.amountOfItem = numOfItem;
+                                    break;
 
-                                    case 'm':
-                                        if (!int.TryParse(Console.ReadLine(), out numOfItem))
-                                            throw new Exception("The conversion failed");
-                                        OI.amountOfItem = numOfItem;
-                                        break;
+                                case 'd':
+                                    break;
 
-                                    default:
-                                        Console.WriteLine("ERROR");
-                                        break;
-                                }
+                                default:
+                                    Console.WriteLine("ERROR");
+                                    break;
                             }
-                        } while (choose != 'f');
+                        }
+                        while (choose != 'd');
 
                         myOI.Update(OI);
 
@@ -586,14 +586,19 @@ f: to finish the update");
                     #endregion
 
                     case 'g':
+                        #region give all the products in a specific order
+                        Console.WriteLine("\nenter id of order: ");
 
-                        Console.WriteLine("enter the id of Order for the list of all his items: ");
-                        if (!int.TryParse(Console.ReadLine(), out idOrder))
+                        if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
-                        listOrderItems = myOI.GetListByOrderID(idOrder);
-                        Console.WriteLine(listOrderItems);
+                        OI.ID = id;
 
+                        listOrderItems = myOI.GetListByOrderID(id);
+                        foreach (OrderItem item in listOrderItems)
+                            Console.WriteLine("\n"+item);
+
+                        #endregion
                         break;
 
                     case 'h':

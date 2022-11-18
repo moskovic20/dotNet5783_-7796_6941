@@ -16,6 +16,6 @@ public interface IOrderItem : ICrud<OrderItem>
     /// <param name="OrderID"></param>
     /// <param name="ProductID"></param>
     /// <returns></returns>
-    public OrderItem GetByOrdetIDProductID(int OrderID, int ProductID);
+    public OrderItem GetByOrderIDProductID(int OrderID, int ProductID);
 
 }

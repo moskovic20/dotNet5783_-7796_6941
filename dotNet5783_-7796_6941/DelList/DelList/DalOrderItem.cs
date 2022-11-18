@@ -77,23 +77,25 @@ public class DalOrderItem : IOrderItem
         Delete(item.ID);
         Add(item);
     }
+
     public List<OrderItem> GetListByOrderID(int OrderID)
     {
         List<OrderItem>? list = new List<OrderItem>();
 
         foreach (OrderItem OItem in _DS._OrderItems)
         {
-            if (OItem.IdOfOrder == OrderID && OItem.IsDeleted != true)
+            if (OItem.IdOfOrder == OrderID && OItem.IsDeleted !=true)
                 list.Add(OItem);
         }
         if (list == null)
-                throw new Exception("The items are not found or thr order is't exist");
+                throw new Exception("The order items are not found or this order is't exist");
         return list;
     }
 
-    public OrderItem GetByOrdetIDProductID(int OrderID, int ProductID)
+    public OrderItem GetByOrderIDProductID(int OrderID, int ProductID)
     {
-        OrderItem? OItem = _DS._OrderItems.Find(x => x.IdOfOrder == OrderID && x.IsDeleted != true && x.IdOfProduct== ProductID);
+        OrderItem? OItem = _DS._OrderItems.Find(x => x.IdOfOrder == OrderID && 
+                                        x.IsDeleted != true && x.IdOfProduct== ProductID);
 
         if (OItem == null)
             throw new Exception("The order item is not found");

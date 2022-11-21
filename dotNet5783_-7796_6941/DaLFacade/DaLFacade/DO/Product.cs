@@ -38,7 +38,7 @@ public struct Product
     /// <summary>
     /// for correct delitions in DalList classes
     /// </summary>
-    public bool? IsDeleted{get; set;}
+    public bool IsDeleted{get; set;}
 
 
     public override string ToString() => $@"

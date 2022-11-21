@@ -277,7 +277,7 @@ c: category");
                         //if (!int.TryParse(Console.ReadLine(), out id))
                         //    throw new Exception("The conversion failed");
                         //ord.ID = id;
-                        ord.IsDeleted = null;
+                        
                         ord.NameCustomer = Console.ReadLine();
                         ord.Email = Console.ReadLine();
                         ord.ShippingAddress = Console.ReadLine();

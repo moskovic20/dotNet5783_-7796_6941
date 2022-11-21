@@ -49,7 +49,7 @@ public struct Order
     /// Has the order been deleted?
     /// האם ההזמנה נמחקה ממאגר הרשימות
     /// </summary>
-    public bool? IsDeleted { get; set; }
+    public bool IsDeleted { get; set; }
 
 
     public override string ToString() => $@"

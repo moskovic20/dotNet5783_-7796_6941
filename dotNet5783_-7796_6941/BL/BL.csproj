@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<BaseOutputPath>$(SolutionDir)\bin\</BaseOutputPath>
+	<OutputPath>$(SolutionDir)\bin\</OutputPath>
+	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+    <RootNamespace />
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="BlApi\" />
+    <Folder Include="BlImplementation\" />
+    <Folder Include="BO\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DaLFacade\DaLFacade\Dalfacade.csproj" />
+    <ProjectReference Include="..\DelList\DelList\DalList.csproj" />
+  </ItemGroup>
+
+</Project>

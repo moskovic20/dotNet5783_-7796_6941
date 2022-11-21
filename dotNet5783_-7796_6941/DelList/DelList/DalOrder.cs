@@ -9,7 +9,9 @@ public class DalOrder : IOrder
 
     public int Add(Order myOrder)
     {
-        int indexOfMyOrder = _DS._Orders.FindIndex(x => x.ID == myOrder.ID);
+        myOrder.IsDeleted = false;
+
+        int indexOfMyOrder = _DS._Orders.FindIndex(x => x.GetValueOrDefault().ID == myOrder.ID);
 
         if (indexOfMyOrder == -1) //myOrder.ID is not found in _OrderS
         {
@@ -18,7 +20,7 @@ public class DalOrder : IOrder
             return myOrder.ID;
         }
 
-        if (_DS._Orders[indexOfMyOrder].IsDeleted == false)
+        if (_DS._Orders[indexOfMyOrder].GetValueOrDefault().IsDeleted == false)
             throw new Exception("The order you wish to add is already exists\n");
 
         _DS._Orders.Add(myOrder);
@@ -28,13 +30,14 @@ public class DalOrder : IOrder
 
     public void Delete(int id)
     {
-        int indexOfOrderById = _DS._Orders.FindIndex(x => x.ID == id&& x.IsDeleted==null);
+        int indexOfOrderById = _DS._Orders.FindIndex(x => x.GetValueOrDefault().ID
+                                    == id&& x.GetValueOrDefault().IsDeleted==false);
 
         if (indexOfOrderById == -1)
             throw new Exception("The order you wanted to delete is not found\n");
 
 
-        Order myOrder = _DS._Orders[indexOfOrderById];
+        Order myOrder = _DS._Orders[indexOfOrderById].GetValueOrDefault();
 
         if (myOrder.IsDeleted ==true)
             throw new Exception("The order you wanted to delete has already been deleted\n");
@@ -49,15 +52,15 @@ public class DalOrder : IOrder
         if (_DS._Orders == null)
             throw new Exception("there is not any orders");
 
-        IEnumerable<Order>? allOrders = _DS._Orders.FindAll(x=>x.IsDeleted==null);
+        IEnumerable<Order> allOrders = (IEnumerable<Order>)_DS._Orders.FindAll(x=>x.GetValueOrDefault().IsDeleted==false);
         return allOrders;
     }
 
     public Order GetById(int id)
     {
-        Order? myOrder = _DS._Orders.Find(x => x.ID == id && x.IsDeleted == null);
+        Order? myOrder = _DS._Orders.Find(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted == false);
 
-        if (myOrder.Value.ID==0)
+        if (myOrder.GetValueOrDefault().ID==0)
             throw new Exception("The Order is not found\n");
 
         return (Order)myOrder;

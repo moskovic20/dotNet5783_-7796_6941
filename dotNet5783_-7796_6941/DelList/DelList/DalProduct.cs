@@ -12,8 +12,9 @@ public class DalProduct : IProduct
     
     public int Add(Product P)
     {
+        P.IsDeleted = false;
         Random random = new Random();
-        int indexOfMyP = _DS._Products.FindIndex(x => x.ID == P.ID);
+        int indexOfMyP = _DS._Products.FindIndex(x => x.GetValueOrDefault().ID == P.ID);
 
         if (indexOfMyP == -1) //this product is not found in the data
         {
@@ -26,7 +27,7 @@ public class DalProduct : IProduct
             return P.ID;
         }
 
-        if (_DS._Products[indexOfMyP].IsDeleted != true)
+        if (_DS._Products[indexOfMyP].GetValueOrDefault().IsDeleted != true)
             throw new Exception("The product you wish to add is already exists");
 
         _DS._Products.Add(P);
@@ -36,15 +37,15 @@ public class DalProduct : IProduct
 
     public void Delete(int id)
     {
-        int getIdOfProduct = _DS._Products.FindIndex(x => x.ID == id&& x.IsDeleted!=true);
+        int getIdOfProduct = _DS._Products.FindIndex(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted != true);
 
-        if (getIdOfProduct > 0)
+        if (getIdOfProduct != -1)
         {
-            if (_DS._Products[getIdOfProduct].IsDeleted == true)
+            if (_DS._Products[getIdOfProduct].GetValueOrDefault().IsDeleted == true)
                 throw new Exception("the product doesn't exist");
             else
             {
-                Product ChangingStatusOfProductIsdeleted = _DS._Products[getIdOfProduct];
+                Product ChangingStatusOfProductIsdeleted = _DS._Products[getIdOfProduct].GetValueOrDefault();
                 ChangingStatusOfProductIsdeleted.IsDeleted = true;
                 _DS._Products[getIdOfProduct] = ChangingStatusOfProductIsdeleted;
             }
@@ -59,15 +60,17 @@ public class DalProduct : IProduct
         if (_DS._Products == null)
             throw new Exception("there is not any products");
 
-        IEnumerable<Product>? allProducts = _DS._Products.FindAll(x => x.IsDeleted != true );
+        IEnumerable<Product> allProducts = (IEnumerable<Product>)_DS._Products.FindAll(x => x.GetValueOrDefault()
+                                            .IsDeleted != true);
         return allProducts;
     }
 
     public Product GetById(int id)
     {
-        Product? ProductById = _DS._Products.Find(x => x.ID == id && x.IsDeleted != true);
+        Product? ProductById = _DS._Products.Find(x => x.GetValueOrDefault().ID == 
+                                                        id && x.GetValueOrDefault().IsDeleted != true);
 
-        if (ProductById.Value.ID == 0)
+        if (ProductById.GetValueOrDefault().ID == 0)
             throw new Exception("the product is not found");///ok?
 
         return (Product)ProductById;
@@ -89,7 +92,7 @@ public class DalProduct : IProduct
 
     private bool IdIsFound(int myID)
     {
-        int indexOfSameId = _DS._Products.FindIndex(x => x.ID == myID);
+        int indexOfSameId = _DS._Products.FindIndex(x => x.GetValueOrDefault().ID == myID);
 
         if (indexOfSameId == -1)
             return true;

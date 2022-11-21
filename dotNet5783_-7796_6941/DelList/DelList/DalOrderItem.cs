@@ -9,8 +9,9 @@ public class DalOrderItem : IOrderItem
 
     public int Add(OrderItem myOrderItem)
     {
+        myOrderItem.IsDeleted = false;
 
-        int indexOfMyOrderItem = _DS._OrderItems.FindIndex(x => x.ID == myOrderItem.ID);
+        int indexOfMyOrderItem = _DS._OrderItems.FindIndex(x => x.GetValueOrDefault().ID == myOrderItem.ID);
 
         if (indexOfMyOrderItem == -1) //myOrderItem.ID is not found in _OrderItems
         {
@@ -19,7 +20,7 @@ public class DalOrderItem : IOrderItem
             return myOrderItem.ID;
         }
 
-        if (_DS._OrderItems[indexOfMyOrderItem].IsDeleted == false)
+        if (_DS._OrderItems[indexOfMyOrderItem].GetValueOrDefault().IsDeleted == false)
             throw new Exception("The order item you wish to add is already exists");
 
         _DS._OrderItems.Add(myOrderItem);
@@ -29,13 +30,13 @@ public class DalOrderItem : IOrderItem
 
     public void Delete(int id)
     {
-        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x.ID == id && x.IsDeleted!= true);  ///
+        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted!= true);  ///
 
         if (indexOfOItemById == -1)
             throw new Exception("The order item you wanted to delete is not found");
 
 
-        OrderItem myOItem = _DS._OrderItems[indexOfOItemById];
+        OrderItem myOItem = _DS._OrderItems[indexOfOItemById].GetValueOrDefault();
 
         if (myOItem.IsDeleted == true)
             throw new Exception("The order item you wanted to delete has already been deleted");
@@ -50,15 +51,16 @@ public class DalOrderItem : IOrderItem
         if (_DS._OrderItems == null)
             throw new Exception("there is not any orderItem");
 
-        IEnumerable<OrderItem>? allOrderItems = _DS._OrderItems.FindAll(x => x.IsDeleted != true);
+        IEnumerable<OrderItem> allOrderItems = (IEnumerable<OrderItem>)_DS._OrderItems.FindAll(x => x.GetValueOrDefault().IsDeleted != true);
         return allOrderItems;
     }
 
     public OrderItem GetById(int id)
     {
-        OrderItem? OItem = _DS._OrderItems.Find(x => x.ID == id && x.IsDeleted != true); 
+        OrderItem? OItem = _DS._OrderItems.Find(x => x.GetValueOrDefault().ID == 
+                                                      id && x.GetValueOrDefault().IsDeleted != true); 
 
-        if (OItem.Value.ID == 0)
+        if (OItem.GetValueOrDefault().ID == 0)
             throw new Exception("The order item is not found");
 
         return (OrderItem)OItem;
@@ -80,7 +82,7 @@ public class DalOrderItem : IOrderItem
 
     public List<OrderItem> GetListByOrderID(int OrderID)
     {
-        List<OrderItem>? list = new List<OrderItem>();
+        List<OrderItem> list = new List<OrderItem>();
 
         foreach (OrderItem OItem in _DS._OrderItems)
         {
@@ -94,8 +96,8 @@ public class DalOrderItem : IOrderItem
 
     public OrderItem GetByOrderIDProductID(int OrderID, int ProductID)
     {
-        OrderItem? OItem = _DS._OrderItems.Find(x => x.IdOfOrder == OrderID && 
-                                        x.IsDeleted != true && x.IdOfProduct== ProductID);
+        OrderItem? OItem = _DS._OrderItems.Find(x => x.GetValueOrDefault().ID == OrderID && 
+                     x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfProduct== ProductID);
 
         if (OItem == null)
             throw new Exception("The order item is not found");

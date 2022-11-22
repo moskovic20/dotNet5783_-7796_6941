@@ -38,7 +38,12 @@ public struct Product
     /// <summary>
     /// for correct delitions in DalList classes
     /// </summary>
-    public bool? IsDeleted{get; set;}
+    public bool IsDeleted { get; set; }
+
+    /// <summary>
+    /// Path for product image
+    /// </summary>
+    public string? pathToImage { get; set; }
 
 
     public override string ToString() => $@"

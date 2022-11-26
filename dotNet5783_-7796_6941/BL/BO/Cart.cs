@@ -4,9 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace BO;
+
+public class Cart
 {
-    internal class Cart
-    {
-    }
+    public string? CustomerName { get; set;}
+
+    public string? CustomerEmail { get; set;}
+
+    public int? CustomerAddress { get; set;}
+
+    public OrderItem? Items { get; set;}
+
+    public double?  TotalPrice { get; set;}
 }

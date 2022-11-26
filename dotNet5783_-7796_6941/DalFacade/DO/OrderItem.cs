@@ -1,5 +1,10 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-﻿ namespace Do;
+namespace Do;
 /// <summary>
 /// structor for ditales of this item to relate the products to his ordet
 /// </summary>
@@ -23,7 +28,7 @@ public struct OrderItem
     /// <summary>
     /// price of this current item on store
     /// </summary>
-    public double ? priceOfOneItem { get; set; }
+    public double? priceOfOneItem { get; set; }
 
     /// <summary>
     /// number of this book in the order
@@ -42,6 +47,6 @@ public struct OrderItem
     Price of one item : {priceOfOneItem}
     The amount of items : {amountOfItem}
 	";
-  
+
 }
 

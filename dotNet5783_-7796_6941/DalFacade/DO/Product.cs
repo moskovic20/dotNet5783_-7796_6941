@@ -1,4 +1,11 @@
-﻿namespace Do;
+﻿using DO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Do;
 
 /// <summary>
 /// structor for all kinds of structors in our book stor
@@ -23,7 +30,7 @@ public struct Product
     /// <summary>
     /// for category of this book or other items 
     /// </summary>
-    public Enums.CATEGORY? Category { get; set; }
+    public CATEGORY? Category { get; set; }
 
     /// <summary>
     /// price of this product
@@ -33,7 +40,7 @@ public struct Product
     /// <summary>
     /// Number of books in stock
     /// </summary>
-    public int? InStock{get; set;}
+    public int? InStock { get; set; }
 
     /// <summary>
     /// for correct delitions in DalList classes
@@ -41,22 +48,19 @@ public struct Product
     public bool IsDeleted { get; set; }
 
     /// <summary>
-    /// Path for product image
+    /// Path for image to product
     /// </summary>
-    public string? pathToImage { get; set; }
+    public string? path { get; set; }
 
 
     public override string ToString() => $@"
-
-        Product ID: {ID } 
+        Product ID: {ID} 
         Book title: {nameOfBook}
         The author: {authorName}
         Category: {Category}
         Price: {Price}
         Number of books in stock: {InStock}
-
 "
     ;
-        
-}
 
+}

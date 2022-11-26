@@ -8,7 +8,7 @@ public interface IOrderItem : ICrud<OrderItem>
     /// </summary>
     /// <param name="OrderID"></param>
     /// <returns></returns>
-    public List<OrderItem> GetListByOrderID(int OrderID); 
+    public List<OrderItem> GetListByOrderID(int OrderID);
 
     /// <summary>
     /// find OrderItem by data of his OrderID and ProductID

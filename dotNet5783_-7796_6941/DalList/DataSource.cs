@@ -1,5 +1,6 @@
 ﻿using Do;
 using DalApi;
+using DO;
 
 namespace Dal;
 
@@ -17,7 +18,7 @@ public class DataSource
         {
             lock (key)
             {
-                if(instance==null)
+                if (instance == null)
                     instance = new DataSource();
             }
         }

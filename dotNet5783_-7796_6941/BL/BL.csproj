@@ -7,20 +7,19 @@
 	<BaseOutputPath>$(SolutionDir)\bin\</BaseOutputPath>
 	<OutputPath>$(SolutionDir)\bin\</OutputPath>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
-    <RootNamespace />
+	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+	<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+	<RootNamespace />
 
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="BlApi\" />
-    <Folder Include="BlImplementation\" />
+    <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
+    <ProjectReference Include="..\DalList\DalList.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DaLFacade\DaLFacade\Dalfacade.csproj" />
-    <ProjectReference Include="..\DelList\DelList\DalList.csproj" />
+    <Folder Include="BlImplementation\" />
   </ItemGroup>
 
 </Project>

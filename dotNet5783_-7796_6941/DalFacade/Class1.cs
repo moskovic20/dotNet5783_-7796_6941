@@ -1,4 +1,4 @@
-﻿namespace BlApi
+﻿namespace DalFacade
 {
     public class Class1
     {

@@ -2,9 +2,9 @@
 using DalApi;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using static Do.Enums;
 using System.Diagnostics;
 using System;
+using DO;
 
 namespace Dal;
 
@@ -16,7 +16,7 @@ internal class Program
 
     static void Main(string[] arg)
     {
-        int choice=4;
+        int choice = 4;
         do
         {
             Console.WriteLine(@"Select one of the following data entities:
@@ -30,7 +30,7 @@ internal class Program
                 if (!int.TryParse(Console.ReadLine(), out choice))
                     throw new Exception("The conversion failed");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -118,10 +118,10 @@ internal class Program
                         if (!int.TryParse(Console.ReadLine(), out category))
                             throw new Exception("The conversion failed");
 
-                        p.Category = (Enums.CATEGORY)category;
+                        p.Category = (CATEGORY)category;
 
-                        id=myP.Add(p);
-                        Console.WriteLine("\n the id of this product is: {0}\n",id);
+                        id = myP.Add(p);
+                        Console.WriteLine("\n the id of this product is: {0}\n", id);
 
                         break;
                     #endregion
@@ -198,7 +198,7 @@ c: category");
                                     if (!int.TryParse(Console.ReadLine(), out category))
                                         throw new Exception("The conversion failed");
 
-                                    p.Category = (Enums.CATEGORY)category;
+                                    p.Category = (CATEGORY)category;
                                     break;
                                 case 'e':
                                     break;
@@ -277,7 +277,7 @@ c: category");
                         //if (!int.TryParse(Console.ReadLine(), out id))
                         //    throw new Exception("The conversion failed");
                         //ord.ID = id;
-                        
+
                         ord.NameCustomer = Console.ReadLine();
                         ord.Email = Console.ReadLine();
                         ord.ShippingAddress = Console.ReadLine();
@@ -294,8 +294,8 @@ c: category");
                             throw new Exception("The conversion failed");
                         ord.DeliveryDate = dt;
 
-                        id=myO.Add(ord);
-                        Console.WriteLine("\n The id of this order will be :{0}\n",id);
+                        id = myO.Add(ord);
+                        Console.WriteLine("\n The id of this order will be :{0}\n", id);
                         break;
                     #endregion
 
@@ -330,7 +330,7 @@ c: category");
 
                         do
                         {
-                            Console.WriteLine("\n"+@"Which field do you want to update?
+                            Console.WriteLine("\n" + @"Which field do you want to update?
 e: end of update
 n: name of costumer
 m: email
@@ -414,7 +414,7 @@ d: delivery date");
                         break;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
@@ -435,7 +435,7 @@ d: delivery date");
         do
         {
             #region print menue for order item and user choose
-        Console.WriteLine(@"Choose the action you want:
+            Console.WriteLine(@"Choose the action you want:
     a: add a new OrderItem
     b: get OrderItem by id
     c: get all the OrderItems
@@ -446,8 +446,8 @@ d: delivery date");
     
     h: exit");
 
-        choose = (char)Console.Read();
-        Console.ReadLine();
+            choose = (char)Console.Read();
+            Console.ReadLine();
             #endregion
 
             try
@@ -476,8 +476,8 @@ d: delivery date");
 
                         OI.amountOfItem = numOfItem;
 
-                        id=myOI.Add(OI);
-                        Console.WriteLine("\n the id of this ordrr item is:{0}\n",id);
+                        id = myOI.Add(OI);
+                        Console.WriteLine("\n the id of this ordrr item is:{0}\n", id);
                         break;
                     #endregion
 
@@ -516,7 +516,6 @@ d: delivery date");
 a: IdOfOrder
 b: IdOfProduct
 c: amount
-
 d: to finish the update");
 
                             choose = (char)Console.Read(); //id,IdOfOrder,IdOfProduct,priceOfOneItem and amountOfItem
@@ -595,7 +594,7 @@ d: to finish the update");
 
                         listOrderItems = myOI.GetListByOrderID(id);
                         foreach (OrderItem item in listOrderItems)
-                            Console.WriteLine("\n"+item);
+                            Console.WriteLine("\n" + item);
 
                         #endregion
                         break;
@@ -613,7 +612,7 @@ d: to finish the update");
                 Console.WriteLine(e.Message);
             }
         }
-        while (choose != 'h') ;
+        while (choose != 'h');
     }
 
     static void printCategories()

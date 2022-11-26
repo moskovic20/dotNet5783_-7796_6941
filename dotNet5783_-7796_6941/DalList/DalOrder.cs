@@ -31,7 +31,7 @@ public class DalOrder : IOrder
     public void Delete(int id)
     {
         int indexOfOrderById = _DS._Orders.FindIndex(x => x.GetValueOrDefault().ID
-                                    == id&& x.GetValueOrDefault().IsDeleted==false);
+                                    == id && x.GetValueOrDefault().IsDeleted == false);
 
         if (indexOfOrderById == -1)
             throw new Exception("The order you wanted to delete is not found\n");
@@ -39,7 +39,7 @@ public class DalOrder : IOrder
 
         Order myOrder = _DS._Orders[indexOfOrderById].GetValueOrDefault();
 
-        if (myOrder.IsDeleted ==true)
+        if (myOrder.IsDeleted == true)
             throw new Exception("The order you wanted to delete has already been deleted\n");
 
 
@@ -52,7 +52,7 @@ public class DalOrder : IOrder
         if (_DS._Orders == null)
             throw new Exception("there is not any orders");
 
-        IEnumerable<Order> allOrders = (IEnumerable<Order>)_DS._Orders.FindAll(x=>x.GetValueOrDefault().IsDeleted==false);
+        IEnumerable<Order> allOrders = (IEnumerable<Order>)_DS._Orders.FindAll(x => x.GetValueOrDefault().IsDeleted == false);
         return allOrders;
     }
 
@@ -60,7 +60,7 @@ public class DalOrder : IOrder
     {
         Order? myOrder = _DS._Orders.Find(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted == false);
 
-        if (myOrder.GetValueOrDefault().ID==0)
+        if (myOrder.GetValueOrDefault().ID == 0)
             throw new Exception("The Order is not found\n");
 
         return (Order)myOrder;

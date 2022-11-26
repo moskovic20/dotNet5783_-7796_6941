@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace BO;
+
+public class OrderTracking
 {
-    internal class OrderTracking
-    {
-    }
+    public int OrderID { get; set; }
+
+    public OrderStatus Status { get; set; }
 }

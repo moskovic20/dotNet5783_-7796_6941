@@ -1,4 +1,9 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Do;
 
@@ -6,7 +11,7 @@ namespace Do;
 /// Structure for order that contains details about the customer
 /// and the items in the order.
 /// </summary>
-public struct Order 
+public struct Order
 {
     /// <summary>
     /// Unique identifier for order
@@ -53,7 +58,6 @@ public struct Order
 
 
     public override string ToString() => $@"
-
     Order ID : {ID}, 
     Name Customer : {NameCustomer}
     Customer email : {Email}

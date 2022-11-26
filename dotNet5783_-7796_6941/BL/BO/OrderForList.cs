@@ -4,9 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO
+namespace BO;
+
+public class OrderForList
 {
-    internal class OrderForList
-    {
-    }
+    public int OrderID { get; set; }
+
+    public string? CuustomerName { get; set; }
+
+    public OrderStatus Status { get; set; }
+
+    public int AmountOfItems { get; set; }
+
+    double TotalPrice { get; set; }
 }

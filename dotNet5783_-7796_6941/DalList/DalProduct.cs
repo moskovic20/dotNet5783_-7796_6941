@@ -1,4 +1,6 @@
-﻿using DalApi;
+﻿using Do;
+
+using DalApi;
 using Do;
 using System.Collections.Generic;
 
@@ -6,10 +8,10 @@ namespace Dal;
 
 public class DalProduct : IProduct
 {
-    
+
     DataSource _DS = DataSource.GetInstance();
 
-    
+
     public int Add(Product P)
     {
         P.IsDeleted = false;
@@ -67,7 +69,7 @@ public class DalProduct : IProduct
 
     public Product GetById(int id)
     {
-        Product? ProductById = _DS._Products.Find(x => x.GetValueOrDefault().ID == 
+        Product? ProductById = _DS._Products.Find(x => x.GetValueOrDefault().ID ==
                                                         id && x.GetValueOrDefault().IsDeleted != true);
 
         if (ProductById.GetValueOrDefault().ID == 0)

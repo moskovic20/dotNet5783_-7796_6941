@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using Do;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,11 @@ using System.Threading.Tasks;
 
 namespace Dal;
 
-sealed internal class DalList: IDal
+sealed internal class DalList : IDal
 {
     public IOrder Order => new DalOrder();
-    public IProduct Product=> new DalProduct();
-    public IOrderItem OrderItem=> new DalOrderItem();
+    public IProduct Product => new DalProduct();
+    public IOrderItem OrderItem => new DalOrderItem();
 
-    
+
 }
-

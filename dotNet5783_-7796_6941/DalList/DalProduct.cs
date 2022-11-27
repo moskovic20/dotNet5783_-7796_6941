@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Dal;
 
-public class DalProduct : IProduct
+internal class DalProduct : IProduct
 {
 
     DataSource _DS = DataSource.GetInstance();
@@ -30,7 +30,7 @@ public class DalProduct : IProduct
         }
 
         if (_DS._Products[indexOfMyP].GetValueOrDefault().IsDeleted != true)
-            throw new Exception("The product you wish to add is already exists");
+            throw new AlreadyExistException("The product you wish to add is already exists");
 
         _DS._Products.Add(P);
         return P.ID;
@@ -44,7 +44,7 @@ public class DalProduct : IProduct
         if (getIdOfProduct != -1)
         {
             if (_DS._Products[getIdOfProduct].GetValueOrDefault().IsDeleted == true)
-                throw new Exception("the product doesn't exist");
+                throw new NotFounfException("the product doesn't exist");
             else
             {
                 Product ChangingStatusOfProductIsdeleted = _DS._Products[getIdOfProduct].GetValueOrDefault();
@@ -53,14 +53,14 @@ public class DalProduct : IProduct
             }
         }
         else
-            throw new Exception("the product doesn't exist");
+            throw new NotFounfException("the product doesn't exist");
     }
 
     public IEnumerable<Product> GetAll()
     {
 
         if (_DS._Products == null)
-            throw new Exception("there is not any products");
+            throw new NotFounfException("there is not any products");
 
         IEnumerable<Product> allProducts = (IEnumerable<Product>)_DS._Products.FindAll(x => x.GetValueOrDefault()
                                             .IsDeleted != true);
@@ -73,7 +73,7 @@ public class DalProduct : IProduct
                                                         id && x.GetValueOrDefault().IsDeleted != true);
 
         if (ProductById.GetValueOrDefault().ID == 0)
-            throw new Exception("the product is not found");///ok?
+            throw new NotFounfException("the product is not found");///ok?
 
         return (Product)ProductById;
     }
@@ -86,7 +86,7 @@ public class DalProduct : IProduct
         }
         catch
         {
-            throw new Exception("the product can't be update because he doesn't exist");
+            throw new NotFounfException("the product can't be update because he doesn't exist");
         }
         Delete(item.ID);
         Add(item);

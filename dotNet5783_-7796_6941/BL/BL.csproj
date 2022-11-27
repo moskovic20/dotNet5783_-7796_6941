@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="BlImplementation\" />
+    <Folder Include="BlImplementation\" />
   </ItemGroup>
 
 </Project>

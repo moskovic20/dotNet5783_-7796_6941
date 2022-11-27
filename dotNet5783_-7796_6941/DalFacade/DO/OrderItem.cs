@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,13 +41,11 @@ public struct OrderItem
     /// </summary>
     public bool IsDeleted { get; set; }
 
-    public override string ToString() => $@"
-    Ordered product ID : {ID} 
-    Order ID : {IdOfOrder}
-    Product ID : {IdOfProduct}
-    Price of one item : {priceOfOneItem}
-    The amount of items : {amountOfItem}
-	";
+    public override string ToString()
+    {
+        return this.ToStringProperty();
+    }
+
 
 }
 

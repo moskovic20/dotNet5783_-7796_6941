@@ -4,7 +4,7 @@ using DalApi;
 
 namespace Dal;
 
-public class DalOrderItem : IOrderItem
+internal class DalOrderItem : IOrderItem
 {
     DataSource _DS = DataSource.GetInstance();
 

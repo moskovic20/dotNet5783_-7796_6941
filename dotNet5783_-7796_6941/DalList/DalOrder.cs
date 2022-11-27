@@ -3,7 +3,7 @@ using Do;
 
 namespace Dal;
 
-public class DalOrder : IOrder
+internal class DalOrder : IOrder
 {
     DataSource _DS = DataSource.GetInstance();
 
@@ -49,11 +49,13 @@ public class DalOrder : IOrder
 
     public IEnumerable<Order> GetAll()
     {
-        if (_DS._Orders == null)
-            throw new Exception("there is not any orders");
+        //if (_DS._Orders == null)
+        //    throw new Exception("there is not any orders");
 
-        IEnumerable<Order> allOrders = (IEnumerable<Order>)_DS._Orders.FindAll(x => x.GetValueOrDefault().IsDeleted == false);
-        return allOrders;
+        //IEnumerable<Order> allOrders = (IEnumerable<Order>)_DS._Orders.FindAll(x => x.GetValueOrDefault().IsDeleted == false);
+        //return allOrders;
+
+        return (IEnumerable<Order>)_DS._Orders;
     }
 
     public Order GetById(int id)

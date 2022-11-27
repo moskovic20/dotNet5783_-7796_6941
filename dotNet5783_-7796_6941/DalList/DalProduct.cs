@@ -1,12 +1,10 @@
 ﻿using Do;
-
 using DalApi;
-using Do;
 using System.Collections.Generic;
 
 namespace Dal;
 
-public class DalProduct : IProduct
+internal class DalProduct : IProduct
 {
 
     DataSource _DS = DataSource.GetInstance();

@@ -5,17 +5,21 @@ using System.Security.Cryptography;
 using System.Diagnostics;
 using System;
 using DO;
+using Dal;
+using System.Collections.Specialized;
 
 namespace Dal;
 
 internal class Program
 {
+
     public static DalProduct myP = new();
     public static DalOrder myO = new();
     public static DalOrderItem myOI = new();
 
     static void Main(string[] arg)
     {
+
         int choice = 4;
         do
         {
@@ -120,7 +124,8 @@ internal class Program
 
                         p.Category = (CATEGORY)category;
 
-                        id = myP.Add(p);
+                        //id = myP.Add(p);
+                        
                         Console.WriteLine("\n the id of this product is: {0}\n", id);
 
                         break;

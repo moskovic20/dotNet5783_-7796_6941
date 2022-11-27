@@ -53,14 +53,10 @@ public struct Product
     public string? path { get; set; }
 
 
-    public override string ToString() => $@"
-        Product ID: {ID} 
-        Book title: {nameOfBook}
-        The author: {authorName}
-        Category: {Category}
-        Price: {Price}
-        Number of books in stock: {InStock}
-"
-    ;
+    public override string ToString()
+    {
+        return this.ToStringProperty();
+    }
+
 
 }

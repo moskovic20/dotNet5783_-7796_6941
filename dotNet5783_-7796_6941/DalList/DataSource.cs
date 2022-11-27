@@ -1,6 +1,7 @@
 ﻿using Do;
 using DalApi;
 using DO;
+using Enums;
 
 namespace Dal;
 
@@ -68,7 +69,7 @@ public class DataSource
                 Price = R.Next(40, 150),
                 nameOfBook = NameOfBook[i],
                 authorName = NamesOfWriters[R.Next(0, 7)],
-                Category = (Enums.CATEGORY)R.Next(0, 9),
+                Category = (DO.CATEGORY) R.Next(0, 9),
                 InStock = (i != 0) ? R.Next(20, 100) : 0,
 
             };

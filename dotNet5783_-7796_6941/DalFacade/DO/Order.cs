@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -57,14 +58,9 @@ public struct Order
     public bool IsDeleted { get; set; }
 
 
-    public override string ToString() => $@"
-    Order ID : {ID}, 
-    Name Customer : {NameCustomer}
-    Customer email : {Email}
-    Send the order to: {ShippingAddress}
-    The order was made on : {DateOrder}
-    The shipment started on: {ShippingDate}
-    The shipment reached its destination on : {DeliveryDate}
-	";
+    public override string ToString()
+    {
+        return this.ToStringProperty();
+    }
 
 }

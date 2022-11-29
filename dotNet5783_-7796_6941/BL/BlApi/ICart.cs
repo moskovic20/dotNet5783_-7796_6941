@@ -2,6 +2,6 @@
 
 namespace BlApi;
 
-internal interface ICart
+public interface ICart
 {
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BlApi;
 
-internal interface IBl
+public interface IBl
 {
-    public ICart Cart { get; }
+    public ICart cart { get; }
     public IOrder Order { get; }
     public IProduct Product { get; }
 }

@@ -2,6 +2,7 @@
 
 namespace BlApi;
 
-internal interface IOrder
+public interface IOrder
 {
+    IEnumerable<OrderForList> GetAllOrderForList();
 }

@@ -47,15 +47,6 @@ internal class DalOrder : IOrder
         _DS._Orders[indexOfOrderById] = myOrder;
     }
 
-    public IEnumerable<Order> GetAll()
-    {
-        if (_DS._Orders == null)
-            throw new NotFounfException("there is not any orders");
-
-        //IEnumerable<Order> allOrders = (IEnumerable<Order>)_DS._Orders.FindAll(x => x.GetValueOrDefault().IsDeleted == false);
-        return (IEnumerable<Order>)_DS._Orders;
-    }
-
     public Order GetById(int id)
     {
         Order? myOrder = _DS._Orders.Find(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted == false);
@@ -79,5 +70,58 @@ internal class DalOrder : IOrder
 
         Delete(item.ID);
         Add(item);
+    }
+
+    public IEnumerable<Order> GetAll()
+    {
+        if (_DS._Orders == null)
+            throw new NotFounfException("there is not any orders");
+
+        return (IEnumerable<Order>)_DS._Orders;
+    }
+
+    /// <summary>
+    ///  הפונקציה מחזירה את כל רשימת המוצרים (כולל אלו שנמחקו) לפי פונקציית הסינון שמתקבלת
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFounfException"></exception>
+    public IEnumerable<Order?> GetAllBy(Func<Order?, bool>? filter = null)
+    {
+        if (filter == null)
+            return _DS._Orders;
+
+        var list = from item in _DS._Orders
+                   where filter(item)
+                   select item;
+
+        if (list.Count() == 0)
+            throw new NotFounfException("there is not any orders");
+
+        return list;
+    }
+
+
+    /// <summary>
+    /// הפונקציה מחזירה את כל רשימת המוצרים בהזמנות הקיימים, לפי פונקציית הסינון שמתקבלת
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    public IEnumerable<Order?> GetAllExistsBy(Func<Order?, bool>? filter = null)
+    {
+        if (filter == null)
+            return from item in _DS._Orders
+                    where item.Value.IsDeleted == false
+                    select item;
+
+        var list = from item in _DS._Orders
+                   where item.Value.IsDeleted == false
+                   where filter(item)
+                   select item;
+
+        if (list.Count() == 0)
+            throw new NotFounfException("there is not any orders");
+
+        return list;
     }
 }

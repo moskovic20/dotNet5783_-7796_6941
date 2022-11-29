@@ -16,4 +16,9 @@ public class ProductForList
     public double Price { get; set; }
 
     public BL_CATEGORY Category { get; set; }
+
+    public override string ToString()
+    {
+        return this.ToStringProperty();
+    }
 }

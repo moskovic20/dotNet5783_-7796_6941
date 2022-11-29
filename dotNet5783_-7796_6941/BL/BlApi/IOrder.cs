@@ -4,6 +4,5 @@ namespace BlApi;
 
 public interface IOrder
 {
-    //void Add(Order order);
-
+    IEnumerable<OrderForList> GetAllOrderForList();
 }

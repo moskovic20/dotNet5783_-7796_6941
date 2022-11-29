@@ -1,6 +1,7 @@
 ﻿using Do;
 using DalApi;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Dal;
 
@@ -54,17 +55,6 @@ internal class DalProduct : IProduct
             throw new NotFounfException("the product doesn't exist");
     }
 
-    public IEnumerable<Product> GetAll()
-    {
-
-        if (_DS._Products == null)
-            throw new NotFounfException("there is not any products");
-
-        IEnumerable<Product> allProducts = (IEnumerable<Product>)_DS._Products.FindAll(x => x.GetValueOrDefault()
-                                            .IsDeleted != true);
-        return allProducts;
-    }
-
     public Product GetById(int id)
     {
         Product? ProductById = _DS._Products.Find(x => x.GetValueOrDefault().ID ==
@@ -99,5 +89,58 @@ internal class DalProduct : IProduct
 
         else
             return false;
+    }
+
+    public IEnumerable<Product> GetAll()
+    {
+        if (_DS._Products == null)
+            throw new NotFounfException("there is not any products");
+
+        return (IEnumerable<Product>)_DS._Products;
+    }
+
+    /// <summary>
+    ///  הפונקציה מחזירה את כל רשימת המוצרים (כולל אלו שנמחקו) לפי פונקציית הסינון שמתקבלת
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFounfException"></exception>
+    public IEnumerable<Product?> GetAllBy(Func<Product?, bool>? filter = null)
+    {
+        if (filter == null)
+            return _DS._Products;
+
+        var list = from item in _DS._Products
+                   where filter(item)
+                   select item;
+
+        if (list.Count() == 0)
+            throw new NotFounfException("there is not any products");
+
+        return list;
+    }
+
+
+    /// <summary>
+    /// הפונקציה מחזירה את כל רשימת המוצרים הקיימים לפי פונקציית הסינון שמתקבלת
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    public IEnumerable<Product?> GetAllExistsBy(Func<Product?, bool>? filter = null)
+    {
+        if (filter == null)
+            return from item in _DS._Products
+                    where item.Value.IsDeleted == false
+                    select item;
+
+        var list = from item in _DS._Products
+                   where item.Value.IsDeleted == false
+                   where filter(item)
+                   select item;
+
+        if (list.Count() == 0)
+            throw new NotFounfException("there is not any products");
+
+        return list;
     }
 }

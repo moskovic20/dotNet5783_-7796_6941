@@ -11,4 +11,9 @@ public class OrderTracking
     public int OrderID { get; set; }
 
     public OrderStatus Status { get; set; }
+
+    public override string ToString()
+    {
+        return this.ToStringProperty();
+    }
 }

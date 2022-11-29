@@ -10,12 +10,9 @@ using System.Collections.Specialized;
 
 namespace Dal;
 
-internal class Program
+class Program
 {
-
-    public static DalProduct myP = new();
-    public static DalOrder myO = new();
-    public static DalOrderItem myOI = new();
+    static  IDal DL = new DalList();
 
     static void Main(string[] arg)
     {
@@ -138,7 +135,7 @@ internal class Program
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
-                        p = myP.GetById(id);
+                        p = DL.Product.GetById(id);
                         Console.WriteLine(p);
 
                         break;
@@ -146,7 +143,7 @@ internal class Program
 
                     case 'c':
                         #region print all the product
-                        IEnumerable<Product> allP = myP.GetAll();
+                        IEnumerable<Product> allP = DL.Product.GetAll();
                         foreach (Product product in allP)
                             Console.WriteLine("\n" + product + "\n");
                         break;
@@ -159,7 +156,7 @@ internal class Program
 
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
-                        p = myP.GetById(id);
+                        p = DL.Product.GetById(id);
 
                         do
                         {
@@ -215,7 +212,7 @@ c: category");
 
                         } while (choose != 'e');
 
-                        myP.Update(p);
+                        DL.Product.Update(p);
 
                         #endregion
                         break;
@@ -225,7 +222,7 @@ c: category");
                         Console.WriteLine("enter the the ID of the product you want delete: ");
 
                         if (int.TryParse(Console.ReadLine(), out id))
-                            myP.Delete(id);
+                            DL.Product.Delete(id);
                         break;
                     #endregion
 
@@ -299,7 +296,7 @@ c: category");
                             throw new Exception("The conversion failed");
                         ord.DeliveryDate = dt;
 
-                        id = myO.Add(ord);
+                        id = DL.Order.Add(ord);
                         Console.WriteLine("\n The id of this order will be :{0}\n", id);
                         break;
                     #endregion
@@ -310,7 +307,7 @@ c: category");
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
-                        ord = myO.GetById(id);
+                        ord = DL.Order.GetById(id);
                         Console.WriteLine(ord);
 
                         break;
@@ -318,7 +315,7 @@ c: category");
 
                     case 'c':
                         #region print all the order
-                        IEnumerable<Order> allO = myO.GetAll();
+                        IEnumerable<Order> allO = DL.Order.GetAll();
                         foreach (Order order in allO)
                             Console.WriteLine(order);
                         break;
@@ -331,7 +328,7 @@ c: category");
 
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
-                        ord = myO.GetById(id);
+                        ord = DL.Order.GetById(id);
 
                         do
                         {
@@ -395,7 +392,7 @@ d: delivery date");
 
                         } while (choose != 'e');
 
-                        myO.Update(ord);
+                        DL.Order.Update(ord);
 
                         #endregion
                         break;
@@ -407,7 +404,7 @@ d: delivery date");
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
-                        myO.Delete(id);
+                        DL.Order.Delete(id);
                         break;
                     #endregion
 
@@ -481,7 +478,7 @@ d: delivery date");
 
                         OI.amountOfItem = numOfItem;
 
-                        id = myOI.Add(OI);
+                        id = DL.OrderItem.Add(OI);
                         Console.WriteLine("\n the id of this ordrr item is:{0}\n", id);
                         break;
                     #endregion
@@ -492,14 +489,14 @@ d: delivery date");
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
-                        OI = myOI.GetById(id);
+                        OI = DL.OrderItem.GetById(id);
                         Console.WriteLine(OI);
                         break;
                     #endregion
 
                     case 'c':
                         #region print all the orderItem
-                        IEnumerable<OrderItem> allOI = myOI.GetAll();
+                        IEnumerable<OrderItem> allOI = DL.OrderItem.GetAll();
                         foreach (OrderItem Oitem in allOI)
                             Console.WriteLine("\n" + Oitem + "\n");
                         break;
@@ -513,7 +510,7 @@ d: delivery date");
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
-                        OI = myOI.GetById(id);
+                        OI = DL.OrderItem.GetById(id);
 
                         do
                         {
@@ -561,7 +558,7 @@ d: to finish the update");
                         }
                         while (choose != 'd');
 
-                        myOI.Update(OI);
+                        DL.OrderItem.Update(OI);
 
                         #endregion
                         break;
@@ -571,7 +568,7 @@ d: to finish the update");
                         Console.WriteLine("enter the the ID of the orderItem you want delete: ");
 
                         if (int.TryParse(Console.ReadLine(), out id))
-                            myOI.Delete(id);
+                            DL.OrderItem.Delete(id);
                         #endregion
                         break;
 
@@ -583,7 +580,7 @@ d: to finish the update");
                         if (!int.TryParse(Console.ReadLine(), out idProduct))
                             throw new Exception("The conversion failed");
 
-                        OI = myOI.GetByOrderIDProductID(idOrder, idProduct);
+                        OI = DL.OrderItem.GetByOrderIDProductID(idOrder, idProduct);
                         Console.WriteLine(OI);
                         break;
                     #endregion
@@ -597,7 +594,7 @@ d: to finish the update");
 
                         OI.ID = id;
 
-                        listOrderItems = myOI.GetListByOrderID(id);
+                        listOrderItems = DL.OrderItem.GetListByOrderID(id);
                         foreach (OrderItem item in listOrderItems)
                             Console.WriteLine("\n" + item);
 

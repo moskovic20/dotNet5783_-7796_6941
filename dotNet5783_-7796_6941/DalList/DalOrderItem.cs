@@ -1,6 +1,7 @@
 ﻿using Do;
 
 using DalApi;
+using System.Collections.Generic;
 
 namespace Dal;
 
@@ -47,15 +48,6 @@ internal class DalOrderItem : IOrderItem
         _DS._OrderItems[indexOfOItemById] = myOItem;
     }
 
-    public IEnumerable<OrderItem> GetAll()
-    {
-        if (_DS._OrderItems == null)
-            throw new NotFounfException("there is not any orderItem");
-
-       
-        return (IEnumerable<OrderItem>)_DS._OrderItems; //as IEnumerable<OrderItem>;
-    }
-
     public OrderItem GetById(int id)
     {
         OrderItem? OItem = _DS._OrderItems.Find(x => x.GetValueOrDefault().ID ==
@@ -83,7 +75,7 @@ internal class DalOrderItem : IOrderItem
 
     public List<OrderItem> GetListByOrderID(int OrderID)
     {
-        List<OrderItem> list = new List<OrderItem>();
+        List<OrderItem?> list = new List<OrderItem?>();
 
         //foreach (OrderItem OItem in _DS._OrderItems)
         //{
@@ -94,7 +86,8 @@ internal class DalOrderItem : IOrderItem
         list = _DS._OrderItems.FindAll(x => x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfOrder == OrderID);
         if (list == null)
             throw new NotFounfException("The order items are not found or this order is't exist");
-        return list;
+        //List<OrderItem> list1 = (List<OrderItem>)list;
+        return (List<OrderItem>)list;
     }
 
     public OrderItem GetByOrderIDProductID(int OrderID, int ProductID)
@@ -107,6 +100,59 @@ internal class DalOrderItem : IOrderItem
 
         return (OrderItem)OItem;
 
+    }
+
+    public IEnumerable<OrderItem> GetAll()
+    {
+        if (_DS._OrderItems == null)
+            throw new NotFounfException("there is not any order items");
+
+        return (IEnumerable<OrderItem>)_DS._OrderItems;
+    }
+
+    /// <summary>
+    ///  הפונקציה מחזירה את כל רשימת המוצרים (כולל אלו שנמחקו) לפי פונקציית הסינון שמתקבלת
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    /// <exception cref="NotFounfException"></exception>
+    public IEnumerable<OrderItem?> GetAllBy(Func<OrderItem?, bool>? filter = null)
+    {
+        if (filter == null)
+            return _DS._OrderItems;
+
+        var list = from item in _DS._OrderItems
+                   where filter(item)
+                   select item;
+
+        if (list.Count() == 0)
+            throw new NotFounfException("there is not any order items");
+
+        return list;
+    }
+
+
+    /// <summary>
+    /// הפונקציה מחזירה את כל רשימת המוצרים בהזמנות הקיימים, לפי פונקציית הסינון שמתקבלת
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    public IEnumerable<OrderItem?> GetAllExistsBy(Func<OrderItem?, bool>? filter = null)
+    {
+        if (filter == null)
+            return from item in _DS._OrderItems
+                   where item.Value.IsDeleted == false
+                   select item;
+
+        var list = from item in _DS._OrderItems
+                   where item.Value.IsDeleted == false
+                   where filter(item)
+                   select item;
+
+        if (list.Count() == 0)
+            throw new NotFounfException("there is not any order items");
+
+        return list;
     }
 }
 

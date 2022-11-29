@@ -16,4 +16,9 @@ public class Product
     public CATEGORY Category { get; set; }
 
     public int InStock { get; set; }
+
+    public override string ToString()
+    {
+        return this.ToStringProperty();
+    }
 }

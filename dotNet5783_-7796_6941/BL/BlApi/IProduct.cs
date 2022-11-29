@@ -2,6 +2,6 @@
 
 namespace BlApi;
 
-internal interface IProduct
+public interface IProduct
 {
 }

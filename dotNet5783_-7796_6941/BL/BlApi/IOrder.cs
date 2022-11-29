@@ -2,6 +2,8 @@
 
 namespace BlApi;
 
-internal interface IOrder
+public interface IOrder
 {
+    //void Add(Order order);
+
 }

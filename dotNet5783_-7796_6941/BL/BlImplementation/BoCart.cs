@@ -11,5 +11,5 @@ namespace BlImplementation;
 
 internal class BoCart: ICart
 {
-    private IDal dal = new Dal.DalList();
+    private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 }

@@ -11,9 +11,9 @@ namespace Dal;
 sealed internal class DalList : IDal
 {
     public static IDal Instance { get; } = new DalList();
-    private IOrder Order => new DalOrder();
-    private IProduct Product => new DalProduct();
-    private IOrderItem OrderItem => new DalOrderItem();
-
+    private DalList() { }
+    public IOrder Order => new DalOrder();
+    public IProduct Product => new DalProduct();
+    public IOrderItem OrderItem => new DalOrderItem();
 
 }

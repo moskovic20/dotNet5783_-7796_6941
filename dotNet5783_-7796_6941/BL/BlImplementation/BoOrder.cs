@@ -8,11 +8,12 @@ using DalApi;
 using BO;
 using Do;
 
+
 namespace BlImplementation;
 
 internal class BoOrder: IOrder
 {
-    private IDal Dal = new Dal.DalList();
+    private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
     IEnumerable<OrderForList> GetAllOrderForList()
     {
        // dal.DalOrder.GetAll()

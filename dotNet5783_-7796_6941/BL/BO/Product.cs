@@ -11,11 +11,16 @@ public class Product
 {
     public int ProductID { get; set; }
 
-    public double Price { get; set; }
+    /// <summary>
+    ///  Unique identifier for item
+    /// </summary>
+    public string? name { get; set; }
 
-    public CATEGORY Category { get; set; }
+    public double? Price { get; set; }
 
-    public int InStock { get; set; }
+    public CATEGORY? Category { get; set; }
+
+    public int? InStock { get; set; }
 
     public override string ToString()
     {

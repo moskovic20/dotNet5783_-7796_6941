@@ -13,9 +13,9 @@ public class ProductForList
 
     public string? Name { get; set; }
 
-    public double Price { get; set; }
+    public double? Price { get; set; }
 
-    public BL_CATEGORY Category { get; set; }
+    public BL_CATEGORY? Category { get; set; }
 
     public override string ToString()
     {

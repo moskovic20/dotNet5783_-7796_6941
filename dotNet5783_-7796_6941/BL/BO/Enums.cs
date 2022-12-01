@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-public enum OrderStatus { Pending =1, Processing , Completed }
+public enum OrderStatus { Pending = 1 /*ממתין ל*/ , Processing /*מעבד*/ , Completed /*הושלם*/ }
 
 public enum BL_CATEGORY
 {

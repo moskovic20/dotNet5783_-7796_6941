@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
+using DalApi;
+using BO;
+using Do;
 
 
 namespace BlImplementation;
@@ -11,4 +14,37 @@ namespace BlImplementation;
 internal class BoOrder: IOrder
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
+    IEnumerable<OrderForList> GetAllOrderForList()
+    {
+       // dal.DalOrder.GetAll()
+       var orderList = from O in Dal.Order.GetAllExistsBy()
+                       select new OrderForList()
+                       {
+                           OrderID = O.GetValueOrDefault().ID,
+                           CuustomerName= O.GetValueOrDefault().NameCustomer,
+                           Status= O.GetValueOrDefault().
+
+                       };
+    }
+    BO.Order GetOrdertByID(int id)
+    {
+
+    }
+    BO.Order UpdateOrderShipping(int id)
+    {
+
+    }
+    BO.Order UpdateOrderDelivery(int id)
+    {
+
+    }
+    OrderTracking GetOrderTracking(int id)
+    {
+
+    }
+    void UpdateOrder(int id)
+    {
+
+    }
+
 }

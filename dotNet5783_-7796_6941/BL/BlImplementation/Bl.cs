@@ -3,7 +3,7 @@ using BO;
 
 namespace BlImplementation;
 
-internal class Bl: IBl
+sealed public class Bl : IBl
 {
 
     public static IBl Instance { get; } = new Bl();

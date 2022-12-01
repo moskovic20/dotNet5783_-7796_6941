@@ -73,21 +73,15 @@ internal class DalOrderItem : IOrderItem
         Add(item);
     }
 
-    public List<OrderItem> GetListByOrderID(int OrderID)
+    public List<OrderItem?> GetListByOrderID(int OrderID)
     {
         List<OrderItem?> list = new List<OrderItem?>();
-
-        //foreach (OrderItem OItem in _DS._OrderItems)
-        //{
-        //    if (OItem.IdOfOrder == OrderID && OItem.IsDeleted != true)
-        //        list.Add(OItem);
-        //}
 
         list = _DS._OrderItems.FindAll(x => x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfOrder == OrderID);
         if (list == null)
             throw new NotFounfException("The order items are not found or this order is't exist");
-        //List<OrderItem> list1 = (List<OrderItem>)list;
-        return (List<OrderItem>)list;
+       
+        return list;
     }
 
     public OrderItem GetByOrderIDProductID(int OrderID, int ProductID)

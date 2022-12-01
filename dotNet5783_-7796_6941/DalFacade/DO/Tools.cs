@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DalApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -24,4 +25,5 @@ public static class Tools
             str += "\n" + item.Name + ": " + item.GetValue(t, null);
         return str;
     }
+
 }

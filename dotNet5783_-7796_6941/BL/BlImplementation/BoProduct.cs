@@ -15,19 +15,26 @@ internal class BoProduct: IProduct
 
     IEnumerable<ProductForList> GetAllProductForList()
     {
-        var products = from P in dal.Product.GetAllExistsBy()
-                       select new ProductForList()
-                       {
-                           ProductID = P.GetValueOrDefault().ID,
-                           Name=P.GetValueOrDefault().nameOfBook,
-                           Price=P.GetValueOrDefault().Price,
-                           Category= (BL_CATEGORY?)P.GetValueOrDefault().Category
-                       };
+        try
+        {
+            var products = from P in dal.Product.GetAllExistsBy()
+                           select new ProductForList()
+                           {
+                               ProductID = P.GetValueOrDefault().ID,
+                               Name = P.GetValueOrDefault().nameOfBook,
+                               Price = P.GetValueOrDefault().Price,
+                               Category = (BL_CATEGORY?)P.GetValueOrDefault().Category
+                           };
 
-        if (products.Count() == 0)
-            throw new Exception();//חריגה של- אין מוצרים,לעדכןןןןן
+            if (products.Count() == 0)
+                throw new Exception();//חריגה של- אין מוצרים,לעדכןןןןן
+            return products;
+        }
+        catch (Exception ex/* string mes*/)
+        {
 
-        return products;
+        }
+       
     }
 
     BO.Product GetProductByID(int id)

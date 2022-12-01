@@ -10,13 +10,13 @@ namespace BO;
 public class ProductItem
 {
 
-    public int ProductID { get; set; }
+    public int ID { get; set; }
 
     public string? Name { get; set; }
 
-    public double Price { get; set; }
+    public double? Price { get; set; }
 
-    public BL_CATEGORY Category { get; set; }
+    public BL_CATEGORY? Category { get; set; }
 
     /// <summary>
     /// The amount of the product in the customer's shopping cart.

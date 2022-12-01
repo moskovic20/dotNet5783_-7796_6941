@@ -43,7 +43,7 @@ internal class DalProduct : IProduct
         if (getIdOfProduct != -1)
         {
             if (_DS._Products[getIdOfProduct].GetValueOrDefault().IsDeleted == true)
-                throw new NotFounfException("the product doesn't exist");
+                throw new DoesntExistException("the product doesn't exist");
             else
             {
                 Product ChangingStatusOfProductIsdeleted = _DS._Products[getIdOfProduct].GetValueOrDefault();
@@ -52,32 +52,34 @@ internal class DalProduct : IProduct
             }
         }
         else
-            throw new NotFounfException("the product doesn't exist");
+            throw new DoesntExistException("the product doesn't exist");
     }
 
-    public Product GetById(int id)
+    public Product? GetById(int id)
     {
         Product? ProductById = _DS._Products.Find(x => x.GetValueOrDefault().ID ==
                                                         id && x.GetValueOrDefault().IsDeleted != true);
 
         if (ProductById.GetValueOrDefault().ID == 0)
-            throw new NotFounfException("the product is not found");///ok?
+            throw new DoesntExistException("the product is not found");///ok?
 
-        return (Product)ProductById;
+        return ProductById;
     }
 
-    public void Update(Product item)
+    public void Update(Product? item)
     {
+        if (item == null)
+            return;
         try
         {
-            GetById(item.ID);
+            GetById(item.GetValueOrDefault().ID);
         }
         catch
         {
-            throw new NotFounfException("the product can't be update because he doesn't exist");
+            throw new DoesntExistException("the product can't be update because he doesn't exist");
         }
-        Delete(item.ID);
-        Add(item);
+        Delete(item.GetValueOrDefault().ID);
+        Add((Product)item);
     }
 
     private bool IdIsFound(int myID)
@@ -94,7 +96,7 @@ internal class DalProduct : IProduct
     public IEnumerable<Product> GetAll()
     {
         if (_DS._Products == null)
-            throw new NotFounfException("there is not any products");
+            throw new DoesntExistException("there is not any products");
 
         return (IEnumerable<Product>)_DS._Products;
     }
@@ -115,7 +117,7 @@ internal class DalProduct : IProduct
                    select item;
 
         if (list.Count() == 0)
-            throw new NotFounfException("there is not any products");
+            throw new DoesntExistException("there is not any products");
 
         return list;
     }
@@ -137,9 +139,6 @@ internal class DalProduct : IProduct
                    where item.Value.IsDeleted == false
                    where filter(item)
                    select item;
-
-        if (list.Count() == 0)
-            throw new NotFounfException("there is not any products");
 
         return list;
     }

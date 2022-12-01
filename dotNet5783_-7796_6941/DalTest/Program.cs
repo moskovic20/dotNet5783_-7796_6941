@@ -12,7 +12,7 @@ namespace Dal;
 
 class Program
 {
-    static  IDal DL = new DalList();
+    static private DalApi.IDal DL = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
     static void Main(string[] arg)
     {
@@ -101,8 +101,8 @@ class Program
 
                         p.ID = id;
 
-                        p.nameOfBook = Console.ReadLine();
-                        p.authorName = Console.ReadLine();
+                        p.NameOfBook = Console.ReadLine();
+                        p.AuthorName = Console.ReadLine();
 
                         if (!double.TryParse(Console.ReadLine(), out price))
                             throw new Exception("The conversion failed");
@@ -174,11 +174,11 @@ c: category");
                             switch (choose)
                             {
                                 case 't':
-                                    p.nameOfBook = Console.ReadLine();
+                                    p.NameOfBook = Console.ReadLine();
                                     break;
 
                                 case 'a':
-                                    p.authorName = Console.ReadLine();
+                                    p.AuthorName = Console.ReadLine();
                                     break;
 
                                 case 'p':

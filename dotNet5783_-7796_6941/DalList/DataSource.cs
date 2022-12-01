@@ -66,8 +66,8 @@ public class DataSource
             {
                 ID = R.Next(100000, 999999999),
                 Price = R.Next(40, 150),
-                nameOfBook = NameOfBook[i],
-                authorName = NamesOfWriters[R.Next(0, 7)],
+                NameOfBook = NameOfBook[i],
+                AuthorName = NamesOfWriters[R.Next(0, 7)],
                 Category = (CATEGORY) R.Next(0, 9),
                 InStock = (i != 0) ? R.Next(20, 100) : 0,
 

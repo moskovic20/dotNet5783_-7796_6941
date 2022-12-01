@@ -11,12 +11,12 @@ namespace Do;
 //חריגה עבור ישות שלא נמצאה או מזהה חסר עבור עדכון, מחיקה או בקשה)
 
 [Serializable]
-public class NotFounfException : Exception
+public class DoesntExistException : Exception
 {
-    public NotFounfException() : base() { }
-    public NotFounfException(string message) : base(message) { }
-    public NotFounfException(string message, Exception innerException) : base(message, innerException) { }
-    protected NotFounfException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    public DoesntExistException() : base() { }
+    public DoesntExistException(string message) : base(message) { }
+    public DoesntExistException(string message, Exception innerException) : base(message, innerException) { }
+    protected DoesntExistException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 
 }
 

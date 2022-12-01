@@ -9,12 +9,15 @@ namespace BO;
 
 public class Product
 {
-    public int ProductID { get; set; }
+    /// <summary>
+    /// ID of product
+    /// </summary>
+    public int ID { get; set; }
 
     /// <summary>
     ///  Unique identifier for item
     /// </summary>
-    public string? name { get; set; }
+    public string? NameOfBook { get; set; }
 
     public double? Price { get; set; }
 

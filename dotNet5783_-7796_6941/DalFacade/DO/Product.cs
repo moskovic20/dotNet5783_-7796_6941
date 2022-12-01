@@ -20,12 +20,12 @@ public struct Product
     /// <summary>
     ///  Unique identifier for item
     /// </summary>
-    public string? nameOfBook { get; set; }
+    public string? NameOfBook { get; set; }
 
     /// <summary>
     /// The name of the author of the book
     /// </summary>
-    public string? authorName { get; set; }
+    public string? AuthorName { get; set; }
 
     /// <summary>
     /// for category of this book or other items 

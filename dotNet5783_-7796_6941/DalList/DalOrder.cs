@@ -34,27 +34,27 @@ internal class DalOrder : IOrder
                                     == id && x.GetValueOrDefault().IsDeleted == false);
 
         if (indexOfOrderById == -1)
-            throw new NotFounfException("The order you wanted to delete is not found\n");
+            throw new DoesntExistException("The order you wanted to delete is not found\n");
 
 
         Order myOrder = _DS._Orders[indexOfOrderById].GetValueOrDefault();
 
         if (myOrder.IsDeleted == true)
-            throw new NotFounfException("The order you wanted to delete has already been deleted\n");
+            throw new DoesntExistException("The order you wanted to delete has already been deleted\n");
 
 
         myOrder.IsDeleted = true;
         _DS._Orders[indexOfOrderById] = myOrder;
     }
 
-    public Order GetById(int id)
+    public Order? GetById(int id)
     {
         Order? myOrder = _DS._Orders.Find(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted == false);
 
         if (myOrder.GetValueOrDefault().ID == 0)
-            throw new NotFounfException("The Order is not found\n");
+            throw new DoesntExistException("The Order is not found\n");
 
-        return (Order)myOrder;
+        return myOrder;
     }
 
     public void Update(Order item)
@@ -65,7 +65,7 @@ internal class DalOrder : IOrder
         }
         catch
         {
-            throw new NotFounfException("the order you wish to update does not exist");
+            throw new DoesntExistException("the order you wish to update does not exist");
         }
 
         Delete(item.ID);
@@ -75,7 +75,7 @@ internal class DalOrder : IOrder
     public IEnumerable<Order> GetAll()
     {
         if (_DS._Orders == null)
-            throw new NotFounfException("there is not any orders");
+            throw new DoesntExistException("there is not any orders");
 
         return (IEnumerable<Order>)_DS._Orders;
     }
@@ -96,7 +96,7 @@ internal class DalOrder : IOrder
                    select item;
 
         if (list.Count() == 0)
-            throw new NotFounfException("there is not any orders");
+            throw new DoesntExistException("there is not any orders");
 
         return list;
     }
@@ -118,9 +118,6 @@ internal class DalOrder : IOrder
                    where item.Value.IsDeleted == false
                    where filter(item)
                    select item;
-
-        if (list.Count() == 0)
-            throw new NotFounfException("there is not any orders");
 
         return list;
     }

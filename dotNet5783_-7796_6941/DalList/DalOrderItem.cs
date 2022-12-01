@@ -35,28 +35,28 @@ internal class DalOrderItem : IOrderItem
         int indexOfOItemById = _DS._OrderItems.FindIndex(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted != true);  ///
 
         if (indexOfOItemById == -1)
-            throw new NotFounfException("The order item you wanted to delete is not found");
+            throw new DoesntExistException("The order item you wanted to delete is not found");
 
 
         OrderItem myOItem = _DS._OrderItems[indexOfOItemById].GetValueOrDefault();
 
         if (myOItem.IsDeleted == true)
-            throw new NotFounfException("The order item you wanted to delete has already been deleted");
+            throw new DoesntExistException("The order item you wanted to delete has already been deleted");
 
 
         myOItem.IsDeleted = true;
         _DS._OrderItems[indexOfOItemById] = myOItem;
     }
 
-    public OrderItem GetById(int id)
+    public OrderItem? GetById(int id)
     {
         OrderItem? OItem = _DS._OrderItems.Find(x => x.GetValueOrDefault().ID ==
                                                       id && x.GetValueOrDefault().IsDeleted != true);
 
         if (OItem.GetValueOrDefault().ID == 0)
-            throw new NotFounfException("The order item is not found");
+            throw new DoesntExistException("The order item is not found");
 
-        return (OrderItem)OItem;
+        return OItem;
     }
 
     public void Update(OrderItem item)
@@ -67,13 +67,13 @@ internal class DalOrderItem : IOrderItem
         }
         catch
         {
-            throw new NotFounfException("the order item can't be update because he doesn't exist");
+            throw new DoesntExistException("the order item can't be update because he doesn't exist");
         }
         Delete(item.ID);
         Add(item);
     }
 
-    public List<OrderItem> GetListByOrderID(int OrderID)
+    public List<OrderItem?> GetListByOrderID(int OrderID)
     {
         List<OrderItem?> list = new List<OrderItem?>();
 
@@ -85,9 +85,9 @@ internal class DalOrderItem : IOrderItem
 
         list = _DS._OrderItems.FindAll(x => x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfOrder == OrderID);
         if (list == null)
-            throw new NotFounfException("The order items are not found or this order is't exist");
+            throw new DoesntExistException("The order items are not found or this order is't exist");
         //List<OrderItem> list1 = (List<OrderItem>)list;
-        return (List<OrderItem>)list;
+        return list;
     }
 
     public OrderItem GetByOrderIDProductID(int OrderID, int ProductID)
@@ -96,7 +96,7 @@ internal class DalOrderItem : IOrderItem
                      x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfProduct == ProductID);
 
         if (OItem == null)
-            throw new NotFounfException("The order item is not found");
+            throw new DoesntExistException("The order item is not found");
 
         return (OrderItem)OItem;
 
@@ -105,7 +105,7 @@ internal class DalOrderItem : IOrderItem
     public IEnumerable<OrderItem> GetAll()
     {
         if (_DS._OrderItems == null)
-            throw new NotFounfException("there is not any order items");
+            throw new DoesntExistException("there is not any order items");
 
         return (IEnumerable<OrderItem>)_DS._OrderItems;
     }
@@ -126,7 +126,7 @@ internal class DalOrderItem : IOrderItem
                    select item;
 
         if (list.Count() == 0)
-            throw new NotFounfException("there is not any order items");
+            throw new DoesntExistException("there is not any order items");
 
         return list;
     }
@@ -148,9 +148,6 @@ internal class DalOrderItem : IOrderItem
                    where item.Value.IsDeleted == false
                    where filter(item)
                    select item;
-
-        if (list.Count() == 0)
-            throw new NotFounfException("there is not any order items");
 
         return list;
     }

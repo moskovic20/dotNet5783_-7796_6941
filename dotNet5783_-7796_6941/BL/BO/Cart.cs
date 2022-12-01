@@ -14,7 +14,7 @@ public class Cart
 
     public int? CustomerAddress { get; set;}
 
-    public OrderItem? Items { get; set;}
+    public List<OrderItem?>? Items { get; set;}
 
     public double?  TotalPrice { get; set;}
 

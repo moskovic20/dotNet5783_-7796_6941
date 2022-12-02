@@ -21,7 +21,7 @@ public class Product
 
     public double? Price { get; set; }
 
-    public CATEGORY? Category { get; set; }
+    public DO.CATEGORY? Category { get; set; }
 
     public int? InStock { get; set; }
 

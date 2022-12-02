@@ -57,19 +57,21 @@ internal class DalOrder : IOrder
         return myOrder;
     }
 
-    public void Update(Order item)
+    public void Update(Order? item)
     {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
         try
         {
-            GetById(item.ID);
+            GetById(item.GetValueOrDefault().ID);
         }
         catch
         {
             throw new DoesntExistException("the order you wish to update does not exist");
         }
 
-        Delete(item.ID);
-        Add(item);
+        Delete(item.GetValueOrDefault().ID);
+        Add((Order)item);
     }
 
     public IEnumerable<Order> GetAll()
@@ -92,7 +94,7 @@ internal class DalOrder : IOrder
             return _DS._Orders;
 
         var list = from item in _DS._Orders
-                   where filter(item)
+                   where item!=null && filter(item)
                    select item;
 
         if (list.Count() == 0)
@@ -111,7 +113,7 @@ internal class DalOrder : IOrder
     {
         if (filter == null)
             return from item in _DS._Orders
-                    where item.Value.IsDeleted == false
+                    where item!=null&& item.Value.IsDeleted == false
                     select item;
 
         var list = from item in _DS._Orders

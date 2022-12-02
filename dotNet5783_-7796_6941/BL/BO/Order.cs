@@ -8,23 +8,35 @@ namespace BO;
 
 public class Order
 {
-    public int OrderID { get; set; }
+    public int ID { get; set; }
 
-    public string? CustomerEmail { get; set;}
+    public string? Email { get; set;}
 
-    public string? CustomerAdress { get; set;}
+    /// <summary>
+    /// כתובת הלקוח, אליה צריך לשלוח את ההזמנה
+    /// </summary>
+    public string? ShippingAddress { get; set;}
 
-    public DateTime? OrderDate { get; set; }
+    public DateTime? DateOrder { get; set; }
 
     public OrderStatus Status { get; set; }
 
+    /// <summary>
+    ///תאריך ביצוע הזמנה
+    /// </summary>
     public DateTime PaymentDate { get; set; }
 
-    public DateTime ShipDate { get; set; }
+    /// <summary>
+    /// תאריך שילוח
+    /// </summary>
+    public DateTime? ShipDate { get; set; }
 
+    /// <summary>
+    /// תאריך אספקה
+    /// </summary>
     public DateTime DeliveryDate { get; set; }
 
-    public OrderItem? Items { get; set; }
+    public List<OrderItem?>? Items { get; set; }
 
     public double TotalPrice { get; set; }
 

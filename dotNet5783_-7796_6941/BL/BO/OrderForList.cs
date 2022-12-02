@@ -16,7 +16,7 @@ public class OrderForList
 
     public int AmountOfItems { get; set; }
 
-    double TotalPrice { get; set; }
+    public  double TotalPrice { get; set; }
 
     public override string ToString()
     {

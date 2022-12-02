@@ -53,24 +53,26 @@ internal class DalOrderItem : IOrderItem
         OrderItem? OItem = _DS._OrderItems.Find(x => x.GetValueOrDefault().ID ==
                                                       id && x.GetValueOrDefault().IsDeleted != true);
 
-        if (OItem.GetValueOrDefault().ID == 0)
+        if (OItem==null)
             throw new DoesntExistException("The order item is not found");
 
         return OItem;
     }
 
-    public void Update(OrderItem item)
+    public void Update(OrderItem? item)
     {
+        if (item == null)
+            throw new ArgumentNullException(nameof(item));
         try
         {
-            GetById(item.ID);
+            GetById(item.GetValueOrDefault().ID);
         }
         catch
         {
             throw new DoesntExistException("the order item can't be update because he doesn't exist");
         }
-        Delete(item.ID);
-        Add(item);
+        Delete(item.GetValueOrDefault().ID);
+        Add((OrderItem)item);
     }
 
     public List<OrderItem?> GetListByOrderID(int OrderID)
@@ -80,7 +82,7 @@ internal class DalOrderItem : IOrderItem
         list = _DS._OrderItems.FindAll(x => x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfOrder == OrderID);
         if (list == null)
             throw new DoesntExistException("The order items are not found or this order is't exist");
-        //List<OrderItem> list1 = (List<OrderItem>)list;
+       
         return list;
     }
 
@@ -116,7 +118,7 @@ internal class DalOrderItem : IOrderItem
             return _DS._OrderItems;
 
         var list = from item in _DS._OrderItems
-                   where filter(item)
+                   where item != null && filter(item)
                    select item;
 
         if (list.Count() == 0)
@@ -135,7 +137,7 @@ internal class DalOrderItem : IOrderItem
     {
         if (filter == null)
             return from item in _DS._OrderItems
-                   where item.Value.IsDeleted == false
+                   where item!=null && item.Value.IsDeleted == false
                    select item;
 
         var list = from item in _DS._OrderItems

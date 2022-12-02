@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-//using DalApi;
-using BO;
-using Do;
-using Dal;
-using Order = BO.Order;
+
+
 
 namespace BlImplementation;
 
@@ -17,7 +14,7 @@ internal class BoOrder: IOrder
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
     #region   חישוב סטטוס להזמנה וזריקת חריגות
-    private static OrderStatus calculateStatus(DateTime? DateO, DateTime? ShippingD, DateTime? DeliveryD ) 
+    private static BO.OrderStatus calculateStatus(DateTime? DateO, DateTime? ShippingD, DateTime? DeliveryD ) 
     {
 
         #region חריגות אפשריות בזמנים
@@ -33,11 +30,11 @@ internal class BoOrder: IOrder
         ///-------------calculateStatus--------------
 
         if (ShippingD == null)
-            return OrderStatus.Pending;
+            return BO.OrderStatus.Pending;
         if (DeliveryD == null)
-            return OrderStatus.Processing;
+            return BO.OrderStatus.Processing;
         else
-            return OrderStatus.Completed;
+            return BO.OrderStatus.Completed;
     }
     #endregion
 
@@ -48,49 +45,73 @@ internal class BoOrder: IOrder
     /// הכנסת כל ההזמנות הלא ריקות לרשימה
     /// </summary>
     /// <returns></returns>
-    IEnumerable<OrderForList> GetAllOrderForList()
+    IEnumerable<BO.OrderForList> GetAllOrderForList()
     {
         try
         {
-            // dal.DalOrder.GetAll()
             var orderList = from O in dal.Order.GetAllExistsBy()
-                            select new OrderForList()
+                            select new BO.OrderForList()
                             {
                                 OrderID = O.GetValueOrDefault().ID,
                                 CuustomerName = O.GetValueOrDefault().NameCustomer,
                                 Status = calculateStatus(O.GetValueOrDefault().DateOrder, O.GetValueOrDefault().ShippingDate, O.GetValueOrDefault().DeliveryDate),
-                                AmountOfItems = O.CalculateAmountItems(),
-                                TotalPrice = O.CalculatePriceOfAllItems()
+                                AmountOfItems = Dal.Tools.CalculateAmountItems(O),
+                                TotalPrice = Dal.Tools.CalculatePriceOfAllItems(O)
 
                             };
             return orderList;
         }
-        catch()
-    }
-    BO.Order GetOrdertByID(int id)
-    {
-        if (id > 0)
+        catch (Exception ex)
         {
-            Order order;
-            if
-
+            throw new BO.GetAllForListProblemException("cant give all the orders for list", ex);
         }
-        else
-            throw new Do.NotFounfException("can't be founf");
+    }
+
+    BO.Order GetOrdertDetails(int id)
+    {
+        if (id < 0)
+            throw new BO.GetDetailsProblemException("Negative ID");
+
+
+        try
+        {
+            Do.Order? myOrder = dal.Order.GetById(id);
+            return new BO.Order()
+            {
+                ID = myOrder.GetValueOrDefault().ID,
+                Email = myOrder.GetValueOrDefault().Email,
+                ShippingAddress = myOrder.GetValueOrDefault().ShippingAddress,
+                DateOrder = myOrder.GetValueOrDefault().DateOrder,
+                Status = calculateStatus(myOrder.GetValueOrDefault().DateOrder, myOrder.GetValueOrDefault().ShippingDate,
+                                                                                  myOrder.GetValueOrDefault().DeliveryDate),
+                PaymentDate = DateTime.MinValue,//לתקןןן!! לשים פה ערך תקין
+                ShipDate = myOrder.GetValueOrDefault().ShippingDate,
+
+            };
+        }
+        catch(Exception ex)
+        {
+            throw new BO.GetDetailsProblemException("Can't get this order",ex);
+        }
+       
 
     }
+
     BO.Order UpdateOrderShipping(int id)
     {
 
     }
+
     BO.Order UpdateOrderDelivery(int id)
     {
 
     }
-    OrderTracking GetOrderTracking(int id)
+
+    BO.OrderTracking GetOrderTracking(int id)
     {
 
     }
+
     void UpdateOrder(int id)
     {
 

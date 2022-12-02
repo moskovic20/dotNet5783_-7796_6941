@@ -1,13 +1,13 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-using BlApi;
-//using DalApi;
-using BO;
-using Do;
+//using BlApi;
+
 
 namespace BlImplementation;
 
@@ -15,28 +15,23 @@ internal class BoProduct//: IProduct
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
-    IEnumerable<ProductForList> GetAllProductForList()
+    IEnumerable<BO.ProductForList> GetAllProductForList()
     {
         var products = from P in dal.Product.GetAllExistsBy()
-                       select new ProductForList()
-                       {
-                           ProductID = P.GetValueOrDefault().ID,
-                           Name = P.GetValueOrDefault().NameOfBook,
-                           Price = P.GetValueOrDefault().Price,
-                           Category = (BL_CATEGORY?)P.GetValueOrDefault().Category
-                       };
+                       where P!=null
+                       select BO.Tools.CopyPropertiesToNew(P,typeof( BO.ProductForList));
 
         if (products.Count() == 0)
             throw new Exception("");//לעשות חריגה מתאימה- אין מוצרים
 
-        return products;
+        return (IEnumerable<ProductForList>)products;
     }
 
     BO.Product GetProductDetails_forM(int id)
     {
         try
         {
-            Do.Product? myP = dal.Product.GetById(id);
+            Do.Product? myP = dal.Product.GetById(id) ?? throw new NullReferenceException("");
 
             return new BO.Product()
             {
@@ -46,25 +41,25 @@ internal class BoProduct//: IProduct
                 InStock = myP.GetValueOrDefault().InStock,
             };
         }
-        catch (DoesntExistException ex)
+        catch (Exception ex)
         {
-            throw new GetDetailsProblemException("Can't get this product", ex);
+            throw new BO.GetDetailsProblemException("Can't get this product", ex);
         }
     }
 
     void AddProduct(BO.Product productToAdd)
     {
         if (productToAdd.ID < 1)
-            throw new AddingProblemException("Negative ID");//מספר שלילי
+            throw new BO.AddingProblemException("Negative ID");//מספר שלילי
 
         if (productToAdd.NameOfBook == "")
-            throw new AddingProblemException("Name of book is missing");
+            throw new BO.AddingProblemException("Name of book is missing");
 
         if (productToAdd.Price < 0)
-            throw new AddingProblemException("Negative price");
+            throw new BO.AddingProblemException("Negative price");
 
         if (productToAdd.InStock < 0)
-            throw new AddingProblemException("Negative amount");
+            throw new BO.AddingProblemException("Negative amount");
 
 
         try
@@ -87,7 +82,7 @@ internal class BoProduct//: IProduct
 
         catch (Exception ex)
         {
-            throw new AddingProblemException("Can't add this product", ex);
+            throw new BO.AddingProblemException("Can't add this product", ex);
         }
 
     }
@@ -98,13 +93,13 @@ internal class BoProduct//: IProduct
         {
             dal.Product.Delete(id);
         }
-        catch (DoesntExistException ex)
+        catch (Do.DoesntExistException ex)
         {
-            throw new DeletedProblemException("Can't deleted this product", ex);
+            throw new BO.DeletedProblemException("Can't deleted this product", ex);
         }
     }
 
-    ProductItem GetProductDetails_forC(int id, Cart cart)
+    BO.ProductItem GetProductDetails_forC(int id, BO.Cart cart)
     {
         try
         {
@@ -115,7 +110,7 @@ internal class BoProduct//: IProduct
                 ID = myP.GetValueOrDefault().ID,
                 Name = myP.GetValueOrDefault().NameOfBook,
                 Price = myP.GetValueOrDefault().Price,
-                Category = (BL_CATEGORY?)myP.GetValueOrDefault().Category,
+                Category = (BO.CATEGORY?)myP.GetValueOrDefault().Category,
                 InStock = (myP.GetValueOrDefault().InStock > 0) ? true : false,
             };
 
@@ -124,31 +119,35 @@ internal class BoProduct//: IProduct
                 pForClient.Amount = 0;
             }
             else
-                pForClient.Amount = cart.Items.Count(x =>  x.ID == id);
+            {
+                var myItems = from item in cart.Items
+                              where item != null && item.ID == id
+                              select item;
+                pForClient.Amount = myItems.Count();
 
-
+            }
             return pForClient;
 
         }
-        catch (DoesntExistException ex)
+        catch ( Do.DoesntExistException ex)
         {
-            throw new GetDetailsProblemException("Can't get this product", ex);
+            throw new BO.GetDetailsProblemException("Can't get this product", ex);
         }
     }
 
     void UpdateProductDetails(BO.Product productToUp)
     {
         if (productToUp.ID < 1)
-            throw new UpdateProblemException("Negative ID");//מספר שלילי
+            throw new BO.UpdateProblemException("Negative ID");//מספר שלילי
 
         if (productToUp.NameOfBook == "")
-            throw new UpdateProblemException("Name of book is missing");
+            throw new BO.UpdateProblemException("Name of book is missing");
 
         if (productToUp.Price < 0)
-            throw new UpdateProblemException("Negative price");
+            throw new BO.UpdateProblemException("Negative price");
 
         if (productToUp.InStock < 0)
-            throw new UpdateProblemException("Negative amount");
+            throw new BO.UpdateProblemException("Negative amount");
 
         Do.Product DoProductToUp = new Do.Product()
         {
@@ -165,9 +164,9 @@ internal class BoProduct//: IProduct
         {
             dal.Product.Update(DoProductToUp);
         }
-        catch (DoesntExistException ex)
+        catch (Do.DoesntExistException ex)
         {
-            throw new UpdateProblemException("Can't update product", ex);
+            throw new BO.UpdateProblemException("Can't update product", ex);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace BO;
 
 public enum OrderStatus { Pending = 1 /*ממתין ל*/ , Processing /*מעבד*/ , Completed /*הושלם*/ }
 
-public enum BL_CATEGORY
+public enum CATEGORY
 {
     mystery, fantasy, history, scinence, childen, romans, cookingAndBaking, psychology, Kodesh
 }

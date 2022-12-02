@@ -16,7 +16,7 @@ public class ProductItem
 
     public double? Price { get; set; }
 
-    public BL_CATEGORY? Category { get; set; }
+    public CATEGORY? Category { get; set; }
 
     /// <summary>
     /// The amount of the product in the customer's shopping cart.

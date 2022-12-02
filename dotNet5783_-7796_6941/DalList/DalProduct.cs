@@ -57,7 +57,7 @@ internal class DalProduct : IProduct
 
     public Product? GetById(int id)
     {
-        Product? ProductById = _DS._Products.Find(x => x.GetValueOrDefault().ID ==
+        Product? ProductById = _DS._Products.Find(x => x!=null&&x.GetValueOrDefault().ID ==
                                                         id && x.GetValueOrDefault().IsDeleted != true);
 
         if (ProductById==null)

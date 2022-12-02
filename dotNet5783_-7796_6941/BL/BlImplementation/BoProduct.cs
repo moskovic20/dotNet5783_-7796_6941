@@ -6,20 +6,20 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-//using BlApi;
+using BlApi;
 
 
 namespace BlImplementation;
 
-internal class BoProduct//: IProduct
+internal class BoProduct: IProduct
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
-    IEnumerable<BO.ProductForList> GetAllProductForList()
+    public IEnumerable<BO.ProductForList> GetAllProductForList()
     {
         var products = from P in dal.Product.GetAllExistsBy()
-                       where P!=null
-                       select BO.Tools.CopyPropertiesToNew(P,typeof( BO.ProductForList));
+                       where P != null
+                       select BO.Tools.CopyPropertiesToNew(P, typeof(BO.ProductForList));
 
         if (products.Count() == 0)
             throw new Exception("");//לעשות חריגה מתאימה- אין מוצרים
@@ -27,19 +27,14 @@ internal class BoProduct//: IProduct
         return (IEnumerable<ProductForList>)products;
     }
 
-    BO.Product GetProductDetails_forM(int id)
+    public BO.Product GetProductDetails_forM(int id)
     {
         try
         {
-            Do.Product? myP = dal.Product.GetById(id) ?? throw new NullReferenceException("");
-
-            return new BO.Product()
-            {
-                ID = myP.GetValueOrDefault().ID,
-                Price = myP.GetValueOrDefault().Price,
-                Category = myP.GetValueOrDefault().Category,
-                InStock = myP.GetValueOrDefault().InStock,
-            };
+            Do.Product? myP = dal.Product.GetById(id);
+            BO.Product BoMyP = new();
+            BO.Tools.CopyPropertiesTo(myP, BoMyP);
+            return BoMyP;
         }
         catch (Exception ex)
         {
@@ -47,8 +42,11 @@ internal class BoProduct//: IProduct
         }
     }
 
-    void AddProduct(BO.Product productToAdd)
+    public void AddProduct(BO.Product productToAdd)
     {
+        if (productToAdd == null)
+            throw new ArgumentNullException("missing product yo add");
+
         if (productToAdd.ID < 1)
             throw new BO.AddingProblemException("Negative ID");//מספר שלילי
 
@@ -64,20 +62,10 @@ internal class BoProduct//: IProduct
 
         try
         {
-            Do.Product myNewP = new()
-            {
-                ID = productToAdd.ID,
-                InStock = productToAdd.InStock,
-                Category = productToAdd.Category,
-                Price = productToAdd.Price,
-                NameOfBook = productToAdd.NameOfBook,
-                IsDeleted = false,
-                AuthorName = null,
-                path = null
+            Do.Product myNewP = new();
+            BO.Tools.CopyPropertiesTo(productToAdd, myNewP);
 
-            };
-
-            dal.Product.Add(myNewP);
+            dal.Product.Add((Do.Product)myNewP);
         }
 
         catch (Exception ex)
@@ -87,7 +75,7 @@ internal class BoProduct//: IProduct
 
     }
 
-    void DeleteProductByID(int id)
+    public void DeleteProductByID(int id)
     {
         try
         {
@@ -99,20 +87,16 @@ internal class BoProduct//: IProduct
         }
     }
 
-    BO.ProductItem GetProductDetails_forC(int id, BO.Cart cart)
+    public BO.ProductItem GetProductDetails_forC(int id, BO.Cart cart)
     {
         try
         {
-            Do.Product? myP = dal.Product.GetById(id);
+            Do.Product? myP = dal.Product.GetById(id);//הבאת המוצר הרצוי
 
-            BO.ProductItem pForClient = new BO.ProductItem()
-            {
-                ID = myP.GetValueOrDefault().ID,
-                Name = myP.GetValueOrDefault().NameOfBook,
-                Price = myP.GetValueOrDefault().Price,
-                Category = (BO.CATEGORY?)myP.GetValueOrDefault().Category,
-                InStock = (myP.GetValueOrDefault().InStock > 0) ? true : false,
-            };
+            BO.ProductItem pForClient = new();
+            BO.Tools.CopyPropertiesTo(myP, pForClient);
+
+            pForClient.InStock = (myP.GetValueOrDefault().InStock > 0) ? true : false;
 
             if (cart.Items == null)
             {
@@ -126,17 +110,21 @@ internal class BoProduct//: IProduct
                 pForClient.Amount = myItems.Count();
 
             }
+
             return pForClient;
 
         }
-        catch ( Do.DoesntExistException ex)
+        catch (Do.DoesntExistException ex)
         {
             throw new BO.GetDetailsProblemException("Can't get this product", ex);
         }
     }
 
-    void UpdateProductDetails(BO.Product productToUp)
+    public void UpdateProductDetails(BO.Product productToUp)
     {
+        if (productToUp == null)
+            throw new ArgumentNullException("missing product");
+
         if (productToUp.ID < 1)
             throw new BO.UpdateProblemException("Negative ID");//מספר שלילי
 
@@ -149,17 +137,8 @@ internal class BoProduct//: IProduct
         if (productToUp.InStock < 0)
             throw new BO.UpdateProblemException("Negative amount");
 
-        Do.Product DoProductToUp = new Do.Product()
-        {
-            ID = productToUp.ID,
-            NameOfBook = productToUp.NameOfBook,
-            AuthorName = null,
-            Category = productToUp.Category,
-            Price = productToUp.Price,
-            InStock = productToUp.InStock,
-            IsDeleted = false,
-        };
-
+        Do.Product DoProductToUp = new();
+        BO.Tools.CopyPropertiesTo(productToUp, DoProductToUp);
         try
         {
             dal.Product.Update(DoProductToUp);

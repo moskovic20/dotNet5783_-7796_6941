@@ -10,12 +10,24 @@ namespace BO;
 public class ProductItem
 {
 
+    /// <summary>
+    /// המזהה של המוצר   
+    /// </summary>
     public int ID { get; set; }
 
-    public string? Name { get; set; }
+    /// <summary>
+    /// שם המוצר-הספר
+    /// </summary>
+    public string? NameOfBook { get; set; }
 
+    /// <summary>
+    /// מחיר המוצר
+    /// </summary>
     public double? Price { get; set; }
 
+    /// <summary>
+    /// הקטגוריה אליו משתייך המוצר
+    /// </summary>
     public CATEGORY? Category { get; set; }
 
     /// <summary>
@@ -24,6 +36,9 @@ public class ProductItem
     /// </summary>
     public int Amount { get; set; }
 
+    /// <summary>
+    /// האם המוצר במלאי
+    /// </summary>
     public bool InStock { get; set; }
 
     public override string ToString()

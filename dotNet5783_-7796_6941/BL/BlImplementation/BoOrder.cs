@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using BlApi;
 //using DalApi;
 using BO;
-using Do;
-using Dal;
+//using Do;
+//using Dal;
 using Order = BO.Order;
+
 
 namespace BlImplementation;
 
@@ -16,8 +17,8 @@ internal class BoOrder: IOrder
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
-    #region   חישוב סטטוס להזמנה וזריקת חריגות
-    private static OrderStatus calculateStatus(DateTime? DateO, DateTime? ShippingD, DateTime? DeliveryD ) 
+
+    private static OrderStatus calculateStatus(DateTime? DateO, DateTime? ShippingD, DateTime? DeliveryD)
     {
 
         #region חריגות אפשריות בזמנים
@@ -25,8 +26,8 @@ internal class BoOrder: IOrder
             throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
         if (ShippingD == null && DeliveryD == null)
             throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
-        if ( ShippingD == null && DeliveryD !=null || ShippingD!=null && DateO > ShippingD 
-                   || DeliveryD != null && DateO > DeliveryD || ShippingD != null && DeliveryD != null && ShippingD> DeliveryD)
+        if (ShippingD == null && DeliveryD != null || ShippingD != null && DateO > ShippingD
+                   || DeliveryD != null && DateO > DeliveryD || ShippingD != null && DeliveryD != null && ShippingD > DeliveryD)
             throw new ArgumentException("rong information,cant be possible");          /////////exceptions
         #endregion
 
@@ -39,44 +40,46 @@ internal class BoOrder: IOrder
         else
             return OrderStatus.Completed;
     }
-    #endregion
 
-    
+
+
 
 
     /// <summary>
     /// הכנסת כל ההזמנות הלא ריקות לרשימה
     /// </summary>
     /// <returns></returns>
-    IEnumerable<OrderForList> GetAllOrderForList()
+    IEnumerable<BO.OrderForList> GetAllOrderForList()
     {
         try
         {
             // dal.DalOrder.GetAll()
             var orderList = from O in dal.Order.GetAllExistsBy()
-                            select new OrderForList()
+                            select new BO.OrderForList()
                             {
                                 OrderID = O.GetValueOrDefault().ID,
                                 CuustomerName = O.GetValueOrDefault().NameCustomer,
-                                Status = calculateStatus(O.GetValueOrDefault().DateOrder, O.GetValueOrDefault().ShippingDate, O.GetValueOrDefault().DeliveryDate),
+                                Status = calculateStatus(O.GetValueOrDefault().DateOrder, O.GetValueOrDefault().ShippingDate, O.GetValueOrDefault().DeliveryDate),  
                                 AmountOfItems = O.CalculateAmountItems(),
                                 TotalPrice = O.CalculatePriceOfAllItems()
-
                             };
             return orderList;
         }
-        catch()
+        catch (GetDetailsProblemException ex)
+        {
+            ;
+        }
     }
     BO.Order GetOrdertByID(int id)
     {
         if (id > 0)
         {
             Order order;
-            if
+            
 
         }
         else
-            throw new Do.NotFounfException("can't be founf");
+            throw new Do.DoesntExistException("can't be founf");
 
     }
     BO.Order UpdateOrderShipping(int id)

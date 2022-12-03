@@ -75,12 +75,15 @@ internal class DalOrderItem : IOrderItem
 
     public List<OrderItem?> GetListByOrderID(int OrderID)
     {
+
+        if (OrderID <= 0)
+            throw new DoesntExistException("uncorect ID order");
+
         List<OrderItem?> list = new List<OrderItem?>();
 
         list = _DS._OrderItems.FindAll(x => x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfOrder == OrderID);
         if (list == null)
             throw new DoesntExistException("The order items are not found or this order is't exist");
-        //List<OrderItem> list1 = (List<OrderItem>)list;
         return list;
     }
 

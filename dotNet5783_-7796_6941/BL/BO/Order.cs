@@ -14,13 +14,13 @@ public class Order
 
     public string? CustomerAdress { get; set;}
 
-    public DateTime? OrderDate { get; set; }
+    public DateTime? DateOrder { get; set; }
 
     public OrderStatus Status { get; set; }
 
     public DateTime PaymentDate { get; set; }
 
-    public DateTime ShipDate { get; set; }
+    public DateTime ShippingDate { get; set; }
 
     public DateTime DeliveryDate { get; set; }
 

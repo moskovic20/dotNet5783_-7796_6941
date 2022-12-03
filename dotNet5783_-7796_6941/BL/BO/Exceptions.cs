@@ -9,6 +9,15 @@ namespace BO;
 
 
 [Serializable]
+public class GetAllForListProblemException : Exception
+{
+    public GetAllForListProblemException() : base() { }
+    public GetAllForListProblemException(string message) : base(message) { }
+    public GetAllForListProblemException(string message, Exception inner) : base(message, inner) { }
+    protected GetAllForListProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+}
+
+[Serializable]
 public class AddingProblemException : Exception
 {
     public AddingProblemException() : base() { }
@@ -44,3 +53,4 @@ public class UpdateProblemException : Exception
     protected UpdateProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
 
+ 

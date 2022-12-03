@@ -9,13 +9,13 @@ namespace BO;
 
 public class ProductForList
 {
-    public int ProductID { get; set; }
+    public int ID { get; set; }
 
-    public string? Name { get; set; }
+    public string? NameOfBook { get; set; }
 
     public double? Price { get; set; }
 
-    public BL_CATEGORY? Category { get; set; }
+    public CATEGORY? Category { get; set; }
 
     public override string ToString()
     {

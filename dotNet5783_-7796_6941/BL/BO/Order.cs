@@ -32,11 +32,10 @@ public class Order
     ///תאריך ביצוע הזמנה
     /// </summary>
     public DateTime PaymentDate { get; set; }
-
     /// <summary>
     /// תאריך שילוח
     /// </summary>
-    public DateTime? ShipDate { get; set; }
+    public DateTime ShippingDate { get; set; }
 
     /// <summary>
     /// תאריך אספקה

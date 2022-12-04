@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using BlApi;
 
 
-
 namespace BlImplementation;
 
 internal class BoOrder //: IOrder
@@ -22,8 +21,8 @@ internal class BoOrder //: IOrder
             throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
         if (ShippingD == null && DeliveryD == null)
             throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
-        if ( ShippingD == null && DeliveryD !=null || ShippingD!=null && DateO > ShippingD 
-                   || DeliveryD != null && DateO > DeliveryD || ShippingD != null && DeliveryD != null && ShippingD> DeliveryD)
+        if (ShippingD == null && DeliveryD != null || ShippingD != null && DateO > ShippingD
+                   || DeliveryD != null && DateO > DeliveryD || ShippingD != null && DeliveryD != null && ShippingD > DeliveryD)
             throw new ArgumentException("rong information,cant be possible");          /////////exceptions
         #endregion
 
@@ -36,10 +35,8 @@ internal class BoOrder //: IOrder
         else
             return BO.OrderStatus.Completed;
     }
+
     #endregion
-
-    
-
 
     /// <summary>
     /// הכנסת כל ההזמנות הלא ריקות לרשימה
@@ -55,7 +52,7 @@ internal class BoOrder //: IOrder
                                 OrderID = O.GetValueOrDefault().ID,
                                 CuustomerName = O.GetValueOrDefault().NameCustomer,
                                 Status = calculateStatus(O.GetValueOrDefault().DateOrder, O.GetValueOrDefault().ShippingDate, O.GetValueOrDefault().DeliveryDate),
-                                AmountOfItems = Dal.Tools.CalculateAmountItems(O),
+                                AmountOfItems = O.CalculateAmountItems(),
                                 TotalPrice = Dal.Tools.CalculatePriceOfAllItems(O)
                             };
             return orderList;
@@ -83,7 +80,7 @@ internal class BoOrder //: IOrder
                 Status = calculateStatus(myOrder.GetValueOrDefault().DateOrder, myOrder.GetValueOrDefault().ShippingDate,
                                                                                   myOrder.GetValueOrDefault().DeliveryDate),
                 PaymentDate = DateTime.MinValue,//לתקןןן!! לשים פה ערך תקין
-                ShipDate = myOrder.GetValueOrDefault().ShippingDate,
+                ShippingDate = (DateTime)myOrder.GetValueOrDefault().ShippingDate,
 
             };
         }

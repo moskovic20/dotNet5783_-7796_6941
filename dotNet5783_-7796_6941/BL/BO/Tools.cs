@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using Do;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace BO;
 
 public static class Tools
 {
+    static private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
+
     /// <summary>
     /// שיטת הרחבה עבור ToString
     /// </summary>
@@ -48,4 +51,62 @@ public static class Tools
         from.CopyPropertiesTo(to);//copy all value of properties with the same name to the new object
         return to;
     }
+
+    //#region   חישוב סטטוס להזמנה וזריקת חריגות
+    //public static OrderStatus calculateStatus(this BO.Order order)
+    //{
+    //    DateTime? DateO = order.DateOrder;
+    //    DateTime? ShippingD = order.ShippingDate;
+    //    DateTime? DeliveryD = order.DeliveryDate;
+
+    //    #region חריגות אפשריות בזמנים
+    //    if (DateO == null)
+    //        throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
+    //    if (ShippingD == null && DeliveryD == null)
+    //        throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
+    //    if (ShippingD == null && DeliveryD != null || ShippingD != null && DateO > ShippingD
+    //               || DeliveryD != null && DateO > DeliveryD || ShippingD != null && DeliveryD != null && ShippingD > DeliveryD)
+    //        throw new ArgumentException("rong information,cant be possible");          /////////exceptions
+    //    #endregion
+
+    //    // -------------Calculate the Status--------------
+
+    //    if (ShippingD == null)
+    //        return OrderStatus.Pending;
+    //    if (DeliveryD == null)
+    //        return OrderStatus.Processing;
+    //    else
+    //        return OrderStatus.Completed;
+    //}
+    //#endregion
+
+    #region חישוב מספר פריטים בכל הזמנה לפי מספר הזמנה
+    public static int CalculateAmountItems(this Do.Order? order)
+    {
+      
+        int amountOfItems = 0;
+
+        if (order == null)
+            throw new DoesntExistException("missing ID");
+
+        List<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.GetValueOrDefault().ID);
+        amountOfItems = listforAmount.Sum(o => o.GetValueOrDefault().amountOfItem ?? 0);
+
+        return amountOfItems;
+    }
+    #endregion
+
+
+    #region חישוב מחיר לסך כל ההזמנה על כל פריטיה
+    public static double CalculatePriceOfAllItems(this Do.Order? order)
+    {
+       
+        double Price = 0;
+
+        List<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.GetValueOrDefault().ID);
+        Price = (double)listforAmount.Sum(o => o.GetValueOrDefault().amountOfItem ?? 0 * o.GetValueOrDefault().priceOfOneItem ?? throw new Exception("אין מחיר!!"));
+        return Price;
+    }
+
+    #endregion
 }

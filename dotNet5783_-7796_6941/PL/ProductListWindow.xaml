@@ -19,9 +19,9 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <Label x:Name="label" Content="category:" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFF1B0EA" Width="400" Height="46" FontSize="24" FontWeight="Bold" FontFamily="Verdana Pro Black"/>
+            <Label x:Name="category" Content="category:" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFF1B0EA" Width="400" Height="46" FontSize="24" FontWeight="Bold" FontFamily="Verdana Pro Black"/>
         </Grid>
-        <ComboBox Name="AttributeSelector" Margin="400,0,0,0"
+        <ComboBox Name="CategorySelector" Margin="400,0,0,0" BorderBrush="#FFF8D0F3"
 />
 
 

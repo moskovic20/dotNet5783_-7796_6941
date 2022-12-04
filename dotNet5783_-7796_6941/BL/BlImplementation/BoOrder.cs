@@ -36,9 +36,7 @@ internal class BoOrder: IOrder
             return BO.OrderStatus.Completed;
     }
 
-
-
-
+    #endregion
 
     /// <summary>
     /// הכנסת כל ההזמנות הלא ריקות לרשימה
@@ -54,7 +52,7 @@ internal class BoOrder: IOrder
                                 OrderID = O.GetValueOrDefault().ID,
                                 CuustomerName = O.GetValueOrDefault().NameCustomer,
                                 Status = calculateStatus(O.GetValueOrDefault().DateOrder, O.GetValueOrDefault().ShippingDate, O.GetValueOrDefault().DeliveryDate),
-                                AmountOfItems = Dal.Tools.CalculateAmountItems(O),
+                                AmountOfItems = O.CalculateAmountItems(),
                                 TotalPrice = Dal.Tools.CalculatePriceOfAllItems(O)
 
                             };
@@ -84,7 +82,7 @@ internal class BoOrder: IOrder
                 Status = calculateStatus(myOrder.GetValueOrDefault().DateOrder, myOrder.GetValueOrDefault().ShippingDate,
                                                                                   myOrder.GetValueOrDefault().DeliveryDate),
                 PaymentDate = DateTime.MinValue,//לתקןןן!! לשים פה ערך תקין
-                ShipDate = myOrder.GetValueOrDefault().ShippingDate,
+                ShippingDate = (DateTime)myOrder.GetValueOrDefault().ShippingDate,
 
             };
         }

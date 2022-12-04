@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using Do;
+using DO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-public static /*partial*/ class Tools
+public static class Tools
 {
+    static private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
+
     /// <summary>
     /// שיטת הרחבה עבור ToString
     /// </summary>
@@ -76,4 +79,34 @@ public static /*partial*/ class Tools
     //        return OrderStatus.Completed;
     //}
     //#endregion
+
+    #region חישוב מספר פריטים בכל הזמנה לפי מספר הזמנה
+    public static int CalculateAmountItems(this Do.Order? order)
+    {
+      
+        int amountOfItems = 0;
+
+        if (order == null)
+            throw new DoesntExistException("missing ID");
+
+        List<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.GetValueOrDefault().ID);
+        amountOfItems = listforAmount.Sum(o => o.GetValueOrDefault().amountOfItem ?? 0);
+
+        return amountOfItems;
+    }
+    #endregion
+
+
+    #region חישוב מחיר לסך כל ההזמנה על כל פריטיה
+    public static double CalculatePriceOfAllItems(this Do.Order? order)
+    {
+       
+        double Price = 0;
+
+        List<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.GetValueOrDefault().ID);
+        Price = (double)listforAmount.Sum(o => o.GetValueOrDefault().amountOfItem ?? 0 * o.GetValueOrDefault().priceOfOneItem ?? throw new Exception("אין מחיר!!"));
+        return Price;
+    }
+
+    #endregion
 }

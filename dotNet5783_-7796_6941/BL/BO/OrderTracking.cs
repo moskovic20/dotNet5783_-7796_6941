@@ -8,9 +8,12 @@ namespace BO;
 
 public class OrderTracking
 {
-    public int OrderID { get; set; }
+    public int ID { set; get; }
 
-    public OrderStatus Status { get; set; }
+    public OrderStatus Status { set; get; }
+
+    public List<Tuple<DateTime, string>>? Tracking { set; get; }
+
 
     public override string ToString()
     {

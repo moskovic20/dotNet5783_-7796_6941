@@ -8,8 +8,14 @@ namespace BO;
 
 public class Order
 {
+    /// <summary>
+    /// מזהה ההזמנה
+    /// </summary>
     public int ID { get; set; }
 
+    /// <summary>
+    /// כתובת האימייל של הלקוח
+    /// </summary>
     public string? Email { get; set;}
 
     /// <summary>
@@ -17,8 +23,9 @@ public class Order
     /// </summary>
     public string? ShippingAddress { get; set;}
 
-    public DateTime? DateOrder { get; set; }
-
+    /// <summary>
+    /// מצב ההזמנה
+    /// </summary>
     public OrderStatus Status { get; set; }
 
     /// <summary>
@@ -36,8 +43,14 @@ public class Order
     /// </summary>
     public DateTime DeliveryDate { get; set; }
 
+    /// <summary>
+    /// רשימת הפריטים בהזמנה
+    /// </summary>
     public List<OrderItem?>? Items { get; set; }
 
+    /// <summary>
+    /// המחיר לתשלום של כל ההזמנה
+    /// </summary>
     public double TotalPrice { get; set; }
 
     public override string ToString()

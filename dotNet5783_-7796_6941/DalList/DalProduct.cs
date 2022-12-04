@@ -137,6 +137,7 @@ internal class DalProduct : IProduct
 
         var list = from item in _DS._Products
                    where item.Value.IsDeleted == false
+                   where item != null
                    where filter(item)
                    select item;
 

@@ -50,9 +50,9 @@ internal class BoOrder //: IOrder
             var orderList = from O in dal.Order.GetAllExistsBy()
                             select new BO.OrderForList()
                             {
-                                OrderID = O.GetValueOrDefault().ID,
-                                CuustomerName = O.GetValueOrDefault().NameCustomer,
-                                Status = calculateStatus(O.GetValueOrDefault().DateOrder, O.GetValueOrDefault().ShippingDate, O.GetValueOrDefault().DeliveryDate),
+                                OrderID = O.ID,
+                                CuustomerName = O.NameCustomer,
+                                Status = calculateStatus(O.DateOrder, O.ShippingDate, O.DeliveryDate),
                                 AmountOfItems =O.CalculateAmountItems(),
                                 TotalPrice =O.CalculatePriceOfAllItems()
                             };
@@ -72,16 +72,15 @@ internal class BoOrder //: IOrder
 
         try
         {
-            Do.Order? myOrder = dal.Order.GetById(id);
+            Do.Order myOrder = dal.Order.GetById(id);
             return new BO.Order()
             {
-                ID = myOrder.GetValueOrDefault().ID,
-                Email = myOrder.GetValueOrDefault().Email,
-                ShippingAddress = myOrder.GetValueOrDefault().ShippingAddress,
-                Status = calculateStatus(myOrder.GetValueOrDefault().DateOrder, myOrder.GetValueOrDefault().ShippingDate,
-                                                                                  myOrder.GetValueOrDefault().DeliveryDate),
-                PaymentDate = DateTime.MinValue,//לתקןןן!! לשים פה ערך תקין
-                ShippingDate = (DateTime)myOrder.GetValueOrDefault().ShippingDate,
+                ID = myOrder.ID,
+                Email = myOrder.Email,
+                ShippingAddress = myOrder.ShippingAddress,
+                Status = calculateStatus(myOrder.DateOrder, myOrder.ShippingDate,myOrder.DeliveryDate),
+                //PaymentDate = DateTime.MinValue,//לתקןןן!! לשים פה ערך תקין
+                ShippingDate = myOrder.ShippingDate,
 
             };
         }

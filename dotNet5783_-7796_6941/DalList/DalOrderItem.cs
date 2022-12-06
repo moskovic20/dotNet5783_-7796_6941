@@ -10,9 +10,7 @@ internal class DalOrderItem : IOrderItem
 
     public int Add(OrderItem myOrderItem)
     {
-        myOrderItem.IsDeleted = false;
-
-        int indexOfMyOrderItem = _DS._OrderItems.FindIndex(x => x.GetValueOrDefault().ID == myOrderItem.ID);
+        int indexOfMyOrderItem = _DS._OrderItems.FindIndex(x => x?.ID == myOrderItem.ID);
 
         if (indexOfMyOrderItem == -1) //myOrderItem.ID is not found in _OrderItems
         {
@@ -21,7 +19,7 @@ internal class DalOrderItem : IOrderItem
             return myOrderItem.ID;
         }
 
-        if (_DS._OrderItems[indexOfMyOrderItem].GetValueOrDefault().IsDeleted == false)
+        if (_DS._OrderItems[indexOfMyOrderItem]?.IsDeleted == false)
             throw new AlreadyExistException("The order item you wish to add is already exists");
 
         _DS._OrderItems.Add(myOrderItem);
@@ -31,13 +29,13 @@ internal class DalOrderItem : IOrderItem
 
     public void Delete(int id)
     {
-        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted != true);  ///
+        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x?.ID == id && x?.IsDeleted != true);  
 
         if (indexOfOItemById == -1)
             throw new DoesntExistException("The order item you wanted to delete is not found");
 
 
-        OrderItem myOItem = _DS._OrderItems[indexOfOItemById].GetValueOrDefault();
+        OrderItem myOItem = _DS._OrderItems[indexOfOItemById] ?? new();
 
         if (myOItem.IsDeleted == true)
             throw new DoesntExistException("The order item you wanted to delete has already been deleted");
@@ -49,8 +47,7 @@ internal class DalOrderItem : IOrderItem
 
     public OrderItem GetById(int id)
     {
-        OrderItem? OItem = _DS._OrderItems.Find(x => x.GetValueOrDefault().ID ==
-                                                      id && x.GetValueOrDefault().IsDeleted != true);
+        OrderItem? OItem = _DS._OrderItems.FirstOrDefault(x => x?.ID == id && x?.IsDeleted != true);
 
         return OItem?? throw new DoesntExistException("The order item is not found");
     }
@@ -99,10 +96,7 @@ internal class DalOrderItem : IOrderItem
 
     public IEnumerable<OrderItem> GetAll()
     {
-        if (_DS._OrderItems == null)
-            throw new DoesntExistException("there is not any order items");
-
-        return (IEnumerable<OrderItem>)_DS._OrderItems;
+        return (IEnumerable<OrderItem>)_DS._OrderItems?? throw new DoesntExistException("there is not any order items");
     }
 
     /// <summary>

@@ -82,16 +82,16 @@ public static class Tools
     #endregion
 
     #region חישוב מספר פריטים בכל הזמנה לפי מספר הזמנה
-    public static int CalculateAmountItems(this Do.Order? order)
+    public static int CalculateAmountItems(this Do.Order order)
     {
       
         int amountOfItems = 0;
 
-        if (order == null)
-            throw new DoesntExistException("missing ID");
+        //if (order == null)
+        //    throw new DoesntExistException("missing ID");
 
-        List<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.GetValueOrDefault().ID);
-        amountOfItems = listforAmount.Sum(o => o.GetValueOrDefault().amountOfItem ?? 0);
+        List<Do.OrderItem?> listforAmount = (List<Do.OrderItem?>)dal.OrderItem.GetListByOrderID(order.ID);
+        amountOfItems = listforAmount.Sum(o => o?.amountOfItem ?? 0);
 
         return amountOfItems;
     }
@@ -99,12 +99,12 @@ public static class Tools
 
 
     #region חישוב מחיר לסך כל ההזמנה על כל פריטיה
-    public static double CalculatePriceOfAllItems(this Do.Order? order)
+    public static double CalculatePriceOfAllItems(this Do.Order order)
     {
         double Price = 0;
 
-        List<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.GetValueOrDefault().ID);
-        Price = (double)listforAmount.Sum(o => o.GetValueOrDefault().amountOfItem ?? 0 * o.GetValueOrDefault().priceOfOneItem ?? throw new Exception("אין מחיר!!"));
+        List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID);
+        Price = (double)listforAmount.Sum(o => o.amountOfItem ?? 0 * o.priceOfOneItem ??throw new Exception("אין מחיר!!"));
         return Price;
     }
 

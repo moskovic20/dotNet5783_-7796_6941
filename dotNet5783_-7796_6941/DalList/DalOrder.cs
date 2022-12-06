@@ -37,7 +37,7 @@ internal class DalOrder : IOrder
             throw new DoesntExistException("The order you wanted to delete is not found\n");
 
 
-        Order myOrder = _DS._Orders[indexOfOrderById].GetValueOrDefault();
+        Order myOrder = _DS._Orders[indexOfOrderById]?? new();
 
         if (myOrder.IsDeleted == true)
             throw new DoesntExistException("The order you wanted to delete has already been deleted\n");

@@ -15,7 +15,7 @@ internal class DalProduct : IProduct
     {
         P.IsDeleted = false;
         Random random = new Random();
-        int indexOfMyP = _DS._Products.FindIndex(x => x.GetValueOrDefault().ID == P.ID);
+        int indexOfMyP = _DS._Products.FindIndex(x => x?.ID == P.ID);
 
         if (indexOfMyP == -1) //this product is not found in the data
         {
@@ -38,11 +38,11 @@ internal class DalProduct : IProduct
 
     public void Delete(int id)
     {
-        int getIdOfProduct = _DS._Products.FindIndex(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted != true);
+        int getIdOfProduct = _DS._Products.FindIndex(x => x?.ID == id && x?.IsDeleted != true);
 
         if (getIdOfProduct != -1)
         {
-            if (_DS._Products[getIdOfProduct].GetValueOrDefault().IsDeleted == true)
+            if (_DS._Products[getIdOfProduct]?.IsDeleted == true)
                 throw new DoesntExistException("the product doesn't exist");
             else
             {
@@ -89,7 +89,8 @@ internal class DalProduct : IProduct
 
     public IEnumerable<Product> GetAll()
     {
-        return (IEnumerable<Product>)_DS._Products?? throw new DoesntExistException("there is not any products");
+        //return (IEnumerable<Product>)_DS._Products?? throw new DoesntExistException("there is not any products");
+        return GetAllBy();
     }
 
     /// <summary>

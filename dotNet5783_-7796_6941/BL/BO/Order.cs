@@ -31,16 +31,16 @@ public class Order
     /// <summary>
     ///תאריך ביצוע הזמנה
     /// </summary>
-    public DateTime PaymentDate { get; set; }
+    public DateTime? PaymentDate { get; set; }
     /// <summary>
     /// תאריך שילוח
     /// </summary>
-    public DateTime ShippingDate { get; set; }
+    public DateTime? ShippingDate { get; set; }
 
     /// <summary>
     /// תאריך אספקה
     /// </summary>
-    public DateTime DeliveryDate { get; set; }
+    public DateTime? DeliveryDate { get; set; }
 
     /// <summary>
     /// רשימת הפריטים בהזמנה

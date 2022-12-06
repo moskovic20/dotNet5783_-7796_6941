@@ -1,5 +1,4 @@
 ﻿using Do;
-
 using DalApi;
 using System.Collections.Generic;
 
@@ -56,35 +55,34 @@ internal class DalOrderItem : IOrderItem
         return OItem?? throw new DoesntExistException("The order item is not found");
     }
 
-    public void Update(OrderItem? item)
+    public void Update(OrderItem item)
     {
-        if (item == null)
-            throw new ArgumentNullException(nameof(item));
         try
         {
-            GetById(item.GetValueOrDefault().ID);
+            GetById(item.ID);
         }
         catch
         {
             throw new DoesntExistException("the order item can't be update because he doesn't exist");
         }
-        Delete(item.GetValueOrDefault().ID);
-        Add((OrderItem)item);
+        Delete(item.ID);
+        Add(item);
     }
 
-    public List<OrderItem?> GetListByOrderID(int OrderID)
+    public IEnumerable<OrderItem> GetListByOrderID(int OrderID)
     {
 
-        if (OrderID <= 0)
+        if (OrderID < 100000)
             throw new DoesntExistException("uncorect ID order");
 
-        List<OrderItem?> list = new List<OrderItem?>();
+        var list= from item in _DS._OrderItems
+                  where item!=null && item?.ID == OrderID
+                  select item;
 
-        list = _DS._OrderItems.FindAll(x => x!=null&&x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfOrder == OrderID);
-        if (list == null)
+        if (list.Count()==0)
             throw new DoesntExistException("The order items are not found or this order is't exist");
 
-        return list;
+        return (IEnumerable<OrderItem>)list;
     }
 
     public OrderItem GetByOrderIDProductID(int OrderID, int ProductID)
@@ -134,19 +132,23 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<OrderItem?> GetAllExistsBy(Func<OrderItem?, bool>? filter = null)
+    public IEnumerable<OrderItem> GetAllExistsBy(Func<OrderItem?, bool>? filter = null)
     {
         if (filter == null)
-            return from item in _DS._OrderItems
-                   where item!=null && item.Value.IsDeleted == false
+        {
+            var notFilterList= from item in _DS._OrderItems
+                   where item != null && item.Value.IsDeleted == false
                    select item;
 
-        var list = from item in _DS._OrderItems
+            return (IEnumerable<OrderItem>)notFilterList;
+        }
+
+        var filterlist = from item in _DS._OrderItems
                    where item.Value.IsDeleted == false
                    where filter(item)
                    select item;
 
-        return list;
+        return (IEnumerable<OrderItem>)filterlist;
     }
 }
 

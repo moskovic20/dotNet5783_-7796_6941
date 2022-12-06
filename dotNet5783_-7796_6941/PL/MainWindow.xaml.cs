@@ -24,5 +24,15 @@ namespace PL
         {
             InitializeComponent();
         }
+
+        private void _go_to_product_list__Click(object sender, RoutedEventArgs e)
+        {
+            new ProductListWindow().Show();
+        }
+
+        private void _go_to_product_admin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

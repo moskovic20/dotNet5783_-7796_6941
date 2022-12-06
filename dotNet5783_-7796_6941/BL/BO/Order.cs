@@ -17,12 +17,18 @@ public class Order
     /// </summary>
     public string? ShippingAddress { get; set;}
 
+    /// <summary>
+    /// תאריך יצירת הזמנה
+    /// </summary>
     public DateTime? DateOrder { get; set; }
 
+    /// <summary>
+    /// מצב הזמנה
+    /// </summary>
     public OrderStatus Status { get; set; }
 
     /// <summary>
-    ///תאריך ביצוע הזמנה
+    ///תאריך ביצוע(תשלום) הזמנה
     /// </summary>
     public DateTime PaymentDate { get; set; }
     /// <summary>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="BoProductWindow" Height="640" Width="800">
-    <Grid Name="MainGrid" ShowGridLines="True" Background="pink">
+    <Grid Name="MainGrid" ShowGridLines="True" Background="#0000">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
@@ -19,10 +19,17 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <Label x:Name="category" Content="category:" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFF1B0EA" Width="400" Height="46" FontSize="24" FontWeight="Bold" FontFamily="Verdana Pro Black"/>
+            <Label x:Name="category" Content="category:" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#FFF1B0EA" Width="400" Height="46" FontSize="24" FontFamily="Yu Gothic UI" Foreground="#FFFCF9F9" FontWeight="Bold"/>
         </Grid>
-        <ComboBox Name="CategorySelector" Margin="400,0,0,0" BorderBrush="#FFF8D0F3"
-/>
+        <ComboBox Name="CategorySelector" Margin="400,0,0,0" BorderBrush="#FFF8D0F3"/>
+        <ListView Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View Name="ProductListView" >
+                
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
 
     </Grid>

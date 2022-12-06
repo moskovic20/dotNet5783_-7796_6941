@@ -15,14 +15,16 @@ internal class BoCart//: ICart
 
     BO.Cart AddProductToCart(BO.Cart cart, int id)
     {
-        Do.Product myP = dal.Product.GetById(id)?? throw new ArgumentNullException("missing product");
+        Do.Product myP = dal.Product.GetById(id) ?? throw new ArgumentNullException("missing product");
 
         if (cart.Items == null)
-            return cart;////לתקן!!!
+            return cart;////לתקן
 
-        bool isExist=cart.Items.Exists(x => x != null && x.ID == id);
-        if(isExist)
+        bool isExist = cart.Items.Exists(x => x != null && x.ID == id);
+        if (isExist)
         {
+            if (myP.InStock! > 0)
+                throw new BO.AddProductToCartProblemException("המוצר לא במלאי");
 
         }
     }

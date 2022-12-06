@@ -48,15 +48,12 @@ internal class DalOrderItem : IOrderItem
         _DS._OrderItems[indexOfOItemById] = myOItem;
     }
 
-    public OrderItem? GetById(int id)
+    public OrderItem GetById(int id)
     {
         OrderItem? OItem = _DS._OrderItems.Find(x => x.GetValueOrDefault().ID ==
                                                       id && x.GetValueOrDefault().IsDeleted != true);
 
-        if (OItem==null)
-            throw new DoesntExistException("The order item is not found");
-
-        return OItem;
+        return OItem?? throw new DoesntExistException("The order item is not found");
     }
 
     public void Update(OrderItem? item)
@@ -83,9 +80,10 @@ internal class DalOrderItem : IOrderItem
 
         List<OrderItem?> list = new List<OrderItem?>();
 
-        list = _DS._OrderItems.FindAll(x => x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfOrder == OrderID);
+        list = _DS._OrderItems.FindAll(x => x!=null&&x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfOrder == OrderID);
         if (list == null)
             throw new DoesntExistException("The order items are not found or this order is't exist");
+
         return list;
     }
 

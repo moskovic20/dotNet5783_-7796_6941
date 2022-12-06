@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.BoProducts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void מעבר_לתצוגת_מוצרים_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductListWindow().Show();
         }
     }
 }

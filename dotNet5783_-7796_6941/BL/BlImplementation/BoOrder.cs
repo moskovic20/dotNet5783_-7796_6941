@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
+using BO;
 
 
 namespace BlImplementation;
@@ -52,8 +53,8 @@ internal class BoOrder //: IOrder
                                 OrderID = O.GetValueOrDefault().ID,
                                 CuustomerName = O.GetValueOrDefault().NameCustomer,
                                 Status = calculateStatus(O.GetValueOrDefault().DateOrder, O.GetValueOrDefault().ShippingDate, O.GetValueOrDefault().DeliveryDate),
-                                AmountOfItems = O.CalculateAmountItems(),
-                                TotalPrice = Dal.Tools.CalculatePriceOfAllItems(O)
+                                AmountOfItems =O.CalculateAmountItems(),
+                                TotalPrice =O.CalculatePriceOfAllItems()
                             };
             return orderList;
         }

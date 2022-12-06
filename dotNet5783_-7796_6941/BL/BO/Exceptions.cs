@@ -18,6 +18,15 @@ public class GetAllForListProblemException : Exception
 }
 
 [Serializable]
+public class AddProductToCartProblemException : Exception
+{
+    public AddProductToCartProblemException() : base() { }
+    public AddProductToCartProblemException(string message) : base(message) { }
+    public AddProductToCartProblemException(string message, Exception inner) : base(message, inner) { }
+    protected AddProductToCartProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+}
+
+[Serializable]
 public class AddingProblemException : Exception
 {
     public AddingProblemException() : base() { }

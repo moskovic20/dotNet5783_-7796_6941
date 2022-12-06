@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.BoProducts"
         mc:Ignorable="d"
-        Title="ProductListWindow" Height="640" Width="800">
-    
+        Title="ProductListWindow" Height="450" Width="800">
+
     <Grid Name="MainGrid" ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -20,10 +20,18 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
+            <ComboBox x:Name="categoryFilter1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,-11,0,0" VerticalAlignment="Top" Width="400" Height="43" FontFamily="Miriam Fixed" FontSize="22"/>
 
-           
-            <Label Content="Label" HorizontalAlignment="Left" Margin="26,22,0,0" VerticalAlignment="Top" Width="208"/>
         </Grid>
+        <Label x:Name="categoryFilter" Content="Category :" HorizontalAlignment="Left" VerticalAlignment="Center" Width="400" Height="32" Background="#FFEFDFDF" FontFamily="Sitka Text" FontSize="20"/>
+        <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
 
     </Grid>
+
 </Window>

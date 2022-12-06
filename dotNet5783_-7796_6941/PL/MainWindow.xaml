@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="מעבר_לתצוגת_מוצרים" Content="הצג את רשימת הפריטים" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="62" Width="253" BorderBrush="#FFD09292" Background="#FFF8E6E6" FontSize="18" FontFamily="Sylfaen" BorderThickness="2,2,2,2" Click="מעבר_לתצוגת_מוצרים_Click"/>
 
     </Grid>
 </Window>

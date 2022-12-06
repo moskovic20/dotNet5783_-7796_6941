@@ -47,14 +47,11 @@ internal class DalOrder : IOrder
         _DS._Orders[indexOfOrderById] = myOrder;
     }
 
-    public Order? GetById(int id)
+    public Order GetById(int id)
     {
         Order? myOrder = _DS._Orders.Find(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted == false);
 
-        if (myOrder.GetValueOrDefault().ID == 0)
-            throw new DoesntExistException("The Order is not found\n");
-
-        return myOrder;
+        return myOrder ?? throw new DoesntExistException("The Order is not found\n"); ;
     }
 
     public void Update(Order? item)

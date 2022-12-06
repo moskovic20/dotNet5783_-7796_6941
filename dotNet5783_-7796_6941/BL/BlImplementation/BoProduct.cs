@@ -24,7 +24,7 @@ internal class BoProduct: IProduct
         if (products.Count() == 0)
             throw new Exception("");//לעשות חריגה מתאימה- אין מוצרים
 
-        return (IEnumerable<ProductForList>)products;
+        return (IEnumerable<BO.ProductForList>)products;
     }
 
     public BO.Product GetProductDetails_forM(int id)

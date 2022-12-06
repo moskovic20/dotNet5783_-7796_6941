@@ -76,7 +76,7 @@ public class DataSource
             #region Makes sure id is unique
             int pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
 
-            while (pWithTheSameId != -1)//To make sure this ID is unique.
+            while (pWithTheSameId !=-1)//To make sure this ID is unique.
             {
                 myP.ID = R.Next(100000, 999999999);
                 pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);

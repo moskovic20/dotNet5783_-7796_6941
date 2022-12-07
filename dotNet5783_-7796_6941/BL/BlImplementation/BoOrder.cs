@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using Do;
-//using BO;
 
 namespace BlImplementation;
 
@@ -60,12 +58,11 @@ internal class BoOrder //: IOrder
             var orderList = from O in dal.Order.GetAllExistsBy()
                             select new BO.OrderForList()
                             {
-                                OrderID = O.GetValueOrDefault().ID,
-                                CuustomerName = O.GetValueOrDefault().NameCustomer,
-                                Status = calculateStatus(O.GetValueOrDefault().DateOrder, O.GetValueOrDefault().ShippingDate, O.GetValueOrDefault().DeliveryDate),
-                                AmountOfItems = BO.Tools.CalculateAmountItems(O),
-                                TotalPrice = BO.Tools.CalculatePriceOfAllItems(O)
-
+                                OrderID = O.ID,
+                                CuustomerName = O.NameCustomer,
+                                Status = calculateStatus(O.DateOrder, O.ShippingDate, O.DeliveryDate),
+                                AmountOfItems =O.CalculateAmountItems(),
+                                TotalPrice =O.CalculatePriceOfAllItems()
                             };
             return orderList;
         }
@@ -83,7 +80,7 @@ internal class BoOrder //: IOrder
 
         try
         {
-            Do.Order? myOrder = dal.Order.GetById(id);
+            Do.Order myOrder = dal.Order.GetById(id);
             return new BO.Order()
             {
                 ID = myOrder.GetValueOrDefault().ID,

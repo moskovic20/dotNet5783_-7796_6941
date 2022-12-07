@@ -1,5 +1,4 @@
 ﻿using Do;
-
 using DalApi;
 using System.Collections.Generic;
 
@@ -11,9 +10,7 @@ internal class DalOrderItem : IOrderItem
 
     public int Add(OrderItem myOrderItem)
     {
-        myOrderItem.IsDeleted = false;
-
-        int indexOfMyOrderItem = _DS._OrderItems.FindIndex(x => x.GetValueOrDefault().ID == myOrderItem.ID);
+        int indexOfMyOrderItem = _DS._OrderItems.FindIndex(x => x?.ID == myOrderItem.ID);
 
         if (indexOfMyOrderItem == -1) //myOrderItem.ID is not found in _OrderItems
         {
@@ -22,7 +19,7 @@ internal class DalOrderItem : IOrderItem
             return myOrderItem.ID;
         }
 
-        if (_DS._OrderItems[indexOfMyOrderItem].GetValueOrDefault().IsDeleted == false)
+        if (_DS._OrderItems[indexOfMyOrderItem]?.IsDeleted == false)
             throw new AlreadyExistException("The order item you wish to add is already exists");
 
         _DS._OrderItems.Add(myOrderItem);
@@ -32,13 +29,13 @@ internal class DalOrderItem : IOrderItem
 
     public void Delete(int id)
     {
-        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted != true);  ///
+        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x?.ID == id && x?.IsDeleted != true);  
 
         if (indexOfOItemById == -1)
             throw new DoesntExistException("The order item you wanted to delete is not found");
 
 
-        OrderItem myOItem = _DS._OrderItems[indexOfOItemById].GetValueOrDefault();
+        OrderItem myOItem = _DS._OrderItems[indexOfOItemById] ?? new();
 
         if (myOItem.IsDeleted == true)
             throw new DoesntExistException("The order item you wanted to delete has already been deleted");
@@ -50,41 +47,39 @@ internal class DalOrderItem : IOrderItem
 
     public OrderItem GetById(int id)
     {
-        OrderItem? OItem = _DS._OrderItems.Find(x => x.GetValueOrDefault().ID ==
-                                                      id && x.GetValueOrDefault().IsDeleted != true);
+        OrderItem? OItem = _DS._OrderItems.FirstOrDefault(x => x?.ID == id && x?.IsDeleted != true);
 
         return OItem?? throw new DoesntExistException("The order item is not found");
     }
 
-    public void Update(OrderItem? item)
+    public void Update(OrderItem item)
     {
-        if (item == null)
-            throw new ArgumentNullException(nameof(item));
         try
         {
-            GetById(item.GetValueOrDefault().ID);
+            GetById(item.ID);
         }
         catch
         {
             throw new DoesntExistException("the order item can't be update because he doesn't exist");
         }
-        Delete(item.GetValueOrDefault().ID);
-        Add((OrderItem)item);
+        Delete(item.ID);
+        Add(item);
     }
 
-    public List<OrderItem?> GetListByOrderID(int OrderID)
+    public IEnumerable<OrderItem> GetListByOrderID(int OrderID)
     {
 
-        if (OrderID <= 0)
+        if (OrderID < 100000)
             throw new DoesntExistException("uncorect ID order");
 
-        List<OrderItem?> list = new List<OrderItem?>();
+        var list= from item in _DS._OrderItems
+                  where item!=null && item?.ID == OrderID
+                  select item;
 
-        list = _DS._OrderItems.FindAll(x => x!=null&&x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfOrder == OrderID);
-        if (list == null)
+        if (list.Count()==0)
             throw new DoesntExistException("The order items are not found or this order is't exist");
 
-        return list;
+        return (IEnumerable<OrderItem>)list;
     }
 
     public OrderItem GetByOrderIDProductID(int OrderID, int ProductID)
@@ -101,10 +96,7 @@ internal class DalOrderItem : IOrderItem
 
     public IEnumerable<OrderItem> GetAll()
     {
-        if (_DS._OrderItems == null)
-            throw new DoesntExistException("there is not any order items");
-
-        return (IEnumerable<OrderItem>)_DS._OrderItems;
+        return (IEnumerable<OrderItem>)_DS._OrderItems?? throw new DoesntExistException("there is not any order items");
     }
 
     /// <summary>
@@ -134,19 +126,23 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<OrderItem?> GetAllExistsBy(Func<OrderItem?, bool>? filter = null)
+    public IEnumerable<OrderItem> GetAllExistsBy(Func<OrderItem?, bool>? filter = null)
     {
         if (filter == null)
-            return from item in _DS._OrderItems
-                   where item!=null && item.Value.IsDeleted == false
+        {
+            var notFilterList= from item in _DS._OrderItems
+                   where item != null && item.Value.IsDeleted == false
                    select item;
 
-        var list = from item in _DS._OrderItems
+            return (IEnumerable<OrderItem>)notFilterList;
+        }
+
+        var filterlist = from item in _DS._OrderItems
                    where item.Value.IsDeleted == false
                    where filter(item)
                    select item;
 
-        return list;
+        return (IEnumerable<OrderItem>)filterlist;
     }
 }
 

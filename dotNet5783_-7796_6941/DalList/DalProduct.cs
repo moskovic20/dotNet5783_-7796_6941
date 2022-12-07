@@ -15,7 +15,7 @@ internal class DalProduct : IProduct
     {
         P.IsDeleted = false;
         Random random = new Random();
-        int indexOfMyP = _DS._Products.FindIndex(x => x.GetValueOrDefault().ID == P.ID);
+        int indexOfMyP = _DS._Products.FindIndex(x => x?.ID == P.ID);
 
         if (indexOfMyP == -1) //this product is not found in the data
         {
@@ -38,11 +38,11 @@ internal class DalProduct : IProduct
 
     public void Delete(int id)
     {
-        int getIdOfProduct = _DS._Products.FindIndex(x => x.GetValueOrDefault().ID == id && x.GetValueOrDefault().IsDeleted != true);
+        int getIdOfProduct = _DS._Products.FindIndex(x => x?.ID == id && x?.IsDeleted != true);
 
         if (getIdOfProduct != -1)
         {
-            if (_DS._Products[getIdOfProduct].GetValueOrDefault().IsDeleted == true)
+            if (_DS._Products[getIdOfProduct]?.IsDeleted == true)
                 throw new DoesntExistException("the product doesn't exist");
             else
             {
@@ -57,31 +57,28 @@ internal class DalProduct : IProduct
 
     public Product GetById(int id)
     {
-        Product? ProductById = _DS._Products.Find(x =>x.GetValueOrDefault().ID == id &&
-                                                           x.GetValueOrDefault().IsDeleted != true);
+        Product? ProductById = _DS._Products.FirstOrDefault(x => x?.ID == id && x?.IsDeleted != true);
 
         return ProductById ?? throw new DoesntExistException("the product is not found");
     }
 
-    public void Update(Product? item)
+    public void Update(Product item)
     {
-        if (item == null)
-            throw new ArgumentNullException(nameof(item));
         try
         {
-            GetById(item.GetValueOrDefault().ID);
+            GetById(item.ID);
         }
         catch
         {
             throw new DoesntExistException("the product can't be update because he doesn't exist");
         }
-        Delete(item.GetValueOrDefault().ID);
+        Delete(item.ID);
         Add((Product)item);
     }
 
     private bool IdIsFound(int myID)
     {
-        int indexOfSameId = _DS._Products.FindIndex(x => x.GetValueOrDefault().ID == myID);
+        int indexOfSameId = _DS._Products.FindIndex(x => x?.ID == myID);
 
         if (indexOfSameId == -1)
             return true;
@@ -92,10 +89,8 @@ internal class DalProduct : IProduct
 
     public IEnumerable<Product> GetAll()
     {
-        if (_DS._Products == null)
-            throw new DoesntExistException("there is not any products");
-
-        return (IEnumerable<Product>)_DS._Products;
+        //return (IEnumerable<Product>)_DS._Products?? throw new DoesntExistException("there is not any products");
+        return GetAllBy();
     }
 
     /// <summary>
@@ -104,19 +99,23 @@ internal class DalProduct : IProduct
     /// <param name="filter"></param>
     /// <returns></returns>
     /// <exception cref="NotFounfException"></exception>
-    public IEnumerable<Product?> GetAllBy(Func<Product?, bool>? filter = null)
+    public IEnumerable<Product> GetAllBy(Func<Product?, bool>? filter = null)
     {
         if (filter == null)
-            return _DS._Products;
+        {
+            var notFilterList = from item in _DS._Products
+                                where item != null
+                                select item;
 
-        var list = from item in _DS._Products
-                   where item!=null&&filter(item)
-                   select item;
+            return (IEnumerable<Product>)notFilterList;
+        }
 
-        if (list.Count() == 0)
-            throw new DoesntExistException("there is not any products");
 
-        return list;
+        var Filterlist = from item in _DS._Products
+                         where item!=null && filter(item)
+                         select item;
+
+        return (IEnumerable<Product>)Filterlist;
     }
 
 
@@ -125,19 +124,22 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Product?> GetAllExistsBy(Func<Product?, bool>? filter = null)
+    public IEnumerable<Product> GetAllExistsBy(Func<Product?, bool>? filter = null)
     {
         if (filter == null)
-            return from item in _DS._Products
-                    where item!=null&&item.Value.IsDeleted == false
-                    select item;
+        {
+            var notFilterList = from item in _DS._Products
+                                where item != null && item.Value.IsDeleted == false
+                                select item;
 
-        var list = from item in _DS._Products
-                   where item.Value.IsDeleted == false
-                   where item != null
-                   where filter(item)
-                   select item;
+            return (IEnumerable<Product>)notFilterList;
+        }
 
-        return list;
+
+        var filterList= from item in _DS._Products
+               where item != null && item.Value.IsDeleted == false && filter(item)
+               select item;
+
+        return (IEnumerable<Product>)filterList;
     }
 }

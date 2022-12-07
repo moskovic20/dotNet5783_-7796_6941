@@ -83,16 +83,16 @@ internal class BoOrder //: IOrder
             Do.Order myOrder = dal.Order.GetById(id);
             return new BO.Order()
             {
-                ID = myOrder.GetValueOrDefault().ID,
-                Email = myOrder.GetValueOrDefault().Email,
-                ShippingAddress = myOrder.GetValueOrDefault().ShippingAddress,
-                DateOrder = myOrder.GetValueOrDefault().DateOrder?? throw new ArgumentNullException("there is no vall in DateOrder"),//should be nullable?
-                Status = calculateStatus(myOrder.GetValueOrDefault().DateOrder, myOrder.GetValueOrDefault().ShippingDate, myOrder.GetValueOrDefault().DeliveryDate),
-                PaymentDate = myOrder.GetValueOrDefault().DateOrder ?? null,//should be nullable?//לתקןןן!! לשים פה ערך תקין
-                ShippingDate = myOrder.GetValueOrDefault().ShippingDate,
-                DeliveryDate= myOrder.GetValueOrDefault().DeliveryDate,
+                ID = myOrder.ID,
+                Email = myOrder.Email,
+                ShippingAddress = myOrder.ShippingAddress,
+                DateOrder = myOrder.DateOrder?? throw new ArgumentNullException("there is no vall in DateOrder"),//should be nullable?
+                Status = calculateStatus(myOrder.DateOrder, myOrder.ShippingDate, myOrder.DeliveryDate),
+                PaymentDate = myOrder.DateOrder ?? null,//should be nullable?//לתקןןן!! לשים פה ערך תקין
+                ShippingDate = myOrder.ShippingDate,
+                DeliveryDate= myOrder.DeliveryDate,
                 // Items = dal.OrderItem.GetListByOrderID(myOrder.GetValueOrDefault().ID)  casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
-                TotalPrice= BO.Tools.CalculatePriceOfAllItems(myOrder)
+                TotalPrice= myOrder.CalculatePriceOfAllItems()
             };
         }
         catch(Exception ex)
@@ -114,12 +114,12 @@ internal class BoOrder //: IOrder
             throw new BO.GetDetailsProblemException("Negative ID");
         try
         {
-            Order? myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
+            Do.Order myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
             datePosibleExceptiones(myOrder);
 
-            if (myOrder.GetValueOrDefault().ShippingDate == null && myOrder.GetValueOrDefault().DeliveryDate == null) //____we can update like we was asked for____
+            if (myOrder.ShippingDate == null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
             {
-                Order order = myOrder.GetValueOrDefault();
+                Do.Order order = myOrder;
                 order.ShippingDate = DateTime.Now;
                 if (order.DateOrder > order.ShippingDate)
                     throw new ArgumentException("rong information,cant be possible that DateOrder > ShippingDate");
@@ -150,12 +150,12 @@ internal class BoOrder //: IOrder
             throw new BO.GetDetailsProblemException("Negative ID");
         try
         {
-            Order? myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
+            Do.Order myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
             datePosibleExceptiones(myOrder);
 
-             if (myOrder.GetValueOrDefault().ShippingDate != null && myOrder.GetValueOrDefault().DeliveryDate == null) //____we can update like we was asked for____
+             if (myOrder.ShippingDate != null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
             { 
-                Order order = myOrder.GetValueOrDefault();
+                Do.Order order = myOrder;
                 order.DeliveryDate = DateTime.Now;
                 if (order.ShippingDate > order.DeliveryDate)
                     throw new ArgumentException("rong information,cant be possible that ShippingDate > DeliveryDate");
@@ -181,14 +181,14 @@ internal class BoOrder //: IOrder
 
         try
         {
-            Do.Order? myOrder = dal.Order.GetById(id);
+            Do.Order myOrder = dal.Order.GetById(id);
             return new BO.OrderTracking()
             {
-                ID = myOrder.GetValueOrDefault().ID,
-                Status = calculateStatus(myOrder.GetValueOrDefault().DateOrder, myOrder.GetValueOrDefault().ShippingDate, myOrder.GetValueOrDefault().DeliveryDate),
+                ID = myOrder.ID,
+                Status = calculateStatus(myOrder.DateOrder, myOrder.ShippingDate, myOrder.DeliveryDate),
                 //Tracking
 
-            }
+            };
         }
         catch(Exception ex)
         {

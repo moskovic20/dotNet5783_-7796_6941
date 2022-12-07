@@ -13,7 +13,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Folder Include="BlApi\" />
+	  <Compile Remove="BlApi\**" />
+	  <EmbeddedResource Remove="BlApi\**" />
+	  <None Remove="BlApi\**" />
 	</ItemGroup>
 
 </Project>

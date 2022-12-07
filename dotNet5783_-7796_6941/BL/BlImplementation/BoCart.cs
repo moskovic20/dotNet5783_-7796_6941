@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
+
 
 
 namespace BlImplementation;
@@ -21,7 +21,7 @@ internal class BoCart//: ICart
 
         Do.Product myP = dal.Product.GetById(id);//הבאת פרטי מוצר
 
-        BO.OrderItem myOI = cart.Items.FirstOrDefault(x => x?.ID == id)??;//בודק האם המוצר כבר נמצא בסל הקניות
+        BO.OrderItem? myOI = cart.Items.FirstOrDefault(x => x?.ID == id);//בודק האם המוצר כבר נמצא בסל הקניות
 
 
         if (myP.InStock! > 0)

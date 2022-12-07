@@ -1,5 +1,4 @@
-﻿using Do;
-using DO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO;
+namespace BlApi;
 
 public static class Tools
 {
@@ -19,7 +18,7 @@ public static class Tools
     /// <typeparam name="T">generic type</typeparam>
     /// <param name="t">"this" type</param>
     /// <returns></returns>
-    public static string ToStringProperty<T>(this T? t)
+    public static string ToStringProperty<T>(this T? t)                   
     {
 
         string str = "";
@@ -84,7 +83,7 @@ public static class Tools
     #region חישוב מספר פריטים בכל הזמנה לפי מספר הזמנה
     public static int CalculateAmountItems(this Do.Order order)
     {
-      
+
         int amountOfItems = 0;
 
         //if (order == null)
@@ -104,7 +103,7 @@ public static class Tools
         double Price = 0;
 
         List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID);
-        Price = (double)listforAmount.Sum(o => o.amountOfItem ?? 0 * o.priceOfOneItem ??throw new Exception("אין מחיר!!"));
+        Price = (double)listforAmount.Sum(o => o.amountOfItem ?? 0 * o.priceOfOneItem ?? throw new Exception("אין מחיר!!"));
         return Price;
     }
 

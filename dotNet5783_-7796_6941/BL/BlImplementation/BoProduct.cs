@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -18,8 +17,7 @@ internal class BoProduct: IProduct
     public IEnumerable<BO.ProductForList> GetAllProductForList()
     {
         var products = from P in dal.Product.GetAllExistsBy()
-                       where P != null
-                       select BO.Tools.CopyPropertiesToNew(P, typeof(BO.ProductForList));
+                       select BlApi.Tools.CopyPropertiesToNew(P, typeof(BO.ProductForList));
 
         if (products.Count() == 0)
             throw new Exception("");//לעשות חריגה מתאימה- אין מוצרים

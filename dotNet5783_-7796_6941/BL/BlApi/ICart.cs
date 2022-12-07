@@ -1,15 +1,12 @@
-﻿using BO;
-using System.Runtime.InteropServices;
+﻿
 
 namespace BlApi;
 
 public interface ICart
 {
-    Cart AddProductToCart(Cart cart, int IDOfProduct);//List Cart?
-    Cart UpdateProductAmountInCart(Cart cart, int IDOfProduct, ImportedFromTypeLibAttribute NewSumOfProduct); 
+    BO.Cart AddProductToCart(BO.Cart cart, int IdOfProduct);
 
-    void MakingTheOrderFromCart(Cart cart);
+    BO.Cart UpdateProductAmountInCart(BO.Cart cart, int IDOfProduct, int NewSumOfProduct); 
 
-
-
+    void MakingTheOrderFromCart(BO.Cart cart);
 }

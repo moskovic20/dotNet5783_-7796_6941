@@ -55,15 +55,12 @@ internal class DalProduct : IProduct
             throw new DoesntExistException("the product doesn't exist");
     }
 
-    public Product? GetById(int id)
+    public Product GetById(int id)
     {
-        Product? ProductById = _DS._Products.Find(x => x!=null&&x.GetValueOrDefault().ID ==
-                                                        id && x.GetValueOrDefault().IsDeleted != true);
+        Product? ProductById = _DS._Products.Find(x =>x.GetValueOrDefault().ID == id &&
+                                                           x.GetValueOrDefault().IsDeleted != true);
 
-        if (ProductById==null)
-            throw new DoesntExistException("the product is not found");///ok?
-
-        return ProductById;
+        return ProductById ?? throw new DoesntExistException("the product is not found");
     }
 
     public void Update(Product? item)
@@ -137,6 +134,7 @@ internal class DalProduct : IProduct
 
         var list = from item in _DS._Products
                    where item.Value.IsDeleted == false
+                   where item != null
                    where filter(item)
                    select item;
 

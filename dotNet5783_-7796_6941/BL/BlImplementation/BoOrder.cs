@@ -9,7 +9,7 @@ using Do;
 
 namespace BlImplementation;
 
-internal class BoOrder: IOrder
+internal class BoOrder //: IOrder
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
@@ -79,7 +79,6 @@ internal class BoOrder: IOrder
                 ID = myOrder.GetValueOrDefault().ID,
                 Email = myOrder.GetValueOrDefault().Email,
                 ShippingAddress = myOrder.GetValueOrDefault().ShippingAddress,
-                DateOrder = myOrder.GetValueOrDefault().DateOrder,
                 Status = calculateStatus(myOrder.GetValueOrDefault().DateOrder, myOrder.GetValueOrDefault().ShippingDate,
                                                                                   myOrder.GetValueOrDefault().DeliveryDate),
                 PaymentDate = DateTime.MinValue,//לתקןןן!! לשים פה ערך תקין
@@ -149,17 +148,17 @@ internal class BoOrder: IOrder
         }
 
 
-    }
+    //}
 
-    BO.Order UpdateOrderDelivery(int id)
-    {
+    //BO.Order UpdateOrderDelivery(int id)
+    //{
 
-    }
+    //}
 
-    BO.OrderTracking GetOrderTracking(int id)
-    {
+    //BO.OrderTracking GetOrderTracking(int id)
+    //{
 
-    }
+    //}
 
     void UpdateOrder(int id)
     {

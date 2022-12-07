@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL.BoProducts
 {
     /// <summary>
-    /// Interaction logic for BoProductWindow.xaml
+    /// Interaction logic for ProductListWindow.xaml
     /// </summary>
-    public partial class BoProductWindow : Window
+    public partial class ProductListWindow : Window
     {
-        public BoProductWindow()
+        public ProductListWindow()
         {
             InitializeComponent();
         }

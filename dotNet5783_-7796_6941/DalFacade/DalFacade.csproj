@@ -12,5 +12,9 @@
 		<RootNamespace />
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <Folder Include="BlApi\" />
+	</ItemGroup>
+
 </Project>
 

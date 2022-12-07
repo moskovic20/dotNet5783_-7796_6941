@@ -431,7 +431,7 @@ d: delivery date");
         int id, idOrder, idProduct, numOfItem;
         //double price;
         char choose;
-        List<OrderItem>? listOrderItems = new List<OrderItem>();
+        List<OrderItem?>? listOrderItems = new List<OrderItem?>();
         #endregion
 
         do
@@ -595,8 +595,10 @@ d: to finish the update");
                         OI.ID = id;
 
                         listOrderItems = DL.OrderItem.GetListByOrderID(id);
-                        foreach (OrderItem item in listOrderItems)
-                            Console.WriteLine("\n" + item);
+                        foreach (OrderItem? item in listOrderItems)
+                        {
+                            Console.WriteLine("\n" + item); 
+                        }
 
                         #endregion
                         break;

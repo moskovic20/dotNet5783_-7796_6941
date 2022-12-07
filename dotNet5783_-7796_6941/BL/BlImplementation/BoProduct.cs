@@ -24,7 +24,7 @@ internal class BoProduct: IProduct
         if (products.Count() == 0)
             throw new Exception("");//לעשות חריגה מתאימה- אין מוצרים
 
-        return (IEnumerable<ProductForList>)products;
+        return (IEnumerable<BO.ProductForList>)products;
     }
 
     public BO.Product GetProductDetails_forM(int id)
@@ -33,7 +33,7 @@ internal class BoProduct: IProduct
         {
             Do.Product? myP = dal.Product.GetById(id);
             BO.Product BoMyP = new();
-            BO.Tools.CopyPropertiesTo(myP, BoMyP);
+            myP.CopyPropertiesTo(BoMyP);
             return BoMyP;
         }
         catch (Exception ex)
@@ -63,7 +63,7 @@ internal class BoProduct: IProduct
         try
         {
             Do.Product myNewP = new();
-            BO.Tools.CopyPropertiesTo(productToAdd, myNewP);
+            productToAdd.CopyPropertiesTo(myNewP);
 
             dal.Product.Add((Do.Product)myNewP);
         }
@@ -94,7 +94,7 @@ internal class BoProduct: IProduct
             Do.Product? myP = dal.Product.GetById(id);//הבאת המוצר הרצוי
 
             BO.ProductItem pForClient = new();
-            BO.Tools.CopyPropertiesTo(myP, pForClient);
+            myP.CopyPropertiesTo(pForClient);
 
             pForClient.InStock = (myP.GetValueOrDefault().InStock > 0) ? true : false;
 
@@ -138,7 +138,7 @@ internal class BoProduct: IProduct
             throw new BO.UpdateProblemException("Negative amount");
 
         Do.Product DoProductToUp = new();
-        BO.Tools.CopyPropertiesTo(productToUp, DoProductToUp);
+        productToUp.CopyPropertiesTo(DoProductToUp);
         try
         {
             dal.Product.Update(DoProductToUp);

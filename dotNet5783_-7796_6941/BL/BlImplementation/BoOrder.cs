@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
+using BO;
 
 namespace BlImplementation;
 
@@ -12,7 +13,7 @@ internal class BoOrder //: IOrder
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
     #region   חישוב סטטוס להזמנה 
-    private static BO.OrderStatus calculateStatus(DateTime? DateO, DateTime? ShippingD, DateTime? DeliveryD ) 
+    private static BO.OrderStatus calculateStatus( DateTime? ShippingD, DateTime? DeliveryD ) 
     {
         if (DeliveryD != null)
             return BO.OrderStatus.Completed;
@@ -32,15 +33,17 @@ internal class BoOrder //: IOrder
         if (or.GetValueOrDefault().ShippingDate == null && or.GetValueOrDefault().DeliveryDate != null)
             throw new ArgumentException("order allredy delivered but there is no info about the shipping date");
 
-        if (or.GetValueOrDefault().ShippingDate != null && or.GetValueOrDefault().DateOrder > or.GetValueOrDefault().ShippingDate)
-            throw new ArgumentException("rong information,cant be possible that DateOrder > ShippingDate");
 
-        if (or.GetValueOrDefault().DeliveryDate != null && or.GetValueOrDefault().DateOrder > or.GetValueOrDefault().DeliveryDate)
-            throw new ArgumentException("rong information,cant be possiblecant be possible that DateOrder > DeliveryDate");
+        //----------------לא נכון בשלב שכבה זו לבדוק כאלה חריגות---------------------
+        //if (or.GetValueOrDefault().ShippingDate != null && or.GetValueOrDefault().DateOrder > or.GetValueOrDefault().ShippingDate)
+        //    throw new ArgumentException("rong information,cant be possible that DateOrder > ShippingDate");
 
-        if (or.GetValueOrDefault().ShippingDate != null && or.GetValueOrDefault().DeliveryDate != null
-                                                         && or.GetValueOrDefault().ShippingDate > or.GetValueOrDefault().DeliveryDate)
-            throw new ArgumentException("rong information,cant be possible ShippingDate > DeliveryDate");
+        //if (or.GetValueOrDefault().DeliveryDate != null && or.GetValueOrDefault().DateOrder > or.GetValueOrDefault().DeliveryDate)
+        //    throw new ArgumentException("rong information,cant be possiblecant be possible that DateOrder > DeliveryDate");
+
+        //if (or.GetValueOrDefault().ShippingDate != null && or.GetValueOrDefault().DeliveryDate != null
+        //                                                 && or.GetValueOrDefault().ShippingDate > or.GetValueOrDefault().DeliveryDate)
+        //    throw new ArgumentException("rong information,cant be possible ShippingDate > DeliveryDate");
 
         if (or.GetValueOrDefault().ShippingDate != null && or.GetValueOrDefault().DeliveryDate != null)//evrything allready got heandeled
             throw new ArgumentException("order allredy delivered");
@@ -60,7 +63,7 @@ internal class BoOrder //: IOrder
                             {
                                 OrderID = O.ID,
                                 CuustomerName = O.NameCustomer,
-                                Status = calculateStatus(O.DateOrder, O.ShippingDate, O.DeliveryDate),
+                                Status = calculateStatus( O.ShippingDate, O.DeliveryDate),
                                 AmountOfItems =O.CalculateAmountItems(),
                                 TotalPrice =O.CalculatePriceOfAllItems()
                             };
@@ -77,7 +80,6 @@ internal class BoOrder //: IOrder
         if (id < 0)
             throw new BO.GetDetailsProblemException("Negative ID");
 
-
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);
@@ -86,13 +88,15 @@ internal class BoOrder //: IOrder
                 ID = myOrder.ID,
                 Email = myOrder.Email,
                 ShippingAddress = myOrder.ShippingAddress,
-                DateOrder = myOrder.DateOrder?? throw new ArgumentNullException("there is no vall in DateOrder"),//should be nullable?
-                Status = calculateStatus(myOrder.DateOrder, myOrder.ShippingDate, myOrder.DeliveryDate),
-                PaymentDate = myOrder.DateOrder ?? null,//should be nullable?//לתקןןן!! לשים פה ערך תקין
+                DateOrder = myOrder.DateOrder ?? throw new ArgumentNullException("there is no vall in DateOrder"),//should be nullable?
+                Status = calculateStatus(myOrder.ShippingDate, myOrder.DeliveryDate),
+                PaymentDate = myOrder.DateOrder ?? null,//should be nullable?
                 ShippingDate = myOrder.ShippingDate,
-                DeliveryDate= myOrder.DeliveryDate,
-                // Items = dal.OrderItem.GetListByOrderID(myOrder.GetValueOrDefault().ID)  casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
-                TotalPrice= myOrder.CalculatePriceOfAllItems()
+                DeliveryDate = myOrder.DeliveryDate,
+            //    var itemCasting = (dal.OrderItem.GetListByOrderID(myOrder.ID)).AsEnumerable(BO.OrderItem) //casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
+            
+            //Items = itemCasting;
+            TotalPrice = myOrder.CalculatePriceOfAllItems()
             };
         }
         catch(Exception ex)
@@ -101,6 +105,20 @@ internal class BoOrder //: IOrder
         }
 
 
+    }
+
+    private List<BO.OrderItem?> ListFromDoToBo(List<Do.OrderItem?> orderItems)
+    {
+
+        var itemCasting = from item in orderItems
+                          where item != null
+                          select item.CopyPropertiesTo(orderItems);
+
+        ////    var myItems = from item in cart.Items
+        ////                  where item != null && item.ID == id
+        ////                  select item;
+        ////pForClient.Amount = myItems.Count();
+        return itemCasting;
     }
 
     /// <summary>
@@ -115,17 +133,20 @@ internal class BoOrder //: IOrder
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
-            datePosibleExceptiones(myOrder);
+            datePosibleExceptiones(myOrder);//exceptions
 
             if (myOrder.ShippingDate == null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
             {
-                Do.Order order = myOrder;
-                order.ShippingDate = DateTime.Now;
-                if (order.DateOrder > order.ShippingDate)
-                    throw new ArgumentException("rong information,cant be possible that DateOrder > ShippingDate");
+                //Do.Order order = myOrder;
+
+                if (myOrder.DateOrder > DateTime.Now)
+                    throw new ArgumentException("rong information,cant be possible that DateOrder > ShippingDate"); //exceptions
                 else
-                    dal.Order.Update(order);
-                return GetOrdertDetails(id); ////לטפל בחריגות מהפונק הזאת   
+                {
+                    myOrder.ShippingDate = DateTime.Now;
+                    dal.Order.Update(myOrder);
+                    return GetOrdertDetails(id); ////לטפל בחריגות מהפונק הזאת   
+                }
             }
             else
                 throw new BO.GetDetailsProblemException("Can't get this order correct ditales");//////ok exception?
@@ -154,14 +175,17 @@ internal class BoOrder //: IOrder
             datePosibleExceptiones(myOrder);
 
              if (myOrder.ShippingDate != null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
-            { 
-                Do.Order order = myOrder;
-                order.DeliveryDate = DateTime.Now;
-                if (order.ShippingDate > order.DeliveryDate)
+            {
+
+                
+                if (myOrder.ShippingDate > DateTime.Now)
                     throw new ArgumentException("rong information,cant be possible that ShippingDate > DeliveryDate");
                 else
-                    dal.Order.Update(order);
-                return GetOrdertDetails(id); ////לטפל בחריגות מהפונק הזאת  
+                {   
+                    myOrder.DeliveryDate = DateTime.Now;
+                    dal.Order.Update(myOrder);
+                    return GetOrdertDetails(id); ////לטפל בחריגות מהפונק הזאת  
+                }
              }
              else
                 throw new BO.GetDetailsProblemException("Can't get this order correct ditales");//////ok exception?
@@ -174,6 +198,12 @@ internal class BoOrder //: IOrder
 
     }
 
+    /// <summary>
+    /// אובייקט להסבר מצב תהליך ההזמנה
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.GetDetailsProblemException"></exception>
     BO.OrderTracking GetOrderTracking(int id)
     {
         if (id < 0)
@@ -185,14 +215,13 @@ internal class BoOrder //: IOrder
             return new BO.OrderTracking()
             {
                 ID = myOrder.ID,
-                Status = calculateStatus(myOrder.DateOrder, myOrder.ShippingDate, myOrder.DeliveryDate),
-                //Tracking
-
+                Status = calculateStatus(myOrder.ShippingDate, myOrder.DeliveryDate),///------אופציה להוסיף כבונוס תאריך משוער למה שלא קיים לו ערך-------
+                Tracking = myOrder.TrackingHealper()
             };
         }
-        catch(Exception ex)
+        catch(Do.DoesntExistException ex)
         {
-
+            throw new BO.GetDetailsProblemException("Can't get this order", ex);
         }
     }
 

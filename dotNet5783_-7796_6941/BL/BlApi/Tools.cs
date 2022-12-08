@@ -1,5 +1,6 @@
 ﻿using BO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -18,17 +19,35 @@ public static class Tools
     /// <typeparam name="T">generic type</typeparam>
     /// <param name="t">"this" type</param>
     /// <returns></returns>
-    public static string ToStringProperty<T>(this T? t)                   
+    public static string ToStringProperty<T>(this T t, string suffix = "") //מעבר כולל גם על אוספים
     {
-
         string str = "";
-        if (t == null) return str;
+        foreach (PropertyInfo item in t!.GetType().GetProperties())
+        {
 
-        foreach (PropertyInfo item in t.GetType().GetProperties())
-            str += "\n" + item.Name ?? "no name" + ": " + item.GetValue(t, null);
+            var value = item.GetValue(t, null);
+            if (value is IEnumerable)
+            {
+                str += $"\n{item.Name}: ";
+                foreach (var item2 in (IEnumerable)value)
+                    str += item2.ToStringProperty("  ");
+            }
+            else
+                str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+        }
         return str;
     }
 
+    //public static string ToStringProperty<T>(this T? t)                   
+    //{
+
+    //    string str = "";
+    //    if (t == null) return str;
+
+    //    foreach (PropertyInfo item in t.GetType().GetProperties())
+    //        str += "\n" + item.Name ?? "no name" + ": " + item.GetValue(t, null);
+    //    return str;
+    //}
 
     //copy elements of BO to DO and vice versa
     public static void CopyPropertiesTo<T, S>(this S from, T to)
@@ -106,11 +125,19 @@ public static class Tools
         Price = (double)listforAmount.Sum(o => o.amountOfItem ?? 0 * o.priceOfOneItem ?? throw new Exception("אין מחיר!!"));
         return Price;
     }
-
-    public static int c(this Do.Order order)
-    {
-        return 3;
-    }
-
     #endregion
+
+    #region Tupleחישוב מסע ההזמנה ותיעוד ב
+    public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
+    {
+        List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>()
+        {
+                (or.DateOrder!= null)? new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered"):null,
+                (or.ShippingDate!= null)? new Tuple<DateTime, string>((DateTime)or.ShippingDate  , "order shipped" ):null,
+                (or.DeliveryDate!= null)? new Tuple<DateTime, string>((DateTime)or.DeliveryDate , "order delivered"):null,
+        };
+        return list;
+    }
+    #endregion
+    
 }

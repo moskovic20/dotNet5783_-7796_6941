@@ -1,5 +1,6 @@
 ﻿using BO;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -20,17 +21,35 @@ public static class Tools
     /// <typeparam name="T">generic type</typeparam>
     /// <param name="t">"this" type</param>
     /// <returns></returns>
-    public static string ToStringProperty<T>(this T? t)                   
+    public static string ToStringProperty<T>(this T t, string suffix = "") //מעבר כולל גם על אוספים
     {
-
         string str = "";
-        if (t == null) return str;
+        foreach (PropertyInfo item in t!.GetType().GetProperties())
+        {
 
-        foreach (PropertyInfo item in t.GetType().GetProperties())
-            str += "\n" + item.Name ?? "no name" + ": " + item.GetValue(t, null);
+            var value = item.GetValue(t, null);
+            if (value is IEnumerable)
+            {
+                str += $"\n{item.Name}: ";
+                foreach (var item2 in (IEnumerable)value)
+                    str += item2.ToStringProperty("  ");
+            }
+            else
+                str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+        }
         return str;
     }
 
+    //public static string ToStringProperty<T>(this T? t)                   
+    //{
+
+    //    string str = "";
+    //    if (t == null) return str;
+
+    //    foreach (PropertyInfo item in t.GetType().GetProperties())
+    //        str += "\n" + item.Name ?? "no name" + ": " + item.GetValue(t, null);
+    //    return str;
+    //}
 
     //copy elements of BO to DO and vice versa
     public static void CopyPropertiesTo<T, S>(this S from, T to)
@@ -55,32 +74,17 @@ public static class Tools
 
 
     #region   חישוב סטטוס להזמנה וזריקת חריגות
-    public static OrderStatus calculateStatus(this Do.Order order)
+    private static BO.OrderStatus calculateStatus(this Do.Order or)
     {
-        DateTime? DateO = order.DateOrder;
-        DateTime? ShippingD = order.ShippingDate;
-        DateTime? DeliveryD = order.DeliveryDate;
-
-        #region חריגות אפשריות בזמנים
-        if (DateO == null)
-            throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
-        if (ShippingD == null && DeliveryD == null)
-            throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
-        if (ShippingD == null && DeliveryD != null || ShippingD != null && DateO > ShippingD
-                   || DeliveryD != null && DateO > DeliveryD || ShippingD != null && DeliveryD != null && ShippingD > DeliveryD)
-            throw new ArgumentException("rong information,cant be possible");          /////////exceptions
-        #endregion
-
-        // -------------Calculate the Status--------------
-
-        if (ShippingD == null)
-            return OrderStatus.Pending;
-        if (DeliveryD == null)
-            return OrderStatus.Processing;
+        if (or.DeliveryDate != null)
+            return BO.OrderStatus.Completed;
+        if (or.ShippingDate != null)
+            return BO.OrderStatus.Processing;
         else
-            return OrderStatus.Completed;
+            return BO.OrderStatus.Pending;
     }
     #endregion
+
 
     #region חישוב מספר פריטים בכל הזמנה לפי מספר הזמנה
     public static int CalculateAmountItems(this Do.Order order)
@@ -104,16 +108,52 @@ public static class Tools
     {
         double Price = 0;
 
-        List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID);
-        Price = (double)listforAmount.Sum(o => o.AmountOfItem ?? 0 * o.PriceOfOneItem ?? throw new Exception("אין מחיר!!"));
+        List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
+        Price = (double)listforAmount.Sum(o => o.amountOfItem ?? 0 * o.priceOfOneItem ?? throw new Exception("אין מחיר!!"));
         return Price;
     }
+    #endregion
 
-    public static int c(this Do.Order order)
+    #region Tupleחישוב מסע ההזמנה ותיעוד ב
+    public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
     {
-        return 3;
+        List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>()
+        {
+                (or.DateOrder!= null)? new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered"):null,
+                (or.ShippingDate!= null)? new Tuple<DateTime, string>((DateTime)or.ShippingDate  , "order shipped" ):null,
+                (or.DeliveryDate!= null)? new Tuple<DateTime, string>((DateTime)or.DeliveryDate , "order delivered"):null,
+        };
+        return list;
     }
+    #endregion
 
+    #region המרת רשימה של אובייקטים מסוג פריט-הזמנה משכבת הנתונים לשכבת הלוגיקה עם השינויים הנדרשים
+    public static List<BO.OrderItem?> ListFromDoToBo(this IEnumerable<Do.OrderItem> orderItems)
+    {
+        List<BO.OrderItem?> itemsCasting = new List<BO.OrderItem?>();
+        foreach (Do.OrderItem item in orderItems)
+        {
+            itemsCasting.Add(new BO.OrderItem()
+            {
+                ID = item.ID,
+                NameOfBook = (dal.Product.GetById(item.ID)).NameOfBook,//name of the product by his order ID
+                priceOfOneItem = item.priceOfOneItem,
+                Amount = item.amountOfItem ?? 0,///
+                TotalPrice = item.priceOfOneItem * item.amountOfItem
+            });
+
+        }
+
+        //var itemCasting = from item in orderItems
+        //                  where item != null
+        //                  select orderItems.CopyPropertiesTo(item);
+
+        //    var myItems = from item in cart.Items
+        //                  where item != null && item.ID == id
+        //                  select item;
+        //pForClient.Amount = myItems.Count();
+        return itemsCasting;
+    }
     #endregion
 
 
@@ -160,4 +200,5 @@ public static class Tools
             return false;
         }
     }
-}
+
+ 

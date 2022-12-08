@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using BlApi;
 namespace BO;
+
 
 public class OrderItem
 {
@@ -26,7 +27,7 @@ public class OrderItem
     /// <summary>
     ///מחיר של יחידת מוצר 1 
     /// </summary>
-    public double Price { get; set; }
+    public double? priceOfOneItem { get; set; }
     
     /// <summary>
     /// כמות הפריטים של מוצר זה בהזמנה
@@ -36,7 +37,7 @@ public class OrderItem
     /// <summary>
     /// מחיר כולל של הפריט
     /// </summary>
-    public double TotalPrice { get; set; }
+    public double? TotalPrice { get; set; }
 
 
     public override string ToString()

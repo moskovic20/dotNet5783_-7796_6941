@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using BlApi;
 namespace BO;
 
 public class Order
@@ -24,12 +24,17 @@ public class Order
     public string? ShippingAddress { get; set;}
 
     /// <summary>
-    /// מצב ההזמנה
+    /// תאריך יצירת הזמנה
+    /// </summary>
+    public DateTime DateOrder { get; set; }
+
+    /// <summary>
+    /// מצב הזמנה
     /// </summary>
     public OrderStatus Status { get; set; }
 
     /// <summary>
-    ///תאריך ביצוע הזמנה
+    ///תאריך ביצוע(תשלום) הזמנה
     /// </summary>
     public DateTime? PaymentDate { get; set; }
     /// <summary>

@@ -29,12 +29,12 @@ public struct OrderItem
     /// <summary>
     /// price of this current item on store
     /// </summary>
-    public double? priceOfOneItem { get; set; }
+    public double? PriceOfOneItem { get; set; }
 
     /// <summary>
     /// number of this book in the order
     /// </summary>
-    public int? amountOfItem { get; set; }
+    public int? AmountOfItem { get; set; }
 
     /// <summary>
     /// Should this orderItem be considered deleted?

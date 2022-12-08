@@ -65,7 +65,13 @@ internal class DalOrderItem : IOrderItem
         Delete(item.ID);
         Add(item);
     }
-
+    
+    /// <summary>
+    /// הפונקציה מקבלת מספר הזמנה ומחזירה רשימה של כל המוצרים שבהזמנה זו
+    /// </summary>
+    /// <param name="OrderID"></param>
+    /// <returns></returns>
+    /// <exception cref="DoesntExistException"></exception>
     public IEnumerable<OrderItem> GetListByOrderID(int OrderID)
     {
 
@@ -82,9 +88,16 @@ internal class DalOrderItem : IOrderItem
         return (IEnumerable<OrderItem>)list;
     }
 
+    /// <summary>
+    /// הפונקציה מקבלת מזהה של מוצר ושל הזמנה ומחזירה את הפריט בהזמנה שמתאים לשני המזהים
+    /// </summary>
+    /// <param name="OrderID"></param>
+    /// <param name="ProductID"></param>
+    /// <returns></returns>
+    /// <exception cref="DoesntExistException"></exception>
     public OrderItem GetByOrderIDProductID(int OrderID, int ProductID)
     {
-        OrderItem? OItem = _DS._OrderItems.Find(x => x.GetValueOrDefault().ID == OrderID &&
+        OrderItem? OItem = _DS._OrderItems.FirstOrDefault(x => x.GetValueOrDefault().ID == OrderID &&
                      x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfProduct == ProductID);
 
         if (OItem == null)

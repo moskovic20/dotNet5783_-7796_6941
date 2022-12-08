@@ -280,8 +280,8 @@ c: category");
                         //    throw new Exception("The conversion failed");
                         //ord.ID = id;
 
-                        ord.NameCustomer = Console.ReadLine();
-                        ord.Email = Console.ReadLine();
+                        ord.CustomerName = Console.ReadLine();
+                        ord.CustomerEmail = Console.ReadLine();
                         ord.ShippingAddress = Console.ReadLine();
 
                         if (!DateTime.TryParse(Console.ReadLine(), out dt))
@@ -348,12 +348,12 @@ d: delivery date");
                             {
                                 case 'n':
                                     Console.WriteLine("enter the new name of customer:");
-                                    ord.NameCustomer = Console.ReadLine();
+                                    ord.CustomerName = Console.ReadLine();
                                     break;
 
                                 case 'm':
                                     Console.WriteLine("enter the new email:");
-                                    ord.Email = Console.ReadLine();
+                                    ord.CustomerEmail = Console.ReadLine();
                                     break;
 
                                 case 'a':
@@ -476,7 +476,7 @@ d: delivery date");
                         if (!int.TryParse(Console.ReadLine(), out numOfItem))
                             throw new Exception("The conversion failed");
 
-                        OI.amountOfItem = numOfItem;
+                        OI.AmountOfItem = numOfItem;
 
                         id = DL.OrderItem.Add(OI);
                         Console.WriteLine("\n the id of this ordrr item is:{0}\n", id);
@@ -545,7 +545,7 @@ d: to finish the update");
                                     Console.WriteLine("enter the new amount: ");
                                     if (!int.TryParse(Console.ReadLine(), out numOfItem))
                                         throw new Exception("The conversion failed");
-                                    OI.amountOfItem = numOfItem;
+                                    OI.AmountOfItem = numOfItem;
                                     break;
 
                                 case 'd':

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,12 +25,12 @@ public class Cart
     /// <summary>
     /// הכתובת של הקונה
     /// </summary>
-    public int? CustomerAddress { get; set;}
+    public string? CustomerAddress { get; set;}
 
     /// <summary>
     /// רשימת הפריטים בהזמנה
     /// </summary>
-    public List<OrderItem?>? Items { get; set;}
+    public List<OrderItem>? Items { get; set;}
 
     /// <summary>
     /// המחיר הכולל של ההזמנה

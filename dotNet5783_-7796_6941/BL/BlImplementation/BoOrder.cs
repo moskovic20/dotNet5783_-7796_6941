@@ -50,7 +50,7 @@ internal class BoOrder //: IOrder
                             select new BO.OrderForList()
                             {
                                 OrderID = O.ID,
-                                CuustomerName = O.NameCustomer,
+                                CuustomerName = O.CustomerName,
                                 Status = calculateStatus(O.DateOrder, O.ShippingDate, O.DeliveryDate),
                                 AmountOfItems =O.CalculateAmountItems(),
                                 TotalPrice =O.CalculatePriceOfAllItems()
@@ -59,14 +59,14 @@ internal class BoOrder //: IOrder
         }
         catch (Exception ex)
         {
-            throw new BO.GetAllForListProblemException("cant give all the orders for list", ex);
+            throw new BO.GetAllForList_Exception("cant give all the orders for list", ex);
         }
     }
 
     BO.Order GetOrdertDetails(int id)
     {
         if (id < 0)
-            throw new BO.GetDetailsProblemException("Negative ID");
+            throw new BO.GetDetails_Exception("Negative ID");
 
 
         try
@@ -75,7 +75,7 @@ internal class BoOrder //: IOrder
             return new BO.Order()
             {
                 ID = myOrder.ID,
-                Email = myOrder.Email,
+                Email = myOrder.CustomerEmail,
                 ShippingAddress = myOrder.ShippingAddress,
                 Status = calculateStatus(myOrder.DateOrder, myOrder.ShippingDate,myOrder.DeliveryDate),
                 //PaymentDate = DateTime.MinValue,//לתקןןן!! לשים פה ערך תקין
@@ -85,7 +85,7 @@ internal class BoOrder //: IOrder
         }
         catch(Exception ex)
         {
-            throw new BO.GetDetailsProblemException("Can't get this order",ex);
+            throw new BO.GetDetails_Exception("Can't get this order",ex);
         }
        
 

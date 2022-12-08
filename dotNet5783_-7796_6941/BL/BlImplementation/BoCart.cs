@@ -5,89 +5,161 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-
+using BO;
 
 
 namespace BlImplementation;
 
-internal class BoCart//: ICart
+internal class BoCart : ICart
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
-
-    BO.Cart AddProductToCart(BO.Cart cart, int id)
+    
+    public BO.Cart AddProductToCart(BO.Cart cart, int productID)
     {
-        if (cart.Items == null) //הוספה ראשונה של מוצר לסל הכניות
-            cart.Items = new();
-
-        Do.Product myP = dal.Product.GetById(id);//הבאת פרטי מוצר
-
-        BO.OrderItem? myOI = cart.Items.FirstOrDefault(x => x?.ID == id);//בודק האם המוצר כבר נמצא בסל הקניות
-
-
-        if (myP.InStock! > 0)
-            throw new BO.AddProductToCartProblemException("המוצר לא במלאי");
-
-
-        if (myOI != null)//  המוצר כבר נמצא בסל הקניות
+        try
         {
-            myOI.Amount++;
-            myOI.TotalPrice += myOI.Price;
-            cart.TotalPrice += myOI.Price;
-            cart.Items.RemoveAll(x => x?.ID == id);
-            cart.Items.Add(myOI);
+            cart.Items = cart.Items ?? new();
 
-        }
-        else //המוצר לא נמצא בסל הקניות מלכתחילה
-        {
-            myOI = new();
-            myP.CopyPropertiesTo(myOI);
-            myOI.Price = myP.Price ?? throw new AddProductToCartProblemException("אין מחיר");
-            myOI.TotalPrice = myOI.Price;
-            cart.TotalPrice = myOI.Price;
-            cart.Items.Add(myOI);
-        }
+            Do.Product product = dal.Product.GetById(productID);//הבאת פרטי מוצר
 
-        return cart;
+            BO.OrderItem item = cart.Items.FirstOrDefault(x => x?.ProductID == productID)
+            ?? new()
+            {
+                ID = 0,
+                ProductID = productID,
+                NameOfBook = product.NameOfBook,
+                Price = product.Price ?? throw new BO.Adding_Exception("cant add this product to the cart because No price has been entered for it yet"),
+                Amount = 0,
+                TotalPrice = 0,
+            };
+
+            if (product.InStock! >= 0)
+                throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:" + item.NameOfBook);
+
+            item.Amount++;
+            item.TotalPrice += item.Price;
+
+            cart.Items.Add(item);
+            return cart;
+        }
+        catch (Do.DoesntExistException ex) { throw new BO.Adding_Exception("cant add this product to the cart", ex); }
+        catch (BO.InvalidValue_Exception ex) { throw new BO.Adding_Exception("cant add this product to the cart", ex); }
+        catch (Exception ex) { throw new BO.Adding_Exception("cant add this product to the cart", ex); }
+
+
     }
 
-    BO.Cart UpdateProductAmountInCart(BO.Cart cart, int id, int NewAmount)
+    public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int productID, int NewAmount)
     {
-        int difference = 0;
-
-        if (cart.Items == null) //הוספה ראשונה של מוצר לסל הכניות
-            cart.Items = new();
-
-        Do.Product myP = dal.Product.GetById(id);//הבאת פרטי מוצר
-
-        BO.OrderItem? myOI = cart.Items.Find(x => x?.ID == id);//מביא את המוצר מסל הקניות
-
-        if (NewAmount < myOI?.Amount)
+        try
         {
-            difference = myOI.Amount - NewAmount;
+            int difference = 0;
+            cart.Items = cart.Items ?? new();
 
-            myOI.Amount = NewAmount;
-            myOI.TotalPrice -= difference * myOI.Price;
-            cart.TotalPrice -= difference * myOI.TotalPrice;
+            Do.Product product = dal.Product.GetById(productID);//הבאת פרטי מוצר
+
+            BO.OrderItem item = cart.Items.Find(x => x.ProductID == productID) ?? throw new Exception("אין מוצר לעדכן");
+
+            if (NewAmount == 0)
+            {
+                cart.Items.Remove(item);
+                cart.TotalPrice -= item.TotalPrice;
+            }
+
+            else if (NewAmount < item.Amount)
+            {
+                difference = item.Amount - NewAmount;
+
+                item.Amount = NewAmount;
+                item.TotalPrice -= difference * item.Price;
+                cart.TotalPrice -= difference * item.Price;
+                return cart;
+            }
+
+            else
+            {
+                difference = NewAmount - item.Amount;
+
+                if (product.InStock < NewAmount)
+                    throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:"+item.NameOfBook);
+
+                item.Amount = NewAmount;
+                item.TotalPrice += difference * item.Price;
+                cart.TotalPrice += difference * item.Price;
+            }
+
+            return cart;
         }
-        else if (NewAmount > myOI?.Amount)
-        {
-            difference = NewAmount-myOI.Amount;
-
-            if (myP.InStock < NewAmount)
-                throw new AddProductToCartProblemException("אין במלאי");
-
-            myOI.Amount = NewAmount;
-            myOI.TotalPrice += difference * myOI.Price;
-            cart.TotalPrice += difference * myOI.TotalPrice;
-        }
-
-        cart.Items.RemoveAll(x => x?.ID == id);
-
-        if (difference != 0)
-            cart.Items.Add(myOI);
-
-        return cart;
+        catch(InvalidValue_Exception ex) { throw new BO.Update_Exception("can't update the amount of this product",ex); }
+        catch (Do.DoesntExistException ex) { throw new BO.Update_Exception("can't update the amount of this product", ex); }
     }
 
+    public int MakeOrder(BO.Cart cart)
+    {
+        try
+        {
+            cart = cart ?? throw new ArgumentNullException("");//לתקן
+            cart.Items = cart.Items ?? throw new Exception("אין מוצרים בסל הקניות");//לתקן
+
+            if (cart.CustomerName == null)
+                throw new BO.InvalidValue_Exception("No value entered for the field: Customer Name");
+
+            if (cart.CustomerAddress == null)
+                throw new BO.InvalidValue_Exception("No value entered for the field: Customer Address");
+
+            if (cart.CustomerEmail != null)
+            {
+                if (!cart.CustomerEmail.IsValidEmail())
+                    throw new BO.InvalidValue_Exception("Invalid email address");
+            }
+
+            cart.Items.TrueForAll(x => ValidationChecks(x));
+
+            Do.Order newOrder = new(); //יצירת הזמנה חדשה
+            cart.CopyPropertiesTo(newOrder);
+            newOrder.DateOrder = DateTime.Now;
+
+            int IdOfONewOrder = dal.Order.Add(newOrder);
+
+            foreach (BO.OrderItem item in cart.Items)
+            {
+                Do.Product product = dal.Product.GetById(item.ProductID);
+
+                Do.OrderItem orderItem = new()
+                {
+                    IdOfOrder = IdOfONewOrder,
+                    IdOfProduct = item.ProductID,
+                    AmountOfItem = item.Amount,
+                    PriceOfOneItem = item.Price,
+                };
+
+                dal.OrderItem.Add(orderItem);
+
+                Do.Product newProduct = new();//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
+                product.CopyPropertiesTo(newProduct);
+                newProduct.InStock -= item.Amount;
+
+                dal.Product.Update(newProduct);//מעדכנים את הכמות של המוצר ברשימה
+            }
+            return IdOfONewOrder;
+        }
+        catch (BO.InvalidValue_Exception ex) { throw new BO.MakeOrder_Exception("cant create this cart",ex); }
+        catch (Do.AlreadyExistException ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }
+        catch (Do.DoesntExistException ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }
+        catch(Exception ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }
+    }
+
+    private bool ValidationChecks(BO.OrderItem item)
+    {
+        Do.Product product = dal.Product.GetById(item.ProductID);
+
+        if (item.Amount < 1)
+            throw new BO.InvalidValue_Exception("the amount of the book:"+ item.NameOfBook+" is negative");
+
+        if (product.InStock < item.Amount)
+            throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:"+item.NameOfBook);
+
+        return true; ;
+    }
 
 }

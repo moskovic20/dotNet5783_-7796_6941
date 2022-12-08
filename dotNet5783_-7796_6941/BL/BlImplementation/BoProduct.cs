@@ -10,7 +10,7 @@ using BlApi;
 
 namespace BlImplementation;
 
-internal class BoProduct: IProduct
+internal class BoProduct : IProduct
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
@@ -20,7 +20,7 @@ internal class BoProduct: IProduct
                        select BlApi.Tools.CopyPropertiesToNew(P, typeof(BO.ProductForList));
 
         if (products.Count() == 0)
-            throw new Exception("");//לעשות חריגה מתאימה- אין מוצרים
+            throw new BO.GetAllForList_Exception("There are no products");
 
         return (IEnumerable<BO.ProductForList>)products;
     }
@@ -34,46 +34,44 @@ internal class BoProduct: IProduct
             myP.CopyPropertiesTo(BoMyP);
             return BoMyP;
         }
-        catch (Exception ex)
+        catch (Do.DoesntExistException ex)
         {
-            throw new BO.GetDetailsProblemException("Can't get this product", ex);
+            throw new BO.GetDetails_Exception("cant give details of this product", ex);
         }
     }
 
-    public void AddProduct(BO.Product productToAdd)
+    public void AddProduct_forM(BO.Product productToAdd)
     {
+
         if (productToAdd == null)
-            throw new ArgumentNullException("missing product yo add");
+            throw new ArgumentNullException("missing product to add");
 
         if (productToAdd.ID < 1)
-            throw new BO.AddingProblemException("Negative ID");//מספר שלילי
+            throw new BO.Adding_Exception("Can't add becouse the negative ID");//מספר שלילי
 
-        if (productToAdd.NameOfBook == "")
-            throw new BO.AddingProblemException("Name of book is missing");
+        if (productToAdd.NameOfBook == null)
+            throw new BO.Adding_Exception("Can't add becouse the name of book is missing");
 
         if (productToAdd.Price < 0)
-            throw new BO.AddingProblemException("Negative price");
+            throw new BO.Adding_Exception("Can't add becouse the negative price");
 
         if (productToAdd.InStock < 0)
-            throw new BO.AddingProblemException("Negative amount");
+            throw new BO.Adding_Exception("Can't add becouse the negative amount");
 
+
+        Do.Product myNewP = new();
+        productToAdd.CopyPropertiesTo(myNewP);
 
         try
         {
-            Do.Product myNewP = new();
-            productToAdd.CopyPropertiesTo(myNewP);
-
-            dal.Product.Add((Do.Product)myNewP);
+            dal.Product.Add(myNewP);
         }
 
-        catch (Exception ex)
-        {
-            throw new BO.AddingProblemException("Can't add this product", ex);
-        }
-
+        catch (Do.AlreadyExistException ex)  { throw new BO.Adding_Exception("Can't add this product", ex);}
+        catch (Exception) { }
     }
 
-    public void DeleteProductByID(int id)
+    public void DeleteProductByID_forM(int id)
     {
         try
         {
@@ -81,7 +79,7 @@ internal class BoProduct: IProduct
         }
         catch (Do.DoesntExistException ex)
         {
-            throw new BO.DeletedProblemException("Can't deleted this product", ex);
+            throw new BO.Deleted_Exception("Can't deleted this product", ex);
         }
     }
 
@@ -89,12 +87,12 @@ internal class BoProduct: IProduct
     {
         try
         {
-            Do.Product? myP = dal.Product.GetById(id);//הבאת המוצר הרצוי
+            Do.Product myP = dal.Product.GetById(id);//הבאת המוצר הרצוי
 
             BO.ProductItem pForClient = new();
             myP.CopyPropertiesTo(pForClient);
 
-            pForClient.InStock = (myP.GetValueOrDefault().InStock > 0) ? true : false;
+            pForClient.InStock = (myP.InStock > 0) ? true : false;
 
             if (cart.Items == null)
             {
@@ -103,7 +101,7 @@ internal class BoProduct: IProduct
             else
             {
                 var myItems = from item in cart.Items
-                              where item != null && item.ID == id
+                              where item != null && item.ProductID == id
                               select item;
                 pForClient.Amount = myItems.Count();
 
@@ -114,36 +112,37 @@ internal class BoProduct: IProduct
         }
         catch (Do.DoesntExistException ex)
         {
-            throw new BO.GetDetailsProblemException("Can't get this product", ex);
+            throw new BO.GetDetails_Exception("Can't get this product", ex);
         }
     }
 
-    public void UpdateProductDetails(BO.Product productToUp)
+    public void UpdateProductDetails_forM(BO.Product productToUp)
     {
         if (productToUp == null)
             throw new ArgumentNullException("missing product");
 
         if (productToUp.ID < 1)
-            throw new BO.UpdateProblemException("Negative ID");//מספר שלילי
+            throw new BO.Update_Exception("cant gets Negative ID");//מספר שלילי
 
         if (productToUp.NameOfBook == "")
-            throw new BO.UpdateProblemException("Name of book is missing");
+            throw new BO.Update_Exception("Name of book is missing");
 
         if (productToUp.Price < 0)
-            throw new BO.UpdateProblemException("Negative price");
+            throw new BO.Update_Exception("cant gets Negative price");
 
         if (productToUp.InStock < 0)
-            throw new BO.UpdateProblemException("Negative amount");
+            throw new BO.Update_Exception("cant gets Negative amount");
 
         Do.Product DoProductToUp = new();
         productToUp.CopyPropertiesTo(DoProductToUp);
+
         try
         {
             dal.Product.Update(DoProductToUp);
         }
         catch (Do.DoesntExistException ex)
         {
-            throw new BO.UpdateProblemException("Can't update product", ex);
+            throw new BO.Update_Exception("Can't update product", ex);
         }
     }
 }

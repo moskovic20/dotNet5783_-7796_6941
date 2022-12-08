@@ -1,9 +1,11 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BlApi;
@@ -90,7 +92,7 @@ public static class Tools
         //    throw new DoesntExistException("missing ID");
 
         List<Do.OrderItem?> listforAmount = (List<Do.OrderItem?>)dal.OrderItem.GetListByOrderID(order.ID);
-        amountOfItems = listforAmount.Sum(o => o?.amountOfItem ?? 0);
+        amountOfItems = listforAmount.Sum(o => o?.AmountOfItem ?? 0);
 
         return amountOfItems;
     }
@@ -103,7 +105,7 @@ public static class Tools
         double Price = 0;
 
         List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID);
-        Price = (double)listforAmount.Sum(o => o.amountOfItem ?? 0 * o.priceOfOneItem ?? throw new Exception("אין מחיר!!"));
+        Price = (double)listforAmount.Sum(o => o.AmountOfItem ?? 0 * o.PriceOfOneItem ?? throw new Exception("אין מחיר!!"));
         return Price;
     }
 
@@ -113,4 +115,49 @@ public static class Tools
     }
 
     #endregion
+
+
+    public static bool IsValidEmail(this string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            return false;
+
+        try
+        {
+            // Normalize the domain
+            email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
+                                  RegexOptions.None, TimeSpan.FromMilliseconds(200));
+
+            // Examines the domain part of the email and normalizes it.
+            string DomainMapper(Match match)
+            {
+                // Use IdnMapping class to convert Unicode domain names.
+                var idn = new IdnMapping();
+
+                // Pull out and process domain name (throws ArgumentException on invalid)
+                string domainName = idn.GetAscii(match.Groups[2].Value);
+
+                return match.Groups[1].Value + domainName;
+            }
+        }
+        catch (RegexMatchTimeoutException e)
+        {
+            return false;
+        }
+        catch (ArgumentException e)
+        {
+            return false;
+        }
+
+        try
+        {
+            return Regex.IsMatch(email,
+                @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+        }
+        catch (RegexMatchTimeoutException)
+        {
+            return false;
+        }
+    }
 }

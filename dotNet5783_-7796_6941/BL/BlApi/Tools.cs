@@ -72,32 +72,17 @@ public static class Tools
 
 
     #region   חישוב סטטוס להזמנה וזריקת חריגות
-    public static OrderStatus calculateStatus(this Do.Order order)
+    private static BO.OrderStatus calculateStatus(this Do.Order or)
     {
-        DateTime? DateO = order.DateOrder;
-        DateTime? ShippingD = order.ShippingDate;
-        DateTime? DeliveryD = order.DeliveryDate;
-
-        #region חריגות אפשריות בזמנים
-        if (DateO == null)
-            throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
-        if (ShippingD == null && DeliveryD == null)
-            throw new ArgumentNullException("cant calculate status, there is no info"); ////////exceptions
-        if (ShippingD == null && DeliveryD != null || ShippingD != null && DateO > ShippingD
-                   || DeliveryD != null && DateO > DeliveryD || ShippingD != null && DeliveryD != null && ShippingD > DeliveryD)
-            throw new ArgumentException("rong information,cant be possible");          /////////exceptions
-        #endregion
-
-        // -------------Calculate the Status--------------
-
-        if (ShippingD == null)
-            return OrderStatus.Pending;
-        if (DeliveryD == null)
-            return OrderStatus.Processing;
+        if (or.DeliveryDate != null)
+            return BO.OrderStatus.Completed;
+        if (or.ShippingDate != null)
+            return BO.OrderStatus.Processing;
         else
-            return OrderStatus.Completed;
+            return BO.OrderStatus.Pending;
     }
     #endregion
+
 
     #region חישוב מספר פריטים בכל הזמנה לפי מספר הזמנה
     public static int CalculateAmountItems(this Do.Order order)
@@ -121,7 +106,7 @@ public static class Tools
     {
         double Price = 0;
 
-        List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID);
+        List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
         Price = (double)listforAmount.Sum(o => o.amountOfItem ?? 0 * o.priceOfOneItem ?? throw new Exception("אין מחיר!!"));
         return Price;
     }
@@ -139,5 +124,38 @@ public static class Tools
         return list;
     }
     #endregion
-    
+
+    #region המרת רשימה של אובייקטים מסוג פריט-הזמנה משכבת הנתונים לשכבת הלוגיקה עם השינויים הנדרשים
+    public static List<BO.OrderItem?> ListFromDoToBo(this IEnumerable<Do.OrderItem> orderItems)
+    {
+        List<BO.OrderItem?> itemsCasting = new List<BO.OrderItem?>();
+        foreach (Do.OrderItem item in orderItems)
+        {
+            itemsCasting.Add(new BO.OrderItem()
+            {
+                ID = item.ID,
+                NameOfBook = (dal.Product.GetById(item.ID)).NameOfBook,//name of the product by his order ID
+                priceOfOneItem = item.priceOfOneItem,
+                Amount = item.amountOfItem ?? 0,///
+                TotalPrice = item.priceOfOneItem * item.amountOfItem
+            });
+
+        }
+
+        //var itemCasting = from item in orderItems
+        //                  where item != null
+        //                  select orderItems.CopyPropertiesTo(item);
+
+        //    var myItems = from item in cart.Items
+        //                  where item != null && item.ID == id
+        //                  select item;
+        //pForClient.Amount = myItems.Count();
+        return itemsCasting;
+    }
+    #endregion
+
+    Func<Do.OrderItem, BO.OrderItem?> selector
+    {
+        get
+    }
 }

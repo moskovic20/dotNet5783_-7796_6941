@@ -13,11 +13,11 @@ public class OrderItem
 
     public string? NameOfBook { get; set; }
 
-    public double Price { get; set; }
+    public double? priceOfOneItem { get; set; }
     
     public int Amount { get; set; }
 
-    public double TotalPrice { get; set; }
+    public double? TotalPrice { get; set; }
 
     public override string ToString()
     {

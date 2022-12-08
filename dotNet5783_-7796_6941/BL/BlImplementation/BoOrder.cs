@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,17 +13,8 @@ internal class BoOrder //: IOrder
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
-    #region   חישוב סטטוס להזמנה 
-    private static BO.OrderStatus calculateStatus( DateTime? ShippingD, DateTime? DeliveryD ) 
-    {
-        if (DeliveryD != null)
-            return BO.OrderStatus.Completed;
-        if(ShippingD != null)
-            return BO.OrderStatus.Processing;
-        else
-            return BO.OrderStatus.Pending;
-    }
-    #endregion
+    //
+    
     #region חריגות זמנים אופציונליות
     private static void datePosibleExceptiones(Do.Order? or)
     {
@@ -63,7 +55,7 @@ internal class BoOrder //: IOrder
                             {
                                 OrderID = O.ID,
                                 CuustomerName = O.NameCustomer,
-                                Status = calculateStatus( O.ShippingDate, O.DeliveryDate),
+                                Status = O.,
                                 AmountOfItems =O.CalculateAmountItems(),
                                 TotalPrice =O.CalculatePriceOfAllItems()
                             };
@@ -75,6 +67,12 @@ internal class BoOrder //: IOrder
         }
     }
 
+    /// <summary>
+    /// שליחת פרטי הזמנה לפי נתונים שמתאימים לשכבת הלוגיקה
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="BO.GetDetailsProblemException"></exception>
     BO.Order GetOrdertDetails(int id)
     {
         if (id < 0)
@@ -89,14 +87,12 @@ internal class BoOrder //: IOrder
                 Email = myOrder.Email,
                 ShippingAddress = myOrder.ShippingAddress,
                 DateOrder = myOrder.DateOrder ?? throw new ArgumentNullException("there is no vall in DateOrder"),//should be nullable?
-                Status = calculateStatus(myOrder.ShippingDate, myOrder.DeliveryDate),
+                Status = myOrder.calculateStatus(),
                 PaymentDate = myOrder.DateOrder ?? null,//should be nullable?
                 ShippingDate = myOrder.ShippingDate,
                 DeliveryDate = myOrder.DeliveryDate,
-            //    var itemCasting = (dal.OrderItem.GetListByOrderID(myOrder.ID)).AsEnumerable(BO.OrderItem) //casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
-            
-            //Items = itemCasting;
-            TotalPrice = myOrder.CalculatePriceOfAllItems()
+                Items =dal.OrderItem.GetListByOrderID(myOrder.ID).ListFromDoToBo(),//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
+                TotalPrice = myOrder.CalculatePriceOfAllItems()
             };
         }
         catch(Exception ex)
@@ -107,20 +103,7 @@ internal class BoOrder //: IOrder
 
     }
 
-    private List<BO.OrderItem?> ListFromDoToBo(List<Do.OrderItem?> orderItems)
-    {
-
-        var itemCasting = from item in orderItems
-                          where item != null
-                          select item.CopyPropertiesTo(orderItems);
-
-        ////    var myItems = from item in cart.Items
-        ////                  where item != null && item.ID == id
-        ////                  select item;
-        ////pForClient.Amount = myItems.Count();
-        return itemCasting;
-    }
-
+   
     /// <summary>
     /// עדכון שילוח הזמנה 
     /// </summary>
@@ -215,7 +198,7 @@ internal class BoOrder //: IOrder
             return new BO.OrderTracking()
             {
                 ID = myOrder.ID,
-                Status = calculateStatus(myOrder.ShippingDate, myOrder.DeliveryDate),///------אופציה להוסיף כבונוס תאריך משוער למה שלא קיים לו ערך-------
+                Status = myOrder.calculateStatus(),///------אופציה להוסיף כבונוס תאריך משוער למה שלא קיים לו ערך-------
                 Tracking = myOrder.TrackingHealper()
             };
         }

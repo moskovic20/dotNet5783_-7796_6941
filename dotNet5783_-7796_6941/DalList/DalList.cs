@@ -20,8 +20,7 @@ sealed internal class DalList : IDal
         {
             lock (key)
             {
-                if (instance == null)
-                    instance = new DalList();
+                instance ??= new DalList();
             }
         }
 

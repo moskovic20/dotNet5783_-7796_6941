@@ -1,15 +1,16 @@
 ﻿using BO;
-using Do;
+
 
 namespace BlApi;
 
 public interface IProduct
 {
-    IEnumerable<BO.ProductForList> GetAllProductForList();
-    void AddProduct(BO.Product product);
+    IEnumerable<BO.ProductForList> GetAllProductForList_forM();
+    IEnumerable<BO.ProductForList> GetAllProductForList_forC();
+    void AddProduct_forM(BO.Product product);
     BO.Product GetProductDetails_forM(int id);
     ProductItem GetProductDetails_forC(int id,Cart cart);
-    void DeleteProductByID(int id);
-    void UpdateProductDetails(BO.Product product);
+    void DeleteProductByID_forM(int id);
+    void UpdateProductDetails_forM(BO.Product product);
 
 }

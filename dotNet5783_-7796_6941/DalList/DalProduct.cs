@@ -8,7 +8,7 @@ namespace Dal;
 internal class DalProduct : IProduct
 {
 
-    DataSource _DS = DataSource.GetInstance();
+    DataSource _DS = DataSource.Instance();
 
 
     public int Add(Product P)

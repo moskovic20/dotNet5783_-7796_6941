@@ -2,9 +2,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace BlApi;
@@ -50,6 +52,7 @@ public static class Tools
     //}
 
     //copy elements of BO to DO and vice versa
+
     public static void CopyPropertiesTo<T, S>(this S from, T to)
     {
         foreach (PropertyInfo propTo in to.ToStringProperty().GetType().GetProperties())//loop on all the properties in the new object
@@ -72,7 +75,7 @@ public static class Tools
 
 
     #region   חישוב סטטוס להזמנה וזריקת חריגות
-    public static OrderStatus calculateStatus(this Do.Order or)
+    public static BO.OrderStatus calculateStatus(this Do.Order or)
     {
         if (or.DeliveryDate != null)
             return OrderStatus.Completed;
@@ -94,7 +97,7 @@ public static class Tools
         //    throw new DoesntExistException("missing ID");
 
         List<Do.OrderItem?> listforAmount = (List<Do.OrderItem?>)dal.OrderItem.GetListByOrderID(order.ID);
-        amountOfItems = listforAmount.Sum(o => o?.amountOfItem ?? 0);
+        amountOfItems = listforAmount.Sum(o => o?.AmountOfItem ?? 0);
 
         return amountOfItems;
     }
@@ -107,7 +110,7 @@ public static class Tools
         double Price = 0;
 
         List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
-        Price = (double)listforAmount.Sum(o => o.amountOfItem ?? 0 * o.priceOfOneItem ?? throw new Exception("אין מחיר!!"));
+        Price = (double)listforAmount.Sum(o => o.AmountOfItem ?? 0 * o.PriceOfOneItem ?? throw new Exception("אין מחיר!!"));
         return Price;
     }
     #endregion
@@ -135,9 +138,9 @@ public static class Tools
             {
                 ID = item.ID,
                 NameOfBook = (dal.Product.GetById(item.ID)).NameOfBook,//name of the product by his order ID
-                priceOfOneItem = item.priceOfOneItem,
-                Amount = item.amountOfItem ?? 0,///
-                TotalPrice = item.priceOfOneItem * item.amountOfItem
+                PriceOfOneItem = item.PriceOfOneItem,
+                AmountOfItems = item.AmountOfItem ?? 0,///
+                TotalPrice = item.PriceOfOneItem * item.AmountOfItem
             });
 
         }
@@ -145,10 +148,50 @@ public static class Tools
     }
     #endregion
 
-    //Func<Do.OrderItem, BO.OrderItem?> selector
-    //{
-    //    get
-    //}
+
+    public static bool IsValidEmail(this string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            return false;
+
+        try
+        {
+            // Normalize the domain
+            email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
+                                  RegexOptions.None, TimeSpan.FromMilliseconds(200));
+
+            // Examines the domain part of the email and normalizes it.
+            string DomainMapper(Match match)
+            {
+                // Use IdnMapping class to convert Unicode domain names.
+                var idn = new IdnMapping();
+
+                // Pull out and process domain name (throws ArgumentException on invalid)
+                string domainName = idn.GetAscii(match.Groups[2].Value);
+
+                return match.Groups[1].Value + domainName;
+            }
+        }
+        catch (RegexMatchTimeoutException e)
+        {
+            return false;
+        }
+        catch (ArgumentException e)
+        {
+            return false;
+        }
+
+        try
+        {
+            return Regex.IsMatch(email,
+                @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+        }
+        catch (RegexMatchTimeoutException)
+        {
+            return false;
+        }
+    }
 
 
 }

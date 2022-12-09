@@ -9,16 +9,16 @@ using BO;
 
 namespace BlImplementation;
 
-internal class BoOrder //: IOrder
+internal class BoOrder : IOrder
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
     //
-    
+
     #region חריגות זמנים אופציונליות
     private static void datePosibleExceptiones(Do.Order? or)
     {
-        
+
         if (or.GetValueOrDefault().DateOrder == null)
             throw new ArgumentNullException("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
 
@@ -46,7 +46,7 @@ internal class BoOrder //: IOrder
     /// הכנסת כל ההזמנות הלא ריקות לרשימה
     /// </summary>
     /// <returns></returns>
-    IEnumerable<BO.OrderForList> GetAllOrderForList()
+    public IEnumerable<BO.OrderForList> GetAllOrderForList()
     {
         try
         {
@@ -63,7 +63,7 @@ internal class BoOrder //: IOrder
         }
         catch (Exception ex)
         {
-            throw new BO.GetAllForListProblemException("cant give all the orders for list", ex);
+            throw new BO.GetAllForList_Exception("cant give all the orders for list", ex);
         }
     }
 
@@ -73,10 +73,10 @@ internal class BoOrder //: IOrder
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="BO.GetDetailsProblemException"></exception>
-    BO.Order GetOrdertDetails(int id)
+    public BO.Order GetOrdertDetails(int id)
     {
         if (id < 0)
-            throw new BO.GetDetailsProblemException("Negative ID");
+            throw new BO.GetDetails_Exception("Negative ID");
 
         try
         {
@@ -84,35 +84,35 @@ internal class BoOrder //: IOrder
             return new BO.Order()///use insted with copyprop...
             {
                 ID = myOrder.ID,
-                Email = myOrder.Email,
+                Email = myOrder.CustomerEmail,
                 ShippingAddress = myOrder.ShippingAddress,
                 DateOrder = myOrder.DateOrder ?? throw new ArgumentNullException("there is no vall in DateOrder"),//should be nullable?
                 Status = myOrder.calculateStatus(),
                 PaymentDate = myOrder.DateOrder ?? null,//should be nullable?
                 ShippingDate = myOrder.ShippingDate,
                 DeliveryDate = myOrder.DeliveryDate,
-                Items =dal.OrderItem.GetListByOrderID(myOrder.ID).ListFromDoToBo(),//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
+                Items = dal.OrderItem.GetListByOrderID(myOrder.ID).ListFromDoToBo(),//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
                 TotalPrice = myOrder.CalculatePriceOfAllItems()
             };
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
-            throw new BO.GetDetailsProblemException("Can't get this order",ex);
+            throw new BO.GetDetails_Exception("Can't get this order", ex);
         }
 
 
     }
 
-   
+
     /// <summary>
     /// עדכון שילוח הזמנה 
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    BO.Order UpdateOrderShipping(int id)
+    public BO.Order UpdateOrderShipping(int id)
     {
         if (id < 0)
-            throw new BO.GetDetailsProblemException("Negative ID");
+            throw new BO.GetDetails_Exception("Negative ID");
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
@@ -132,11 +132,11 @@ internal class BoOrder //: IOrder
                 }
             }
             else
-                throw new BO.GetDetailsProblemException("Can't get this order correct ditales");//////ok exception?
+                throw new BO.GetDetails_Exception("Can't get this order correct ditales");//////ok exception?
         }
         catch (Exception ex)
         {
-            throw new BO.GetDetailsProblemException("Can't get this order", ex);
+            throw new BO.GetDetails_Exception("Can't get this order", ex);
         }
 
     }
@@ -147,36 +147,36 @@ internal class BoOrder //: IOrder
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="BO.GetDetailsProblemException"></exception>
-    BO.Order UpdateOrderDelivery(int id)
+    public BO.Order UpdateOrderDelivery(int id)
     {
 
         if (id < 0)
-            throw new BO.GetDetailsProblemException("Negative ID");
+            throw new BO.GetDetails_Exception("Negative ID");
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
             datePosibleExceptiones(myOrder);
 
-             if (myOrder.ShippingDate != null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
+            if (myOrder.ShippingDate != null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
             {
 
-                
+
                 if (myOrder.ShippingDate > DateTime.Now)
                     throw new ArgumentException("rong information,cant be possible that ShippingDate > DeliveryDate");
                 else
-                {   
+                {
                     myOrder.DeliveryDate = DateTime.Now;
                     dal.Order.Update(myOrder);
                     return GetOrdertDetails(id); ////לטפל בחריגות מהפונק הזאת  
                 }
-             }
-             else
-                throw new BO.GetDetailsProblemException("Can't get this order correct ditales");//////ok exception?
+            }
+            else
+                throw new BO.GetDetails_Exception("Can't get this order correct ditales");//////ok exception?
 
         }
         catch (Exception ex)
         {
-            throw new BO.GetDetailsProblemException("Can't get this order", ex);
+            throw new BO.GetDetails_Exception("Can't get this order", ex);
         }
 
     }
@@ -187,10 +187,10 @@ internal class BoOrder //: IOrder
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="BO.GetDetailsProblemException"></exception>
-    BO.OrderTracking GetOrderTracking(int id)
+    public BO.OrderTracking GetOrderTracking(int id)
     {
         if (id < 0)
-            throw new BO.GetDetailsProblemException("Negative ID");
+            throw new BO.GetDetails_Exception("Negative ID");
 
         try
         {
@@ -202,15 +202,14 @@ internal class BoOrder //: IOrder
                 Tracking = myOrder.TrackingHealper()
             };
         }
-        catch(Do.DoesntExistException ex)
+        catch (Do.DoesntExistException ex)
         {
-            throw new BO.GetDetailsProblemException("Can't get this order", ex);
+            throw new BO.GetDetails_Exception("Can't get this order", ex);
         }
     }
 
-    void UpdateOrder(int id)
+    public void UpdateOrder(int id)
     {
-
+        throw new NotImplementedException();
     }
-
 }

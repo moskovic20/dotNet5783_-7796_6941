@@ -7,14 +7,13 @@ namespace Dal;
 public class DataSource
 {
     static readonly Random R = new Random();
-    //internal static DataSource s_instance { get; } = new DataSource();
 
     private static DataSource? instance;
-    private static readonly object key = new();
+    private static readonly object key = new(); //Thread Safe
 
-    public static DataSource GetInstance()
+    public static DataSource Instance()
     {
-        if (instance == null)
+        if (instance == null) //Lazy Initialization
         {
             lock (key)
             {
@@ -105,11 +104,11 @@ public class DataSource
             {
                 ID = Config.NextOrderNumber,
                 DateOrder = DateTime.Now - new TimeSpan(R.Next(11, 41), R.Next(24), R.Next(60), R.Next(60)),
-                NameCustomer = customerNames[R.Next(0, 20)],
+                CustomerName = customerNames[R.Next(0, 20)],
                 ShippingAddress = address[R.Next(0, 20)],
             };
 
-            myOrder.Email = myOrder.NameCustomer + "@gmail.com";
+            myOrder.CustomerEmail = myOrder.CustomerName + "@gmail.com";
 
             myOrder.ShippingDate = (i < 16) ? DateTime.Now - new TimeSpan(R.Next(6, 11), R.Next(24), R.Next(6), R.Next(60)) : null;
             myOrder.DeliveryDate = (i < 10) ? DateTime.Now - new TimeSpan(R.Next(6), R.Next(24), R.Next(6), R.Next(60)) : null;
@@ -130,8 +129,8 @@ public class DataSource
                 ID = Config.NextOrderItem,
                 IdOfProduct = product?.ID ?? 0,
                 IdOfOrder = R.Next(Config.s_startOrderNumber, Config.s_startOrderNumber + _Orders.Count),
-                priceOfOneItem = product?.Price ?? 0,
-                amountOfItem = R.Next(5)
+                PriceOfOneItem = product?.Price ?? 0,
+                AmountOfItem = R.Next(5)
 
             });
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -7,59 +8,90 @@ using System.Threading.Tasks;
 
 namespace BO;
 
-
+/// <summary>
+/// ערך לא תקין
+/// </summary>
 [Serializable]
-public class GetAllForListProblemException : Exception
+public class InvalidValue_Exception : Exception
 {
-    public GetAllForListProblemException() : base() { }
-    public GetAllForListProblemException(string message) : base(message) { }
-    public GetAllForListProblemException(string message, Exception inner) : base(message, inner) { }
-    protected GetAllForListProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    public InvalidValue_Exception() : base() { }
+    public InvalidValue_Exception(string message) : base(message) { }
+    public InvalidValue_Exception(string message, Exception inner) : base(message, inner) { }
+    protected InvalidValue_Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
 
+/// <summary>
+/// בעיה בהצגת כל המוצרים
+/// </summary>
 [Serializable]
-public class AddProductToCartProblemException : Exception
+public class GetAllForList_Exception : Exception
 {
-    public AddProductToCartProblemException() : base() { }
-    public AddProductToCartProblemException(string message) : base(message) { }
-    public AddProductToCartProblemException(string message, Exception inner) : base(message, inner) { }
-    protected AddProductToCartProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    public GetAllForList_Exception() : base() { }
+    public GetAllForList_Exception(string message) : base(message) { }
+    public GetAllForList_Exception(string message, Exception inner) : base(message, inner) { }
+    protected GetAllForList_Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
 
+/// <summary>
+/// בעיה בהוספת מוצר לבסיס הנתונים או לסל הקניות
+/// </summary>
 [Serializable]
-public class AddingProblemException : Exception
+public class Adding_Exception : Exception
 {
-    public AddingProblemException() : base() { }
-    public AddingProblemException(string message) : base(message) { }
-    public AddingProblemException(string message, Exception inner) : base(message, inner) { }
-    protected AddingProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    //public int ID { get; set; }
+   // public string DataEntity { get; set; }
+    public Adding_Exception() : base() {  }
+    public Adding_Exception(string message) : base(message) { }
+    public Adding_Exception(string message, Exception inner) : base(message, inner) { }
+    protected Adding_Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
 
+/// <summary>
+/// בעיה בהבאת פרטי מוצר
+/// </summary>
 [Serializable]
-public class GetDetailsProblemException : Exception
+public class GetDetails_Exception : Exception
 {
-    public GetDetailsProblemException() : base() { }
-    public GetDetailsProblemException(string message) : base(message) { }
-    public GetDetailsProblemException(string message, Exception inner) : base(message, inner) { }
-    protected GetDetailsProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    public GetDetails_Exception() : base() { }
+    public GetDetails_Exception(string message) : base(message) { }
+    public GetDetails_Exception(string message, Exception inner) : base(message, inner) { }
+    protected GetDetails_Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
 
+/// <summary>
+/// בעיה במחיקת מוצר מבסיס הנתונים
+/// </summary>
 [Serializable]
-public class DeletedProblemException : Exception
+public class Deleted_Exception : Exception
 {
-    public DeletedProblemException() : base() { }
-    public DeletedProblemException(string message) : base(message) { }
-    public DeletedProblemException(string message, Exception inner) : base(message, inner) { }
-    protected DeletedProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    public Deleted_Exception() : base() { }
+    public Deleted_Exception(string message) : base(message) { }
+    public Deleted_Exception(string message, Exception inner) : base(message, inner) { }
+    protected Deleted_Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
 
+/// <summary>
+/// בעיה בעדכון מוצר בבסיס הנתונים או בסל הקניות
+/// </summary>
 [Serializable]
-public class UpdateProblemException : Exception
+public class Update_Exception : Exception
 {
-    public UpdateProblemException() : base() { }
-    public UpdateProblemException(string message) : base(message) { }
-    public UpdateProblemException(string message, Exception inner) : base(message, inner) { }
-    protected UpdateProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    public Update_Exception() : base() { }
+    public Update_Exception(string message) : base(message) { }
+    public Update_Exception(string message, Exception inner) : base(message, inner) { }
+    protected Update_Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }
 
- 
+/// <summary>
+/// בעיה ביצירת ההזמנה
+/// </summary>
+[Serializable]
+public class MakeOrder_Exception : Exception
+{
+    public MakeOrder_Exception() : base() { }
+    public MakeOrder_Exception(string message) : base(message) { }
+    public MakeOrder_Exception(string message, Exception inner) : base(message, inner) { }
+    protected MakeOrder_Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+}
+

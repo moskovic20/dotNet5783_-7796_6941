@@ -22,12 +22,12 @@ public struct Order
     /// <summary>
     /// The name of the customer
     /// </summary>
-    public string? NameCustomer { get; set; }
+    public string? CustomerName { get; set; }
 
     /// <summary>
     /// Email addrres of the customer
     /// </summary>
-    public string? Email { get; set; }
+    public string? CustomerEmail { get; set; }
 
     /// <summary>
     /// The address to which the order should be sent
@@ -36,6 +36,7 @@ public struct Order
 
     /// <summary>
     /// The date the order was created
+    /// תאריך ביצוע ההזמנה
     /// </summary>
     public DateTime? DateOrder { get; set; }
 

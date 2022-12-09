@@ -55,7 +55,7 @@ internal class BoOrder //: IOrder
                             {
                                 OrderID = O.ID,
                                 CuustomerName = O.NameCustomer,
-                                Status = O.,
+                                Status = O.calculateStatus(),
                                 AmountOfItems =O.CalculateAmountItems(),
                                 TotalPrice =O.CalculatePriceOfAllItems()
                             };
@@ -81,7 +81,7 @@ internal class BoOrder //: IOrder
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);
-            return new BO.Order()
+            return new BO.Order()///use insted with copyprop...
             {
                 ID = myOrder.ID,
                 Email = myOrder.Email,

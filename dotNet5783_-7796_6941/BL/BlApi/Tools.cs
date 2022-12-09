@@ -72,14 +72,14 @@ public static class Tools
 
 
     #region   חישוב סטטוס להזמנה וזריקת חריגות
-    private static BO.OrderStatus calculateStatus(this Do.Order or)
+    public static OrderStatus calculateStatus(this Do.Order or)
     {
         if (or.DeliveryDate != null)
-            return BO.OrderStatus.Completed;
+            return OrderStatus.Completed;
         if (or.ShippingDate != null)
-            return BO.OrderStatus.Processing;
+            return OrderStatus.Processing;
         else
-            return BO.OrderStatus.Pending;
+            return OrderStatus.Pending;
     }
     #endregion
 
@@ -129,7 +129,7 @@ public static class Tools
     public static List<BO.OrderItem?> ListFromDoToBo(this IEnumerable<Do.OrderItem> orderItems)
     {
         List<BO.OrderItem?> itemsCasting = new List<BO.OrderItem?>();
-        foreach (Do.OrderItem item in orderItems)
+        foreach (Do.OrderItem item in orderItems) //casting from list <do.ordetitem > to list<bo.orderitem>
         {
             itemsCasting.Add(new BO.OrderItem()
             {
@@ -141,21 +141,14 @@ public static class Tools
             });
 
         }
-
-        //var itemCasting = from item in orderItems
-        //                  where item != null
-        //                  select orderItems.CopyPropertiesTo(item);
-
-        //    var myItems = from item in cart.Items
-        //                  where item != null && item.ID == id
-        //                  select item;
-        //pForClient.Amount = myItems.Count();
         return itemsCasting;
     }
     #endregion
 
-    Func<Do.OrderItem, BO.OrderItem?> selector
-    {
-        get
-    }
+    //Func<Do.OrderItem, BO.OrderItem?> selector
+    //{
+    //    get
+    //}
+
+
 }

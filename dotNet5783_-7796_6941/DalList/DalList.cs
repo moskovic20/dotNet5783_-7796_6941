@@ -12,23 +12,28 @@ sealed internal class DalList : IDal
 {
 
     private static DalList? instance;
+
     private static readonly object key = new(); //Thread Safe
 
-    public static DalList Instance()
+    public static DalList? Instance
     {
-        if (instance == null) //Lazy Initialization
+        get
         {
-            lock (key)
+            if (instance == null) //Lazy Initialization
             {
-                if (instance == null)
-                    instance = new DalList();
+                lock (key)
+                {
+                    if (instance == null)
+                        instance = new DalList();
+                }
             }
+
+            return instance;
         }
-
-        return instance;
     }
+ 
 
-    //private DalList() { }
+    private DalList() { }
     public IOrder Order => new DalOrder();
     public IProduct Product => new DalProduct();
     public IOrderItem OrderItem => new DalOrderItem();

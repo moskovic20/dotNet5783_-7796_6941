@@ -50,14 +50,15 @@ internal class BoOrder : IOrder
     {
         try
         {
-            var orderList = from O in dal.Order.GetAllExistsBy()
+            var orderList = from O in dal.Order.GetAll()
+                           let p = O.GetValueOrDefault()
                             select new BO.OrderForList()
                             {
-                                OrderID = O.ID,
-                                CuustomerName = O.NameCustomer,
-                                Status = O.calculateStatus(),
-                                AmountOfItems =O.CalculateAmountItems(),
-                                TotalPrice =O.CalculatePriceOfAllItems()
+                                OrderID = p.ID,
+                                CustomerName = p.CustomerName,
+                                Status = p.calculateStatus(),
+                                AmountOfItems = p.CalculateAmountItems(),
+                                TotalPrice = p.CalculatePriceOfAllItems()
                             };
             return orderList;
         }
@@ -81,6 +82,8 @@ internal class BoOrder : IOrder
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);
+            BO.Order order = new BO.Order();
+            order = myOrder.CopyPropTo(order);
             return new BO.Order()///use insted with copyprop...
             {
                 ID = myOrder.ID,

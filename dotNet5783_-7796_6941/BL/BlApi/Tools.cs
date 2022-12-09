@@ -74,7 +74,7 @@ public static class Tools
     }
 
 
-    #region   חישוב סטטוס להזמנה וזריקת חריגות
+    #region   חישוב סטטוס להזמנה
     public static BO.OrderStatus calculateStatus(this Do.Order or)
     {
         if (or.DeliveryDate != null)

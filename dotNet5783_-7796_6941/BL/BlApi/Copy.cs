@@ -11,25 +11,30 @@ static class Copy
 {
     public static Target CopyPropTo<Source, Target>(this Source source, Target target)
     {
-        Dictionary<string, PropertyInfo> propertyInfoTarget = target.GetType().GetProperties()
+        Dictionary<string, PropertyInfo> propertyInfoTarget = target!.GetType().GetProperties()
             .ToDictionary(key => key.Name, value => value);
 
-        IEnumerable<PropertyInfo> propertyInfoSource = source.GetType().GetProperties();
+        IEnumerable<PropertyInfo> propertyInfoSource = source!.GetType().GetProperties();
 
         foreach (var item in propertyInfoSource)
         {
             if (propertyInfoTarget.ContainsKey(item.Name) && (item.PropertyType == typeof(string) || !item.PropertyType.IsClass))
             {
-                Type typeSource = Nullable.GetUnderlyingType(item.PropertyType);
-                Type typeTarget = Nullable.GetUnderlyingType(propertyInfoTarget[item.Name].PropertyType);
+                Type typeSource = Nullable.GetUnderlyingType(item.PropertyType)!;
+                Type typeTarget = Nullable.GetUnderlyingType(propertyInfoTarget[item.Name].PropertyType)!;
 
-                object value = item.GetValue(source);
+                object value = item.GetValue(source)!;
 
-                if (typeSource is not null && typeTarget is not null)
-                    value = Enum.ToObject(typeTarget, value);
+                if (value is not null)
+                {
+                    if (propertyInfoTarget[item.Name].PropertyType == item.PropertyType)
+                        propertyInfoTarget[item.Name].SetValue(target, value);
 
-                else if (propertyInfoTarget[item.Name].PropertyType is item.PropertyType)
-                    propertyInfoTarget[item.Name].SetValue(target, value);
+                    else if (typeSource is not null && typeTarget is not null)
+                        value = Enum.ToObject(typeTarget, value);
+
+                     
+                }
             }
         }
 
@@ -37,7 +42,11 @@ static class Copy
     }
 
     public static Target CopyPropToStruct<Source, Target>(this Source source, Target target) where Target : struct
- => source.CopyPropTo(target as object) as Target;
+    {
+        object obj = target;
+        source.CopyPropTo(obj);
+        return (Target)obj;
+    }
 
     public static IEnumerable<Target> CopyListTo<Source, Target>(this IEnumerable<Source> sources) where Target : new()
     => from source in sources

@@ -107,55 +107,16 @@ internal class DalOrderItem : IOrderItem
 
     }
 
-    public IEnumerable<OrderItem> GetAll()
-    {
-        return (IEnumerable<OrderItem>)_DS._OrderItems?? throw new DoesntExistException("there is not any order items");
-    }
-
     /// <summary>
     ///  הפונקציה מחזירה את כל רשימת המוצרים (כולל אלו שנמחקו) לפי פונקציית הסינון שמתקבלת
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
     /// <exception cref="NotFounfException"></exception>
-    public IEnumerable<OrderItem?> GetAllBy(Func<OrderItem?, bool>? filter = null)
-    {
-        if (filter == null)
-            return _DS._OrderItems;
+   public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter = null)
+    => from item in _DS._OrderItems
+       where (filter is null ? true : filter(item)) && item.Value.IsDeleted == false
+       select item;
 
-        var list = from item in _DS._OrderItems
-                   where item != null && filter(item)
-                   select item;
-
-        if (list.Count() == 0)
-            throw new DoesntExistException("there is not any order items");
-
-        return list;
-    }
-
-
-    /// <summary>
-    /// הפונקציה מחזירה את כל רשימת המוצרים בהזמנות הקיימים, לפי פונקציית הסינון שמתקבלת
-    /// </summary>
-    /// <param name="filter"></param>
-    /// <returns></returns>
-    public IEnumerable<OrderItem> GetAllExistsBy(Func<OrderItem?, bool>? filter = null)
-    {
-        if (filter == null)
-        {
-            var notFilterList= from item in _DS._OrderItems
-                   where item != null && item.Value.IsDeleted == false
-                   select item;
-
-            return (IEnumerable<OrderItem>)notFilterList;
-        }
-
-        var filterlist = from item in _DS._OrderItems
-                   where item.Value.IsDeleted == false
-                   where filter(item)
-                   select item;
-
-        return (IEnumerable<OrderItem>)filterlist;
-    }
 }
 

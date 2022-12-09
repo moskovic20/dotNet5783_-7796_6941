@@ -3,10 +3,25 @@ using BO;
 
 namespace BlImplementation;
 
-sealed public class Bl : IBl
+sealed internal class Bl : IBl
 {
 
-    public static IBl Instance { get; } = new Bl();
+    private static IBl? instance;
+    private static readonly object key = new(); //Thread Safe
+
+    public static IBl Instance()
+    {
+        if (instance == null) //Lazy Initialization
+        {
+            lock (key)
+            {
+                if (instance == null)
+                    instance = new Bl();
+            }
+        }
+
+        return instance;
+    }
 
     private Bl() { }
 

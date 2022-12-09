@@ -9,11 +9,11 @@ public class DataSource
     static readonly Random R = new Random();
 
     private static DataSource? instance;
-    private static readonly object key = new();
+    private static readonly object key = new(); //Thread Safe
 
-    public static DataSource GetInstance()
+    public static DataSource Instance()
     {
-        if (instance == null)
+        if (instance == null) //Lazy Initialization
         {
             lock (key)
             {

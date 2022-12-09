@@ -6,7 +6,7 @@ namespace Dal;
 
 internal class DalOrderItem : IOrderItem
 {
-    DataSource _DS = DataSource.GetInstance();
+    DataSource _DS = DataSource.Instance();
 
     public int Add(OrderItem myOrderItem)
     {

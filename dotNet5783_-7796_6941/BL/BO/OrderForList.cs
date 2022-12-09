@@ -10,7 +10,7 @@ public class OrderForList
 {
     public int OrderID { get; set; }
 
-    public string? CuustomerName { get; set; }
+    public string? CustomerName { get; set; }
 
     public OrderStatus Status { get; set; }
 

@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
 
 
 namespace BlImplementation;
@@ -28,16 +27,16 @@ internal class BoCart : ICart
                 ID = 0,
                 ProductID = productID,
                 NameOfBook = product.NameOfBook,
-                Price = product.Price ?? throw new BO.Adding_Exception("cant add this product to the cart because No price has been entered for it yet"),
-                Amount = 0,
+                PriceOfOneItem = product.Price ?? throw new BO.Adding_Exception("cant add this product to the cart because No price has been entered for it yet"),
+                AmountOfItems = 0,
                 TotalPrice = 0,
             };
 
             if (product.InStock! >= 0)
                 throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:" + item.NameOfBook);
 
-            item.Amount++;
-            item.TotalPrice += item.Price;
+            item.AmountOfItems++;
+            item.TotalPrice += item.PriceOfOneItem;
 
             cart.Items.Add(item);
             return cart;
@@ -66,31 +65,31 @@ internal class BoCart : ICart
                 cart.TotalPrice -= item.TotalPrice;
             }
 
-            else if (NewAmount < item.Amount)
+            else if (NewAmount < item.AmountOfItems)
             {
-                difference = item.Amount - NewAmount;
+                difference = item.AmountOfItems - NewAmount;
 
-                item.Amount = NewAmount;
-                item.TotalPrice -= difference * item.Price;
-                cart.TotalPrice -= difference * item.Price;
+                item.AmountOfItems = NewAmount;
+                item.TotalPrice -= difference * item.PriceOfOneItem;
+                cart.TotalPrice -= difference * item.PriceOfOneItem;
                 return cart;
             }
 
             else
             {
-                difference = NewAmount - item.Amount;
+                difference = NewAmount - item.AmountOfItems;
 
                 if (product.InStock < NewAmount)
                     throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:"+item.NameOfBook);
 
-                item.Amount = NewAmount;
-                item.TotalPrice += difference * item.Price;
-                cart.TotalPrice += difference * item.Price;
+                item.AmountOfItems = NewAmount;
+                item.TotalPrice += difference * item.PriceOfOneItem;
+                cart.TotalPrice += difference * item.PriceOfOneItem;
             }
 
             return cart;
         }
-        catch(InvalidValue_Exception ex) { throw new BO.Update_Exception("can't update the amount of this product",ex); }
+        catch(BO.InvalidValue_Exception ex) { throw new BO.Update_Exception("can't update the amount of this product",ex); }
         catch (Do.DoesntExistException ex) { throw new BO.Update_Exception("can't update the amount of this product", ex); }
     }
 
@@ -129,15 +128,15 @@ internal class BoCart : ICart
                 {
                     IdOfOrder = IdOfONewOrder,
                     IdOfProduct = item.ProductID,
-                    AmountOfItem = item.Amount,
-                    PriceOfOneItem = item.Price,
+                    AmountOfItem = item.AmountOfItems,
+                    PriceOfOneItem = item.PriceOfOneItem,
                 };
 
                 dal.OrderItem.Add(orderItem);
 
                 Do.Product newProduct = new();//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
                 product.CopyPropertiesTo(newProduct);
-                newProduct.InStock -= item.Amount;
+                newProduct.InStock -= item.AmountOfItems;
 
                 dal.Product.Update(newProduct);//מעדכנים את הכמות של המוצר ברשימה
             }
@@ -153,10 +152,10 @@ internal class BoCart : ICart
     {
         Do.Product product = dal.Product.GetById(item.ProductID);
 
-        if (item.Amount < 1)
+        if (item.AmountOfItems < 1)
             throw new BO.InvalidValue_Exception("the amount of the book:"+ item.NameOfBook+" is negative");
 
-        if (product.InStock < item.Amount)
+        if (product.InStock < item.AmountOfItems)
             throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:"+item.NameOfBook);
 
         return true; ;

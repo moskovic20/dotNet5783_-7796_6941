@@ -14,9 +14,21 @@ internal class BoProduct : IProduct
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
-    public IEnumerable<BO.ProductForList> GetAllProductForList()
+    public IEnumerable<BO.ProductForList> GetAllProductForList_forM()
     {
         var products = from P in dal.Product.GetAllExistsBy()
+                       select BlApi.Tools.CopyPropertiesToNew(P, typeof(BO.ProductForList));
+
+        if (products.Count() == 0)
+            throw new BO.GetAllForList_Exception("There are no products");
+
+        return (IEnumerable<BO.ProductForList>)products;
+    }
+
+    public IEnumerable<BO.ProductForList> GetAllProductForList_forC()
+    {
+        var products = from P in dal.Product.GetAllExistsBy()
+                       where P.Price!=null
                        select BlApi.Tools.CopyPropertiesToNew(P, typeof(BO.ProductForList));
 
         if (products.Count() == 0)

@@ -27,12 +27,12 @@ public class OrderItem
     /// <summary>
     ///מחיר של יחידת מוצר 1 
     /// </summary>
-    public double? priceOfOneItem { get; set; }
+    public double? PriceOfOneItem { get; set; }
     
     /// <summary>
     /// כמות הפריטים של מוצר זה בהזמנה
     /// </summary>
-    public int Amount { get; set; }
+    public int AmountOfItems { get; set; }
 
     /// <summary>
     /// מחיר כולל של הפריט

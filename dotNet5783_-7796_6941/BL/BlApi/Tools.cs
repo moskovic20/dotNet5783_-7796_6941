@@ -52,6 +52,7 @@ public static class Tools
     //}
 
     //copy elements of BO to DO and vice versa
+
     public static void CopyPropertiesTo<T, S>(this S from, T to)
     {
         foreach (PropertyInfo propTo in to.ToStringProperty().GetType().GetProperties())//loop on all the properties in the new object
@@ -74,7 +75,7 @@ public static class Tools
 
 
     #region   חישוב סטטוס להזמנה וזריקת חריגות
-    private static BO.OrderStatus calculateStatus(this Do.Order or)
+    public static BO.OrderStatus calculateStatus(this Do.Order or)
     {
         if (or.DeliveryDate != null)
             return BO.OrderStatus.Completed;
@@ -109,7 +110,7 @@ public static class Tools
         double Price = 0;
 
         List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
-        Price = (double)listforAmount.Sum(o => o.amountOfItem ?? 0 * o.priceOfOneItem ?? throw new Exception("אין מחיר!!"));
+        Price = (double)listforAmount.Sum(o => o.AmountOfItem ?? 0 * o.PriceOfOneItem ?? throw new Exception("אין מחיר!!"));
         return Price;
     }
     #endregion
@@ -137,9 +138,9 @@ public static class Tools
             {
                 ID = item.ID,
                 NameOfBook = (dal.Product.GetById(item.ID)).NameOfBook,//name of the product by his order ID
-                priceOfOneItem = item.priceOfOneItem,
-                Amount = item.amountOfItem ?? 0,///
-                TotalPrice = item.priceOfOneItem * item.amountOfItem
+                PriceOfOneItem = item.PriceOfOneItem,
+                AmountOfItems = item.AmountOfItem ?? 0,///
+                TotalPrice = item.PriceOfOneItem * item.AmountOfItem
             });
 
         }
@@ -201,4 +202,5 @@ public static class Tools
         }
     }
 
- 
+
+}

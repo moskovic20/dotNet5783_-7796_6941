@@ -87,59 +87,14 @@ internal class DalProduct : IProduct
             return false;
     }
 
-    public IEnumerable<Product> GetAll()
-    {
-        //return (IEnumerable<Product>)_DS._Products?? throw new DoesntExistException("there is not any products");
-        return GetAllBy();
-    }
-
-    /// <summary>
-    ///  הפונקציה מחזירה את כל רשימת המוצרים (כולל אלו שנמחקו) לפי פונקציית הסינון שמתקבלת
-    /// </summary>
-    /// <param name="filter"></param>
-    /// <returns></returns>
-    /// <exception cref="NotFounfException"></exception>
-    public IEnumerable<Product> GetAllBy(Func<Product?, bool>? filter = null)
-    {
-        if (filter == null)
-        {
-            var notFilterList = from item in _DS._Products
-                                where item != null
-                                select item;
-
-            return (IEnumerable<Product>)notFilterList;
-        }
-
-
-        var Filterlist = from item in _DS._Products
-                         where item!=null && filter(item)
-                         select item;
-
-        return (IEnumerable<Product>)Filterlist;
-    }
-
-
+  
     /// <summary>
     /// הפונקציה מחזירה את כל רשימת המוצרים הקיימים לפי פונקציית הסינון שמתקבלת
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Product> GetAllExistsBy(Func<Product?, bool>? filter = null)
-    {
-        if (filter == null)
-        {
-            var notFilterList = from item in _DS._Products
-                                where item != null && item.Value.IsDeleted == false
-                                select item;
-
-            return (IEnumerable<Product>)notFilterList;
-        }
-
-
-        var filterList= from item in _DS._Products
-               where item != null && item.Value.IsDeleted == false && filter(item)
-               select item;
-
-        return (IEnumerable<Product>)filterList;
-    }
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null)
+    => from item in _DS._Products
+       where (filter is null ? true : filter(item)) && item.Value.IsDeleted == false
+       select item;
 }

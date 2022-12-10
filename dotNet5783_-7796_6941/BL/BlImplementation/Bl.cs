@@ -3,7 +3,7 @@ using BO;
 
 namespace BlImplementation;
 
-sealed internal class Bl : IBl
+sealed public class Bl : IBl
 {
 
     private static IBl? instance;

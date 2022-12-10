@@ -1,4 +1,6 @@
-﻿using PL.BoProducts;
+﻿using BlApi;
+using BlImplementation;
+using PL.BoProducts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IBl _bl =  Bl.Instance();
         public MainWindow()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace PL
 
         private void _go_to_product_list__Click(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow().Show();
+            new ProductListWindow(_bl).Show();
         }
 
         private void _go_to_product_admin_Click(object sender, RoutedEventArgs e)

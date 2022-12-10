@@ -69,35 +69,6 @@ internal class DalOrder : IOrder
         Add(item);
     }
 
-    public IEnumerable<Order> GetAll()
-    {
-        return (IEnumerable<Order>)_DS._Orders ?? throw new DoesntExistException("there is not any orders");
-    }
-
-    /// <summary>
-    ///  הפונקציה מחזירה את כל רשימת המוצרים (כולל אלו שנמחקו) לפי פונקציית הסינון שמתקבלת
-    /// </summary>
-    /// <param name="filter"></param>
-    /// <returns></returns>
-    /// <exception cref="NotFounfException"></exception>
-    public IEnumerable<Order> GetAllBy(Func<Order?, bool>? filter = null)
-    {
-        if (filter == null)
-        {
-            var notFilterList = from item in _DS._Orders
-                                where item != null
-                                select item;
-
-            return (IEnumerable<Order>)notFilterList;
-        }
-
-
-        var Filterlist = from item in _DS._Orders
-                         where item != null && filter(item)
-                         select item;
-
-        return (IEnumerable<Order>)Filterlist;
-    }
 
 
     /// <summary>
@@ -105,23 +76,10 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Order> GetAllExistsBy(Func<Order?, bool>? filter = null)
-    {
-        if (filter == null)
-        {
-            var notFilterList = from item in _DS._Orders
-                                where item != null && item?.IsDeleted == false
-                                select item;
+ 
 
-            return (IEnumerable<Order>)notFilterList;
-        }
-
-
-        var Filterlist = from item in _DS._Orders
-                         where item != null && item?.IsDeleted == false && filter(item)
-                         select item;
-
-        return (IEnumerable<Order>)Filterlist;
-    }
-
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null)
+    => from item in _DS._Orders
+       where (filter is null ? true : filter(item)) && item.Value.IsDeleted == false
+       select item;
 }

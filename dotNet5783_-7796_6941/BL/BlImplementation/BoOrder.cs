@@ -86,14 +86,14 @@ internal class BoOrder : IOrder
             order = myOrder.CopyPropTo(order);
             return new BO.Order()///use insted with copyprop...
             {
-                ID = myOrder.ID,
-                Email = myOrder.CustomerEmail,
-                ShippingAddress = myOrder.ShippingAddress,
-                DateOrder = myOrder.DateOrder ?? throw new ArgumentNullException("there is no vall in DateOrder"),//should be nullable?
+                //ID = myOrder.ID,
+                //CustomerEmail = myOrder.CustomerEmail,
+                //ShippingAddress = myOrder.ShippingAddress,
+                //DateOrder = myOrder.DateOrder,
                 Status = myOrder.calculateStatus(),
-                PaymentDate = myOrder.DateOrder ?? null,//should be nullable?
-                ShippingDate = myOrder.ShippingDate,
-                DeliveryDate = myOrder.DeliveryDate,
+                PaymentDate = myOrder.DateOrder,//should be nullable?
+                //ShippingDate = myOrder.ShippingDate,
+                //DeliveryDate = myOrder.DeliveryDate,
                 Items = dal.OrderItem.GetListByOrderID(myOrder.ID).ListFromDoToBo(),//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
                 TotalPrice = myOrder.CalculatePriceOfAllItems()
             };
@@ -123,15 +123,14 @@ internal class BoOrder : IOrder
 
             if (myOrder.ShippingDate == null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
             {
-                //Do.Order order = myOrder;
 
                 if (myOrder.DateOrder > DateTime.Now)
                     throw new ArgumentException("rong information,cant be possible that DateOrder > ShippingDate"); //exceptions
                 else
                 {
-                    myOrder.ShippingDate = DateTime.Now;
-                    dal.Order.Update(myOrder);
-                    return GetOrdertDetails(id); ////לטפל בחריגות מהפונק הזאת   
+                    myOrder.ShippingDate = DateTime.Now;//עדכון תאריך שליחה
+                    dal.Order.Update(myOrder);//לעדכן גם את הבסיס נתונים בהתאם
+                    return GetOrdertDetails(id);//החזרת ההזמנה המעודכנת//    לטפל בחריגות מהפונק הזאת   
                 }
             }
             else
@@ -157,12 +156,11 @@ internal class BoOrder : IOrder
             throw new BO.GetDetails_Exception("Negative ID");
         try
         {
-            Do.Order myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
+            Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
             datePosibleExceptiones(myOrder);
 
             if (myOrder.ShippingDate != null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
             {
-
 
                 if (myOrder.ShippingDate > DateTime.Now)
                     throw new ArgumentException("rong information,cant be possible that ShippingDate > DeliveryDate");

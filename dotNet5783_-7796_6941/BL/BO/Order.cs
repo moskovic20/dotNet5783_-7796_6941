@@ -16,7 +16,7 @@ public class Order
     /// <summary>
     /// כתובת האימייל של הלקוח
     /// </summary>
-    public string? Email { get; set;}
+    public string? CustomerEmail { get; set;}
 
     /// <summary>
     /// כתובת הלקוח, אליה צריך לשלוח את ההזמנה
@@ -26,7 +26,7 @@ public class Order
     /// <summary>
     /// תאריך יצירת הזמנה
     /// </summary>
-    public DateTime DateOrder { get; set; }
+    public DateTime? DateOrder { get; set; }
 
     /// <summary>
     /// מצב הזמנה

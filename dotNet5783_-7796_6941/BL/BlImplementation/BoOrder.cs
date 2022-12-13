@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
 
 namespace BlImplementation;
 
@@ -20,10 +19,10 @@ internal class BoOrder : IOrder
     {
 
         if (or.GetValueOrDefault().DateOrder == null)
-            throw new ArgumentNullException("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
+            throw new BO.InvalidValue_Exception("There is no date for creating an order");// בדיקות אם קיים בכלל עם מה לעבוד
 
-        if (or.GetValueOrDefault().ShippingDate == null && or.GetValueOrDefault().DeliveryDate != null)
-            throw new ArgumentException("order allredy delivered but there is no info about the shipping date");
+        if (or.GetValueOrDefault().ShippingDate == null && or.GetValueOrDefault().DeliveryDate != null) //לא בטוח שצריך,לשים לב
+            throw new BO.InvalidValue_Exception("order allredy delivered but there is no info about the shipping date");
 
 
         //----------------לא נכון בשלב שכבה זו לבדוק כאלה חריגות---------------------
@@ -48,24 +47,19 @@ internal class BoOrder : IOrder
     /// <returns></returns>
     public IEnumerable<BO.OrderForList> GetAllOrderForList()
     {
-        try
-        {
-            var orderList = from O in dal.Order.GetAll()
-                           let p = O.GetValueOrDefault()
-                            select new BO.OrderForList()
-                            {
-                                OrderID = p.ID,
-                                CustomerName = p.CustomerName,
-                                Status = p.calculateStatus(),
-                                AmountOfItems = p.CalculateAmountItems(),
-                                TotalPrice = p.CalculatePriceOfAllItems()
-                            };
-            return orderList;
-        }
-        catch (Exception ex)
-        {
-            throw new BO.GetAllForList_Exception("cant give all the orders for list", ex);
-        }
+        var orderList = from O in dal.Order.GetAll()
+                        let p = O.GetValueOrDefault()
+                        select new BO.OrderForList()
+                        {
+                            OrderID = p.ID,
+                            CustomerName = p.CustomerName,
+                            Status = p.calculateStatus(),
+                            AmountOfItems = p.CalculateAmountItems(),
+                            TotalPrice = p.CalculatePriceOfAllItems()
+                        }
+                        ?? throw new BO.GetAllForList_Exception("there is no orders in the list");
+        return orderList;
+
     }
 
     /// <summary>
@@ -89,7 +83,7 @@ internal class BoOrder : IOrder
                 ID = myOrder.ID,
                 Email = myOrder.CustomerEmail,
                 ShippingAddress = myOrder.ShippingAddress,
-                DateOrder = myOrder.DateOrder ?? throw new ArgumentNullException("there is no vall in DateOrder"),//should be nullable?
+                DateOrder = myOrder.DateOrder ?? throw new BO.InvalidValue_Exception("there is no vall in DateOrder"),//should be nullable?
                 Status = myOrder.calculateStatus(),
                 PaymentDate = myOrder.DateOrder ?? null,//should be nullable?
                 ShippingDate = myOrder.ShippingDate,
@@ -98,14 +92,17 @@ internal class BoOrder : IOrder
                 TotalPrice = myOrder.CalculatePriceOfAllItems()
             };
         }
-        catch (Exception ex)
+        catch (Do.DoesntExistException ex)
+        {
+            throw new BO.GetDetails_Exception("Can't get this order", ex);
+        }
+        catch (BO.InvalidValue_Exception ex)
         {
             throw new BO.GetDetails_Exception("Can't get this order", ex);
         }
 
 
     }
-
 
     /// <summary>
     /// עדכון שילוח הזמנה 
@@ -115,10 +112,10 @@ internal class BoOrder : IOrder
     public BO.Order UpdateOrderShipping(int id)
     {
         if (id < 0)
-            throw new BO.GetDetails_Exception("Negative ID");
+            throw new BO.Update_Exception("Negative ID");
         try
         {
-            Do.Order myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
+            Do.Order myOrder = dal.Order.GetById(id);
             datePosibleExceptiones(myOrder);//exceptions
 
             if (myOrder.ShippingDate == null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
@@ -135,13 +132,16 @@ internal class BoOrder : IOrder
                 }
             }
             else
-                throw new BO.GetDetails_Exception("Can't get this order correct ditales");//////ok exception?
+                throw new BO.GetDetails_Exception("Can't update this order correct ditales");//////ok exception?
         }
-        catch (Exception ex)
+        catch (Do.DoesntExistException ex)
         {
-            throw new BO.GetDetails_Exception("Can't get this order", ex);
+            throw new BO.GetDetails_Exception("Can't update shipping date", ex);
         }
-
+        catch (BO.InvalidValue_Exception ex)
+        {
+            throw new BO.GetDetails_Exception("Can't update shipping date", ex);
+        }
     }
 
     /// <summary>

@@ -70,16 +70,14 @@ internal class DalOrder : IOrder
     }
 
 
-
     /// <summary>
     /// הפונקציה מחזירה את כל רשימת המוצרים בהזמנות הקיימים, לפי פונקציית הסינון שמתקבלת
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
- 
-
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null)
     => from item in _DS._Orders
        where (filter is null ? true : filter(item)) && item.Value.IsDeleted == false
        select item;
+
 }

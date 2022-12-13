@@ -110,8 +110,8 @@ public class DataSource
 
             myOrder.CustomerEmail = myOrder.CustomerName + "@gmail.com";
 
-            myOrder.ShippingDate = (i < 16) ? DateTime.Now - new TimeSpan(R.Next(6, 11), R.Next(24), R.Next(6), R.Next(60)) : null;
-            myOrder.DeliveryDate = (i < 10) ? DateTime.Now - new TimeSpan(R.Next(6), R.Next(24), R.Next(6), R.Next(60)) : null;
+            myOrder.ShippingDate = (i < 16) ? DateTime.Now - new TimeSpan(R.Next(6, 11), R.Next(24), R.Next(60), R.Next(60)) : null;
+            myOrder.DeliveryDate = (i < 10) ? DateTime.Now - new TimeSpan(R.Next(6), R.Next(24), R.Next(60), R.Next(60)) : null;
 
             _Orders.Add(myOrder);
         }

@@ -26,7 +26,7 @@ internal class BoProduct : IProduct
     }
 
     public IEnumerable<BO.ProductForList> GetAllProductForList_forC()
-    {
+    {//לסנן את מחיר
         var products = dal.Product.GetAll(); 
 
         if (products.Count() == 0)
@@ -57,16 +57,16 @@ internal class BoProduct : IProduct
             throw new ArgumentNullException("missing product to add");
 
         if (productToAdd.ID < 1)
-            throw new BO.Adding_Exception("Can't add becouse the negative ID");//מספר שלילי
+            throw new BO.Adding_Exception("Can't add because the negative ID");//מספר שלילי
 
         if (productToAdd.NameOfBook == null)
-            throw new BO.Adding_Exception("Can't add becouse the name of book is missing");
+            throw new BO.Adding_Exception("Can't add because the name of book is missing");
 
         if (productToAdd.Price < 0)
-            throw new BO.Adding_Exception("Can't add becouse the negative price");
+            throw new BO.Adding_Exception("Can't add because the negative price");
 
         if (productToAdd.InStock < 0)
-            throw new BO.Adding_Exception("Can't add becouse the negative amount");
+            throw new BO.Adding_Exception("Can't add because the negative amount");
 
 
         Do.Product myNewP = new();

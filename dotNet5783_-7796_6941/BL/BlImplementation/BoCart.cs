@@ -12,7 +12,9 @@ namespace BlImplementation;
 internal class BoCart : ICart
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
-    
+    //DalApi.IDal? dal = DalApi.Factory.Get();לפי דן!
+
+
     public BO.Cart AddProductToCart(BO.Cart cart, int productID)
     {
         try
@@ -106,13 +108,13 @@ internal class BoCart : ICart
             if (cart.CustomerAddress == null)
                 throw new BO.InvalidValue_Exception("No value entered for the field: Customer Address");
 
-            if (cart.CustomerEmail != null)
+            if (cart.CustomerEmail != null)//מה עם חריגה של אין מייל?
             {
                 if (!cart.CustomerEmail.IsValidEmail())
                     throw new BO.InvalidValue_Exception("Invalid email address");
             }
 
-            cart.Items.TrueForAll(x => ValidationChecks(x));
+            cart.Items.TrueForAll(x => x.ValidationChecks());
 
             Do.Order newOrder = new(); //יצירת הזמנה חדשה
             cart.CopyPropertiesTo(newOrder);
@@ -124,7 +126,7 @@ internal class BoCart : ICart
             {
                 Do.Product product = dal.Product.GetById(item.ProductID);
 
-                Do.OrderItem orderItem = new()
+                Do.OrderItem orderItem = new()//למה לא עם הפונקציית העתקה?יש לנו גם ממבנה לקלאס וגם להיפך:) 
                 {
                     IdOfOrder = IdOfONewOrder,
                     IdOfProduct = item.ProductID,
@@ -148,17 +150,5 @@ internal class BoCart : ICart
         catch(Exception ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }
     }
 
-    private bool ValidationChecks(BO.OrderItem item)
-    {
-        Do.Product product = dal.Product.GetById(item.ProductID);
-
-        if (item.AmountOfItems < 1)
-            throw new BO.InvalidValue_Exception("the amount of the book:"+ item.NameOfBook+" is negative");
-
-        if (product.InStock < item.AmountOfItems)
-            throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:"+item.NameOfBook);
-
-        return true; ;
-    }
-
+    
 }

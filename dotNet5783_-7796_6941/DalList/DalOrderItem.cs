@@ -6,7 +6,7 @@ namespace Dal;
 
 internal class DalOrderItem : IOrderItem
 {
-    DataSource _DS = DataSource.Instance();
+    DataSource _DS = DataSource.Instance!;
 
     public int Add(OrderItem myOrderItem)
     {
@@ -113,9 +113,9 @@ internal class DalOrderItem : IOrderItem
     /// <param name="filter"></param>
     /// <returns></returns>
     /// <exception cref="NotFounfException"></exception>
-   public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter = null)
+   public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter = null, bool allItems = false)
     => from item in _DS._OrderItems
-       where (filter is null ? true : filter(item)) && item.Value.IsDeleted == false
+       where (filter is null ? true : filter(item)) && (allItems is false ? item.Value.IsDeleted == false : true)
        select item;
 
 }

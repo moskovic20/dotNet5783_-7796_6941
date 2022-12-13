@@ -17,7 +17,7 @@ internal class BoProduct : IProduct
     public IEnumerable<BO.ProductForList> GetAllProductForList_forM()
     {
         var products = from P in dal.Product.GetAll()
-                       select BlApi.Tools.CopyPropertiesToNew(P, typeof(BO.ProductForList));
+                       select P.CopyPropTo(typeof(BO.ProductForList));
 
         if (products.Count() == 0)
             throw new BO.GetAllForList_Exception("There are no products");
@@ -70,7 +70,7 @@ internal class BoProduct : IProduct
 
 
         Do.Product myNewP = new();
-        productToAdd.CopyPropertiesTo(myNewP);
+        productToAdd.CopyPropToStruct(myNewP);
 
         try
         {

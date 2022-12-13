@@ -8,7 +8,7 @@ namespace Dal;
 internal class DalProduct : IProduct
 {
 
-    DataSource _DS = DataSource.Instance();
+    DataSource _DS = DataSource.Instance!;
 
 
     public int Add(Product P)
@@ -93,8 +93,8 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null)
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null, bool allItems=false)
     => from item in _DS._Products
-       where (filter is null ? true : filter(item)) && item.Value.IsDeleted == false
+       where (filter is null ? true : filter(item)) && (allItems is false ? item.Value.IsDeleted == false: true)
        select item;
 }

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
+//using BO;
 
 namespace BlImplementation;
 
@@ -84,19 +84,21 @@ internal class BoOrder : IOrder
             Do.Order myOrder = dal.Order.GetById(id);
             BO.Order order = new BO.Order();
             order = myOrder.CopyPropTo(order);
-            return new BO.Order()///use insted with copyprop...
-            {
-                //ID = myOrder.ID,
-                //CustomerEmail = myOrder.CustomerEmail,
-                //ShippingAddress = myOrder.ShippingAddress,
-                //DateOrder = myOrder.DateOrder,
-                Status = myOrder.calculateStatus(),
-                PaymentDate = myOrder.DateOrder,//should be nullable?
-                //ShippingDate = myOrder.ShippingDate,
-                //DeliveryDate = myOrder.DeliveryDate,
-                Items = dal.OrderItem.GetListByOrderID(myOrder.ID).ListFromDoToBo(),//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
-                TotalPrice = myOrder.CalculatePriceOfAllItems()
-            };
+            order.Status = myOrder.calculateStatus();
+            order.PaymentDate = myOrder.DateOrder;//should be nullable?                                  
+            order.Items = (List<BO.OrderItem?>?)dal.OrderItem.GetListByOrderID(myOrder.ID).Select(x => x.ListFromDoToBo()); //casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
+            order.TotalPrice = myOrder.CalculatePriceOfAllItems();
+            return order;
+            //return new BO.Order()
+            //{
+            //ID = myOrder.ID,
+            //CustomerEmail = myOrder.CustomerEmail,
+            //ShippingAddress = myOrder.ShippingAddress,
+            //DateOrder = myOrder.DateOrder,
+            //ShippingDate = myOrder.ShippingDate,
+            //DeliveryDate = myOrder.DeliveryDate,
+            //כל השאר שגם למעלה
+            //};
         }
         catch (Exception ex)
         {

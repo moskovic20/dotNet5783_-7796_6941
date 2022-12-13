@@ -11,7 +11,7 @@ namespace Dal;
 sealed internal class DalList : IDal
 {
 
-    private static DalList? instance;
+    private static DalList? instance ;
 
     private static readonly object key = new(); //Thread Safe
 
@@ -32,7 +32,7 @@ sealed internal class DalList : IDal
         }
     }
  
-
+    static DalList() { }
     private DalList() { }
     public IOrder Order => new DalOrder();
     public IProduct Product => new DalProduct();

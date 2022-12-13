@@ -21,22 +21,28 @@ public static class Tools
     /// <typeparam name="T">generic type</typeparam>
     /// <param name="t">"this" type</param>
     /// <returns></returns>
-    public static string ToStringProperty<T>(this T t, string suffix = "") //מעבר כולל גם על אוספים
+    public static string ToStringProperty<T>(this T t, string suffix = "")
     {
         string str = "";
         foreach (PropertyInfo item in t!.GetType().GetProperties())
         {
 
             var value = item.GetValue(t, null);
-            if (value is IEnumerable)
-            {
-                str += $"\n{item.Name}: ";
-                foreach (var item2 in (IEnumerable)value)
-                    str += item2.ToStringProperty("  ");
-            }
-            else
+            if (value is string)
                 str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+            else
+            {
+                if (value is IEnumerable)
+                {
+                    str += $"\n{item.Name}: ";
+                    foreach (var item2 in (IEnumerable)value)
+                        str += item2.ToStringProperty("  ");
+                }
+                else
+                    str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+            }
         }
+        str += "\n";
         return str;
     }
 
@@ -129,23 +135,17 @@ public static class Tools
     #endregion
 
     #region המרת רשימה של אובייקטים מסוג פריט-הזמנה משכבת הנתונים לשכבת הלוגיקה עם השינויים הנדרשים
-    public static List<BO.OrderItem?> ListFromDoToBo(this IEnumerable<Do.OrderItem> orderItems)
+    public static BO.OrderItem? ListFromDoToBo(this Do.OrderItem orderItems)
+    => new BO.OrderItem() //casting from list <do.ordetitem > to list<bo.orderitem>
     {
-        List<BO.OrderItem?> itemsCasting = new List<BO.OrderItem?>();
-        foreach (Do.OrderItem item in orderItems) //casting from list <do.ordetitem > to list<bo.orderitem>
-        {
-            itemsCasting.Add(new BO.OrderItem()
-            {
-                ID = item.ID,
-                NameOfBook = (dal.Product.GetById(item.ID)).NameOfBook,//name of the product by his order ID
-                PriceOfOneItem = item.PriceOfOneItem,
-                AmountOfItems = item.AmountOfItem ?? 0,///
-                TotalPrice = item.PriceOfOneItem * item.AmountOfItem
-            });
-
-        }
-        return itemsCasting;
-    }
+            ID = orderItems.ID,
+            NameOfBook = (dal.Product.GetById(orderItems.ID)).NameOfBook,//name of the product by his order ID
+            PriceOfOneItem = orderItems.PriceOfOneItem,
+            AmountOfItems = orderItems.AmountOfItem ?? 0,///
+        TotalPrice = orderItems.PriceOfOneItem * orderItems.AmountOfItem
+    };
+        
+    
     #endregion
 
 
@@ -172,11 +172,11 @@ public static class Tools
                 return match.Groups[1].Value + domainName;
             }
         }
-        catch (RegexMatchTimeoutException e)
+        catch (RegexMatchTimeoutException)
         {
             return false;
         }
-        catch (ArgumentException e)
+        catch (ArgumentException)
         {
             return false;
         }
@@ -191,6 +191,19 @@ public static class Tools
         {
             return false;
         }
+    }
+
+    public static bool ValidationChecks( this BO.OrderItem item)
+    {
+        Do.Product product = dal.Product.GetById(item.ProductID);
+
+        if (item.AmountOfItems < 1)
+            throw new BO.InvalidValue_Exception("the amount of the book:" + item.NameOfBook + " is negative");
+
+        if (product.InStock < item.AmountOfItems)
+            throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:" + item.NameOfBook);
+
+        return true; ;
     }
 
 

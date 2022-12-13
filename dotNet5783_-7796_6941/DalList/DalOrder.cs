@@ -6,7 +6,7 @@ namespace Dal;
 
 internal class DalOrder : IOrder
 {
-    DataSource _DS = DataSource.Instance();
+    DataSource _DS = DataSource.Instance!;
 
     public int Add(Order myOrder)
     {
@@ -77,7 +77,12 @@ internal class DalOrder : IOrder
     /// <returns></returns>
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null)
     => from item in _DS._Orders
-       where (filter is null ? true : filter(item)) && item.Value.IsDeleted == false
+       where (filter is null ? true : filter(item)) && (allItems is false ? item.Value.IsDeleted == false : true)
+       select item;
+
+    public IEnumerable<Order?> GetAlldeletted(Func<Order?, bool>? filter = null)
+    => from item in _DS._Orders
+       where (filter is null ? true : filter(item)) && item.Value.IsDeleted == true 
        select item;
 
 }

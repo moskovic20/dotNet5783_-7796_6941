@@ -1,9 +1,9 @@
 ﻿using BlApi;
-using BO;
+//using BO;
 
 namespace BlImplementation;
 
-sealed public class Bl : IBl
+sealed internal class Bl : IBl//from public to internul...ok?
 {
 
     private static IBl? instance;

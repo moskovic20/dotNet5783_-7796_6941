@@ -16,17 +16,17 @@ public class Order
     /// <summary>
     /// כתובת האימייל של הלקוח
     /// </summary>
-    public string? Email { get; set;}
+    public string? CustomerEmail { get; set;}
 
     /// <summary>
     /// כתובת הלקוח, אליה צריך לשלוח את ההזמנה
     /// </summary>
-    public string? ShippingAddress { get; set;}
+    public string? CustomerAddress { get; set;}
 
     /// <summary>
     /// תאריך יצירת הזמנה
     /// </summary>
-    public DateTime DateOrder { get; set; }
+    public DateTime? DateOrder { get; set; }
 
     /// <summary>
     /// מצב הזמנה
@@ -50,7 +50,8 @@ public class Order
     /// <summary>
     /// רשימת הפריטים בהזמנה
     /// </summary>
-    public List<OrderItem?>? Items { get; set; }
+    public List<OrderItem?>? Items
+    { get; set; }
 
     /// <summary>
     /// המחיר לתשלום של כל ההזמנה

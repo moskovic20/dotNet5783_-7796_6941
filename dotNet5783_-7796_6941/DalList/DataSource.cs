@@ -7,24 +7,31 @@ namespace Dal;
 public class DataSource
 {
     static readonly Random R = new Random();
+    
+    private static DataSource? instance ;
 
-    private static DataSource? instance;
     private static readonly object key = new(); //Thread Safe
 
-    public static DataSource Instance()
+    public static DataSource? Instance
     {
-        if (instance == null) //Lazy Initialization
+        get
         {
-            lock (key)
+            if (instance == null) //Lazy Initialization
             {
-                if (instance == null)
-                    instance = new DataSource();
+                lock (key)
+                {
+                    if (instance == null)
+                        instance = new DataSource();
+                }
             }
-        }
 
-        return instance;
+            return instance;
+        }
     }
 
+    static DataSource() { }
+
+    //private DataSource() { }
     internal List<Order?> _Orders { get; } = new List<Order?> { };
     internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> { };
     internal List<Product?> _Products { get; } = new List<Product?> { };

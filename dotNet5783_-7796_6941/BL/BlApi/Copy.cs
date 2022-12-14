@@ -33,7 +33,7 @@ static class Copy
                     else if (typeSource is not null && typeTarget is not null)
                         value = Enum.ToObject(typeTarget, value);
 
-                     
+
                 }
             }
         }
@@ -56,3 +56,32 @@ static class Copy
         => from source in sources
            select source.CopyPropTo(new Target());
 }
+
+//public static Target CopyPropTo<Source, Target>(this Source source, Target target) //ציפי
+//{
+
+//    if (source is not null && target is not null) //אם שני העצמים לא ריקים
+//    {
+//        Dictionary<string, PropertyInfo> propertiesInfoTarget = target.GetType().GetProperties()
+//            .ToDictionary(p => p.Name, p => p); //יוצר מילון של צמדים עם שם של שדה והערך בו
+
+//        IEnumerable<PropertyInfo> propertiesInfoSource = source.GetType().GetProperties();
+
+//        foreach (var propertyInfo in propertiesInfoSource)
+//        {
+//            if (propertiesInfoTarget.ContainsKey(propertyInfo.Name)
+//                && (propertyInfo.PropertyType == typeof(string) || !(propertyInfo.PropertyType.IsClass)))
+//            {
+//                propertiesInfoTarget[propertyInfo.Name].SetValue(target, propertyInfo.GetValue(source));
+//            }
+//        }
+//    }
+//    return target;
+//}
+
+//public static object CopyPropToStruct<S>(this S from, Type type)//get the typy we want to copy to //ציפי
+//{
+//    object? to = Activator.CreateInstance(type); // new object of the Type
+//    from.CopyPropTo(to);//copy all value of properties with the same name to the new object 
+//    return to!; //מחזירה את העצם אובגקט החדש
+//}

@@ -1,15 +1,4 @@
-﻿////namespace BlTest
-////{
-////    internal class Program
-////    {
-////        static void Main(string[] args)
-////        {
-////            Console.WriteLine("Hello, World!");
-////        }
-////    }
-////}
-
-using Dal;
+﻿using Dal;
 using DalApi;
 using System;
 using System.Collections.Generic;
@@ -27,357 +16,205 @@ namespace BLTest
 {
     public class Program
     {
-        private static void testProduct(BlApi.IProduct product)
+        static BlApi.IBl bl = BlApi.Factory.GetBl() ?? throw new NullReferenceException("Missing BL");
+        static int integer;
+        static double dbl;
+        //static DateTime date;
+        static string s;
+        static BO.Cart demoCart = new() { CustomerName = "demo name", CustomerEmail = "demo@email.com", CustomerAddress = "demo address", Items = new List<OrderItem>()! };
+
+
+        private static void ProductsSubMenu()
         {
-            try
+            char option;
+            Console.WriteLine("Please choose one of the following options:\n" +
+                "0. return to main menu\n" +
+                "a. add a product\n" +
+                "b. get a product (manager screen)\n" +
+                "c. get a product (client screen)\n" +
+                "d. get all products (manager screen)\n" +
+                "e. get all products (client screen)\n"+
+                "f. update a product\n" +
+                "g. delete a product");
+            bool success = char.TryParse(Console.ReadLine(), out option);
+            switch (option)//TODO eliminate needless repetition with functions
             {
-                int num = 1;
-                while (num != 0)
-                {
-                    string? temp;
-                    int id;
-                    int stock;
-                    bool b;
-                    double price;
-                    BO.Product pr = new BO.Product();
-                    
-                   
-                    Console.WriteLine(@"test product:
-                            Enter your choice:
-                            0- EXIT
-                            1 - ADD PRODUCT
-                            2 - DELETE PRODUCT
-                            3 - UPDATE PRODUCT
-                            4 - GET LIST OF ALL THE PRODUCTS
-                            5 - GET PRODUCT INFORMATION");//choose which operation they want to do
-                    string? option = Console.ReadLine();
-                    bool op = int.TryParse(option, out num);
-                    if (!op)
-                    {
-                        Console.WriteLine("ERROR");
-                        break;
-                    }
-                    switch (num)
-                    {
-                        case 1:
-                            Console.WriteLine("enter product ID:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out id);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            };
-                            pr.ID = id;
-                            Console.WriteLine("enter product Name:");
-                            temp = Console.ReadLine();
-                            pr.NameOfBook = temp;
-                            Console.WriteLine("enter product Price:");
-                            temp = Console.ReadLine();
-                            b = double.TryParse(temp, out price);
-                            pr.Price = price;
-                            printCategories();
-                             temp = Console.ReadLine();
-                            pr.Category = (DO.CATEGORY)int.Parse(temp!);
-                            Console.WriteLine("enter product stock:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out stock);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            pr.InStock = stock;
-                            product.AddProduct_forM(pr);
-                            break;
-                        case 2:
-                            Console.WriteLine("enter the id of the product you want delete:");
-                            int delID;
-                            temp = Console.ReadLine();
-                            delID = int.Parse(temp!);
-                            product.DeleteProductByID_forM(delID);//M or C
-                            break;
-                        case 3:
-                            Console.WriteLine("enter product ID:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out id);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            pr.ID = id;
-                            Console.WriteLine(@"enter product Name:");
-                            temp = Console.ReadLine();
-                            pr.NameOfBook = temp;
-                            Console.WriteLine(@"enter product Price:");
-                            temp = Console.ReadLine();
-                            b = double.TryParse(temp, out price);
-                            pr.Price = price;
-                            printCategories();
-                            temp = Console.ReadLine();
-                            pr.Category = (DO.CATEGORY)int.Parse(temp!);
-                            Console.WriteLine(@"enter product stock:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out stock);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            pr.InStock = stock;
-                            product!.UpdateProductDetails_forM(pr);//M or C
-                            break;
-                        case 4:
-                            IEnumerable<BO.ProductForList> products; 
-                            products = product.GetAllProductForList_forC();//M or C
-                            foreach (var item in products)
-                                Console.WriteLine(item);
-                            break;
-                        case 5:
-                            Console.WriteLine("Enter 1 to manager, 2 for customer\n");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out int choose);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            Console.WriteLine(@"Enter the id of the wanted product");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out id);
-                            if (!b || choose != 1 || choose != 2)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            if (choose == 1)
-                                product.DeleteProductByID_forM(id);//ok??
-                            //else
-                            //   // product.getProductInfoCustomer(id);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-        }
-        private static void testOrder(BlApi.IOrder order)
-        {
-            try
-            {
-                string? temp;
-                int id;
-                bool b;
-                int num = 1;
-                while (num != 0)
-                {
+                case '0':
+                    return;
 
-                    BO.Product pr = new BO.Product();
-                    Console.WriteLine(@"test product:
-                            Enter your choice:
-                            0- EXIT
-                            1 - GET ORDER LIST
-                            2 - UPDATE SENT ORDER
-                            3 - UPDATE DELIVERY ORDER
-                            4 - GET ORDER INFORMATION
-                            5 - ORDER TRACKING");//choose which operation they want to do
-                    string? option = Console.ReadLine();
-                    bool op = int.TryParse(option, out num);
-                    if (!op)
-                    {
-                        Console.WriteLine("ERROR");
-                        break;
-                    }
-                    switch (num)
-                    {
-                        case 1:
-                            List<BO.OrderForList?> lst = new List<OrderForList?>();
-                            lst = (List<BO.OrderForList?>)order.GetAllOrderForList();
-                            foreach (BO.OrderForList? item in lst)
-                                Console.WriteLine(item);
-                            break;
-                        case 2:
-                            Console.WriteLine(@"enter id of the order:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out id);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            order.UpdateOrderShipping(id);
-                            break;
-                        case 3:
-                            Console.WriteLine(@"enter id of the order:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out id);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            order.UpdateOrderDelivery(id);
-                            break;
-                        case 4:
-                            Console.WriteLine(@"enter id of the order:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out id);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            BO.Order? order1 = new BO.Order();
-                            order1 = order.GetOrdertDetails(id);
-                            Console.WriteLine(order1);
-                            break;
-                        case 5:
-                            Console.WriteLine(@"enter id of the order:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out id);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            BO.OrderTracking ortrack = new BO.OrderTracking();
-                            ortrack = order.GetOrderTracking(id);
-                            Console.WriteLine(ortrack);
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-        }
-        private static void testCart(BlApi.ICart cart, BO.Cart? myCart)
-        {
-            myCart = myCart ?? new BO.Cart();
-            Console.WriteLine("Enter your name:");
-            myCart.CustomerName = Console.ReadLine();
-            Console.WriteLine("Enter your address");
-            myCart.CustomerAddress = Console.ReadLine();
-            Console.WriteLine("Enter your email");
-            myCart.CustomerEmail = Console.ReadLine();
-            myCart.TotalPrice = 0;
-            myCart.Items = new List<BO.OrderItem?>();
-            try
-            {
-                string? temp;
-                int id;
-                bool b;
-                int num = 1;
-                while (num != 0)
-                {
-                    BO.Product pr = new BO.Product();
-                    Console.WriteLine(@"test product:
-                            Enter your choice:
-                            0- EXIT
-                            1 - ADD PRODUCT TO CART
-                            2 - UPDATE PRODUCT AMOUNT
-                            3 - CONFIRM ORDER");//choose which operation they want to do
-                    string? option = Console.ReadLine();
-                    bool op = int.TryParse(option, out num);
-                    if (!op)
-                    {
-                        Console.WriteLine("ERROR");
-                        break;
-                    }
-                    switch (num)
-                    {
-                        case 1:
-                            Console.WriteLine(@"enter id of the product:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out id);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            cart?.AddProductToCart(myCart, id);
-                            break;
-                        case 2:
-                            Console.WriteLine(@"enter id of the product:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out id);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
+                #region הוספת מוצר
+                case 'a':
+                    BO.Product newProduct = new();
+                    Console.WriteLine("please enter the following details:");
 
-                            Console.WriteLine(@"enter the new amount of the product:");
-                            temp = Console.ReadLine();
-                            b = int.TryParse(temp, out int amount);
-                            if (!b)
-                            {
-                                Console.WriteLine(@"ERROR");
-                                break;
-                            }
-                            cart.UpdateProductAmountInCart(myCart, id, amount);
-                            break;
-                        case 3:
-                            cart.MakeOrder(myCart);
-                            num = 0; //when we confim the order, we exit from the cart
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
-        }
+                    Console.Write("Product ID: ");
+                    if (int.TryParse(Console.ReadLine(), out integer) && integer >= 100000) newProduct.ID = integer;
+                    else throw new InvalidDataException();
 
-        //private IBl bl;
-        public static void Main(string[] args/*, IBl bl*/ )
-        {
-            BlApi.IBl? bl = BlApi.Factory.GetBl();
+                    Console.Write("Product Name: ");
+                    newProduct.NameOfBook = Console.ReadLine();
 
+                    Console.Write("Product Name of author: ");
+                    newProduct.AuthorName = Console.ReadLine();
 
-            int num = 1;
-            while (num != 0)
-            {
-                Console.WriteLine(@"Hello!
-                            Enter your choice:
-                            0-exit
-                            1-test Product
-                            2-test Order
-                            3-test Cart");
-                string? option = Console.ReadLine();
-                bool b = int.TryParse(option, out num); // בונוסס
-                if (!b)// if the option they choose is incorect
-                {
-                    Console.WriteLine("ERROR");// we print error
+                    Console.Write("Category Number: ");
+                    if (int.TryParse(Console.ReadLine(), out integer) && Enum.IsDefined(typeof(DO.CATEGORY), integer)) newProduct.Category = (DO.CATEGORY)integer;
+                    else throw new InvalidDataException();
+
+                    Console.Write("Price: ");
+                    if (double.TryParse(Console.ReadLine(), out dbl)) newProduct.Price = dbl;
+                    else throw new InvalidDataException();
+
+                    Console.Write("Amount in stock: ");
+                    if (int.TryParse(Console.ReadLine(), out integer)) newProduct.InStock = integer;
+                    else throw new InvalidDataException();
+
+                    Console.WriteLine(bl.BoProduct.AddProduct_forM(newProduct));
                     break;
-                }
-                switch (num)// 3 option: 1 2 or 3
-                {
-                    case 1:
-                        testProduct(bl.BoProduct);// they want an operation on the product
-                        break;
-                    case 2:
-                        testOrder(bl.BoOrder);// they want an operation on the order
-                        break;
-                    case 3:
-                        BO.Cart myCart = new BO.Cart();
-                        testCart(bl.Cart!, myCart);// they want an operation on the cart
-                        break;
-                    default:
-                        break;
-                }
+                #endregion
 
+                #region הבאת פרטי מוצר למנהל
+                case 'b':
+                    Console.Write("Please insert an ID: ");
+                    if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+
+                    Console.WriteLine(bl.BoProduct.GetProductDetails_forM(integer));
+                    break;
+                #endregion
+
+                #region הבאת פרטי מוצר עבור לקוח
+                case 'c':
+                    Console.Write("Please insert an ID: ");
+                    if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+                    Console.WriteLine(bl.BoProduct.GetProductDetails_forC(integer, demoCart));
+                    break;
+                #endregion
+
+                #region הדפסת כל המוצרים עבור מנהל-כולל מוצרים עדכון מחיר
+                case 'd':
+                    foreach (var o in bl.BoProduct.GetAllProductForList_forM())
+                    {
+                        Console.WriteLine(o);
+                    }
+                    break;
+                #endregion
+
+                #region הדפסת כל המוצרים עבור לקוח
+                case 'e':
+                    foreach (var o in bl.BoProduct.GetAllProductForList_forC())
+                    {
+                        Console.WriteLine(o);
+                    }
+                    break;
+                #endregion
+
+                #region עדכון פרטי מוצר
+                case 'f':
+                    Console.Write("Please insert an ID: ");
+                    if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+
+                    Product product = bl.BoProduct.GetProductDetails_forM(integer);
+                    Console.WriteLine(product);
+
+                    Console.WriteLine("please enter the following details:\n" +
+                        "insert values only in details you want to change");
+
+                    Console.Write("Name of book: ");
+                    s = Console.ReadLine()!;
+                    if (s != "") product.NameOfBook = s;
+
+                    Console.Write("Category: ");
+                    s = Console.ReadLine()!;
+                    if (s != "")
+                    {
+                        if (int.TryParse(s, out integer) && Enum.IsDefined(typeof(BO.CATEGORY), integer)) product.Category = (DO.CATEGORY)integer;
+                        else throw new InvalidDataException();
+                    }
+
+                    Console.Write("Price: ");
+                    s = Console.ReadLine()!;
+                    if (s != "")
+                    {
+                        if (double.TryParse(s, out dbl)) product.Price = dbl;
+                        else throw new InvalidDataException();
+                    }
+
+                    Console.Write("Amount in stock: ");
+                    s = Console.ReadLine()!;
+                    if (s != "")
+                    {
+                        if (int.TryParse(s, out integer)) product.InStock = integer;
+                        else throw new InvalidDataException();
+                    }
+
+                    //Console.WriteLine(bl.BoProduct.UpdateProductDetails_forM(product));
+                    bl.BoProduct.UpdateProductDetails_forM(product);
+
+                    break;
+                #endregion
+
+                #region מחיקת מוצר עבור מנהל
+                case 'g':
+                    Console.Write("Please insert an ID: ");
+                    if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+
+                    //Console.WriteLine(bl.BoProduct.DeleteProductByID_forM(integer));
+                    bl.BoProduct.DeleteProductByID_forM(integer);
+                    break;
+                #endregion
+
+                default:
+                    if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
+                    break;
+            }
+        }
+
+        private static void CartsSubMenu()
+        {
+        }
+        private static void OrdersSubMenu()
+        {
+        }
+
+
+        public static void Main(string[] args)
+        {
+            int option;
+            bool success;
+
+            try
+            {
+                do
+                {
+                    Console.WriteLine("Welcome to the test menu!\n" +//TODO menues should use enums
+                        "Please choose one of the following options:\n" +
+                        "0. Exit\n" +
+                        "1. Check Products\n" +
+                        "2. Check Carts\n" +
+                        "3. Check Orders");
+
+                    success = int.TryParse(Console.ReadLine(), out option);
+
+                    switch (option)
+                    {
+                        case 1:
+                            ProductsSubMenu();
+                            break;
+                        case 2:
+                            CartsSubMenu();
+                            break;
+                        case 3:
+                            OrdersSubMenu();
+                            break;
+                        default:
+                            if (!success) Console.WriteLine("Bad command! Go stand in the corner!");
+                            break;
+                    }
+                } while (option != 0 || !success);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
         }
 

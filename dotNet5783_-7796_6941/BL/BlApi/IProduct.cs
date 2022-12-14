@@ -7,7 +7,7 @@ public interface IProduct
 {
     IEnumerable<BO.ProductForList> GetAllProductForList_forM();
     IEnumerable<BO.ProductForList> GetAllProductForList_forC();
-    void AddProduct_forM(BO.Product product);
+    int AddProduct_forM(BO.Product productToAdd);
     BO.Product GetProductDetails_forM(int id);
     ProductItem GetProductDetails_forC(int id,Cart cart);
     void DeleteProductByID_forM(int id);

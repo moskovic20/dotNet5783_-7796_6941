@@ -13,7 +13,7 @@ internal class DalProduct : IProduct
 
     public int Add(Product P)
     {
-        P.IsDeleted = false;
+        //P.IsDeleted = false;
         Random random = new Random();
         int indexOfMyP = _DS._Products.FindIndex(x => x?.ID == P.ID);
 

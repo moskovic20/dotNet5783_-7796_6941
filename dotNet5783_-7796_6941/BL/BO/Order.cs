@@ -21,7 +21,7 @@ public class Order
     /// <summary>
     /// כתובת הלקוח, אליה צריך לשלוח את ההזמנה
     /// </summary>
-    public string? CustomerAddress { get; set;}
+    public string? ShippingAddress { get; set;}
 
     /// <summary>
     /// תאריך יצירת הזמנה
@@ -50,7 +50,7 @@ public class Order
     /// <summary>
     /// רשימת הפריטים בהזמנה
     /// </summary>
-    public List<OrderItem?>? Items
+    public IEnumerable<OrderItem?>? Items
     { get; set; }
 
     /// <summary>

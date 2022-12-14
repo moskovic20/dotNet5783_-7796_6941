@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
+using BO;
 //using BO;
 
 namespace BlImplementation;
@@ -19,11 +20,7 @@ internal class BoOrder : IOrder
     private static void datePosibleExceptiones(Do.Order? or)
     {
 
-        if (or.GetValueOrDefault().DateOrder == null)
-            throw new ArgumentNullException("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
-
-        if (or.GetValueOrDefault().ShippingDate == null && or.GetValueOrDefault().DeliveryDate != null)
-            throw new ArgumentException("order allredy delivered but there is no info about the shipping date");
+      
 
 
         //----------------לא נכון בשלב שכבה זו לבדוק כאלה חריגות---------------------
@@ -86,19 +83,10 @@ internal class BoOrder : IOrder
             order = myOrder.CopyPropTo(order);
             order.Status = myOrder.calculateStatus();
             order.PaymentDate = myOrder.DateOrder;//should be nullable?                                  
-            order.Items = (List<BO.OrderItem?>?)dal.OrderItem.GetListByOrderID(myOrder.ID).Select(x => x.ListFromDoToBo()); //casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools___________
+            var tempItems = dal.OrderItem.GetListByOrderID(myOrder.ID);            
+            order.Items = tempItems.Select(x => x.ListFromDoToBo());// tempItems.CopyListTo<Do.OrderItem?, BO.OrderItem?>(); //casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools__________
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
             return order;
-            //return new BO.Order()
-            //{
-            //ID = myOrder.ID,
-            //CustomerEmail = myOrder.CustomerEmail,
-            //ShippingAddress = myOrder.ShippingAddress,
-            //DateOrder = myOrder.DateOrder,
-            //ShippingDate = myOrder.ShippingDate,
-            //DeliveryDate = myOrder.DeliveryDate,
-            //כל השאר שגם למעלה
-            //};
         }
         catch (Exception ex)
         {
@@ -120,14 +108,18 @@ internal class BoOrder : IOrder
             throw new BO.GetDetails_Exception("Negative ID");
         try
         {
-            Do.Order myOrder = dal.Order.GetById(id);/*?? throw new DoesntExistException("")*///בדיקות אם קיים בכלל...
-            datePosibleExceptiones(myOrder);//exceptions
+            Do.Order myOrder = dal.Order.GetById(id);
+            if (myOrder.DateOrder == null)
+                throw new BO.InvalidValue_Exception("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
+
+            if (myOrder.DeliveryDate != null)//evrything allready got heandeled
+                throw new BO.InvalidValue_Exception("cant update status, order allredy delivered");
 
             if (myOrder.ShippingDate == null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
             {
 
                 if (myOrder.DateOrder > DateTime.Now)
-                    throw new ArgumentException("rong information,cant be possible that DateOrder > ShippingDate"); //exceptions
+                    throw new BO.InvalidValue_Exception("wrong information,cant be possible that DateOrder > ShippingDate"); //exceptions
                 else
                 {
                     myOrder.ShippingDate = DateTime.Now;//עדכון תאריך שליחה
@@ -136,9 +128,9 @@ internal class BoOrder : IOrder
                 }
             }
             else
-                throw new BO.GetDetails_Exception("Can't get this order correct ditales");//////ok exception?
+                throw new BO.GetDetails_Exception("Can't update this order, uncorrect status ditales");//////ok exception?
         }
-        catch (Exception ex)
+        catch (Do.DoesntExistException ex)
         {
             throw new BO.GetDetails_Exception("Can't get this order", ex);
         }
@@ -159,13 +151,17 @@ internal class BoOrder : IOrder
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
-            datePosibleExceptiones(myOrder);
+            if (myOrder.DateOrder == null)
+                throw new BO.InvalidValue_Exception("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
+
+            if (myOrder.DeliveryDate != null)//evrything allready got heandeled
+                throw new BO.InvalidValue_Exception("cant update status, order allredy delivered");
 
             if (myOrder.ShippingDate != null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
             {
 
                 if (myOrder.ShippingDate > DateTime.Now)
-                    throw new ArgumentException("rong information,cant be possible that ShippingDate > DeliveryDate");
+                    throw new ArgumentException("Wrong information,cant be possible that ShippingDate > DeliveryDate");
                 else
                 {
                     myOrder.DeliveryDate = DateTime.Now;
@@ -174,8 +170,7 @@ internal class BoOrder : IOrder
                 }
             }
             else
-                throw new BO.GetDetails_Exception("Can't get this order correct ditales");//////ok exception?
-
+                throw new BO.GetDetails_Exception("Can't update this order, uncorrect status ditales");//////ok exception?
         }
         catch (Exception ex)
         {

@@ -1,4 +1,5 @@
 ﻿using BO;
+using Do;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace BlApi;
 public static class Tools
 {
     static private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
+    private static IEnumerable<Do.OrderItem?> listforAmount;
 
     /// <summary>
     /// שיטת הרחבה עבור ToString
@@ -102,26 +104,27 @@ public static class Tools
         //if (order == null)
         //    throw new DoesntExistException("missing ID");
 
-        List<Do.OrderItem?> listforAmount = (List<Do.OrderItem?>)dal.OrderItem.GetListByOrderID(order.ID);
-        amountOfItems = listforAmount.Sum(o => o?.AmountOfItem ?? 0);
+        listforAmount = dal.OrderItem.GetListByOrderID(order.ID);
+        amountOfItems = listforAmount.Sum(o => o?.AmountOfItem?? 0);
 
         return amountOfItems;
     }
     #endregion
 
 
-    #region חישוב מחיר לסך כל ההזמנה על כל פריטיה
+    #region  חישוב מחיר לסך כל ההזמנה על כל פריטיה
     public static double CalculatePriceOfAllItems(this Do.Order order)
     {
         double Price = 0;
 
-        List<Do.OrderItem> listforAmount = (List<Do.OrderItem>)dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
-        Price = (double)listforAmount.Sum(o => o.AmountOfItem ?? 0 * o.PriceOfOneItem ?? throw new Exception("אין מחיר!!"));
+        IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
+        Price = listforAmount.Sum(o => (o?.AmountOfItem ?? 0) * (o?.PriceOfOneItem ?? 0));
+        //listforAmount.Count();
         return Price;
     }
     #endregion
 
-    #region Tupleחישוב מסע ההזמנה ותיעוד ב
+    #region  תחזור רשימה עם 3 איברים Tupleחישוב מסע ההזמנה ותיעוד ב
     public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
     {
         List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>()
@@ -135,16 +138,19 @@ public static class Tools
     #endregion
 
     #region המרת רשימה של אובייקטים מסוג פריט-הזמנה משכבת הנתונים לשכבת הלוגיקה עם השינויים הנדרשים
-    public static BO.OrderItem? ListFromDoToBo(this Do.OrderItem orderItems)
-    => new BO.OrderItem() //casting from list <do.ordetitem > to list<bo.orderitem>
+    public static BO.OrderItem? ListFromDoToBo(this Do.OrderItem? orderItems)
     {
-            ID = orderItems.ID,
-            NameOfBook = (dal.Product.GetById(orderItems.ID)).NameOfBook,//name of the product by his order ID
-            PriceOfOneItem = orderItems.PriceOfOneItem,
-            AmountOfItems = orderItems.AmountOfItem ?? 0,///
-        TotalPrice = orderItems.PriceOfOneItem * orderItems.AmountOfItem
-    };
-        
+ 
+       return new BO.OrderItem() //casting from list <do.ordetitem > to list<bo.orderitem>
+        {
+            ID = orderItems?.ID ?? 0,
+            ProductID = orderItems?.ProductID ?? 0,
+            NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook,//name of the product by his order ID
+            PriceOfOneItem = orderItems?.PriceOfOneItem ?? 0,
+            AmountOfItems = orderItems?.AmountOfItem ?? 0,///
+            TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItem ?? 0)
+        };
+    }    
     
     #endregion
 

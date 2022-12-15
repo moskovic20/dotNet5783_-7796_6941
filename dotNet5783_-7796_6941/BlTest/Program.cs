@@ -172,8 +172,89 @@ namespace BLTest
         private static void CartsSubMenu()
         {
         }
-        private static void OrdersSubMenu()
+        static void OrdersSubMenu()
         {
+
+            try
+            {
+                char option;
+                Console.WriteLine("Please choose one of the following options:\n" +
+                    "0. return to main menu\n" +
+                    "a. get all orders\n" +
+                    "b. get an order\n" +
+                    "c. report shipping\n" +
+                    "d. report delivery\n" +
+                    "e. update an order\n" +
+                    "f. track an order");
+                bool success = char.TryParse(Console.ReadLine(), out option);
+                switch (option)//TODO eliminate needless repetition with functions
+                {
+                    case '0':
+
+                        return;
+
+                    case 'a': //printing all the orders
+
+                        IEnumerable<BO.OrderForList> orders;
+                        orders = bl.BoOrder.GetAllOrderForList(); //להבין למה זה הגישה הנכונה!
+                        foreach (var item in orders)
+                            Console.WriteLine(item);
+                        break;
+
+                    case 'b': //printing the requested order
+
+                        Console.Write("Please insert an ID: ");
+                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
+                        Console.WriteLine(bl.BoOrder.GetOrdertDetails(integer));
+                        break;
+
+                    case 'c': //send update
+
+                        Console.Write("Please insert an ID: ");
+                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
+                        Console.WriteLine(bl.BoOrder.UpdateOrderShipping(integer));
+                        break;
+
+                    case 'd': //delivart update
+
+                        Console.Write("Please insert an ID: ");
+                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
+                        Console.WriteLine(bl.BoOrder.UpdateOrderDelivery(integer));
+                        break;
+
+                    case 'e': //update order
+
+                        //int orderID, productID, newAmount;
+                        //Console.Write("Please insert an order ID: ");
+                        //if (!(int.TryParse(Console.ReadLine(), out orderID) && orderID > 0)) throw new InvalidDataException();
+                        //Order order = bl.BoOrder.GetOrdertDetails(orderID);
+                        //Console.WriteLine(order);
+                        //Console.Write("Please insert a product ID: ");
+                        //if (!(int.TryParse(Console.ReadLine(), out productID) && productID >= 100000)) throw new InvalidDataException();
+                        //Console.Write("Please insert a new amount: ");
+                        //if (!(int.TryParse(Console.ReadLine(), out newAmount) && integer >= 0)) throw new InvalidDataException();
+
+                        //bl.BoOrder.UpdateOrder(orderID/*, productID, newAmount*/);
+                        Console.WriteLine("not redy for that option yet....:):)");
+                        break;
+
+                    case 'f':
+
+                        Console.Write("Please insert an ID: ");
+                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
+                        Console.WriteLine(bl.BoOrder.GetOrderTracking(integer));
+                        break;
+
+                    default:
+
+                        if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
+                        break;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
 
@@ -216,25 +297,30 @@ namespace BLTest
             {
                 Console.WriteLine(e);
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
         }
-
-
         static void printCategories()
         {
-
             Console.WriteLine(@"Choose a category by the number:
- 1: mystery
- 2: fantasy
- 3: history
- 4: scinencechilden
- 5: romans
- 6: cookingAndBaking
- 7: psychology
- 8: Kodesh");
+                         1: mystery
+                         2: fantasy
+                         3: history
+                         4: scinencechilden
+                         5: romans
+                         6: cookingAndBaking
+                         7: psychology
+                         8: Kodesh"
+            );
 
         }
 
 
+        //}
+        #endregion
     }
 
 

@@ -23,7 +23,7 @@ sealed internal class Bl : IBl//from public to internul...ok?
         return instance;
     }
 
-    private Bl() { }
+    internal Bl() { }
 
     public IOrder BoOrder { set; get; } = new BoOrder();
 

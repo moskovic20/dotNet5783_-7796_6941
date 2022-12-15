@@ -24,7 +24,7 @@ public struct OrderItem
     /// <summary>
     /// ID of the product in store
     /// </summary>
-    public int? IdOfProduct { get; set; }
+    public int? ProductID { get; set; }
 
     /// <summary>
     /// price of this current item on store

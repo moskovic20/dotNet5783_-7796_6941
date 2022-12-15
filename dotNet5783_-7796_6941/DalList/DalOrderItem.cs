@@ -72,7 +72,7 @@ internal class DalOrderItem : IOrderItem
     /// <param name="OrderID"></param>
     /// <returns></returns>
     /// <exception cref="DoesntExistException"></exception>
-    public IEnumerable<OrderItem> GetListByOrderID(int OrderID)
+    public IEnumerable<OrderItem?> GetListByOrderID(int OrderID)
     {
 
         if (OrderID < 100000)
@@ -85,7 +85,7 @@ internal class DalOrderItem : IOrderItem
         if (list.Count()==0)
             throw new DoesntExistException("The order items are not found or this order is't exist");
 
-        return (IEnumerable<OrderItem>)list;
+        return (IEnumerable<OrderItem?>)list;
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ internal class DalOrderItem : IOrderItem
     public OrderItem GetByOrderIDProductID(int OrderID, int ProductID)
     {
         OrderItem? OItem = _DS._OrderItems.FirstOrDefault(x => x.GetValueOrDefault().ID == OrderID &&
-                     x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().IdOfProduct == ProductID);
+                     x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().ProductID == ProductID);
 
         if (OItem == null)
             throw new DoesntExistException("The order item is not found");

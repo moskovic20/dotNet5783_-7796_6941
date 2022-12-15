@@ -129,7 +129,7 @@ internal class BoCart : ICart
                 Do.OrderItem orderItem = new()//למה לא עם הפונקציית העתקה?יש לנו גם ממבנה לקלאס וגם להיפך:) 
                 {
                     IdOfOrder = IdOfONewOrder,
-                    IdOfProduct = item.ProductID,
+                    ProductID = item.ProductID,
                     AmountOfItem = item.AmountOfItems,
                     PriceOfOneItem = item.PriceOfOneItem,
                 };

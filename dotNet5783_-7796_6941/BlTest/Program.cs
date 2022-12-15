@@ -164,7 +164,7 @@ namespace BLTest
                 #endregion
 
                 default:
-                    if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
+                    if (!(success && option == 0)) Console.WriteLine("Bad command! Try again or Exsit ");//אם לא הצליח להמיר או שהפקודה לא תואמת לסוויצ קייסים
                     break;
             }
         }
@@ -296,11 +296,7 @@ namespace BLTest
             {
                 Console.WriteLine(e);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-
+            
         }
         static void printCategories()
         {

@@ -85,8 +85,8 @@ internal class DalOrder : IOrder
        where filter is null ? true : item.Value.IsDeleted == true && filter(item) 
        select item;
 
-    public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null, bool allItems = false)
-    {
-        throw new NotImplementedException();
-    }
+    //public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null, bool allItems = false)
+    //{
+    //    throw new NotImplementedException();
+    //}
 }

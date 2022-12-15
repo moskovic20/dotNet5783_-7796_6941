@@ -143,7 +143,7 @@ class Program
 
                     case 'c':
                         #region print all the product
-                        IEnumerable<Product> allP = DL.Product.GetAll();
+                        IEnumerable<Product> allP = (IEnumerable<Product>)DL.Product.GetAll();
                         foreach (Product product in allP)
                             Console.WriteLine("\n" + product + "\n");
                         break;
@@ -315,7 +315,7 @@ c: category");
 
                     case 'c':
                         #region print all the order
-                        IEnumerable<Order> allO = DL.Order.GetAll();
+                        IEnumerable<Order> allO = (IEnumerable<Order>)DL.Order.GetAll();
                         foreach (Order order in allO)
                             Console.WriteLine(order);
                         break;
@@ -496,7 +496,7 @@ d: delivery date");
 
                     case 'c':
                         #region print all the orderItem
-                        IEnumerable<OrderItem> allOI = DL.OrderItem.GetAll();
+                        IEnumerable<OrderItem> allOI = (IEnumerable<OrderItem>)DL.OrderItem.GetAll();
                         foreach (OrderItem Oitem in allOI)
                             Console.WriteLine("\n" + Oitem + "\n");
                         break;
@@ -594,7 +594,7 @@ d: to finish the update");
 
                         OI.ID = id;
 
-                        listOrderItems = DL.OrderItem.GetListByOrderID(id);
+                        listOrderItems = (List<OrderItem?>)DL.OrderItem.GetListByOrderID(id);
                         foreach (OrderItem? item in listOrderItems)
                         {
                             Console.WriteLine("\n" + item); 

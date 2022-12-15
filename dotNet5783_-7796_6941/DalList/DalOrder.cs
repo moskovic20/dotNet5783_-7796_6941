@@ -37,7 +37,7 @@ internal class DalOrder : IOrder
             throw new DoesntExistException("The order you wanted to delete is not found\n");
 
 
-        Order myOrder = _DS._Orders[indexOfOrderById]?? new();
+        Order myOrder = _DS._Orders[indexOfOrderById] ?? new();
 
         if (myOrder.IsDeleted == true)
             throw new DoesntExistException("The order you wanted to delete has already been deleted\n");
@@ -70,16 +70,23 @@ internal class DalOrder : IOrder
     }
 
 
-
     /// <summary>
     /// הפונקציה מחזירה את כל רשימת המוצרים בהזמנות הקיימים, לפי פונקציית הסינון שמתקבלת
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
- 
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null)
+    => from item in _DS._Orders
+       where filter is null ? true : item?.IsDeleted == null && filter(item)
+       select item;
+
+    public IEnumerable<Order?> GetAlldeletted(Func<Order?, bool>? filter = null)
+    => from item in _DS._Orders
+       where filter is null ? true : item.Value.IsDeleted == true && filter(item) 
+       select item;
 
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null, bool allItems = false)
-    => from item in _DS._Orders
-       where (filter is null ? true : filter(item)) && (allItems is false ? item.Value.IsDeleted == false : true)
-       select item;
+    {
+        throw new NotImplementedException();
+    }
 }

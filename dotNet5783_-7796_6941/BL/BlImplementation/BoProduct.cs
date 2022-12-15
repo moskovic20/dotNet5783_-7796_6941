@@ -16,18 +16,17 @@ internal class BoProduct : IProduct
 
     public IEnumerable<BO.ProductForList> GetAllProductForList_forM()
     {
-        var products = from P in dal.Product.GetAll()
-                       select P.CopyPropTo(typeof(BO.ProductForList));
+        var products = dal.Product.GetAll();
 
         if (products.Count() == 0)
             throw new BO.GetAllForList_Exception("There are no products");
 
-        return (IEnumerable<BO.ProductForList>)products;
+        return products.CopyListTo<Do.Product?, BO.ProductForList>();
     }
 
     public IEnumerable<BO.ProductForList> GetAllProductForList_forC()
-    {
-        var products = dal.Product.GetAll(); 
+    {//לסנן את מחיר
+        var products = dal.Product.GetAll((Do.Product? p) => p?.Price == null ? false : true);
 
         if (products.Count() == 0)
             throw new BO.GetAllForList_Exception("There are no products");
@@ -50,35 +49,36 @@ internal class BoProduct : IProduct
         }
     }
 
-    public void AddProduct_forM(BO.Product productToAdd)
+    public int AddProduct_forM(BO.Product productToAdd)
     {
-
-        if (productToAdd == null)
-            throw new ArgumentNullException("missing product to add");
-
-        if (productToAdd.ID < 1)
-            throw new BO.Adding_Exception("Can't add becouse the negative ID");//מספר שלילי
-
-        if (productToAdd.NameOfBook == null)
-            throw new BO.Adding_Exception("Can't add becouse the name of book is missing");
-
-        if (productToAdd.Price < 0)
-            throw new BO.Adding_Exception("Can't add becouse the negative price");
-
-        if (productToAdd.InStock < 0)
-            throw new BO.Adding_Exception("Can't add becouse the negative amount");
-
-
-        Do.Product myNewP = new();
-        productToAdd.CopyPropToStruct(myNewP);
+        int id=0;
 
         try
         {
-            dal.Product.Add(myNewP);
-        }
+            if (productToAdd == null)
+                throw new ArgumentNullException("missing product to add");
 
-        catch (Do.AlreadyExistException ex)  { throw new BO.Adding_Exception("Can't add this product", ex);}
+            if (productToAdd.ID < 1)
+                throw new BO.Adding_Exception("Can't add because the negative ID");//מספר שלילי
+
+            if (productToAdd.NameOfBook == null)
+                throw new BO.Adding_Exception("Can't add because the name of book is missing");
+
+            if (productToAdd.Price < 0)
+                throw new BO.Adding_Exception("Can't add because the negative price");
+
+            if (productToAdd.InStock < 0)
+                throw new BO.Adding_Exception("Can't add because the negative amount");
+
+            Do.Product myNewP = new();
+            myNewP=productToAdd.CopyPropToStruct(myNewP);
+
+            id = dal.Product.Add(myNewP);
+            return id;
+        }
+        catch (Do.AlreadyExistException ex) { throw new BO.Adding_Exception("Can't add this product", ex); }
         catch (Exception) { }
+        return id;
     }
 
     public void DeleteProductByID_forM(int id)

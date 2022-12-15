@@ -5,8 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-using BO;
-//using BO;
 
 namespace BlImplementation;
 
@@ -87,15 +85,20 @@ internal class BoOrder : IOrder
             order.Items = tempItems.Select(x => x.ListFromDoToBo());// tempItems.CopyListTo<Do.OrderItem?, BO.OrderItem?>(); //casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools__________
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
             return order;
+            
+         
         }
-        catch (Exception ex)
+        catch (Do.DoesntExistException ex)
+        {
+            throw new BO.GetDetails_Exception("Can't get this order", ex);
+        }
+        catch (BO.InvalidValue_Exception ex)
         {
             throw new BO.GetDetails_Exception("Can't get this order", ex);
         }
 
 
     }
-
 
     /// <summary>
     /// עדכון שילוח הזמנה 
@@ -105,7 +108,7 @@ internal class BoOrder : IOrder
     public BO.Order UpdateOrderShipping(int id)
     {
         if (id < 0)
-            throw new BO.GetDetails_Exception("Negative ID");
+            throw new BO.Update_Exception("Negative ID");
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);
@@ -128,13 +131,16 @@ internal class BoOrder : IOrder
                 }
             }
             else
-                throw new BO.GetDetails_Exception("Can't update this order, uncorrect status ditales");//////ok exception?
+                throw new BO.GetDetails_Exception("Can't update this order correct ditales");//////ok exception?
         }
         catch (Do.DoesntExistException ex)
         {
-            throw new BO.GetDetails_Exception("Can't get this order", ex);
+            throw new BO.GetDetails_Exception("Can't update shipping date", ex);
         }
-
+        catch (BO.InvalidValue_Exception ex)
+        {
+            throw new BO.GetDetails_Exception("Can't update shipping date", ex);
+        }
     }
 
     /// <summary>

@@ -34,11 +34,12 @@ internal class BoCart : ICart
                 TotalPrice = 0,
             };
 
-            if (product.InStock! >= 0)
+            if (product.InStock <1)
                 throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:" + item.NameOfBook);
 
             item.AmountOfItems++;
             item.TotalPrice += item.PriceOfOneItem;
+            cart.TotalPrice += item.PriceOfOneItem;
 
             cart.Items.Add(item);
             return cart;

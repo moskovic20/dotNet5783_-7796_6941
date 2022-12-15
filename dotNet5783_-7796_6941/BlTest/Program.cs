@@ -20,7 +20,7 @@ namespace BLTest
         static int integer;
         static double dbl;
         //static DateTime date;
-        static string s;
+        static string s="";
         static char option;
         static BO.Cart demoCart = new() { CustomerName = "demo name", CustomerEmail = "demo@email.com", CustomerAddress = "demo address", Items = new List<OrderItem>()! };
 
@@ -54,19 +54,19 @@ namespace BLTest
 
                             Console.Write("Product ID: ");
                             s = Console.ReadLine()!;
-                            if(s=="") throw new BO.InvalidValue_Exception("You cannot add a product without ID");
-                            if (int.TryParse(s, out integer) && (integer >= 100000||integer<=-100000)) newProduct.ID = integer;
+                            if (s == "") throw new BO.InvalidValue_Exception("You cannot add a product without ID");
+                            if (int.TryParse(s, out integer) && (integer >= 100000 || integer <= -100000)) newProduct.ID = integer;
                             else throw new BO.InvalidValue_Exception("ID sould be with 6 digits at list");
 
                             Console.Write("Product Name: ");
                             s = Console.ReadLine()!;
                             if (s != "") newProduct.NameOfBook = s;
                             else throw new BO.InvalidValue_Exception("You cannot add a product without the product name");
-                            
+
 
                             Console.Write("Product Name of author: ");
                             s = Console.ReadLine()!;
-                            if (s != "") newProduct.AuthorName= s;
+                            if (s != "") newProduct.AuthorName = s;
                             else throw new BO.InvalidValue_Exception("You cannot add a product without the author name");
 
                             printCategories();
@@ -79,7 +79,7 @@ namespace BLTest
                             Console.Write("Price: ");
                             s = Console.ReadLine()!;
                             if (s == "") newProduct.Price = null;
-                            else if (double.TryParse(s, out dbl)) newProduct.Price = dbl; 
+                            else if (double.TryParse(s, out dbl)) newProduct.Price = dbl;
                             else throw new InvalidDataException();
 
                             Console.Write("Amount in stock: ");
@@ -130,7 +130,7 @@ namespace BLTest
                         #region עדכון פרטי מוצר
                         case 'f':
                             Console.Write("Please insert an ID: ");
-                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000|| integer<=-100000)) throw new InvalidDataException();
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000 || integer <= -100000)) throw new InvalidDataException();
 
                             Product product = bl.BoProduct.GetProductDetails_forM(integer);
                             Console.WriteLine(product);
@@ -191,7 +191,7 @@ namespace BLTest
                             break;
                     }
                 }
-                catch (Exception ex) { Console.WriteLine("\n"+ex+"\n"); }
+                catch (Exception ex) { Console.WriteLine("\n" + ex + "\n"); }
 
             } while (option != '0');
         }
@@ -205,35 +205,52 @@ namespace BLTest
                     "a. add a product\n" +
                     "b. update amount\n" +
                     "c. checkout\n");
+
                 bool success = char.TryParse(Console.ReadLine(), out option);
-                switch (option)//TODO eliminate needless repetition with functions
+                try
                 {
-                    case '0':
-                        return;
-                    case 'a':
-                        Console.Write("Please insert a product ID: ");
-                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
-                        Console.WriteLine(bl.Cart.AddProductToCart(demoCart, integer));
-                        break;
-                    case 'b':
-                        int productID, amount;
-                        Console.Write("Please insert a product ID: ");
-                        if (!(int.TryParse(Console.ReadLine(), out productID) && integer >= 100000)) throw new InvalidDataException();
-                        Console.Write("Please insert a new amount: ");
-                        if (!(int.TryParse(Console.ReadLine(), out amount) && integer >= 0)) throw new InvalidDataException();
-                        Console.WriteLine(bl.Cart.UpdateProductAmountInCart(demoCart, productID, amount));
-                        break;
-                    case 'c':
-                        Console.WriteLine("Please enter customer's name, Email and address (separeated with the Enter key)");
-                        Console.WriteLine(bl.Cart.MakeOrder(demoCart));
-                        break;
-                    default:
-                        if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
-                        break;
+                    switch (option)//TODO eliminate needless repetition with functions
+                    {
+                        case '0':
+                            return;
+
+                        #region הוספת מוצר לסל הקניות
+                        case 'a':
+                            Console.Write("Please insert a product ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+                            Console.WriteLine(bl.Cart.AddProductToCart(demoCart, integer));
+                            break;
+                        #endregion
+
+                        #region עדכון כמות של מוצר בסל הקניות
+                        case 'b':
+                            int productID, amount;
+                            Console.Write("Please insert a product ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out productID) && integer >= 100000)) throw new InvalidDataException();
+                            Console.Write("Please insert a new amount: ");
+                            if (!(int.TryParse(Console.ReadLine(), out amount) && integer >= 0)) throw new InvalidDataException();
+                            Console.WriteLine(bl.Cart.UpdateProductAmountInCart(demoCart, productID, amount));
+                            break;
+                        #endregion
+
+                        #region ביצוע ההזמנה של סל הקניות
+                        case 'c':
+                            Console.WriteLine("Please enter customer's name, Email and address (separeated with the Enter key)");
+                            Console.WriteLine(bl.Cart.MakeOrder(demoCart));
+                            break;
+                        #endregion
+
+                        default:
+                            if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
+                            break;
+                    }
+
                 }
-            }while (option != '0');
-            
-        
+                catch (Exception ex) { Console.WriteLine("\n" + ex + "\n"); }
+
+            } while (option != '0');
+
+
         }
 
         static void OrdersSubMenu()

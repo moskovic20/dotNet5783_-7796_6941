@@ -23,7 +23,7 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IBl _bl =  Bl.Instance();
+        private IBl _bl =  BlApi.Factory.GetBl();
         public MainWindow()
         {
             InitializeComponent();

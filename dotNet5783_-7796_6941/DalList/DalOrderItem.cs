@@ -108,14 +108,23 @@ internal class DalOrderItem : IOrderItem
     }
 
     /// <summary>
-    ///  הפונקציה מחזירה את כל רשימת המוצרים (כולל אלו שנמחקו) לפי פונקציית הסינון שמתקבלת
+    /// הפונקציה מחזירה את כל רשימת הפריטים בהזמנות לפי פונקציית הסינון שמתקבלת
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    /// <exception cref="NotFounfException"></exception>
-   public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter = null, bool allItems = false)
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter = null)
     => from item in _DS._OrderItems
-       where (filter is null ? true : filter(item)) && (allItems is false ? item.Value.IsDeleted == false : true)
+       where filter is null ? true : item?.IsDeleted == null && filter(item)
+       select item;
+
+    /// <summary>
+    ///  הפונקציה מחזירה את כל רשימת הפריטים בהזמנות (כולל אלו שנמחקו)-לפי פונקציית הסינון שמתקבלת
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    public IEnumerable<OrderItem?> GetAlldeletted(Func<OrderItem?, bool>? filter = null)
+    => from item in _DS._OrderItems
+       where filter is null ? true : item.Value.IsDeleted == true && filter(item)
        select item;
 
 }

@@ -71,7 +71,7 @@ internal class DalOrder : IOrder
 
 
     /// <summary>
-    /// הפונקציה מחזירה את כל רשימת המוצרים בהזמנות הקיימים, לפי פונקציית הסינון שמתקבלת
+    /// הפונקציה מחזירה את כל רשימת ההזמנות לפי פונקציית הסינון שמתקבלת
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
@@ -80,13 +80,14 @@ internal class DalOrder : IOrder
        where filter is null ? true : item?.IsDeleted == null && filter(item)
        select item;
 
+    /// <summary>
+    ///  הפונקציה מחזירה את כל רשימת ההזמנות (כולל הזמנות שנמחקו)-לפי פונקציית הסינון שמתקבלת
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
     public IEnumerable<Order?> GetAlldeletted(Func<Order?, bool>? filter = null)
     => from item in _DS._Orders
        where filter is null ? true : item.Value.IsDeleted == true && filter(item) 
        select item;
 
-    //public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null, bool allItems = false)
-    //{
-    //    throw new NotImplementedException();
-    //}
 }

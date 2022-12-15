@@ -33,7 +33,7 @@ public class ProductItem
     /// The amount of the product in the customer's shopping cart.
     /// כמות המוצר בסל הקניות של הלקוח
     /// </summary>
-    public int Amount { get; set; }
+    public int AmountInCart { get; set; }
 
     /// <summary>
     /// האם המוצר במלאי

@@ -21,157 +21,221 @@ namespace BLTest
         static double dbl;
         //static DateTime date;
         static string s;
+        static char option;
         static BO.Cart demoCart = new() { CustomerName = "demo name", CustomerEmail = "demo@email.com", CustomerAddress = "demo address", Items = new List<OrderItem>()! };
 
 
         private static void ProductsSubMenu()
         {
-            char option;
-            Console.WriteLine("Please choose one of the following options:\n" +
+            do
+            {
+                Console.WriteLine("\nPlease choose one of the following options:\n" +
                 "0. return to main menu\n" +
                 "a. add a product\n" +
                 "b. get a product (manager screen)\n" +
                 "c. get a product (client screen)\n" +
                 "d. get all products (manager screen)\n" +
-                "e. get all products (client screen)\n"+
+                "e. get all products (client screen)\n" +
                 "f. update a product\n" +
                 "g. delete a product");
-            bool success = char.TryParse(Console.ReadLine(), out option);
-            switch (option)//TODO eliminate needless repetition with functions
-            {
-                case '0':
-                    return;
 
-                #region הוספת מוצר
-                case 'a':
-                    BO.Product newProduct = new();
-                    Console.WriteLine("please enter the following details:");
-
-                    Console.Write("Product ID: ");
-                    if (int.TryParse(Console.ReadLine(), out integer) && integer >= 100000) newProduct.ID = integer;
-                    else throw new InvalidDataException();
-
-                    Console.Write("Product Name: ");
-                    newProduct.NameOfBook = Console.ReadLine();
-
-                    Console.Write("Product Name of author: ");
-                    newProduct.AuthorName = Console.ReadLine();
-
-                    Console.Write("Category Number: ");
-                    if (int.TryParse(Console.ReadLine(), out integer) && Enum.IsDefined(typeof(DO.CATEGORY), integer)) newProduct.Category = (DO.CATEGORY)integer;
-                    else throw new InvalidDataException();
-
-                    Console.Write("Price: ");
-                    if (double.TryParse(Console.ReadLine(), out dbl)) newProduct.Price = dbl;
-                    else throw new InvalidDataException();
-
-                    Console.Write("Amount in stock: ");
-                    if (int.TryParse(Console.ReadLine(), out integer)) newProduct.InStock = integer;
-                    else throw new InvalidDataException();
-
-                    Console.WriteLine(bl.BoProduct.AddProduct_forM(newProduct));
-                    break;
-                #endregion
-
-                #region הבאת פרטי מוצר למנהל
-                case 'b':
-                    Console.Write("Please insert an ID: ");
-                    if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
-
-                    Console.WriteLine(bl.BoProduct.GetProductDetails_forM(integer));
-                    break;
-                #endregion
-
-                #region הבאת פרטי מוצר עבור לקוח
-                case 'c':
-                    Console.Write("Please insert an ID: ");
-                    if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
-                    Console.WriteLine(bl.BoProduct.GetProductDetails_forC(integer, demoCart));
-                    break;
-                #endregion
-
-                #region הדפסת כל המוצרים עבור מנהל-כולל מוצרים עדכון מחיר
-                case 'd':
-                    foreach (var o in bl.BoProduct.GetAllProductForList_forM())
+                bool success = char.TryParse(Console.ReadLine(), out option);
+                try
+                {
+                    switch (option)
                     {
-                        Console.WriteLine(o);
+                        case '0':
+                            return;
+
+                        #region הוספת מוצר
+                        case 'a':
+                            BO.Product newProduct = new();
+                            Console.WriteLine("please enter the following details:");
+
+                            Console.Write("Product ID: ");
+                            s = Console.ReadLine()!;
+                            if(s=="") throw new BO.InvalidValue_Exception("You cannot add a product without ID");
+                            if (int.TryParse(s, out integer) && (integer >= 100000||integer<=-100000)) newProduct.ID = integer;
+                            else throw new BO.InvalidValue_Exception("ID sould be with 6 digits at list");
+
+                            Console.Write("Product Name: ");
+                            s = Console.ReadLine()!;
+                            if (s != "") newProduct.NameOfBook = s;
+                            else throw new BO.InvalidValue_Exception("You cannot add a product without the product name");
+                            
+
+                            Console.Write("Product Name of author: ");
+                            s = Console.ReadLine()!;
+                            if (s != "") newProduct.AuthorName= s;
+                            else throw new BO.InvalidValue_Exception("You cannot add a product without the author name");
+
+                            printCategories();
+                            Console.Write("Category Number: ");
+                            s = Console.ReadLine()!;
+                            if (s == "") throw new BO.InvalidValue_Exception("You cannot add a product without category");
+                            if (int.TryParse(s, out integer) && Enum.IsDefined(typeof(DO.CATEGORY), integer)) newProduct.Category = (DO.CATEGORY)integer;
+                            else throw new InvalidDataException();
+
+                            Console.Write("Price: ");
+                            s = Console.ReadLine()!;
+                            if (s == "") newProduct.Price = null;
+                            else if (double.TryParse(s, out dbl)) newProduct.Price = dbl; 
+                            else throw new InvalidDataException();
+
+                            Console.Write("Amount in stock: ");
+                            s = Console.ReadLine()!;
+                            if (s == "") newProduct.InStock = null;
+                            else if (int.TryParse(s, out integer)) newProduct.InStock = integer;
+                            else throw new InvalidDataException();
+
+                            Console.WriteLine(bl.BoProduct.AddProduct_forM(newProduct));
+                            break;
+                        #endregion
+
+                        #region הבאת פרטי מוצר למנהל
+                        case 'b':
+                            Console.Write("Please insert an ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+
+                            Console.WriteLine(bl.BoProduct.GetProductDetails_forM(integer));
+                            break;
+                        #endregion
+
+                        #region הבאת פרטי מוצר עבור לקוח
+                        case 'c':
+                            Console.Write("Please insert an ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+                            Console.WriteLine(bl.BoProduct.GetProductDetails_forC(integer, demoCart));
+                            break;
+                        #endregion
+
+                        #region הדפסת כל המוצרים עבור מנהל-כולל מוצרים עדכון מחיר
+                        case 'd':
+                            foreach (var o in bl.BoProduct.GetAllProductForList_forM())
+                            {
+                                Console.WriteLine(o);
+                            }
+                            break;
+                        #endregion
+
+                        #region הדפסת כל המוצרים עבור לקוח
+                        case 'e':
+                            foreach (var o in bl.BoProduct.GetAllProductForList_forC())
+                            {
+                                Console.WriteLine(o);
+                            }
+                            break;
+                        #endregion
+
+                        #region עדכון פרטי מוצר
+                        case 'f':
+                            Console.Write("Please insert an ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000|| integer<=-100000)) throw new InvalidDataException();
+
+                            Product product = bl.BoProduct.GetProductDetails_forM(integer);
+                            Console.WriteLine(product);
+
+                            Console.WriteLine("please enter the following details:\n" +
+                                "insert values only in details you want to change");
+
+                            Console.Write("Name of book: ");
+                            s = Console.ReadLine()!;
+                            if (s != "") product.NameOfBook = s;
+
+                            Console.Write("Name of author: ");
+                            s = Console.ReadLine()!;
+                            if (s != "") product.AuthorName = s;
+
+                            Console.Write("Category: ");
+                            s = Console.ReadLine()!;
+                            if (s != "")
+                            {
+                                if (int.TryParse(s, out integer) && Enum.IsDefined(typeof(BO.CATEGORY), integer)) product.Category = (DO.CATEGORY)integer;
+                                else throw new InvalidDataException();
+                            }
+
+                            Console.Write("Price: ");
+                            s = Console.ReadLine()!;
+                            if (s != "")
+                            {
+                                if (double.TryParse(s, out dbl)) product.Price = dbl;
+                                else throw new InvalidDataException();
+                            }
+
+                            Console.Write("Amount in stock: ");
+                            s = Console.ReadLine()!;
+                            if (s != "")
+                            {
+                                if (int.TryParse(s, out integer)) product.InStock = integer;
+                                else throw new InvalidDataException();
+                            }
+
+                            //Console.WriteLine(bl.BoProduct.UpdateProductDetails_forM(product));
+                            bl.BoProduct.UpdateProductDetails_forM(product);
+
+                            break;
+                        #endregion
+
+                        #region מחיקת מוצר עבור מנהל
+                        case 'g':
+                            Console.Write("Please insert an ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+
+                            //Console.WriteLine(bl.BoProduct.DeleteProductByID_forM(integer));
+                            bl.BoProduct.DeleteProductByID_forM(integer);
+                            break;
+                        #endregion
+
+                        default:
+                            if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
+                            break;
                     }
-                    break;
-                #endregion
+                }
+                catch (Exception ex) { Console.WriteLine("\n"+ex+"\n"); }
 
-                #region הדפסת כל המוצרים עבור לקוח
-                case 'e':
-                    foreach (var o in bl.BoProduct.GetAllProductForList_forC())
-                    {
-                        Console.WriteLine(o);
-                    }
-                    break;
-                #endregion
-
-                #region עדכון פרטי מוצר
-                case 'f':
-                    Console.Write("Please insert an ID: ");
-                    if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
-
-                    Product product = bl.BoProduct.GetProductDetails_forM(integer);
-                    Console.WriteLine(product);
-
-                    Console.WriteLine("please enter the following details:\n" +
-                        "insert values only in details you want to change");
-
-                    Console.Write("Name of book: ");
-                    s = Console.ReadLine()!;
-                    if (s != "") product.NameOfBook = s;
-
-                    Console.Write("Category: ");
-                    s = Console.ReadLine()!;
-                    if (s != "")
-                    {
-                        if (int.TryParse(s, out integer) && Enum.IsDefined(typeof(BO.CATEGORY), integer)) product.Category = (DO.CATEGORY)integer;
-                        else throw new InvalidDataException();
-                    }
-
-                    Console.Write("Price: ");
-                    s = Console.ReadLine()!;
-                    if (s != "")
-                    {
-                        if (double.TryParse(s, out dbl)) product.Price = dbl;
-                        else throw new InvalidDataException();
-                    }
-
-                    Console.Write("Amount in stock: ");
-                    s = Console.ReadLine()!;
-                    if (s != "")
-                    {
-                        if (int.TryParse(s, out integer)) product.InStock = integer;
-                        else throw new InvalidDataException();
-                    }
-
-                    //Console.WriteLine(bl.BoProduct.UpdateProductDetails_forM(product));
-                    bl.BoProduct.UpdateProductDetails_forM(product);
-
-                    break;
-                #endregion
-
-                #region מחיקת מוצר עבור מנהל
-                case 'g':
-                    Console.Write("Please insert an ID: ");
-                    if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
-
-                    //Console.WriteLine(bl.BoProduct.DeleteProductByID_forM(integer));
-                    bl.BoProduct.DeleteProductByID_forM(integer);
-                    break;
-                #endregion
-
-                default:
-                    if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
-                    break;
-            }
+            } while (option != '0');
         }
 
         private static void CartsSubMenu()
         {
+            do
+            {
+                Console.WriteLine("Please choose one of the following options:\n" +
+                    "0. return to main menu\n" +
+                    "a. add a product\n" +
+                    "b. update amount\n" +
+                    "c. checkout\n");
+                bool success = char.TryParse(Console.ReadLine(), out option);
+                switch (option)//TODO eliminate needless repetition with functions
+                {
+                    case '0':
+                        return;
+                    case 'a':
+                        Console.Write("Please insert a product ID: ");
+                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+                        Console.WriteLine(bl.Cart.AddProductToCart(demoCart, integer));
+                        break;
+                    case 'b':
+                        int productID, amount;
+                        Console.Write("Please insert a product ID: ");
+                        if (!(int.TryParse(Console.ReadLine(), out productID) && integer >= 100000)) throw new InvalidDataException();
+                        Console.Write("Please insert a new amount: ");
+                        if (!(int.TryParse(Console.ReadLine(), out amount) && integer >= 0)) throw new InvalidDataException();
+                        Console.WriteLine(bl.Cart.UpdateProductAmountInCart(demoCart, productID, amount));
+                        break;
+                    case 'c':
+                        Console.WriteLine("Please enter customer's name, Email and address (separeated with the Enter key)");
+                        Console.WriteLine(bl.Cart.MakeOrder(demoCart));
+                        break;
+                    default:
+                        if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
+                        break;
+                }
+            }while (option != '0');
+            
+        
         }
+
         static void OrdersSubMenu()
         {
 
@@ -288,7 +352,7 @@ namespace BLTest
                             OrdersSubMenu();
                             break;
                         default:
-                            if (!success) Console.WriteLine("Bad command! Go stand in the corner!");
+                            if (option != 0 || !success) Console.WriteLine("\nPlease enter a number between 0-3\n");
                             break;
                     }
                 } while (option != 0 || !success);
@@ -297,12 +361,9 @@ namespace BLTest
             {
                 Console.WriteLine(e);
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
 
         }
+
         static void printCategories()
         {
             Console.WriteLine(@"Choose a category by the number:
@@ -318,9 +379,6 @@ namespace BLTest
 
         }
 
-
-        //}
-        #endregion
     }
 
 

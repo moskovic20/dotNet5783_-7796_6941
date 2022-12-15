@@ -29,7 +29,7 @@ internal class DalProduct : IProduct
         }
 
         if (_DS._Products[indexOfMyP].GetValueOrDefault().IsDeleted != true)
-            throw new AlreadyExistException("The product you wish to add is already exists");
+            throw new AlreadyExistException("The product ID you entered already exists in the database");
 
         _DS._Products.Add(P);
         return P.ID;
@@ -57,7 +57,7 @@ internal class DalProduct : IProduct
 
     public Product GetById(int id)
     {
-        Product? ProductById = _DS._Products.FirstOrDefault(x => x?.ID == id && x?.IsDeleted != true);
+        Product? ProductById = _DS._Products.FirstOrDefault(x => x?.ID == id && x?.IsDeleted==false);
 
         return ProductById ?? throw new DoesntExistException("the product is not found");
     }
@@ -70,10 +70,10 @@ internal class DalProduct : IProduct
         }
         catch
         {
-            throw new DoesntExistException("the product can't be update because he doesn't exist");
+            throw new DoesntExistException("the product doesn't exist");
         }
         Delete(item.ID);
-        Add((Product)item);
+        Add(item);
     }
 
     private bool IdIsFound(int myID)
@@ -87,14 +87,27 @@ internal class DalProduct : IProduct
             return false;
     }
 
-  
+
     /// <summary>
-    /// הפונקציה מחזירה את כל רשימת המוצרים הקיימים לפי פונקציית הסינון שמתקבלת
+    /// הפונקציה מחזירה את כל רשימת המוצרים לפי פונקציית הסינון שמתקבלת
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null, bool allItems=false)
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null)
     => from item in _DS._Products
-       where (filter is null ? true : filter(item)) && (allItems is false ? item.Value.IsDeleted == false: true)
+       where item != null
+       where filter != null ? filter(item) : true
+       select item;
+
+
+    /// <summary>
+    ///  הפונקציה מחזירה את כל רשימת הפריטים (כולל אלו שנמחקו)-לפי פונקציית הסינון שמתקבלת
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
+    public IEnumerable<Product?> GetAlldeletted(Func<Product?, bool>? filter = null)
+    => from item in _DS._Products
+       where item !=null
+       where filter != null ? filter(item): true
        select item;
 }

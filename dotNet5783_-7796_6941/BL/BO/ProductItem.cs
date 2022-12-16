@@ -30,7 +30,6 @@ public class ProductItem
     public CATEGORY? Category { get; set; }
 
     /// <summary>
-    /// The amount of the product in the customer's shopping cart.
     /// כמות המוצר בסל הקניות של הלקוח
     /// </summary>
     public int AmountInCart { get; set; }

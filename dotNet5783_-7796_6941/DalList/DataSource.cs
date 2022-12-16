@@ -137,7 +137,7 @@ public class DataSource
                 ProductID = product?.ID ?? 0,
                 IdOfOrder = R.Next(Config.s_startOrderNumber, Config.s_startOrderNumber + _Orders.Count),
                 PriceOfOneItem = product?.Price ?? 0,
-                AmountOfItem = R.Next(5)
+                AmountOfItems = R.Next(5)
 
             });
         }

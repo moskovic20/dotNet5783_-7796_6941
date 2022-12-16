@@ -236,7 +236,7 @@ namespace BLTest
                         #region ביצוע ההזמנה של סל הקניות
                         case 'c':
                             Console.WriteLine("Please enter customer's name, Email and address (separeated with the Enter key)");
-                            Console.WriteLine(bl.Cart.MakeOrder(demoCart));
+                            Console.WriteLine("Your order number is: " + bl.Cart.MakeOrder(demoCart));
                             break;
                         #endregion
 

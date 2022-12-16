@@ -24,7 +24,7 @@ public struct OrderItem
     /// <summary>
     /// ID of the product in store
     /// </summary>
-    public int? ProductID { get; set; }
+    public int ProductID { get; set; }
 
     /// <summary>
     /// price of this current item on store
@@ -34,7 +34,7 @@ public struct OrderItem
     /// <summary>
     /// number of this book in the order
     /// </summary>
-    public int? AmountOfItem { get; set; }
+    public int AmountOfItems { get; set; }
 
     /// <summary>
     /// Should this orderItem be considered deleted?

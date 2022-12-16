@@ -36,7 +36,7 @@ internal class BoProduct : IProduct
     /// <exception cref="BO.GetAllForList_Exception"></exception>
     public IEnumerable<BO.ProductForList> GetAllProductForList_forC()
     {//לסנן את מחיר
-        var products = dal.Product.GetAll((Do.Product? p) => { return p?.Price == null ? false : true; });
+        var products = dal.Product.GetAll((Do.Product? p) => { return p?.Price == null ? false : true; }); //סינון המוצרים שלא הוזן עבורם מחיר
 
         if (products.Count() == 0)
             throw new BO.GetAllForList_Exception("There are no products");
@@ -48,9 +48,9 @@ internal class BoProduct : IProduct
     {
         try
         {
-            Do.Product? myP = dal.Product.GetById(id);
+            Do.Product? myP = dal.Product.GetById(id); //הבאת המוצר מבשכבת הנתונים
             BO.Product BoMyP = new();
-            BoMyP=myP.CopyPropTo(BoMyP);
+            BoMyP=myP.CopyPropTo(BoMyP);//העתקת הנתונים החופפים לישות הנתונים של מוצר בשכבת הלוגיקה
             return BoMyP;
         }
         catch (Do.DoesntExistException ex)
@@ -63,26 +63,22 @@ internal class BoProduct : IProduct
     {
         try
         {
-            Do.Product myP = dal.Product.GetById(id);//הבאת המוצר הרצוי
+            Do.Product myP = dal.Product.GetById(id);// הבאת המוצר הרצוי משכבת הנתונים
             if (myP.Price == null) throw new BO.InvalidValue_Exception("cant give this product because no price has been entered for it yet");//חריגה שלא אמורה לקרות, כרגע היא בשביל הבדיקה-כי לא ניתן ללקוח לבחור מוצרים שלא הוזן עבורם מחיר
 
             BO.ProductItem pForClient = new();
             pForClient = myP.CopyPropTo(pForClient);
 
-            pForClient.InStock = (myP.InStock > 0) ? true : false;
+            pForClient.InStock = (myP.InStock > 0) ? true : false;// מילוי השדה- האם קיים במלאי
 
             if (cart.Items == null)
             {
                 pForClient.AmountInCart = 0;
             }
             else
-            {
-                var myItems = from item in cart.Items
-                              where item != null 
-                              where item.ProductID == id
-                              select item;
-                pForClient.AmountInCart = myItems.Count();
-
+            { 
+                BO.OrderItem? temp=cart.Items.FirstOrDefault(x=>x.ProductID==id);//חיפוש הפריט בסל הקניות
+                pForClient.AmountInCart = temp?.AmountOfItems ?? 0;//הכנסת כמות הפריטים
             }
 
             return pForClient;
@@ -116,7 +112,7 @@ internal class BoProduct : IProduct
                 throw new BO.Adding_Exception("Can't add because the negative amount");
 
             Do.Product myNewP = new();
-            myNewP = productToAdd.CopyPropToStruct(myNewP);
+            myNewP = productToAdd.CopyPropToStruct(myNewP);//העברה לישות לוגית מוצר מסוג Do
 
             id = dal.Product.Add(myNewP);
             return id;
@@ -157,7 +153,7 @@ internal class BoProduct : IProduct
             throw new BO.Update_Exception("cant gets Negative amount");
 
         Do.Product DoProductToUp = new();
-        DoProductToUp = productToUp.CopyPropToStruct(DoProductToUp);
+        DoProductToUp = productToUp.CopyPropToStruct(DoProductToUp);//העברה לישות נתונים- "מוצר" מסוג שכבת הנתונים
 
         try
         {

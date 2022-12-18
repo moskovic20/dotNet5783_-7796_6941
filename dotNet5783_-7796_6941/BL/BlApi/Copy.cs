@@ -27,7 +27,7 @@ static class Copy
 
                 if (value is not null)
                 {
-                    if (propertyInfoTarget[item.Name].PropertyType == item.PropertyType|| item.PropertyType.IsEnum)
+                    if (propertyInfoTarget[item.Name].PropertyType == item.PropertyType || item.PropertyType.IsEnum)
                         propertyInfoTarget[item.Name].SetValue(target, value);
 
                     else if (typeSource is not null && typeTarget is not null)
@@ -36,7 +36,7 @@ static class Copy
             }
         }
 
-        
+
         return target;
     }
 

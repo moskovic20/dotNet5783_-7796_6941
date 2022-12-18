@@ -9,47 +9,22 @@ namespace BlApi;
 public static class Tools
 {
     static private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
-    private static IEnumerable<Do.OrderItem?> listforAmount;//=new List<Do.OrderItem?>();
+    private static IEnumerable<Do.OrderItem?> listforAmount = new List<Do.OrderItem?>();
 
-    /// שיטת הרחבה עבור ToString
-    //public static string ToStringProperty<T>(this T t, string suffix = "")
-    //{
-    //    string str = "";
-    //    foreach (PropertyInfo item in t!.GetType().GetProperties())
-    //    {
-
-    //        var value = item.GetValue(t, null);
-    //        if (value is string)
-    //            str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
-    //        else
-    //        {
-    //            if (value is IEnumerable)
-    //            {
-    //                str += $"\n{item.Name}: ";
-    //                foreach (var item2 in (IEnumerable)value)
-    //                    str += item2.ToStringProperty("  ");
-    //            }
-    //            else
-    //                str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
-    //        }
-    //    }
-    //    str += "\n";
-    //    return str;
-    //}
 
     #region הרחבה לטו סטרינג כולל טפלים
     public static string ToStringProperty<T>(this T t)
     {
         (string toStringProp, bool isTuple) = HelpToStringProperty(t, false);
-       
-        return isTuple ? new Regex(@"(Item1:|Item2:|True|,|\(|\))").Replace(toStringProp,"") : toStringProp;
+
+        return isTuple ? new Regex(@"(Item1:|Item2:|True|,|\(|\))").Replace(toStringProp, "") : toStringProp;
     }
     #endregion
 
     #region  שיטת הרחבה עבור ToString 
-    public static (string, bool) HelpToStringProperty<T>(this T t, bool isTuple, string suffix = "")
+    public static (string, bool) HelpToStringProperty<T>(this T t, bool isTupleOrOrderItem, string suffix = "")
     {
- 
+
         string str = "";
         foreach (PropertyInfo item in t!.GetType().GetProperties())
         {
@@ -63,18 +38,22 @@ public static class Tools
                 var items = (IEnumerable)value;
                 str += $"\n{item.Name}: ";
                 var types = item.PropertyType.GetGenericArguments();
-                 if (types.Length > 0 && types != null && types[0].FullName.StartsWith("System.Tuple"))
-                         isTuple = true;
+                if (types.Length > 0 && types != null && types[0].FullName.StartsWith("System.Tuple"))
+                    isTupleOrOrderItem = true;
 
-                    foreach (var item1 in items)
-                        str += item1.HelpToStringProperty(isTuple, "  ");
+                if (types?.Length > 0 && types != null && types[0].FullName.EndsWith("BO.OrderItem"))
+                    isTupleOrOrderItem = true;
+
+                foreach (var item1 in items)
+                    str += item1.HelpToStringProperty(isTupleOrOrderItem, "  ");
             }
             else
                 str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
         }
         str += "\n";
-        return (str, isTuple);
+        return (str, isTupleOrOrderItem);
     }
+    #endregion
 
     #region   חישוב סטטוס להזמנה
     public static BO.OrderStatus calculateStatus(this Do.Order or)
@@ -98,7 +77,7 @@ public static class Tools
         //    throw new DoesntExistException("missing ID");
 
         listforAmount = dal.OrderItem.GetListByOrderID(order.ID);
-        amountOfItems = listforAmount.Sum(o => o?.AmountOfItem ?? 0);
+        amountOfItems = listforAmount.Sum(o => (o?.AmountOfItems != null) ? 1 : 0);
 
         return amountOfItems;
     }
@@ -110,7 +89,7 @@ public static class Tools
         double Price = 0;
 
         IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
-        Price = listforAmount.Sum(o => (o?.AmountOfItem ?? 0) * (o?.PriceOfOneItem ?? 0));       
+        Price = listforAmount.Sum(o => (o?.AmountOfItems ?? 0) * (o?.PriceOfOneItem ?? 0));
         return Price;
     }
     #endregion
@@ -132,11 +111,11 @@ public static class Tools
     {
         List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>();
 
-        if (or.DateOrder != null)
-            list.Add(new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered")); 
+        //if (or.DateOrder != null)
+            list.Add(new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered"));
         if (or.ShippingDate != null)
-            list.Add(new Tuple<DateTime, string>((DateTime)or.ShippingDate, "order shipped"));        
-        if(or.DeliveryDate != null)
+            list.Add(new Tuple<DateTime, string>((DateTime)or.ShippingDate, "order shipped"));
+        if (or.DeliveryDate != null)
             list.Add(new Tuple<DateTime, string>((DateTime)or.DeliveryDate, "order delivered"));
 
         return list;
@@ -148,15 +127,14 @@ public static class Tools
 
         return new BO.OrderItem() //casting from list <do.ordetitem > to list<bo.orderitem>
         {
-            ID = orderItems?.ID ?? 0,
+            ID = orderItems?.ID ?? 0, //השמת המספר0 בשביל למנוע אזהרה, לא אמור לקרות!
             ProductID = orderItems?.ProductID ?? 0,
             NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook,//name of the product by his order ID
-            PriceOfOneItem = orderItems?.PriceOfOneItem ?? 0,
+            PriceOfOneItem = orderItems?.PriceOfOneItem ?? null,
             AmountOfItems = orderItems?.AmountOfItems ?? 0,///
             TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0)
         };
     }
-
     #endregion //exceptions
 
 
@@ -215,7 +193,7 @@ public static class Tools
         if (product.InStock < item.AmountOfItems)
             throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:" + item.NameOfBook);
 
-        return true; ;
+        return true; 
     }
 
 

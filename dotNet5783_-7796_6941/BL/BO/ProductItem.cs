@@ -27,7 +27,7 @@ public class ProductItem
     /// <summary>
     /// הקטגוריה אליו משתייך המוצר
     /// </summary>
-    public CATEGORY? Category { get; set; }
+    public CATEGORY Category { get; set; }
 
     /// <summary>
     /// כמות המוצר בסל הקניות של הלקוח

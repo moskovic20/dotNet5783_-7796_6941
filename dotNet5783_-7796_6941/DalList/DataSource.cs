@@ -124,42 +124,24 @@ public class DataSource
         }
     }
 
-    //private void CreateOrderItems()
-    //{
-    //    for (int i = 0; i < 40; i++)
-    //    {
-    //        Product? product = _Products[R.Next(_Products.Count)];
-
-    //        _OrderItems.Add(
-    //        new OrderItem
-    //        {
-    //            ID = Config.NextOrderItem,
-    //            ProductID = product?.ID ?? 0,
-    //            IdOfOrder = R.Next(Config.s_startOrderNumber, Config.s_startOrderNumber + _Orders.Count),
-    //            PriceOfOneItem = product?.Price ?? 0,
-    //            AmountOfItem = R.Next(5)
-
-    //        });
-    //    }
-
-    //}
-
-    private /*static*/ void CreateOrderItems()
+    private void CreateOrderItems()
     {
+
         for (int i = 0; i < 20; i++)
         {
-            int _orderId = R.Next(Config.s_startOrderNumber, Config.s_startOrderNumber + _Orders.Count);
+            int _orderId = Config.s_startOrderNumber+i;
             int numOfItems = R.Next(1, 5);
             for (int j = 0; j < numOfItems; j++)
             {
                 Product? product = _Products[R.Next(_Products.Count)]; //choose random product to put into the orderitems list
+
                 OrderItem _orderItem = new OrderItem
                 {
                     ID = Config.NextOrderItem,
-                    IdOfOrder = _orderId,
+                    OrderID = _orderId,
                     ProductID = product?.ID ?? 0,
                     PriceOfOneItem = product?.Price ?? 0,
-                    AmountOfItem = R.Next(1, 5),
+                    AmountOfItems = R.Next(1, 5),
                     //Image = "",
                     IsDeleted = false
                 };

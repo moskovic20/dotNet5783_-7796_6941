@@ -46,6 +46,8 @@ internal class BoProduct : IProduct
 
     public BO.Product GetProductDetails_forM(int id)
     {
+        if (id < 0) throw new BO.InvalidValue_Exception("can't get this product because ID is negetive");
+
         try
         {
             Do.Product? myP = dal.Product.GetById(id); //הבאת המוצר מבשכבת הנתונים
@@ -61,6 +63,8 @@ internal class BoProduct : IProduct
 
     public BO.ProductItem GetProductDetails_forC(int id, BO.Cart cart)
     {
+        if (id < 0) throw new BO.InvalidValue_Exception("can't get this product because ID is negetive");
+
         try
         {
             Do.Product myP = dal.Product.GetById(id);// הבאת המוצר הרצוי משכבת הנתונים

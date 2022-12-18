@@ -79,7 +79,7 @@ internal class DalOrderItem : IOrderItem
             throw new DoesntExistException("uncorect ID order");
 
         var list= from item in _DS._OrderItems
-                  where item!=null && item?.ID == OrderID
+                  where item!=null && item?.OrderID == OrderID
                   select item;
 
         if (list.Count()==0)

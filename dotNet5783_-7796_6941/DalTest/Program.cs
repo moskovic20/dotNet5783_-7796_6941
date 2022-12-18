@@ -459,7 +459,7 @@ d: delivery date");
                     case 'a':
                         #region add new orderItem.input details from the user
 
-                        Console.WriteLine(@"Enter book's order details: IdOfOrder ,ProductID and amountOfItem ");
+                        Console.WriteLine(@"Enter book's order details: OrderID ,ProductID and amountOfItem ");
 
                         //if (!int.TryParse(Console.ReadLine(), out id))
                         //    throw new Exception("The conversion failed");
@@ -467,7 +467,7 @@ d: delivery date");
 
                         if (!int.TryParse(Console.ReadLine(), out idOrder))
                             throw new Exception("The conversion failed");
-                        OI.IdOfOrder = idOrder;
+                        OI.OrderID = idOrder;
 
                         if (!int.TryParse(Console.ReadLine(), out idProduct))
                             throw new Exception("The conversion failed");
@@ -515,12 +515,12 @@ d: delivery date");
                         do
                         {
                             Console.WriteLine(@"Which field do you want to update?
-a: IdOfOrder
+a: OrderID
 b: ProductID
 c: amount
 d: to finish the update");
 
-                            choose = (char)Console.Read(); //id,IdOfOrder,ProductID,priceOfOneItem and amountOfItem
+                            choose = (char)Console.Read(); //id,OrderID,ProductID,priceOfOneItem and amountOfItem
                             Console.ReadLine();
 
 
@@ -531,7 +531,7 @@ d: to finish the update");
                                     Console.WriteLine("enter the new ID: ");
                                     if (!int.TryParse(Console.ReadLine(), out idOrder))
                                         throw new Exception("The conversion failed");
-                                    OI.IdOfOrder = idOrder;
+                                    OI.OrderID = idOrder;
                                     break;
 
                                 case 'b':

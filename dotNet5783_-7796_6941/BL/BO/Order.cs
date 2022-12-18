@@ -26,7 +26,7 @@ public class Order
     /// <summary>
     /// תאריך יצירת הזמנה
     /// </summary>
-    public DateTime? DateOrder { get; set; }
+    public DateTime DateOrder { get; set; }
 
     /// <summary>
     /// מצב הזמנה

@@ -133,7 +133,7 @@ internal class BoCart : ICart
 
                 Do.OrderItem orderItem = new();
                 orderItem = item.CopyPropToStruct(orderItem);
-                orderItem.IdOfOrder=IdOfNewOrder;
+                orderItem.OrderID=IdOfNewOrder;
 
                 dal.OrderItem.Add(orderItem);
 

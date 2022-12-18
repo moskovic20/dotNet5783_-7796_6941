@@ -96,6 +96,7 @@ internal class DalProduct : IProduct
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null)
     => from item in _DS._Products
        where item != null
+       where item?.IsDeleted==false
        where filter != null ? filter(item) : true
        select item;
 

@@ -20,7 +20,7 @@ namespace BLTest
         static int integer;
         static double dbl;
         //static DateTime date;
-        static string s;
+        static string s="";
         static char option;
         static BO.Cart demoCart = new() { CustomerName = "demo name", CustomerEmail = "demo@email.com", CustomerAddress = "demo address", Items = new List<OrderItem>()! };
 
@@ -206,35 +206,52 @@ namespace BLTest
                     "a. add a product\n" +
                     "b. update amount\n" +
                     "c. checkout\n");
+
                 bool success = char.TryParse(Console.ReadLine(), out option);
-                switch (option)//TODO eliminate needless repetition with functions
+                try
                 {
-                    case '0':
-                        return;
-                    case 'a':
-                        Console.Write("Please insert a product ID: ");
-                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
-                        Console.WriteLine(bl.Cart.AddProductToCart(demoCart, integer));
-                        break;
-                    case 'b':
-                        int productID, amount;
-                        Console.Write("Please insert a product ID: ");
-                        if (!(int.TryParse(Console.ReadLine(), out productID) && integer >= 100000)) throw new InvalidDataException();
-                        Console.Write("Please insert a new amount: ");
-                        if (!(int.TryParse(Console.ReadLine(), out amount) && integer >= 0)) throw new InvalidDataException();
-                        Console.WriteLine(bl.Cart.UpdateProductAmountInCart(demoCart, productID, amount));
-                        break;
-                    case 'c':
-                        Console.WriteLine("Please enter customer's name, Email and address (separeated with the Enter key)");
-                        Console.WriteLine(bl.Cart.MakeOrder(demoCart));
-                        break;
-                    default:
-                        if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
-                        break;
+                    switch (option)//TODO eliminate needless repetition with functions
+                    {
+                        case '0':
+                            return;
+
+                        #region הוספת מוצר לסל הקניות
+                        case 'a':
+                            Console.Write("Please insert a product ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+                            Console.WriteLine(bl.Cart.AddProductToCart(demoCart, integer));
+                            break;
+                        #endregion
+
+                        #region עדכון כמות של מוצר בסל הקניות
+                        case 'b':
+                            int productID, amount;
+                            Console.Write("Please insert a product ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out productID) && integer >= 100000)) throw new InvalidDataException();
+                            Console.Write("Please insert a new amount: ");
+                            if (!(int.TryParse(Console.ReadLine(), out amount) && integer >= 0)) throw new InvalidDataException();
+                            Console.WriteLine(bl.Cart.UpdateProductAmountInCart(demoCart, productID, amount));
+                            break;
+                        #endregion
+
+                        #region ביצוע ההזמנה של סל הקניות
+                        case 'c':
+                            Console.WriteLine("Please enter customer's name, Email and address (separeated with the Enter key)");
+                            Console.WriteLine("Your order number is: " + bl.Cart.MakeOrder(demoCart));
+                            break;
+                        #endregion
+
+                        default:
+                            if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
+                            break;
+                    }
+
                 }
-            }while (option != '0');
-            
-        
+                catch (Exception ex) { Console.WriteLine("\n" + ex + "\n"); }
+
+            } while (option != '0');
+
+
         }
 
         static void OrdersSubMenu()

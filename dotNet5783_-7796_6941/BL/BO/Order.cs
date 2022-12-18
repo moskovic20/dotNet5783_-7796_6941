@@ -37,6 +37,7 @@ public class Order
     ///תאריך ביצוע(תשלום) הזמנה
     /// </summary>
     public DateTime? PaymentDate { get; set; }
+
     /// <summary>
     /// תאריך שילוח
     /// </summary>
@@ -50,8 +51,7 @@ public class Order
     /// <summary>
     /// רשימת הפריטים בהזמנה
     /// </summary>
-    public IEnumerable<OrderItem?>? Items
-    { get; set; }
+    public IEnumerable<OrderItem?>? Items { get; set; }
 
     /// <summary>
     /// המחיר לתשלום של כל ההזמנה

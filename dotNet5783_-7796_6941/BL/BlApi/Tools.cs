@@ -9,8 +9,8 @@ namespace BlApi;
 public static class Tools
 {
     static private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
-    private static IEnumerable<Do.OrderItem?> listforAmount;
-       
+    private static IEnumerable<Do.OrderItem?> listforAmount;//=new List<Do.OrderItem?>();
+
     /// שיטת הרחבה עבור ToString
     //public static string ToStringProperty<T>(this T t, string suffix = "")
     //{
@@ -75,29 +75,6 @@ public static class Tools
         str += "\n";
         return (str, isTuple);
     }
-    #endregion
-
-
-    public static void CopyPropertiesTo<T, S>(this S from, T to)
-    {
-        foreach (PropertyInfo propTo in to.ToStringProperty().GetType().GetProperties())//loop on all the properties in the new object
-        {
-            PropertyInfo? propFrom = typeof(S).GetProperty(propTo.Name);//check if there is property with the same name in the source object and get it
-            if (propFrom == null)
-                continue;
-            var value = propFrom.GetValue(from, null);//get the value of the prperty
-            if (value is ValueType || value is string)
-                propTo.SetValue(to, value);//insert the value to the suitable property
-        }
-    }
-
-    public static object? CopyPropertiesToNew<S>(this S from, Type type)//get the typy we want to copy to 
-    {
-        object? to = Activator.CreateInstance(type); // new object of the Type
-        from.CopyPropertiesTo(to);//copy all value of properties with the same name to the new object
-        return to;
-    }
-
 
     #region   חישוב סטטוס להזמנה
     public static BO.OrderStatus calculateStatus(this Do.Order or)
@@ -110,7 +87,6 @@ public static class Tools
             return OrderStatus.Pending;
     }
     #endregion
-
 
     #region חישוב מספר פריטים בכל הזמנה לפי מספר הזמנה
     public static int CalculateAmountItems(this Do.Order order)
@@ -128,7 +104,6 @@ public static class Tools
     }
     #endregion
 
-
     #region  חישוב מחיר לסך כל ההזמנה על כל פריטיה
     public static double CalculatePriceOfAllItems(this Do.Order order)
     {
@@ -141,6 +116,18 @@ public static class Tools
     #endregion
 
     #region  תחזור רשימה עם 3 איברים Tupleחישוב מסע ההזמנה ותיעוד ב
+    //public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
+    //{
+    //    List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>()
+    //    {
+    //            (or.DateOrder!= null)? new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered"):null,
+    //            (or.ShippingDate!= null)? new Tuple<DateTime, string>((DateTime)or.ShippingDate  , "order shipped" ):null,
+    //            (or.DeliveryDate!= null)? new Tuple<DateTime, string>((DateTime)or.DeliveryDate , "order delivered"):null,
+    //    };
+    //    return list;
+    //}
+    #endregion
+
     public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
     {
         List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>();
@@ -154,7 +141,6 @@ public static class Tools
 
         return list;
     }
-    #endregion
 
     #region המרת רשימה של אובייקטים מסוג פריט-הזמנה משכבת הנתונים לשכבת הלוגיקה עם השינויים הנדרשים
     public static BO.OrderItem? ListFromDoToBo(this Do.OrderItem? orderItems)
@@ -166,12 +152,13 @@ public static class Tools
             ProductID = orderItems?.ProductID ?? 0,
             NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook,//name of the product by his order ID
             PriceOfOneItem = orderItems?.PriceOfOneItem ?? 0,
-            AmountOfItems = orderItems?.AmountOfItem ?? 0,///
-            TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItem ?? 0)
+            AmountOfItems = orderItems?.AmountOfItems ?? 0,///
+            TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0)
         };
     }
 
     #endregion //exceptions
+
 
 
     public static bool IsValidEmail(this string email)

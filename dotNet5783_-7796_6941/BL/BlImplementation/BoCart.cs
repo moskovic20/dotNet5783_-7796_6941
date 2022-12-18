@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using BlApi;
-
+using BO;
 
 namespace BlImplementation;
 
@@ -19,11 +19,12 @@ internal class BoCart : ICart
     {
         try
         {
+
             cart.Items = cart.Items ?? new();
 
             Do.Product product = dal.Product.GetById(productID);//הבאת פרטי מוצר
 
-            BO.OrderItem item = cart.Items.FirstOrDefault(x => x?.ProductID == productID)
+            BO.OrderItem item = cart.Items.FirstOrDefault(x => x?.ProductID == productID) //אם המוצר קיים בסל הקניות אז הוא מקבל אותו אם לא יוצר חדש
             ?? new()
             {
                 ID = 0,
@@ -34,13 +35,17 @@ internal class BoCart : ICart
                 TotalPrice = 0,
             };
 
-            if (product.InStock! >= 0)
+            if (item.AmountOfItems >= product.InStock) 
                 throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:" + item.NameOfBook);
+
+            if (item.AmountOfItems == 0) cart.Items.Add(item);//הוספה ראשונה של מוצר זה לסל הקניות
 
             item.AmountOfItems++;
             item.TotalPrice += item.PriceOfOneItem;
 
-            cart.Items.Add(item);
+            cart.TotalPrice = cart.TotalPrice == null ? 0 : cart.TotalPrice;
+            cart.TotalPrice += item.PriceOfOneItem;
+
             return cart;
         }
         catch (Do.DoesntExistException ex) { throw new BO.Adding_Exception("cant add this product to the cart", ex); }
@@ -52,6 +57,8 @@ internal class BoCart : ICart
 
     public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int productID, int NewAmount)
     {
+        if (NewAmount < 0) throw new BO.InvalidValue_Exception("can't update negetive amount");
+
         try
         {
             int difference = 0;
@@ -59,15 +66,15 @@ internal class BoCart : ICart
 
             Do.Product product = dal.Product.GetById(productID);//הבאת פרטי מוצר
 
-            BO.OrderItem item = cart.Items.Find(x => x.ProductID == productID) ?? throw new Exception("אין מוצר לעדכן");
+            BO.OrderItem item = cart.Items.Find(x => x.ProductID == productID) ?? throw new Exception("There is no product to update - an exception that should not happen");
 
-            if (NewAmount == 0)
+            if (NewAmount == 0)//הסרת מוצר זה מסל הקניות
             {
                 cart.Items.Remove(item);
                 cart.TotalPrice -= item.TotalPrice;
             }
 
-            else if (NewAmount < item.AmountOfItems)
+            else if (NewAmount < item.AmountOfItems)//הקטנת כמות מוצר בסל הקניות
             {
                 difference = item.AmountOfItems - NewAmount;
 
@@ -77,12 +84,12 @@ internal class BoCart : ICart
                 return cart;
             }
 
-            else
+            else //הגדלת כמות מוצר בסל הקניות
             {
                 difference = NewAmount - item.AmountOfItems;
 
                 if (product.InStock < NewAmount)
-                    throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:"+item.NameOfBook);
+                    throw new BO.InvalidValue_Exception("The desired quantity for the book isnt in stock: " + item.NameOfBook);
 
                 item.AmountOfItems = NewAmount;
                 item.TotalPrice += difference * item.PriceOfOneItem;
@@ -91,7 +98,7 @@ internal class BoCart : ICart
 
             return cart;
         }
-        catch(BO.InvalidValue_Exception ex) { throw new BO.Update_Exception("can't update the amount of this product",ex); }
+        catch (BO.InvalidValue_Exception ex) { throw new BO.Update_Exception("can't update the amount of this product", ex); }
         catch (Do.DoesntExistException ex) { throw new BO.Update_Exception("can't update the amount of this product", ex); }
     }
 
@@ -99,56 +106,47 @@ internal class BoCart : ICart
     {
         try
         {
-            cart = cart ?? throw new ArgumentNullException("");//לתקן
-            cart.Items = cart.Items ?? throw new Exception("אין מוצרים בסל הקניות");//לתקן
+            cart = cart ?? throw new ArgumentNullException("There is no shopping basket - an exception that should not happen");
+            cart.Items = cart.Items ?? throw new ArgumentNullException("There are no items in the shopping basket - an exception that should not happen");
 
             if (cart.CustomerName == null)
-                throw new BO.InvalidValue_Exception("No value entered for the field: Customer Name");
+                throw new BO.InvalidValue_Exception("cant make this order without customer Name");
 
             if (cart.CustomerAddress == null)
-                throw new BO.InvalidValue_Exception("No value entered for the field: Customer Address");
+                throw new BO.InvalidValue_Exception("cant make this order without Ccustomer Address");
 
-            if (cart.CustomerEmail != null)//מה עם חריגה של אין מייל?
-            {
-                if (!cart.CustomerEmail.IsValidEmail())
-                    throw new BO.InvalidValue_Exception("Invalid email address");
-            }
+            if (cart.CustomerEmail == null) throw new BO.InvalidValue_Exception("cant make this order without email");
+            else if (!cart.CustomerEmail.IsValidEmail())
+                throw new BO.InvalidValue_Exception("Invalid email address");
 
-            cart.Items.TrueForAll(x => x.ValidationChecks());
+            cart.Items.TrueForAll(x => x.ValidationChecks());//בדיקה שכל כמויות הפריטים בסל הקניות חיוביים וכן שיש מספיק במלאי 
 
             Do.Order newOrder = new(); //יצירת הזמנה חדשה
-            cart.CopyPropertiesTo(newOrder);
+            newOrder = cart.CopyPropToStruct(newOrder);
             newOrder.DateOrder = DateTime.Now;
 
-            int IdOfONewOrder = dal.Order.Add(newOrder);
+            int IdOfNewOrder = dal.Order.Add(newOrder);
 
-            foreach (BO.OrderItem item in cart.Items)
+            foreach (BO.OrderItem item in cart.Items)//הכנסת המוצרים בסל למוצרים בהזמנה ועדכון פרטי המוצרים
             {
-                Do.Product product = dal.Product.GetById(item.ProductID);
+                Do.Product product = dal.Product.GetById(item.ProductID); //הבאת פרטי מוצר
 
-                Do.OrderItem orderItem = new()//למה לא עם הפונקציית העתקה?יש לנו גם ממבנה לקלאס וגם להיפך:) 
-                {
-                    IdOfOrder = IdOfONewOrder,
-                    ProductID = item.ProductID,
-                    AmountOfItem = item.AmountOfItems,
-                    PriceOfOneItem = item.PriceOfOneItem,
-                };
+                Do.OrderItem orderItem = new();
+                orderItem = item.CopyPropToStruct(orderItem);
+                orderItem.IdOfOrder=IdOfNewOrder;
 
                 dal.OrderItem.Add(orderItem);
 
                 Do.Product newProduct = new();//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
-                product.CopyPropertiesTo(newProduct);
+                newProduct = product.CopyPropToStruct(newProduct);
                 newProduct.InStock -= item.AmountOfItems;
 
                 dal.Product.Update(newProduct);//מעדכנים את הכמות של המוצר ברשימה
             }
-            return IdOfONewOrder;
+            return IdOfNewOrder;
         }
-        catch (BO.InvalidValue_Exception ex) { throw new BO.MakeOrder_Exception("cant create this cart",ex); }
         catch (Do.AlreadyExistException ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }
         catch (Do.DoesntExistException ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }
-        catch(Exception ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }
     }
-
-    
 }
+

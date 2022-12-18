@@ -476,7 +476,7 @@ d: delivery date");
                         if (!int.TryParse(Console.ReadLine(), out numOfItem))
                             throw new Exception("The conversion failed");
 
-                        OI.AmountOfItem = numOfItem;
+                        OI.AmountOfItems = numOfItem;
 
                         id = DL.OrderItem.Add(OI);
                         Console.WriteLine("\n the id of this ordrr item is:{0}\n", id);
@@ -545,7 +545,7 @@ d: to finish the update");
                                     Console.WriteLine("enter the new amount: ");
                                     if (!int.TryParse(Console.ReadLine(), out numOfItem))
                                         throw new Exception("The conversion failed");
-                                    OI.AmountOfItem = numOfItem;
+                                    OI.AmountOfItems = numOfItem;
                                     break;
 
                                 case 'd':

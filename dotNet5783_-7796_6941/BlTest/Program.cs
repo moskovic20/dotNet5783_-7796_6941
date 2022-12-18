@@ -54,19 +54,19 @@ namespace BLTest
 
                             Console.Write("Product ID: ");
                             s = Console.ReadLine()!;
-                            if(s=="") throw new BO.InvalidValue_Exception("You cannot add a product without ID");
-                            if (int.TryParse(s, out integer) && (integer >= 100000||integer<=-100000)) newProduct.ID = integer;
+                            if (s == "") throw new BO.InvalidValue_Exception("You cannot add a product without ID");
+                            if (int.TryParse(s, out integer) && (integer >= 100000 || integer <= -100000)) newProduct.ID = integer;
                             else throw new BO.InvalidValue_Exception("ID sould be with 6 digits at list");
 
                             Console.Write("Product Name: ");
                             s = Console.ReadLine()!;
                             if (s != "") newProduct.NameOfBook = s;
                             else throw new BO.InvalidValue_Exception("You cannot add a product without the product name");
-                            
+
 
                             Console.Write("Product Name of author: ");
                             s = Console.ReadLine()!;
-                            if (s != "") newProduct.AuthorName= s;
+                            if (s != "") newProduct.AuthorName = s;
                             else throw new BO.InvalidValue_Exception("You cannot add a product without the author name");
 
                             printCategories();
@@ -79,7 +79,7 @@ namespace BLTest
                             Console.Write("Price: ");
                             s = Console.ReadLine()!;
                             if (s == "") newProduct.Price = null;
-                            else if (double.TryParse(s, out dbl)) newProduct.Price = dbl; 
+                            else if (double.TryParse(s, out dbl)) newProduct.Price = dbl;
                             else throw new InvalidDataException();
 
                             Console.Write("Amount in stock: ");
@@ -130,7 +130,7 @@ namespace BLTest
                         #region עדכון פרטי מוצר
                         case 'f':
                             Console.Write("Please insert an ID: ");
-                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000|| integer<=-100000)) throw new InvalidDataException();
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000 || integer <= -100000)) throw new InvalidDataException();
 
                             Product product = bl.BoProduct.GetProductDetails_forM(integer);
                             Console.WriteLine(product);
@@ -186,10 +186,11 @@ namespace BLTest
                             break;
                         #endregion
 
-                default:
-                    if (!(success && option == 0)) Console.WriteLine("Bad command! Try again or Exsit ");//אם לא הצליח להמיר או שהפקודה לא תואמת לסוויצ קייסים
-                    break;
+                        default:
+                            if (!(success && option == 0)) Console.WriteLine("Bad command! Try again or Exsit ");//אם לא הצליח להמיר או שהפקודה לא תואמת לסוויצ קייסים
+                            break;
                     }
+                }
                 catch (Exception ex) { Console.WriteLine("\n" + ex + "\n"); }
 
             } while (option != '0');
@@ -238,10 +239,8 @@ namespace BLTest
 
         static void OrdersSubMenu()
         {
-
-            try
-            {
-                char option;
+            do
+            {                
                 Console.WriteLine("Please choose one of the following options:\n" +
                     "0. return to main menu\n" +
                     "a. get all orders\n" +
@@ -251,72 +250,77 @@ namespace BLTest
                     "e. update an order\n" +
                     "f. track an order");
                 bool success = char.TryParse(Console.ReadLine(), out option);
-                switch (option)//TODO eliminate needless repetition with functions
+                try
                 {
-                    case '0':
+                    switch (option)//TODO eliminate needless repetition with functions
+                    {
+                        case '0':
 
-                        return;
+                            return;
 
-                    case 'a': //printing all the orders
+                        case 'a': //printing all the orders
 
-                        IEnumerable<BO.OrderForList> orders;
-                        orders = bl.BoOrder.GetAllOrderForList(); //להבין למה זה הגישה הנכונה!
-                        foreach (var item in orders)
-                            Console.WriteLine(item);
-                        break;
+                            IEnumerable<BO.OrderForList> orders;
+                            orders = bl.BoOrder.GetAllOrderForList(); //להבין למה זה הגישה הנכונה!
+                            foreach (var item in orders)
+                                Console.WriteLine(item);
+                            break;
 
-                    case 'b': //printing the requested order
+                        case 'b': //printing the requested order
 
-                        Console.Write("Please insert an ID: ");
-                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
-                        Console.WriteLine(bl.BoOrder.GetOrdertDetails(integer));
-                        break;
+                            Console.Write("Please insert an ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
+                            Console.WriteLine(bl.BoOrder.GetOrdertDetails(integer));
+                            break;
 
-                    case 'c': //send update
+                        case 'c': //send update
 
-                        Console.Write("Please insert an ID: ");
-                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
-                        Console.WriteLine(bl.BoOrder.UpdateOrderShipping(integer));
-                        break;
+                            Console.Write("Please insert an ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
+                            Console.WriteLine(bl.BoOrder.UpdateOrderShipping(integer));
+                            break;
 
-                    case 'd': //delivart update
+                        case 'd': //delivart update
 
-                        Console.Write("Please insert an ID: ");
-                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
-                        Console.WriteLine(bl.BoOrder.UpdateOrderDelivery(integer));
-                        break;
+                            Console.Write("Please insert an ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
+                            Console.WriteLine(bl.BoOrder.UpdateOrderDelivery(integer));
+                            break;
 
-                    case 'e': //update order
-                        //int orderID, productID, newAmount;
-                        //Console.Write("Please insert an order ID: ");
-                        //if (!(int.TryParse(Console.ReadLine(), out orderID) && orderID > 0)) throw new InvalidDataException();
-                        //Order order = bl.BoOrder.GetOrdertDetails(orderID);
-                        //Console.WriteLine(order);
-                        //Console.Write("Please insert a product ID: ");
-                        //if (!(int.TryParse(Console.ReadLine(), out productID) && productID >= 100000)) throw new InvalidDataException();
-                        //Console.Write("Please insert a new amount: ");
-                        //if (!(int.TryParse(Console.ReadLine(), out newAmount) && integer >= 0)) throw new InvalidDataException();                       
-                        //bl.BoOrder.UpdateOrder(orderID/*, productID, newAmount*/);
-                        Console.WriteLine("not redy for that option yet....:):)");
-                        break;
+                        case 'e': //update order
+                                  //int orderID, productID, newAmount;
+                                  //Console.Write("Please insert an order ID: ");
+                                  //if (!(int.TryParse(Console.ReadLine(), out orderID) && orderID > 0)) throw new InvalidDataException();
+                                  //Order order = bl.BoOrder.GetOrdertDetails(orderID);
+                                  //Console.WriteLine(order);
+                                  //Console.Write("Please insert a product ID: ");
+                                  //if (!(int.TryParse(Console.ReadLine(), out productID) && productID >= 100000)) throw new InvalidDataException();
+                                  //Console.Write("Please insert a new amount: ");
+                                  //if (!(int.TryParse(Console.ReadLine(), out newAmount) && integer >= 0)) throw new InvalidDataException();                       
+                                  //bl.BoOrder.UpdateOrder(orderID/*, productID, newAmount*/);
+                            Console.WriteLine("not redy for that option yet....:):)");
+                            break;
 
-                    case 'f':
+                        case 'f':
 
-                        Console.Write("Please insert an ID: ");
-                        if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
-                        Console.WriteLine(bl.BoOrder.GetOrderTracking(integer));
-                        break;
+                            Console.Write("Please insert an ID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
+                            Console.WriteLine(bl.BoOrder.GetOrderTracking(integer));
+                            break;
 
-                    default:
+                        default:
 
-                        if (!(success && option == 0)) Console.WriteLine("Bad command! Go stand in the corner!");
-                        break;
+                            if (!(success && option == '0')) Console.WriteLine("Bad command! Try again or Exsit ");//אם לא הצליח להמיר או שהפקודה לא תואמת לסוויצ קייסים
+                            break;
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+
+            } while (option != '0');
+
         }
 
 

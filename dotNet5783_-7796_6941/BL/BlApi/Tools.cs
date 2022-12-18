@@ -1,14 +1,8 @@
 ﻿using BO;
-using Do;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace BlApi;
 
@@ -16,15 +10,46 @@ public static class Tools
 {
     static private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
     private static IEnumerable<Do.OrderItem?> listforAmount;
-
-    /// <summary>
+       
     /// שיטת הרחבה עבור ToString
-    /// </summary>
-    /// <typeparam name="T">generic type</typeparam>
-    /// <param name="t">"this" type</param>
-    /// <returns></returns>
-    public static string ToStringProperty<T>(this T t, string suffix = "")
+    //public static string ToStringProperty<T>(this T t, string suffix = "")
+    //{
+    //    string str = "";
+    //    foreach (PropertyInfo item in t!.GetType().GetProperties())
+    //    {
+
+    //        var value = item.GetValue(t, null);
+    //        if (value is string)
+    //            str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+    //        else
+    //        {
+    //            if (value is IEnumerable)
+    //            {
+    //                str += $"\n{item.Name}: ";
+    //                foreach (var item2 in (IEnumerable)value)
+    //                    str += item2.ToStringProperty("  ");
+    //            }
+    //            else
+    //                str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+    //        }
+    //    }
+    //    str += "\n";
+    //    return str;
+    //}
+
+    #region הרחבה לטו סטרינג כולל טפלים
+    public static string ToStringProperty<T>(this T t)
     {
+        (string toStringProp, bool isTuple) = HelpToStringProperty(t, false);
+       
+        return isTuple ? new Regex(@"(Item1:|Item2:|True|,|\(|\))").Replace(toStringProp,"") : toStringProp;
+    }
+    #endregion
+
+    #region  שיטת הרחבה עבור ToString 
+    public static (string, bool) HelpToStringProperty<T>(this T t, bool isTuple, string suffix = "")
+    {
+ 
         string str = "";
         foreach (PropertyInfo item in t!.GetType().GetProperties())
         {
@@ -32,34 +57,26 @@ public static class Tools
             var value = item.GetValue(t, null);
             if (value is string)
                 str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
-            else
+
+            else if (value is IEnumerable)
             {
-                if (value is IEnumerable)
-                {
-                    str += $"\n{item.Name}: ";
-                    foreach (var item2 in (IEnumerable)value)
-                        str += item2.ToStringProperty("  ");
-                }
-                else
-                    str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+                var items = (IEnumerable)value;
+                str += $"\n{item.Name}: ";
+                var types = item.PropertyType.GetGenericArguments();
+                 if (types.Length > 0 && types != null && types[0].FullName.StartsWith("System.Tuple"))
+                         isTuple = true;
+
+                    foreach (var item1 in items)
+                        str += item1.HelpToStringProperty(isTuple, "  ");
             }
+            else
+                str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
         }
         str += "\n";
-        return str;
+        return (str, isTuple);
     }
+    #endregion
 
-    //public static string ToStringProperty<T>(this T? t)                   
-    //{
-
-    //    string str = "";
-    //    if (t == null) return str;
-
-    //    foreach (PropertyInfo item in t.GetType().GetProperties())
-    //        str += "\n" + item.Name ?? "no name" + ": " + item.GetValue(t, null);
-    //    return str;
-    //}
-
-    //copy elements of BO to DO and vice versa
 
     public static void CopyPropertiesTo<T, S>(this S from, T to)
     {
@@ -105,7 +122,7 @@ public static class Tools
         //    throw new DoesntExistException("missing ID");
 
         listforAmount = dal.OrderItem.GetListByOrderID(order.ID);
-        amountOfItems = listforAmount.Sum(o => o?.AmountOfItem?? 0);
+        amountOfItems = listforAmount.Sum(o => o?.AmountOfItem ?? 0);
 
         return amountOfItems;
     }
@@ -118,8 +135,7 @@ public static class Tools
         double Price = 0;
 
         IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
-        Price = listforAmount.Sum(o => (o?.AmountOfItem ?? 0) * (o?.PriceOfOneItem ?? 0));
-        //listforAmount.Count();
+        Price = listforAmount.Sum(o => (o?.AmountOfItem ?? 0) * (o?.PriceOfOneItem ?? 0));       
         return Price;
     }
     #endregion
@@ -127,12 +143,15 @@ public static class Tools
     #region  תחזור רשימה עם 3 איברים Tupleחישוב מסע ההזמנה ותיעוד ב
     public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
     {
-        List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>()
-        {
-                (or.DateOrder!= null)? new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered"):null,
-                (or.ShippingDate!= null)? new Tuple<DateTime, string>((DateTime)or.ShippingDate  , "order shipped" ):null,
-                (or.DeliveryDate!= null)? new Tuple<DateTime, string>((DateTime)or.DeliveryDate , "order delivered"):null,
-        };
+        List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>();
+
+        if (or.DateOrder != null)
+            list.Add(new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered")); 
+        if (or.ShippingDate != null)
+            list.Add(new Tuple<DateTime, string>((DateTime)or.ShippingDate, "order shipped"));        
+        if(or.DeliveryDate != null)
+            list.Add(new Tuple<DateTime, string>((DateTime)or.DeliveryDate, "order delivered"));
+
         return list;
     }
     #endregion
@@ -140,8 +159,8 @@ public static class Tools
     #region המרת רשימה של אובייקטים מסוג פריט-הזמנה משכבת הנתונים לשכבת הלוגיקה עם השינויים הנדרשים
     public static BO.OrderItem? ListFromDoToBo(this Do.OrderItem? orderItems)
     {
- 
-       return new BO.OrderItem() //casting from list <do.ordetitem > to list<bo.orderitem>
+
+        return new BO.OrderItem() //casting from list <do.ordetitem > to list<bo.orderitem>
         {
             ID = orderItems?.ID ?? 0,
             ProductID = orderItems?.ProductID ?? 0,
@@ -150,9 +169,9 @@ public static class Tools
             AmountOfItems = orderItems?.AmountOfItem ?? 0,///
             TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItem ?? 0)
         };
-    }    
-    
-    #endregion
+    }
+
+    #endregion //exceptions
 
 
     public static bool IsValidEmail(this string email)
@@ -199,7 +218,7 @@ public static class Tools
         }
     }
 
-    public static bool ValidationChecks( this BO.OrderItem item)
+    public static bool ValidationChecks(this BO.OrderItem item)
     {
         Do.Product product = dal.Product.GetById(item.ProductID);
 

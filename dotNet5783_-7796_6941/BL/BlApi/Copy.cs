@@ -27,13 +27,11 @@ static class Copy
 
                 if (value is not null)
                 {
-                    if (propertyInfoTarget[item.Name].PropertyType == item.PropertyType)
+                    if (propertyInfoTarget[item.Name].PropertyType == item.PropertyType|| item.PropertyType.IsEnum)
                         propertyInfoTarget[item.Name].SetValue(target, value);
 
                     else if (typeSource is not null && typeTarget is not null)
                         value = Enum.ToObject(typeTarget, value);
-
-
                 }
             }
         }

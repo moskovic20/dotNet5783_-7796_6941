@@ -120,7 +120,7 @@ public static class Tools
         oIHelp.TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0);
         return oIHelp;
     }
-    #endregion //exceptions?
+    #endregion 
 
 
 

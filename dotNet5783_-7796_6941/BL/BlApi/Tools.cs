@@ -95,17 +95,7 @@ public static class Tools
     #endregion
 
     #region  תחזור רשימה עם 3 איברים Tupleחישוב מסע ההזמנה ותיעוד ב
-    //public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
-    //{
-    //    List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>()
-    //    {
-    //            (or.DateOrder!= null)? new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered"):null,
-    //            (or.ShippingDate!= null)? new Tuple<DateTime, string>((DateTime)or.ShippingDate  , "order shipped" ):null,
-    //            (or.DeliveryDate!= null)? new Tuple<DateTime, string>((DateTime)or.DeliveryDate , "order delivered"):null,
-    //    };
-    //    return list;
-    //}
-    #endregion
+      
 
     public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
     {
@@ -120,22 +110,17 @@ public static class Tools
 
         return list;
     }
+    #endregion
 
     #region המרת רשימה של אובייקטים מסוג פריט-הזמנה משכבת הנתונים לשכבת הלוגיקה עם השינויים הנדרשים
     public static BO.OrderItem? ListFromDoToBo(this Do.OrderItem? orderItems)
     {
-
-        return new BO.OrderItem() //casting from list <do.ordetitem > to list<bo.orderitem>
-        {
-            ID = orderItems?.ID ?? 0, //השמת המספר0 בשביל למנוע אזהרה, לא אמור לקרות!
-            ProductID = orderItems?.ProductID ?? 0,
-            NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook,//name of the product by his order ID
-            PriceOfOneItem = orderItems?.PriceOfOneItem ?? null,
-            AmountOfItems = orderItems?.AmountOfItems ?? 0,///
-            TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0)
-        };
+        BO.OrderItem oIHelp = orderItems.CopyPropTo(new BO.OrderItem());
+        oIHelp.NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook;//name of the product by his order ID
+        oIHelp.TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0);
+        return oIHelp;
     }
-    #endregion //exceptions
+    #endregion 
 
 
 

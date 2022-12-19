@@ -9,25 +9,28 @@ sealed internal class Bl : IBl//from public to internul...ok?
     private static IBl? instance;
     private static readonly object key = new(); //Thread Safe
 
-    public static IBl Instance()
+    internal static IBl Instance
     {
-        if (instance == null) //Lazy Initialization
+        get
         {
-            lock (key)
+            if (instance == null) //Lazy Initialization
             {
-                if (instance == null)
-                    instance = new Bl();
+                lock (key)
+                {
+                    if (instance == null)
+                        instance = new Bl();
+                }
             }
-        }
 
-        return instance;
+            return instance;
+        }
     }
 
     internal Bl() { }
 
-    public IOrder BoOrder { set; get; } = new BoOrder();
+    public IOrder BoOrder {  get; } = new BoOrder();
 
-    public IProduct BoProduct { set; get; } = new BoProduct();
+    public IProduct BoProduct { get; } = new BoProduct();
 
-    public ICart Cart { set; get; } = new BoCart();
+    public ICart Cart { get; } = new BoCart();
 }

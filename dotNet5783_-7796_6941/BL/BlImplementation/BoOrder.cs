@@ -82,7 +82,7 @@ internal class BoOrder : IOrder
             order.Status = myOrder.calculateStatus();
             order.PaymentDate = myOrder.DateOrder;//should be nullable?                                  
             var tempItems = dal.OrderItem.GetListByOrderID(myOrder.ID);            
-            order.Items = tempItems.Select(x => x.ListFromDoToBo());// tempItems.CopyListTo<Do.OrderItem?, BO.OrderItem?>(); //casting from list<do.ordetitem> to list<bo.orderitem> _________watch it's Tools__________
+            order.Items = tempItems.Select(x => x.ListFromDoToBo());//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
             return order;
             
@@ -112,8 +112,8 @@ internal class BoOrder : IOrder
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);
-            if (myOrder.DateOrder == null)
-                throw new BO.InvalidValue_Exception("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
+            //if (myOrder.DateOrder == null)
+            //    throw new BO.InvalidValue_Exception("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
 
             if (myOrder.DeliveryDate != null)//evrything allready got heandeled
                 throw new BO.InvalidValue_Exception("cant update status, order allredy delivered");
@@ -157,8 +157,8 @@ internal class BoOrder : IOrder
         try
         {
             Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
-            if (myOrder.DateOrder == null)
-                throw new BO.InvalidValue_Exception("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
+            //if (myOrder.DateOrder == null)
+            //    throw new BO.InvalidValue_Exception("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
 
             if (myOrder.DeliveryDate != null)//evrything allready got heandeled
                 throw new BO.InvalidValue_Exception("cant update status, order allredy delivered");
@@ -214,6 +214,6 @@ internal class BoOrder : IOrder
 
     public void UpdateOrder(int id)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException("sorry, I'm not redy yet");
     }
 }

@@ -36,7 +36,7 @@ public class Order
     /// <summary>
     ///תאריך ביצוע(תשלום) הזמנה
     /// </summary>
-    public DateTime? PaymentDate { get; set; }
+    public DateTime PaymentDate { get; set; }
 
     /// <summary>
     /// תאריך שילוח

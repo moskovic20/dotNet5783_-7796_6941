@@ -27,5 +27,15 @@ namespace PL.BoProducts
             InitializeComponent();
             this.bl = bl;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ui3_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

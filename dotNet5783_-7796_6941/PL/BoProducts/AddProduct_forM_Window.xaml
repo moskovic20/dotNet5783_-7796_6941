@@ -7,6 +7,17 @@
         mc:Ignorable="d"
         Title="AddProduct_forM_Window" Height="450" Width="800">
     <Grid>
-        
+        <TextBox x:Name="ui3"
+  Grid.Row="2" HorizontalAlignment="Left" Margin="691,5,0,0" Padding="5" MouseDoubleClick="ui3_MouseDoubleClick"  Height="28" VerticalAlignment="Top"
+
+ Grid.Column="2"
+
+ Text="{Binding ElementName=data3, Path=Text, UpdateSourceTrigger=Explicit, Mode=TwoWay}"
+/>
+        <Button
+ Grid.Column="0"
+ Content="Explicit"
+ Click="Button_Click" Margin="10,345,0,0" />
+
     </Grid>
 </Window>

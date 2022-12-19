@@ -21,15 +21,17 @@ namespace PL.BoProducts
     public partial class ProductListWindow_forM : Window
     {
         private IBl bl;
-
+        
         public ProductListWindow_forM(IBl bl)
         {
             InitializeComponent();
 
             this.bl = bl;
+            //addButton.AddHandler();
 
             ProductListview.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
             cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
+            
         }
 
         private void categoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)

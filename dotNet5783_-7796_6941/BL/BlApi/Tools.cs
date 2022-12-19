@@ -54,8 +54,6 @@ public static class Tools
         return (str, isTupleOrOrderItem);
     }
     #endregion
-
-        #endregion
     
     #region   חישוב סטטוס להזמנה
     public static BO.OrderStatus calculateStatus(this Do.Order or)
@@ -117,18 +115,12 @@ public static class Tools
     #region המרת רשימה של אובייקטים מסוג פריט-הזמנה משכבת הנתונים לשכבת הלוגיקה עם השינויים הנדרשים
     public static BO.OrderItem? ListFromDoToBo(this Do.OrderItem? orderItems)
     {
-
-        return new BO.OrderItem() //casting from list <do.ordetitem > to list<bo.orderitem>
-        {
-            ID = orderItems?.ID ?? 0, //השמת המספר0 בשביל למנוע אזהרה, לא אמור לקרות!
-            ProductID = orderItems?.ProductID ?? 0,
-            NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook,//name of the product by his order ID
-            PriceOfOneItem = orderItems?.PriceOfOneItem ?? null,
-            AmountOfItems = orderItems?.AmountOfItems ?? 0,///
-            TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0)
-        };
+        BO.OrderItem oIHelp = orderItems.CopyPropTo(new BO.OrderItem());
+        oIHelp.NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook;//name of the product by his order ID
+        oIHelp.TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0);
+        return oIHelp;
     }
-    #endregion //exceptions
+    #endregion //exceptions?
 
 
 

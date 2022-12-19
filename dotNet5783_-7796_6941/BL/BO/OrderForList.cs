@@ -26,7 +26,7 @@ public class OrderForList
     /// <summary>
     /// מספר פריטים בהזמנה
     /// </summary>
-    public int AmountOfItems { get; set; }
+    public int AmountOfItems { get; set; }////
 
     /// <summary>
     /// מחיר סופי של ההזמה

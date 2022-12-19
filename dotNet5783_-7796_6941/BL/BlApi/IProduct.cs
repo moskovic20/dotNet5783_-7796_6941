@@ -13,4 +13,6 @@ public interface IProduct
     void DeleteProductByID_forM(int id);
     void UpdateProductDetails_forM(BO.Product product);
 
+    public IEnumerable<BO.ProductForList?> GetListedProducts(BO.Filters enumFilter = BO.Filters.None, Object? filterValue = null);
+
 }

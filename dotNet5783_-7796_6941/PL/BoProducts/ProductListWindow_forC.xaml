@@ -1,12 +1,12 @@
-﻿<Window x:Class="PL.BoProducts.ProductListWindow"
+﻿<Window x:Class="PL.BoProducts.ProductListWindow_forC"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.BoProducts"
         mc:Ignorable="d"
-        Title="ProductListWindow" Height="450" Width="800">
-
+        Title="ProductListWindow_forC" Height="450" Width="800">
+    
     <Grid Name="MainGrid" ShowGridLines="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
@@ -20,18 +20,17 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox x:Name="categoryFilter1" Grid.Column="1" HorizontalAlignment="Center" Margin="0,-11,0,0" VerticalAlignment="Top" Width="400" Height="43" FontFamily="Miriam Fixed" FontSize="22"/>
+            <ComboBox x:Name="cmbCategorySelector" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Width="400" Height="32" FontSize="22"/>
 
         </Grid>
-        <Label x:Name="categoryFilter" Content="Category :" HorizontalAlignment="Left" VerticalAlignment="Center" Width="400" Height="32" Background="#FFEFDFDF" FontFamily="Sitka Text" FontSize="20"/>
-        <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <Label x:Name="category" Content="Category :" HorizontalAlignment="Left" VerticalAlignment="Center" Width="394" Height="32" Background="#FFEFDFDF" FontFamily="Sitka Text" FontSize="20"/>
+        <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-
     </Grid>
-
 </Window>
+

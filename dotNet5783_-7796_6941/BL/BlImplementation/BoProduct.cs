@@ -15,7 +15,7 @@ internal class BoProduct : IProduct
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
     /// <summary>
-    /// הפונקציה מחזירה את רשימת הפריטים בחנות למנהל
+    /// הפונקציה מחזירה את כל רשימת הפריטים בחנות למנהל
     /// </summary>
     /// <returns></returns>
     /// <exception cref="BO.GetAllForList_Exception"></exception>
@@ -167,5 +167,48 @@ internal class BoProduct : IProduct
         {
             throw new BO.Update_Exception("Can't update product", ex);
         }
+    }
+
+
+    //______________________________________________________פונקציה של נורית עבור סינון בתצוגה
+
+    public IEnumerable<BO.ProductForList?> GetListedProducts(BO.Filters enumFilter = BO.Filters.None, Object? filterValue = null)
+
+    {
+
+        IEnumerable<Do.Product?> doProductList =
+
+        enumFilter switch
+
+        {
+
+            BO.Filters.filterBYCategory =>
+
+                //DO.Category categ = filterValue != null ? (DO.Category)filterValue : DO.Category.all;
+
+                dal!.Product.GetAll(dp => dp?.Category == (filterValue != null ? (DO.CATEGORY)filterValue : DO.CATEGORY.None)),
+
+            BO.Filters.filterBYName =>
+
+                dal!.Product.GetAll(dp => dp?.NameOfBook == (string?)filterValue),
+
+            BO.Filters.filterBYBiggerThanPrice =>
+
+                dal!.Product.GetAll(dp => dp?.Price >= (double?)filterValue),
+
+            BO.Filters.filterBYSmallerThanPrice =>
+
+                dal!.Product.GetAll(dp => dp?.Price <= (double?)filterValue),
+
+            BO.Filters.None =>
+
+                dal!.Product.GetAll(),
+
+            _ => dal!.Product.GetAll(),
+
+        };
+
+        return (from Do.Product doProduct in doProductList
+                select doProduct.CopyPropTo(new BO.ProductForList())).ToList();
     }
 }

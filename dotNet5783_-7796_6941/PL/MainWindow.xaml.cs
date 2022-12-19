@@ -24,6 +24,7 @@ namespace PL
     public partial class MainWindow : Window
     {
         private IBl _bl =  BlApi.Factory.GetBl();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -31,12 +32,12 @@ namespace PL
 
         private void _go_to_product_list__Click(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow(_bl).Show();
+            new ProductListWindow_forC(_bl).Show();
         }
 
-        private void _go_to_product_admin_Click(object sender, RoutedEventArgs e)
+        private void _go_to_product_manager_Click(object sender, RoutedEventArgs e)
         {
-
+            new ProductListWindow_forM(_bl).Show();
         }
     }
 }

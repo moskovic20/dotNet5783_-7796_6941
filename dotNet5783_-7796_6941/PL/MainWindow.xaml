@@ -8,7 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name="_go_to_product_list_" Content="הצג רשימת פריטים" HorizontalAlignment="Left" Margin="549,0,0,0" VerticalAlignment="Center" BorderBrush="#FF0E0E0E" Background="#FFF4DEDE" Height="70" Width="158" FontSize="22" FontWeight="Bold" BorderThickness="3,3,3,3" Click="_go_to_product_list__Click"/>
-        <Button x:Name="_go_to_product_admin" Content="פריטים למנהל" HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" BorderBrush="#FF0E0E0E" Background="#FFF4DEDE" Height="70" Width="158" FontSize="22" FontWeight="Bold" BorderThickness="3,3,3,3" Click="_go_to_product_admin_Click"/>
+        <Button x:Name="_go_to_product_admin" Content="פריטים למנהל" HorizontalAlignment="Left" Margin="153,0,0,0" VerticalAlignment="Center" BorderBrush="#FF0E0E0E" Background="#FFF4DEDE" Height="70" Width="158" FontSize="22" FontWeight="Bold" BorderThickness="3,3,3,3" Click="_go_to_product_manager_Click"/>
 
     </Grid>
 </Window>

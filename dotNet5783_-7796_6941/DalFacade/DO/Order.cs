@@ -22,7 +22,7 @@ public struct Order
     /// <summary>
     /// The name of the customer
     /// </summary>
-    public string? CustomerName { get; set; } //ערך מתאפס- בגלל הקומפיילק
+    public string? CustomerName { get; set; } //ערך מתאפס- בגלל הקומפיילקר
 
     /// <summary>
     /// Email addrres of the customer

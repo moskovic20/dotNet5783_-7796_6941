@@ -10,7 +10,16 @@ public enum OrderStatus { Pending = 1 /*ממתין ל*/ , Processing /*מעבד*
 
 public enum CATEGORY
 {
-    mystery=1, fantasy, history, scinence, childen, romans, cookingAndBaking, psychology, Kodesh
+     mystery, fantasy, history, scinence, childen, romans, cookingAndBaking, psychology, Kodesh , all
+}
+
+public enum Filters
+{
+    filterBYCategory,
+    filterBYName,
+    filterBYBiggerThanPrice,
+    filterBYSmallerThanPrice,
+    None
 }
 
 

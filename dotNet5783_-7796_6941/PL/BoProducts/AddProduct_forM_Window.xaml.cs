@@ -16,18 +16,16 @@ using System.Windows.Shapes;
 namespace PL.BoProducts
 {
     /// <summary>
-    /// Interaction logic for ProductListWindow.xaml
+    /// Interaction logic for AddProduct_forM_Window.xaml
     /// </summary>
-    public partial class ProductListWindow : Window
+    public partial class AddProduct_forM_Window : Window
     {
         private IBl bl;
 
-        public ProductListWindow(IBl bl)
+        public AddProduct_forM_Window(IBl bl)
         {
             InitializeComponent();
             this.bl = bl;
-
-            ProductListview.ItemsSource = bl.BoProduct.GetAllProductForList_forC();
         }
     }
 }

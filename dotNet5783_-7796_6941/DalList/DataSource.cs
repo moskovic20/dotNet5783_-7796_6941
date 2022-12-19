@@ -71,7 +71,7 @@ public class DataSource
             Product myP = new Product
             {
                 ID = R.Next(100000, 999999999),
-                Price = R.Next(40, 150),
+                Price = (i>2)? R.Next(40, 150): null,
                 NameOfBook = NameOfBook[i],
                 AuthorName = NamesOfWriters[R.Next(0, 7)],
                 Category = (CATEGORY) R.Next(0, 9),

@@ -30,7 +30,7 @@ internal class BoCart : ICart
                 ID = 0,
                 ProductID = productID,
                 NameOfBook = product.NameOfBook,
-                PriceOfOneItem = product.Price ?? throw new BO.Adding_Exception("cant add this product to the cart because No price has been entered for it yet"),
+                PriceOfOneItem = product.Price ?? throw new BO.Adding_Exception("cant add this product to the cart because No price has been entered for it yet"),//חריגה שלא אמורה לקרות
                 AmountOfItems = 0,
                 TotalPrice = 0,
             };
@@ -49,10 +49,6 @@ internal class BoCart : ICart
             return cart;
         }
         catch (Do.DoesntExistException ex) { throw new BO.Adding_Exception("cant add this product to the cart", ex); }
-        catch (BO.InvalidValue_Exception ex) { throw new BO.Adding_Exception("cant add this product to the cart", ex); }
-        catch (Exception ex) { throw new BO.Adding_Exception("cant add this product to the cart", ex); }
-
-
     }
 
     public BO.Cart UpdateProductAmountInCart(BO.Cart cart, int productID, int NewAmount)

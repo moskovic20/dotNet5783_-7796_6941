@@ -26,6 +26,13 @@ namespace PL.BoProducts
         {
             InitializeComponent();
             this.bl = bl;
+
+            AddProduct_categ_commbbox.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
+        }
+
+        private void AddP_ID_textBox_Copy2_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

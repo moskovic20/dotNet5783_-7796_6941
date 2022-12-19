@@ -22,7 +22,7 @@ namespace BLTest
         //static DateTime date;
         static string s="";
         static char option;
-        static BO.Cart demoCart = new() { CustomerName = "demo name", CustomerEmail = "demo@email.com", CustomerAddress = "demo address", Items = new List<OrderItem>()! };
+        static BO.Cart demoCart = new() { CustomerName = "demo name", CustomerEmail = "demo@email.com", CustomerAddress = "demo address", Items = new()! };
 
 
         private static void ProductsSubMenu()
@@ -87,6 +87,11 @@ namespace BLTest
                             if (s == "") newProduct.InStock = null;
                             else if (int.TryParse(s, out integer)) newProduct.InStock = integer;
                             else throw new InvalidDataException();
+
+
+                            Console.Write("path for picture: ");
+                            s = Console.ReadLine()!;
+                            newProduct.path = (s != "") ? s : null;
 
                             Console.WriteLine(bl.BoProduct.AddProduct_forM(newProduct));
                             break;

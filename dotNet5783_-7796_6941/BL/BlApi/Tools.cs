@@ -29,9 +29,9 @@ public static class Tools
         foreach (PropertyInfo item in t!.GetType().GetProperties())
         {
 
-                var value = item.GetValue(t, null);
-                if (value is string)
-                    str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+            var value = item.GetValue(t, null);
+            if (value is string)
+                str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
 
             else if (value is IEnumerable)
             {
@@ -54,7 +54,7 @@ public static class Tools
         return (str, isTupleOrOrderItem);
     }
     #endregion
-    
+
     #region   חישוב סטטוס להזמנה
     public static BO.OrderStatus calculateStatus(this Do.Order or)
     {

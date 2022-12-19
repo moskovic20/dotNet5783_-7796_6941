@@ -34,8 +34,8 @@ sealed internal class DalList : IDal
  
     static DalList() { }
     private DalList() { }
-    public IOrder Order => new DalOrder();
-    public IProduct Product => new DalProduct();
-    public IOrderItem OrderItem => new DalOrderItem();
+    public IOrder Order { get; } = new DalOrder();
+    public IProduct Product { get; } = new DalProduct();
+    public IOrderItem OrderItem { get; } = new DalOrderItem();
 
 }

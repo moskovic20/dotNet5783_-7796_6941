@@ -73,7 +73,7 @@ namespace BLTest
                             Console.Write("Category Number: ");
                             s = Console.ReadLine()!;
                             if (s == "") throw new BO.InvalidValue_Exception("You cannot add a product without category");
-                            if (int.TryParse(s, out integer) && Enum.IsDefined(typeof(DO.CATEGORY), integer)) newProduct.Category = (DO.CATEGORY)integer;
+                            if (int.TryParse(s, out integer) && Enum.IsDefined(typeof(DO.CATEGORY), integer)) newProduct.Category = (BO.CATEGORY)integer;
                             else throw new InvalidDataException();
 
                             Console.Write("Price: ");
@@ -95,7 +95,7 @@ namespace BLTest
                         #region הבאת פרטי מוצר למנהל
                         case 'b':
                             Console.Write("Please insert an ID: ");
-                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000|| integer<=-100000)) throw new InvalidDataException("ID can't be ");
 
                             Console.WriteLine(bl.BoProduct.GetProductDetails_forM(integer));
                             break;
@@ -104,7 +104,7 @@ namespace BLTest
                         #region הבאת פרטי מוצר עבור לקוח
                         case 'c':
                             Console.Write("Please insert an ID: ");
-                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000 || integer <= -100000)) throw new InvalidDataException();
                             Console.WriteLine(bl.BoProduct.GetProductDetails_forC(integer, demoCart));
                             break;
                         #endregion
@@ -150,7 +150,7 @@ namespace BLTest
                             s = Console.ReadLine()!;
                             if (s != "")
                             {
-                                if (int.TryParse(s, out integer) && Enum.IsDefined(typeof(BO.CATEGORY), integer)) product.Category = (DO.CATEGORY)integer;
+                                if (int.TryParse(s, out integer) && Enum.IsDefined(typeof(BO.CATEGORY), integer)) product.Category = (BO.CATEGORY)integer;
                                 else throw new InvalidDataException();
                             }
 
@@ -286,7 +286,7 @@ namespace BLTest
                         case 'b': //printing the requested order
 
                             Console.Write("Please insert an ID: ");
-                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException("ID cant be negatine- check this error");// חריגה על מספר שלילי , צריך לבדא האם זה תקין לבדוק פה
                             Console.WriteLine(bl.BoOrder.GetOrdertDetails(integer));
                             break;
 

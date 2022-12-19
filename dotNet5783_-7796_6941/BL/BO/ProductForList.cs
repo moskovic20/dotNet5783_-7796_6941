@@ -26,7 +26,7 @@ public class ProductForList
     /// <summary>
     /// קטגוריית המוצר- סוג הג'אנר
     /// </summary>
-    public CATEGORY? Category { get; set; }//? בכוונה נלאייבל
+    public CATEGORY Category { get; set; }
 
     public override string ToString()
     {

@@ -32,7 +32,12 @@ public class Product
     /// <summary>
     /// קטגוריית המוצר
     /// </summary>
-    public DO.CATEGORY? Category { get; set; }
+    public BO.CATEGORY Category { get; set; }
+
+    /// <summary>
+    /// Path for image to product
+    /// </summary>
+    public string? path { get; set; }
 
     /// <summary>
     /// כמות המלאי של המוצר

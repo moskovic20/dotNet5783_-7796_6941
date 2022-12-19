@@ -22,23 +22,23 @@ public struct Order
     /// <summary>
     /// The name of the customer
     /// </summary>
-    public string? CustomerName { get; set; }
+    public string? CustomerName { get; set; } //ערך מתאפס- בגלל הקומפיילק
 
     /// <summary>
     /// Email addrres of the customer
     /// </summary>
-    public string? CustomerEmail { get; set; }
+    public string? CustomerEmail { get; set; } //כנ"ל
 
     /// <summary>
     /// The address to which the order should be sent
     /// </summary>
-    public string? ShippingAddress { get; set; }
+    public string ShippingAddress { get; set; }
 
     /// <summary>
     /// The date the order was created
     /// תאריך ביצוע ההזמנה
     /// </summary>
-    public DateTime? DateOrder { get; set; }
+    public DateTime DateOrder { get; set; }
 
     /// <summary>
     /// The date the shipment was launched.

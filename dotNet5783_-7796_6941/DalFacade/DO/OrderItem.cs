@@ -19,7 +19,7 @@ public struct OrderItem
     /// <summary>
     /// ID for the Order to connect all his product to the same costumer's order
     /// </summary>
-    public int? IdOfOrder { get; set; }
+    public int OrderID { get; set; }
 
     /// <summary>
     /// ID of the product in store

@@ -1,5 +1,4 @@
-﻿using BlApi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,23 +15,15 @@ using System.Windows.Shapes;
 namespace PL.BoProducts
 {
     /// <summary>
-    /// Interaction logic for AddProduct_forM_Window.xaml
+    /// Interaction logic for temp.xaml
     /// </summary>
-    public partial class AddProduct_forM_Window : Window
+    public partial class temp : Window
     {
-        private IBl bl;
-
-        public AddProduct_forM_Window(IBl bl)
+        public temp()
         {
             InitializeComponent();
-            this.bl = bl;
-
-            AddProduct_categ_commbbox.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
         }
 
-        private void AddP_ID_textBox_Copy2_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        
     }
 }

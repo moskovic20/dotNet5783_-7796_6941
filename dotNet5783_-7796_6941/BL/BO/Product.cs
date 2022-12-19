@@ -32,7 +32,7 @@ public class Product
     /// <summary>
     /// קטגוריית המוצר
     /// </summary>
-    public DO.CATEGORY Category { get; set; }
+    public DO.CATEGORY? Category { get; set; }
 
     /// <summary>
     /// כמות המלאי של המוצר

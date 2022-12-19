@@ -159,7 +159,7 @@ public class DataSource
                     IdOfOrder = _orderId,
                     ProductID = product?.ID ?? 0,
                     PriceOfOneItem = product?.Price ?? 0,
-                    AmountOfItem = R.Next(1, 5),
+                    AmountOfItems = R.Next(1, 5),
                     //Image = "",
                     IsDeleted = false
                 };

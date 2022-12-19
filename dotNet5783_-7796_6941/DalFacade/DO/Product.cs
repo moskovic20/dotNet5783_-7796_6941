@@ -30,7 +30,7 @@ public struct Product
     /// <summary>
     /// for category of this book or other items 
     /// </summary>
-    public CATEGORY Category { get; set; }
+    public CATEGORY? Category { get; set; }
 
     /// <summary>
     /// price of this product

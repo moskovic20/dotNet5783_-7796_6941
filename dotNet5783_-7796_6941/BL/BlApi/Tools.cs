@@ -9,9 +9,9 @@ namespace BlApi;
 public static class Tools
 {
     static private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
-    private static IEnumerable<Do.OrderItem?> listforAmount;//=new List<Do.OrderItem?>();
+    private static IEnumerable<Do.OrderItem?> listforAmount =new List<Do.OrderItem?>();
 
-    /// שיטת הרחבה עבור ToString
+    //// שיטת הרחבה עבור ToString
     //public static string ToStringProperty<T>(this T t, string suffix = "")
     //{
     //    string str = "";
@@ -36,46 +36,48 @@ public static class Tools
     //    str += "\n";
     //    return str;
     //}
+    
+        #region הרחבה לטו סטרינג כולל טפלים
+        public static string ToStringProperty<T>(this T t)
+        {
+            (string toStringProp, bool isTuple) = HelpToStringProperty(t, false);
 
-    #region הרחבה לטו סטרינג כולל טפלים
-    public static string ToStringProperty<T>(this T t)
-    {
-        (string toStringProp, bool isTuple) = HelpToStringProperty(t, false);
-       
-        return isTuple ? new Regex(@"(Item1:|Item2:|True|,|\(|\))").Replace(toStringProp,"") : toStringProp;
-    }
-    #endregion
+            return isTuple ? new Regex(@"(Item1:|Item2:|True|,|\(|\))").Replace(toStringProp,"") : toStringProp;
+        }
+        #endregion
 
-    #region  שיטת הרחבה עבור ToString 
-    public static (string, bool) HelpToStringProperty<T>(this T t, bool isTuple, string suffix = "")
-    {
- 
-        string str = "";
-        foreach (PropertyInfo item in t!.GetType().GetProperties())
+        #region  שיטת הרחבה עבור ToString 
+        public static (string, bool) HelpToStringProperty<T>(this T t, bool isTuple, string suffix = "")
         {
 
-            var value = item.GetValue(t, null);
-            if (value is string)
-                str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
-
-            else if (value is IEnumerable)
+            string str = "";
+            foreach (PropertyInfo item in t!.GetType().GetProperties())
             {
-                var items = (IEnumerable)value;
-                str += $"\n{item.Name}: ";
-                var types = item.PropertyType.GetGenericArguments();
-                 if (types.Length > 0 && types != null && types[0].FullName.StartsWith("System.Tuple"))
-                         isTuple = true;
 
-                    foreach (var item1 in items)
-                        str += item1.HelpToStringProperty(isTuple, "  ");
+                var value = item.GetValue(t, null);
+                if (value is string)
+                    str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+
+                else if (value is IEnumerable)
+                {
+                    var items = (IEnumerable)value;
+                    str += $"\n{item.Name}: ";
+                    var types = item.PropertyType.GetGenericArguments();
+                     if (types.Length > 0 && types != null && types[0].FullName.StartsWith("System.Tuple"))
+                             isTuple = true;
+
+                        foreach (var item1 in items)
+                            str += item1.HelpToStringProperty(isTuple, "  ");
+                }
+                else
+                    str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
             }
-            else
-                str += "\n" + suffix + $"{item.Name}: {item.GetValue(t, null)}";
+            str += "\n";
+            return (str, isTuple);
         }
-        str += "\n";
-        return (str, isTuple);
-    }
 
+        #endregion
+    
     #region   חישוב סטטוס להזמנה
     public static BO.OrderStatus calculateStatus(this Do.Order or)
     {
@@ -98,7 +100,7 @@ public static class Tools
         //    throw new DoesntExistException("missing ID");
 
         listforAmount = dal.OrderItem.GetListByOrderID(order.ID);
-        amountOfItems = listforAmount.Sum(o => o?.AmountOfItem ?? 0);
+        amountOfItems = listforAmount.Sum(o => (o?.AmountOfItems !=null)? 1: 0);
 
         return amountOfItems;
     }
@@ -110,7 +112,7 @@ public static class Tools
         double Price = 0;
 
         IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
-        Price = listforAmount.Sum(o => (o?.AmountOfItem ?? 0) * (o?.PriceOfOneItem ?? 0));       
+        Price = listforAmount.Sum(o => (o?.AmountOfItems ?? 0) * (o?.PriceOfOneItem ?? 0));       
         return Price;
     }
     #endregion

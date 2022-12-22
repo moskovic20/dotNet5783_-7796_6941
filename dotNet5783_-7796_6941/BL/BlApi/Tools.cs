@@ -120,9 +120,26 @@ public static class Tools
         oIHelp.TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0);
         return oIHelp;
     }
-    #endregion 
+    #endregion
 
+    #region המרת רשימה של אובייקטים מסוג פריט-הזמנה משכבת הלוגיקה (מהעגלה) לשכבת הנתונים עם השינויים הנדרשים
+    public static Do.OrderItem ListFromBoToDo(this BO.OrderItem orItem, int OrId)
+    {
+        Do.Product product = dal.Product.GetById(orItem.ProductID); //הבאת פרטי מוצר
 
+        Do.OrderItem orderItem = orItem.CopyPropToStruct(new Do.OrderItem());//העתקת שדות זהים לאורדראייטם החדש
+        orderItem.OrderID = OrId;
+
+        dal.OrderItem.Add(orderItem);//עדכון שכבת הנתונים בפריט הזמנה חדש
+
+        Do.Product newProduct = product.CopyPropToStruct(new Do.Product());//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
+        newProduct.InStock -= orItem.AmountOfItems;
+
+        dal.Product.Update(newProduct);//מעדכנים את הכמות של המוצר ברשימה
+
+        return orderItem;
+    }
+    #endregion
 
     public static bool IsValidEmail(this string email)
     {
@@ -180,6 +197,5 @@ public static class Tools
 
         return true; 
     }
-
 
 }

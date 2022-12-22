@@ -192,7 +192,7 @@ internal class BoProduct : IProduct
 
                 //DO.Category categ = filterValue != null ? (DO.Category)filterValue : DO.Category.all;
 
-                dal!.Product.GetAll(dp => dp?.Category == (filterValue != null ? (DO.CATEGORY)filterValue : DO.CATEGORY.None)),
+                dal!.Product.GetAll(dp => dp?.Category == (filterValue != null ? (DO.CATEGORY)filterValue : DO.CATEGORY.all)),
 
             BO.Filters.filterBYName =>
 

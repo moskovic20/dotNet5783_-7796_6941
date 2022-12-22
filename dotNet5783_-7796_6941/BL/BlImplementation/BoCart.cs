@@ -123,26 +123,29 @@ internal class BoCart : ICart
 
             int IdOfNewOrder = dal.Order.Add(newOrder);
 
-            foreach (BO.OrderItem item in cart.Items)//הכנסת המוצרים בסל למוצרים בהזמנה ועדכון פרטי המוצרים
-            {
-                Do.Product product = dal.Product.GetById(item.ProductID); //הבאת פרטי מוצר
+            IEnumerable<Do.OrderItem> afterCastingAndUpdat= cart.Items.Select(oi => oi.ListFromBoToDo(IdOfNewOrder));//casting orderItems from Bo to Do
 
-                Do.OrderItem orderItem = new();
-                orderItem = item.CopyPropToStruct(orderItem);
-                orderItem.OrderID=IdOfNewOrder;
+            //foreach (BO.OrderItem item in cart.Items)//הכנסת המוצרים בסל למוצרים בהזמנה ועדכון פרטי המוצרים
+            //{
+            //    Do.Product product = dal.Product.GetById(item.ProductID); //הבאת פרטי מוצר
 
-                dal.OrderItem.Add(orderItem);
+            //    Do.OrderItem orderItem = new();
+            //    orderItem = item.CopyPropToStruct(orderItem);
+            //    orderItem.OrderID = IdOfNewOrder;
 
-                Do.Product newProduct = new();//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
-                newProduct = product.CopyPropToStruct(newProduct);
-                newProduct.InStock -= item.AmountOfItems;
+            //    dal.OrderItem.Add(orderItem);
 
-                dal.Product.Update(newProduct);//מעדכנים את הכמות של המוצר ברשימה
-            }
+            //    Do.Product newProduct = new();//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
+            //    newProduct = product.CopyPropToStruct(newProduct);
+            //    newProduct.InStock -= item.AmountOfItems;
+
+            //    dal.Product.Update(newProduct);//מעדכנים את הכמות של המוצר ברשימה
+            //}
             return IdOfNewOrder;
         }
         catch (Do.AlreadyExistException ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }
         catch (Do.DoesntExistException ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }
     }
 }
+
 

@@ -215,5 +215,15 @@ namespace PL.BoProducts
         {
             addProductButtonToEnabled();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ui3_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

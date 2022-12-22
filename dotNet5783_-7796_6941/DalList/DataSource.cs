@@ -105,7 +105,7 @@ public class DataSource
 
         #endregion
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 1; i < 21; i++)
         {
             Order myOrder = new Order
             {
@@ -127,7 +127,7 @@ public class DataSource
     private void CreateOrderItems()
     {
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 1; i < 21; i++)
         {
             int _orderId = Config.s_startOrderNumber+i;
             int numOfItems = R.Next(1, 5);

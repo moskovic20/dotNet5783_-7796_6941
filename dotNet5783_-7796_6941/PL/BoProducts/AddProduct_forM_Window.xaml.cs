@@ -14,19 +14,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BO;
 
-namespace PL.BoProducts
-{
-    /// <summary>
-    /// Interaction logic for AddProduct_forM_Window.xaml
-    /// </summary>
-    public partial class AddProduct_forM_Window : Window
-    {
-        private IBl bl;
+namespace PL.BoProducts;
 
-        public AddProduct_forM_Window(IBl bl)
-        {
-            InitializeComponent();
-            this.bl = bl;
+/// <summary>
+/// Interaction logic for AddProduct_forM_Window.xaml
+/// </summary>
+public partial class AddProduct_forM_Window : Window
+{
+    private IBl bl;
+
+    public AddProduct_forM_Window(IBl bl)
+    {
+        InitializeComponent();
+        this.bl = bl;
 
            // AddP_categ_commbbox.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
         }

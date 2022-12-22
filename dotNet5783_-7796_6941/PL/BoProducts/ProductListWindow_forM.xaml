@@ -32,13 +32,24 @@ VerticalAlignment="Stretch" Width="auto">
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button  Name="addButton" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="673,0,0,0" Padding="5" Click="Button_Click" Height="28" VerticalAlignment="Center">
+        <Button  Name="addButton" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="673,0,0,0" Padding="5" Click="addButton_Click" Height="28" VerticalAlignment="Center">
             <Button.Background>
                 <LinearGradientBrush>
                     <GradientStop Color="pink"
- Offset="0" />
+                        Offset="0" />
                     <GradientStop Color= "Azure"
- Offset="1" />
+                        Offset="1" />
+                </LinearGradientBrush>
+            </Button.Background>
+
+        </Button>
+        <Button  x:Name="UpdatButton" Content="Update Product" Grid.Row="2" HorizontalAlignment="Left" Margin="539,0,0,5" Padding="5" Click="UpdatButton_Click" Height="28" VerticalAlignment="Bottom">
+            <Button.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="pink"
+                        Offset="0" />
+                    <GradientStop Color= "Azure"
+                        Offset="1" />
                 </LinearGradientBrush>
             </Button.Background>
 

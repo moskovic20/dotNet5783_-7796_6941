@@ -13,36 +13,35 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.BoProducts
+namespace PL.BoProducts;
+
+/// <summary>
+/// Interaction logic for AddProduct_forM_Window.xaml
+/// </summary>
+public partial class AddProduct_forM_Window : Window
 {
-    /// <summary>
-    /// Interaction logic for AddProduct_forM_Window.xaml
-    /// </summary>
-    public partial class AddProduct_forM_Window : Window
+    private IBl bl;
+
+    public AddProduct_forM_Window(IBl bl)
     {
-        private IBl bl;
+        InitializeComponent();
+        this.bl = bl;
 
-        public AddProduct_forM_Window(IBl bl)
-        {
-            InitializeComponent();
-            this.bl = bl;
+        AddProduct_categ_commbbox.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
+    }
 
-            AddProduct_categ_commbbox.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
-        }
+    private void AddP_ID_textBox_Copy2_TextChanged(object sender, TextChangedEventArgs e)
+    {
 
-        private void AddP_ID_textBox_Copy2_TextChanged(object sender, TextChangedEventArgs e)
-        {
+    }
 
-        }
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+    }
 
-        }
+    private void ui3_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
 
-        private void ui3_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
     }
 }

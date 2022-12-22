@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Documents.DocumentStructures;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -44,9 +45,14 @@ namespace PL.BoProducts
                 ProductListview.ItemsSource = bl.BoProduct.GetListedProducts(BO.Filters.filterBYCategory, categ);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void addButton_Click(object sender, RoutedEventArgs e)
         {
             new AddProduct_forM_Window(bl).Show();
+        }
+
+        private void UpdatButton_Click(object sender, RoutedEventArgs e)
+        {
+            new UpdatProductWindow(bl).Show();
         }
     }
 }

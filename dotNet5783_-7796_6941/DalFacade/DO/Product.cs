@@ -33,6 +33,11 @@ public struct Product
     public CATEGORY Category { get; set; }
 
     /// <summary>
+    /// book summary
+    /// </summary>
+    public string? Summary { get; set; }
+
+    /// <summary>
     /// price of this product
     /// </summary>
     public double? Price { get; set; }

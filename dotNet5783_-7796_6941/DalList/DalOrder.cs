@@ -10,7 +10,7 @@ internal class DalOrder : IOrder
 
     public int Add(Order myOrder)
     {
-        Order temp = myOrder;
+        //Order temp = myOrder;
 
         int indexOfMyOrder = _DS._Orders.FindIndex(x => x?.ID == myOrder.ID);
 
@@ -76,9 +76,11 @@ internal class DalOrder : IOrder
     /// <param name="filter"></param>
     /// <returns></returns>
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter = null)
-    => from item in _DS._Orders
-       where filter is null ? true : item?.IsDeleted == null && filter(item)
-       select item;
+   => from item in _DS._Orders
+      where item != null
+      where item?.IsDeleted == false
+      where filter != null ? filter(item) : true
+      select item;
 
     /// <summary>
     ///  הפונקציה מחזירה את כל רשימת ההזמנות (כולל הזמנות שנמחקו)-לפי פונקציית הסינון שמתקבלת

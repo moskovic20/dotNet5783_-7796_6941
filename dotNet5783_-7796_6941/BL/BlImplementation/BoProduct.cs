@@ -52,7 +52,7 @@ internal class BoProduct : IProduct
         {
             Do.Product? myP = dal.Product.GetById(id); //הבאת המוצר מבשכבת הנתונים
             BO.Product BoMyP = new();
-            BoMyP=myP.CopyPropTo(BoMyP);//העתקת הנתונים החופפים לישות הנתונים של מוצר בשכבת הלוגיקה
+            BoMyP = myP.CopyPropTo(BoMyP);//העתקת הנתונים החופפים לישות הנתונים של מוצר בשכבת הלוגיקה
             return BoMyP;
         }
         catch (Do.DoesntExistException ex)
@@ -80,8 +80,8 @@ internal class BoProduct : IProduct
                 pForClient.AmountInCart = 0;
             }
             else
-            { 
-                BO.OrderItem? temp=cart.Items.FirstOrDefault(x=>x.ProductID==id);//חיפוש הפריט בסל הקניות
+            {
+                BO.OrderItem? temp = cart.Items.FirstOrDefault(x => x.ProductID == id);//חיפוש הפריט בסל הקניות
                 pForClient.AmountInCart = temp?.AmountOfItems ?? 0;//הכנסת כמות הפריטים
             }
 
@@ -103,17 +103,23 @@ internal class BoProduct : IProduct
             if (productToAdd == null)
                 throw new ArgumentNullException("missing product to add");
 
+            if (productToAdd.ID < 0)
+                throw new BO.Adding_Exception("מזהה הספר לא יכול להיות שלילי");
+
             if (productToAdd.ID < 100000)
-                throw new BO.Adding_Exception("Can't add because the negative ID");//מספר שלילי
+                throw new BO.Adding_Exception("מזהה הספר חייב להיות בעל 6 ספרות לפחות");
 
             if (productToAdd.NameOfBook == null)
-                throw new BO.Adding_Exception("Can't add because the name of book is missing");
+                throw new BO.Adding_Exception("חובה להזין את שם הספר");
+
+            if (productToAdd.AuthorName == null)
+                throw new BO.Adding_Exception("חובה להזין את שם הסופר");
 
             if (productToAdd.Price < 0)
-                throw new BO.Adding_Exception("Can't add because the negative price");
+                throw new BO.Adding_Exception("מחיר אינו יכול להיות שלילי");
 
             if (productToAdd.InStock < 0)
-                throw new BO.Adding_Exception("Can't add because the negative amount");
+                throw new BO.Adding_Exception("כמות במלאי אינה יכולה להיות שלילית");
 
             Do.Product myNewP = new();
             myNewP = productToAdd.CopyPropToStruct(myNewP);//העברה לישות לוגית מוצר מסוג Do
@@ -212,3 +218,4 @@ internal class BoProduct : IProduct
                 select doProduct.CopyPropTo(new BO.ProductForList())).ToList();
     }
 }
+  

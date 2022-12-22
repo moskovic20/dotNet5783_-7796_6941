@@ -30,6 +30,11 @@ public class ProductItem
     public CATEGORY Category { get; set; }
 
     /// <summary>
+    /// תקציר הספר
+    /// </summary>
+    public string? Summary { get; set; }
+
+    /// <summary>
     /// כמות המוצר בסל הקניות של הלקוח
     /// </summary>
     public int AmountInCart { get; set; }

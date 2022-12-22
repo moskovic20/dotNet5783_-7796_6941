@@ -35,6 +35,11 @@ public class Product
     public BO.CATEGORY Category { get; set; }
 
     /// <summary>
+    /// תקציר הספר
+    /// </summary>
+    public string? Summary { get; set; }
+
+    /// <summary>
     /// Path for image to product
     /// </summary>
     public string? path { get; set; }

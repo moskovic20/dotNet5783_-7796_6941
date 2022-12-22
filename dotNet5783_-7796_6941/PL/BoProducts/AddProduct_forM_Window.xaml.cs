@@ -92,11 +92,11 @@ namespace PL.BoProducts
             if ((sender as TextBox)?.Text == "")
             {
                 ((TextBox)sender).Foreground = Brushes.Gray;
-                (sender as TextBox)!.Text = "תקציר";
+                (sender as TextBox)!.Text = "...תקציר הספר";
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void addProductButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -180,7 +180,7 @@ namespace PL.BoProducts
         private void AddP_summary_textBox_GotFocus(object sender, RoutedEventArgs e)
         {
             (sender as TextBox)!.Foreground = Brushes.Black;
-            if ((sender as TextBox)?.Text == "...תקציר")
+            if ((sender as TextBox)?.Text == "...תקציר הספר")
                 (sender as TextBox)!.Text = "";
         }
 
@@ -214,16 +214,6 @@ namespace PL.BoProducts
         private void AddP_author_textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             addProductButtonToEnabled();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void ui3_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
         }
     }
 }

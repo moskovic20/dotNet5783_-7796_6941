@@ -47,7 +47,7 @@
         <TextBox  x:Name="AddP_price_textBox" Grid.Column="1" TabIndex="4" Margin="73,327,43,0" Text="...מחיר" LostFocus="AddP_price_textBox_LostFocus" GotFocus="AddP_price_textBox_GotFocus"  />
         <TextBox  x:Name="AddP_inStock_textBox"  TabIndex="5" Margin="57,36,59,0"  Text="...כמות במלאי" LostFocus="AddP_inStock_textBox_LostFocus" GotFocus="AddP_inStock_textBox_GotFocus"   />
         <TextBox  x:Name="AddP_image_textBox" TabIndex="6" Margin="57,82,59,0"  Text="...מיקום התמונה במחשב" LostFocus="AddP_image_textBox_LostFocus" GotFocus="AddP_image_textBox_GotFocus"  />
-        <Button x:Name="addProductButton" Content="הוסף"  Background="#FF4B6794" Foreground="White" HorizontalAlignment="Left" Margin="195,338,0,0" VerticalAlignment="Top" Height="26" Width="148" IsEnabled="False" Click="Button_Click"/>
+        <Button x:Name="addProductButton" Content="הוסף"  Background="#FF4B6794" Foreground="White" HorizontalAlignment="Left" Margin="195,338,0,0" VerticalAlignment="Top" Height="26" Width="148" IsEnabled="False" Click="addProductButton_Click"/>
         <Button Content="ביטול"   Background="#FF4B6794" Foreground="White" HorizontalAlignment="Left" Margin="27,338,0,0" VerticalAlignment="Top" Height="26" Width="148"/>
         <TextBox  x:Name="AddP_summary_textBox"  TabIndex="7" Margin="57,137,59,0"  Text="...תקציר הספר" Height="174" LostFocus="AddP_summary_textBox_LostFocus" GotFocus="AddP_summary_textBox_GotFocus"   />
         <Label Grid.Column="1"  Content="שדות חובה*" HorizontalAlignment="Left" Margin="246,36,0,0" VerticalAlignment="Top" Width="86" FontSize="14" Foreground="Red"/>

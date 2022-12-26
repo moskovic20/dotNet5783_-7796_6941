@@ -28,8 +28,8 @@ public partial class AddProduct_forM_Window : Window
         InitializeComponent();
         this.bl = bl;
 
-           // AddP_categ_commbbox.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
-        }
+        // AddP_categ_commbbox.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
+    }
 
         private void AddP_ID_textBox_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -215,5 +215,5 @@ public partial class AddProduct_forM_Window : Window
         {
             addProductButtonToEnabled();
         }
-    }
+    
 }

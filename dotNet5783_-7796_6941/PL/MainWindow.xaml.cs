@@ -1,6 +1,7 @@
 ﻿using BlApi;
 using BlImplementation;
 using PL.BoProducts;
+using PL.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,14 +31,11 @@ namespace PL
             InitializeComponent();
         }
 
-        private void _go_to_product_list__Click(object sender, RoutedEventArgs e)
-        {
-            new ProductListWindow_forC(_bl).Show();
-        }
 
         private void _go_to_product_manager_Click(object sender, RoutedEventArgs e)
         {
-            new ProductListWindow_forM(_bl).Show();
+            new ProductListForM_Window(_bl).Show();
         }
+
     }
 }

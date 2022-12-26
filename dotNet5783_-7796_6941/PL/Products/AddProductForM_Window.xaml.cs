@@ -48,7 +48,10 @@ namespace PL.Products
                     selectedcmb = comboBoxItem.ToString();
                 }
 
-                bl.BoProduct.AddProduct_forM(product.CopyProductToBO());
+                int newID=bl.BoProduct.AddProduct_forM(product.CopyProductToBO());
+                if(newID!=product.ID)
+                    MessageBox.Show("!הספר בוצע בהצלחה"+"\n:שים לב- עקב כפילות של מספר המוצר מעתה מספר המוצר יהיה"+newID, "מזהה כפול", MessageBoxButton.OK, MessageBoxImage.Information);
+                
                 MessageBox.Show("!הספר נוסף בהצלחה");
 
                 product = new PO.Product();

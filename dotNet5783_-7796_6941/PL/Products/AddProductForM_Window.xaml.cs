@@ -43,7 +43,7 @@ namespace PL.Products
             {
                 string? selectedcmb = "";
                 var comboBoxItem = AddP_categ_commbbox.SelectedItem;
-                if (comboBoxItem != null)
+                if (comboBoxItem != null)//for what perpus?
                 {
                     selectedcmb = comboBoxItem.ToString();
                 }
@@ -63,7 +63,7 @@ namespace PL.Products
             }
             catch
             {
-                MessageBox.Show("תקלה בהוספת הקו", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                MessageBox.Show("תקלה בהוספת הספר", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                     MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
             }
         }

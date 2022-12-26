@@ -66,7 +66,7 @@
 
         </StackPanel>
         <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="56,142,26,219" Grid.RowSpan="2">
-            <TextBox x:Name="AddP_name_textBox" Text="{Binding NameOfBook, Mode=TwoWay}" Height="30" Width="215" />
+            <TextBox x:Name="AddP_name_textBox" Text="{Binding NameOfBook, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="215" TextChanged="AddP_name_textBox_TextChanged" />
             <Label Content="   :שם הספר"  Width="74"/>
             <Label Foreground="Red" Content="*" Height="24" Width="25" RenderTransformOrigin="0.494,-0.763" HorizontalContentAlignment="Right" FontSize="16" VerticalAlignment="Top" >
                 <Label.RenderTransform>

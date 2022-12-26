@@ -89,7 +89,7 @@ namespace PL.Products
 
         private void updateProductButtonToEnable()
         {
-            if (updateProductButton == null)
+            if (updateProductButton is null|| beforUpdate is null)
                 return;
 
            if(productToUpdate!=beforUpdate!)
@@ -99,7 +99,12 @@ namespace PL.Products
         }
 
 
-        
+
         #endregion
+
+        private void AddP_name_textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            updateProductButtonToEnable();
+        }
     }
 }

@@ -15,69 +15,65 @@ namespace PL.PO
         #region convert from PO.Product to BO.Product
         internal static BO.Product CopyProductToBO(this PO.Product prodPO)
         {
-            BO.Product copyProduct = new ()
-            { 
+            BO.Product copyProduct = new()
+            {
                 ID = prodPO.ID,
-                NameOfBook=prodPO.NameOfBook,
-                AuthorName=prodPO.AuthorName,
-                Summary=prodPO.Summary,
-                Price=prodPO.Price,
-                InStock=prodPO.InStock,
-                path=prodPO.Path,
-                Category=(BO.CATEGORY)prodPO.Category,
+                NameOfBook = prodPO.NameOfBook,
+                AuthorName = prodPO.AuthorName,
+                Summary = prodPO.Summary,
+                Price = prodPO.Price,
+                InStock = prodPO.InStock,
+                path = prodPO.Path,
+                Category = (BO.CATEGORY)prodPO.Category.HebrewToEnglishCategory()
             };
             return copyProduct;
         }
         #endregion
 
-        #region convert from Category to string (Hebrew) and from string(Hebrew) to Category.
+        #region Converting the category from English to Hebrew and vice versa.
 
-        public static PO.CATEGORY stringToCategory(string hebrewCategory)
+        public static PO.CATEGORY HebrewToEnglishCategory(this PO.Hebrew_CATEGORY? hebrewCategory)
         {
-            if (hebrewCategory == "מסתורין")
+            if (hebrewCategory == Hebrew_CATEGORY.מסתורין)
                 return PO.CATEGORY.mystery;
-            if (hebrewCategory == "פנטזיה")
+            if (hebrewCategory == Hebrew_CATEGORY.פנטזיה)
                 return PO.CATEGORY.fantasy;
-            if (hebrewCategory == "היסטוריה")
+            if (hebrewCategory == Hebrew_CATEGORY.היסטוריה)
                 return PO.CATEGORY.history;
-            if (hebrewCategory == "מדע")
+            if (hebrewCategory == Hebrew_CATEGORY.מדע)
                 return PO.CATEGORY.scinence;
-            if (hebrewCategory == "ילדים")
+            if (hebrewCategory == Hebrew_CATEGORY.ילדים)
                 return PO.CATEGORY.childen;
-            if (hebrewCategory == "רומן")
+            if (hebrewCategory == Hebrew_CATEGORY.רומן)
                 return PO.CATEGORY.romans;
-            if (hebrewCategory == "בישול ואפייה")
+            if (hebrewCategory == Hebrew_CATEGORY.בישול_ואפייה)
                 return PO.CATEGORY.cookingAndBaking;
-            if (hebrewCategory == "פסיכולוגיה")
+            if (hebrewCategory == Hebrew_CATEGORY.פסיכולוגיה)
                 return PO.CATEGORY.psychology;
-            if (hebrewCategory == "קודש")
-                return PO.CATEGORY.Kodesh;
 
-            throw new Exception();
+            return PO.CATEGORY.Kodesh;
         }
 
-        public static string CategoryToString(this PO.CATEGORY myCategory)
+        public static Hebrew_CATEGORY EnglishToHebewCategory(this PO.CATEGORY myCategory)
         {
             if (myCategory == PO.CATEGORY.mystery)
-                return "מסתורין";
+                return Hebrew_CATEGORY.מסתורין;
             if (myCategory == PO.CATEGORY.fantasy)
-                return "פנטזיה";
+                return Hebrew_CATEGORY.פנטזיה;
             if (myCategory == PO.CATEGORY.history)
-                return "היסטוריה";
+                return Hebrew_CATEGORY.היסטוריה;
             if (myCategory == PO.CATEGORY.scinence)
-                return "מדע";
+                return Hebrew_CATEGORY.מדע;
             if (myCategory == PO.CATEGORY.childen)
-                return "ילדים";
+                return Hebrew_CATEGORY.ילדים;
             if (myCategory == PO.CATEGORY.romans)
-                return "רומן";
+                return Hebrew_CATEGORY.רומן;
             if (myCategory == PO.CATEGORY.cookingAndBaking)
-                return "בישול ואפייה";
+                return Hebrew_CATEGORY.בישול_ואפייה;
             if (myCategory == PO.CATEGORY.psychology)
-                return "פסיכולוגיה";
-            if (myCategory == PO.CATEGORY.Kodesh)
-                return "קודש";
+                return Hebrew_CATEGORY.פסיכולוגיה;
 
-            throw new Exception();
+            return Hebrew_CATEGORY.קודש;
         }
 
         #endregion
@@ -86,17 +82,17 @@ namespace PL.PO
         {
             BO.Product productBO = bl.BoProduct.GetProductDetails_forM(pfl.ID);
 
-           PO.Product product = new PO.Product()
-           {
-              ID= pfl.ID,
-              NameOfBook= pfl.NameOfBook,
-              AuthorName=productBO.AuthorName,
-              Price=pfl.Price,
-              Summary=productBO.Summary,
-              Path=productBO.path,
-              InStock=productBO.InStock,
-              Category=(PO.CATEGORY)pfl.Category
-
+            PO.Product product = new PO.Product()
+            {
+                ID = pfl.ID,
+                NameOfBook = pfl.NameOfBook,
+                AuthorName = productBO.AuthorName,
+                Price = pfl.Price,
+                Summary = productBO.Summary,
+                Path = productBO.path,
+                InStock = productBO.InStock,
+                Category = ((PO.CATEGORY)pfl.Category).EnglishToHebewCategory(),
+ 
            };
 
             return product;

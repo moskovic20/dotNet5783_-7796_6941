@@ -10,8 +10,11 @@ namespace PL.IvalueConvertor
 {
     public class CategoryToHebrew : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null)
+                return null;
+
             PO.CATEGORY myCategory = (PO.CATEGORY)value;
 
             if (myCategory == PO.CATEGORY.mystery)

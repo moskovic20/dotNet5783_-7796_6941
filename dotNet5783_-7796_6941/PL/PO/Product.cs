@@ -60,8 +60,8 @@ namespace PL.PO
             }
         }
 
-        private PO.CATEGORY _Category;
-        public PO.CATEGORY Category
+        private PO.CATEGORY? _Category;
+        public PO.CATEGORY? Category
         {
             get { return _Category; }
             set

@@ -24,7 +24,7 @@ class ImageConverter : IValueConverter
             Console.WriteLine(b.DpiX);
             return b;
         }
-        catch (Exception ex)
+        catch (Exception )
         {
             return new BitmapImage(new Uri(@"images\passport\empty_image.gif", UriKind.RelativeOrAbsolute));
         }

@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using PL.BoProducts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,22 +9,21 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Documents.DocumentStructures;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.BoProducts
+namespace PL.Products
 {
     /// <summary>
-    /// Interaction logic for ProductListWindow_forM.xaml
+    /// Interaction logic for ProductListForM_Window.xaml
     /// </summary>
-    public partial class ProductListWindow_forM : Window
+    public partial class ProductListForM_Window : Window
     {
         private IBl bl;
-        
-        public ProductListWindow_forM(IBl bl)
+
+        public ProductListForM_Window(IBl bl)
         {
             InitializeComponent();
 
@@ -32,7 +32,7 @@ namespace PL.BoProducts
 
             ProductListview.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
             cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
-            
+
         }
 
         private void categoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -47,12 +47,14 @@ namespace PL.BoProducts
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            new AddProduct_forM_Window(bl).Show();
+            new AddProductForM_Window(bl).Show();
         }
 
         private void UpdatButton_Click(object sender, RoutedEventArgs e)
         {
-            new UpdatProductWindow(bl).Show();
+            //new UpdatProductWindow(bl).Show();
+            new UpdatProductForM_Window(bl).Show();
         }
     }
 }
+

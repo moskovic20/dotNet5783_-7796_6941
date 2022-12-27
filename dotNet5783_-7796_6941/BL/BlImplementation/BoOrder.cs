@@ -82,7 +82,7 @@ internal class BoOrder : IOrder
             order.Status = myOrder.calculateStatus();
             order.PaymentDate = myOrder.DateOrder;//should be nullable?                                  
             var tempItems = dal.OrderItem.GetListByOrderID(myOrder.ID);            
-            order.Items = tempItems.Select(x => x.ListFromDoToBo());//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
+            order.Items = tempItems.Select(x => x.ListFromDoToBo()).ToList();//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
             return order;
             

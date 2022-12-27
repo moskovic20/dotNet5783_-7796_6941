@@ -14,5 +14,6 @@ public interface IProduct
     void UpdateProductDetails_forM(BO.Product product);
 
     public IEnumerable<BO.ProductForList?> GetListedProducts(BO.Filters enumFilter = BO.Filters.None, Object? filterValue = null);
-    IEnumerable<ProductForList> GetProductDetails_forM();
+    
+    // IEnumerable<ProductForList> GetProductDetails_forM();
 }

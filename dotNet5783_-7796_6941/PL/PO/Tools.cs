@@ -114,7 +114,7 @@ namespace PL.PO
 
         public static ObservableCollection<PO.productForList> ToObserCollection(this ObservableCollection<PO.productForList> allBooks)
         {
-            foreach (BO.ProductForList Book in bl.BoProduct.GetProductDetails_forM())
+            foreach (BO.ProductForList Book in bl.BoProduct.GetAllProductForList_forM())
                        allBooks.Add(Book.copyProductForListToPo());
            
             return allBooks;

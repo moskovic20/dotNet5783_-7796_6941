@@ -25,42 +25,47 @@ namespace PL.Products
     public partial class ProductListForM_Window : Window
     {
         private IBl bl;
-       // private ObservableCollection<productForList> allBooks;
+        private ObservableCollection<ProductForList> allBooks;
 
         public ProductListForM_Window(IBl bl)
         {
             InitializeComponent();
           
             this.bl = bl;
-            //allBooks = new();
-            //allBooks.ToObserCollection();
-            //DataContext =allBooks;
+            allBooks = new();
+            allBooks = allBooks.ToObserCollection();
+            DataContext =allBooks;
 
-            ProductListview.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
+           // ProductListview.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
             cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
 
         }
+       
 
         private void categoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.CATEGORY? categ = cmbCategorySelector.SelectedItem as BO.CATEGORY?;
 
             if (categ == BO.CATEGORY.all)
-                ProductListview.ItemsSource = bl.BoProduct.GetListedProducts();
+                Products_DateGrid.ItemsSource = bl.BoProduct.GetListedProducts();
             else
-                ProductListview.ItemsSource = bl.BoProduct.GetListedProducts(BO.Filters.filterBYCategory, categ);
+                Products_DateGrid.ItemsSource = bl.BoProduct.GetListedProducts(BO.Filters.filterBYCategory, categ);
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            new AddProductForM_Window(bl).Show();
-            //DataContext = allBooks;
+            new AddProductForM_Window(bl,allBooks).ShowDialog(); 
         }
 
         private void UpdatButton_Click(object sender, RoutedEventArgs e)
         {
-            //new UpdatProductWindow(bl).Show();
-            new UpdatProductForM_Window(bl).Show();
+            new UpdatProductForM_Window(bl, (ProductForList)Products_DateGrid.SelectedItem).ShowDialog();
+            UpdatButton.IsEnabled = false;
+        }
+
+        private void Products_DateGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            UpdatButton.IsEnabled= true;
         }
     }
 }

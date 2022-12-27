@@ -2,6 +2,7 @@
 using PL.PO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,15 +24,17 @@ namespace PL.Products
     public partial class AddProductForM_Window : Window
     {
         private IBl bl;
-        PO.Product product;
+        PO.Product productToAdd;
+        ObservableCollection<ProductForList> allBooks;
 
-        public AddProductForM_Window(IBl bl)
+        public AddProductForM_Window(IBl bl, ObservableCollection<ProductForList> allBooks)
         {
             InitializeComponent();
             this.bl = bl;
+            this.allBooks = allBooks;
 
-            product = new PO.Product();
-            this.DataContext = product;
+            productToAdd = new PO.Product();
+            this.DataContext = productToAdd;
 
             this.AddP_categ_commbbox.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
         }
@@ -52,15 +55,15 @@ namespace PL.Products
                     throw new Exception("הכנס את קטגוריית הספר");
                    
 
-                int newID=bl.BoProduct.AddProduct_forM(product.CopyProductToBO());
+                int newID=bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
 
-                if(newID!=product.ID)
-                    MessageBox.Show("!הספר בוצע בהצלחה"+"\n:שים לב- עקב כפילות של מספר המוצר מעתה מספר המוצר יהיה"+newID, "מזהה כפול", MessageBoxButton.OK, MessageBoxImage.Information);
-                
+                //if(newID!=productToAdd.ID)
+                //    MessageBox.Show("!הספר בוצע בהצלחה"+"\n:שים לב- עקב כפילות של מספר המוצר מעתה מספר המוצר יהיה"+newID, "מזהה כפול", MessageBoxButton.OK, MessageBoxImage.Information);
+                allBooks.Add(productToAdd.copyProductToPFL());
                 MessageBox.Show("!הספר נוסף בהצלחה");
 
-                product = new PO.Product();
-                this.DataContext = product;
+                productToAdd = new PO.Product();
+                this.DataContext = productToAdd;
                 AddP_categ_commbbox.SelectedItem = null;
 
             }

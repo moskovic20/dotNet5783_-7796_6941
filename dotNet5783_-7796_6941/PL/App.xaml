@@ -11,7 +11,7 @@
             <Setter Property="Foreground"
                     Value="White" />
             <Setter Property="Background" 
-                    Value="#FF4B6794" />
+                    Value="#FF009BA6" />
             <Setter Property="Height"
                     Value="26" />
             <Setter Property="Width"

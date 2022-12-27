@@ -33,49 +33,49 @@ namespace PL.PO
 
         #region Converting the category from English to Hebrew and vice versa.
 
-        //public static PO.CATEGORY HebrewToEnglishCategory(this PO.Hebrew_CATEGORY? hebrewCategory)
-        //{
-        //    if (hebrewCategory == Hebrew_CATEGORY.מסתורין)
-        //        return PO.CATEGORY.mystery;
-        //    if (hebrewCategory == Hebrew_CATEGORY.פנטזיה)
-        //        return PO.CATEGORY.fantasy;
-        //    if (hebrewCategory == Hebrew_CATEGORY.היסטוריה)
-        //        return PO.CATEGORY.history;
-        //    if (hebrewCategory == Hebrew_CATEGORY.מדע)
-        //        return PO.CATEGORY.scinence;
-        //    if (hebrewCategory == Hebrew_CATEGORY.ילדים)
-        //        return PO.CATEGORY.childen;
-        //    if (hebrewCategory == Hebrew_CATEGORY.רומן)
-        //        return PO.CATEGORY.romans;
-        //    if (hebrewCategory == Hebrew_CATEGORY.בישול_ואפייה)
-        //        return PO.CATEGORY.cookingAndBaking;
-        //    if (hebrewCategory == Hebrew_CATEGORY.פסיכולוגיה)
-        //        return PO.CATEGORY.psychology;
+        public static PO.CATEGORY HebrewToEnglishCategory(this PO.Hebrew_CATEGORY? hebrewCategory)
+        {
+            if (hebrewCategory == Hebrew_CATEGORY.מסתורין)
+                return PO.CATEGORY.mystery;
+            if (hebrewCategory == Hebrew_CATEGORY.פנטזיה)
+                return PO.CATEGORY.fantasy;
+            if (hebrewCategory == Hebrew_CATEGORY.היסטוריה)
+                return PO.CATEGORY.history;
+            if (hebrewCategory == Hebrew_CATEGORY.מדע)
+                return PO.CATEGORY.scinence;
+            if (hebrewCategory == Hebrew_CATEGORY.ילדים)
+                return PO.CATEGORY.childen;
+            if (hebrewCategory == Hebrew_CATEGORY.רומן)
+                return PO.CATEGORY.romans;
+            if (hebrewCategory == Hebrew_CATEGORY.בישול_ואפייה)
+                return PO.CATEGORY.cookingAndBaking;
+            if (hebrewCategory == Hebrew_CATEGORY.פסיכולוגיה)
+                return PO.CATEGORY.psychology;
 
-        //    return PO.CATEGORY.Kodesh;
-        //}
+            return PO.CATEGORY.Kodesh;
+        }
 
-        //public static Hebrew_CATEGORY EnglishToHebewCategory(this PO.CATEGORY myCategory)
-        //{
-        //    if (myCategory == PO.CATEGORY.mystery)
-        //        return Hebrew_CATEGORY.מסתורין;
-        //    if (myCategory == PO.CATEGORY.fantasy)
-        //        return Hebrew_CATEGORY.פנטזיה;
-        //    if (myCategory == PO.CATEGORY.history)
-        //        return Hebrew_CATEGORY.היסטוריה;
-        //    if (myCategory == PO.CATEGORY.scinence)
-        //        return Hebrew_CATEGORY.מדע;
-        //    if (myCategory == PO.CATEGORY.childen)
-        //        return Hebrew_CATEGORY.ילדים;
-        //    if (myCategory == PO.CATEGORY.romans)
-        //        return Hebrew_CATEGORY.רומן;
-        //    if (myCategory == PO.CATEGORY.cookingAndBaking)
-        //        return Hebrew_CATEGORY.בישול_ואפייה;
-        //    if (myCategory == PO.CATEGORY.psychology)
-        //        return Hebrew_CATEGORY.פסיכולוגיה;
+        public static Hebrew_CATEGORY EnglishToHebewCategory(this PO.CATEGORY myCategory)
+        {
+            if (myCategory == PO.CATEGORY.mystery)
+                return Hebrew_CATEGORY.מסתורין;
+            if (myCategory == PO.CATEGORY.fantasy)
+                return Hebrew_CATEGORY.פנטזיה;
+            if (myCategory == PO.CATEGORY.history)
+                return Hebrew_CATEGORY.היסטוריה;
+            if (myCategory == PO.CATEGORY.scinence)
+                return Hebrew_CATEGORY.מדע;
+            if (myCategory == PO.CATEGORY.childen)
+                return Hebrew_CATEGORY.ילדים;
+            if (myCategory == PO.CATEGORY.romans)
+                return Hebrew_CATEGORY.רומן;
+            if (myCategory == PO.CATEGORY.cookingAndBaking)
+                return Hebrew_CATEGORY.בישול_ואפייה;
+            if (myCategory == PO.CATEGORY.psychology)
+                return Hebrew_CATEGORY.פסיכולוגיה;
 
-        //    return Hebrew_CATEGORY.קודש;
-        //}
+            return Hebrew_CATEGORY.קודש;
+        }
 
         #endregion
 
@@ -99,20 +99,52 @@ namespace PL.PO
             return product;
         }
 
-        internal static PO.productForList copyProductForListToPo(this BO.ProductForList pfl)
+        internal static PO.ProductForList copyProductForListToPo(this BO.ProductForList pfl)
         {
-            PO.productForList myNewPFL = new PO.productForList()
+            PO.ProductForList myNewPFL = new PO.ProductForList()
             {
                 NameOfBook = pfl.NameOfBook,
                 ID = pfl.ID,
                 Price = pfl.Price,
-                Category = (PO.CATEGORY)pfl.Category
+                Category = ((PO.CATEGORY)pfl.Category).EnglishToHebewCategory()
             };
 
             return myNewPFL;
         }
 
-        public static ObservableCollection<PO.productForList> ToObserCollection(this ObservableCollection<PO.productForList> allBooks)
+        internal static PO.ProductForList copyProductToPFL(this PO.Product p)
+        {
+            PO.ProductForList myNewPFL = new PO.ProductForList()
+            {
+                NameOfBook = p.NameOfBook,
+                ID = p.ID,
+                Price = p.Price,
+                Category = ((PO.CATEGORY)p.Category!).EnglishToHebewCategory()
+            };
+
+            return myNewPFL;
+        }
+
+        internal static PO.Product copyProductToPo(this BO.Product pfl)
+        {
+
+            PO.Product product = new PO.Product()
+            {
+                ID = pfl.ID,
+                NameOfBook = pfl.NameOfBook,
+                AuthorName = pfl.AuthorName,
+                Price = pfl.Price,
+                Summary = pfl.Summary,
+                Path = pfl.path,
+                InStock = pfl.InStock,
+                Category = (PO.CATEGORY)pfl.Category
+
+            };
+
+            return product;
+        }
+
+        public static ObservableCollection<PO.ProductForList> ToObserCollection(this ObservableCollection<PO.ProductForList> allBooks)
         {
             foreach (BO.ProductForList Book in bl.BoProduct.GetAllProductForList_forM())
                        allBooks.Add(Book.copyProductForListToPo());

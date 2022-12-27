@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ProductListForM_Window" Height="450" Width="800">
 
-    <Grid Name="MainGrid" ShowGridLines="True">
+    <Grid Name="MainGrid" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="29*"/>
             <RowDefinition Height="367*"/>
@@ -25,13 +25,22 @@ VerticalAlignment="Stretch" Width="auto">
 
         </Grid>
         <Label x:Name="category" Content="Category :" HorizontalAlignment="Left" VerticalAlignment="Center" Width="394" Height="32" Background="#FFEFDFDF" FontFamily="Sitka Text" FontSize="20"/>
-        <ListView x:Name="ProductListview" Grid.Row="1" >
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <DataGrid x:Name="Products_DateGrid"  AreRowDetailsFrozen="False"  ItemsSource="{Binding}" IsReadOnly="True" CanUserAddRows="False"  AlternatingRowBackground="#FFFFF3E5" AlternationCount="2" HorizontalAlignment="Center" Margin="0,2,0,36" Grid.RowSpan="2" Width="780" Grid.Row="1" MouseDoubleClick="Products_DateGrid_MouseDoubleClick" Background="{x:Null}">
+            <DataGrid.Columns >
+                <DataGridTextColumn Header=" מחיר"    
+                                    Binding="{Binding Price}"
+                                    Width="150"/>
+                <DataGridTextColumn Header=" קטגוריה"
+                                    Binding="{Binding Category}"
+                                    Width="150" />
+                <DataGridTextColumn Header=" שם הספר"
+                                    Binding="{Binding NameOfBook}"
+                                    Width="150"/>
+                <DataGridTextColumn Header=" מספר מזהה"
+                                    Binding="{Binding ID}"
+                                    Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button  Name="addButton" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="673,0,0,0" Padding="5" Click="addButton_Click" Height="28" VerticalAlignment="Center">
             <Button.Background>
                 <LinearGradientBrush>
@@ -43,7 +52,7 @@ VerticalAlignment="Stretch" Width="auto">
             </Button.Background>
 
         </Button>
-        <Button  x:Name="UpdatButton" Content="Update Product" Grid.Row="2" HorizontalAlignment="Left" Margin="539,0,0,5" Padding="5" Click="UpdatButton_Click" Height="28" VerticalAlignment="Bottom">
+        <Button  x:Name="UpdatButton" Content="Update Product"  IsEnabled="False" Grid.Row="2" HorizontalAlignment="Left" Margin="539,0,0,5" Padding="5" Click="UpdatButton_Click" Height="28" VerticalAlignment="Bottom">
             <Button.Background>
                 <LinearGradientBrush>
                     <GradientStop Color="pink"

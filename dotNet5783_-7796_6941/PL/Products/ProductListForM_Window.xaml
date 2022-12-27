@@ -25,7 +25,7 @@ VerticalAlignment="Stretch" Width="auto">
 
         </Grid>
         <Label x:Name="category" Content="Category :" HorizontalAlignment="Left" VerticalAlignment="Center" Width="394" Height="32" Background="#FFEFDFDF" FontFamily="Sitka Text" FontSize="20"/>
-        <ListView x:Name="ProductListview" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="ProductListview" Grid.Row="1" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

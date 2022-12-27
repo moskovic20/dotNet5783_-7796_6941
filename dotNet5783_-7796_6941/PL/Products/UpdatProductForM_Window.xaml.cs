@@ -82,7 +82,7 @@ namespace PL.Products
         {
             if (this.idComboBox.SelectedItem is BO.ProductForList)
             {
-                this.productToUpdate = ((BO.ProductForList)this.idComboBox.SelectedItem).copyProductForListToPO().GetCopy();
+                this.productToUpdate = ((BO.ProductForList)this.idComboBox.SelectedItem).copyProductForListToPoProduct().GetCopy();
                 //AddP_categ_commbbox.SelectedValue = productToUpdate.Category;
                 this.DataContext = productToUpdate;
                 beforUpdate = productToUpdate.GetCopy();

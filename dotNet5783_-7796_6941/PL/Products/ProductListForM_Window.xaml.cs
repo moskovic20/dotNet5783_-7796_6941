@@ -25,16 +25,16 @@ namespace PL.Products
     public partial class ProductListForM_Window : Window
     {
         private IBl bl;
-        private ObservableCollection<PO.productForList> allBooks;
+       // private ObservableCollection<productForList> allBooks;
 
         public ProductListForM_Window(IBl bl)
         {
             InitializeComponent();
           
             this.bl = bl;
-            allBooks = new();
-           // ToObserCollection(allBooks);
-            DataContext =allBooks;
+            //allBooks = new();
+            //allBooks.ToObserCollection();
+            //DataContext =allBooks;
 
             ProductListview.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
             cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
@@ -54,6 +54,7 @@ namespace PL.Products
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
             new AddProductForM_Window(bl).Show();
+            //DataContext = allBooks;
         }
 
         private void UpdatButton_Click(object sender, RoutedEventArgs e)

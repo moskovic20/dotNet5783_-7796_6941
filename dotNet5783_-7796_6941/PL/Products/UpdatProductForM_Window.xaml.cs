@@ -30,14 +30,54 @@ namespace PL.Products
             InitializeComponent();
             this.bl = bl;
             productToUpdate = new();
-            this.AddP_categ_commbbox.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
+            this.updateCateg_commbbox.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
 
-            DataContext =productToUpdate;
+            DataContext = productToUpdate;
             this.idComboBox.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
             this.idComboBox.DisplayMemberPath = "ID";
             this.idComboBox.SelectedValuePath = "ID";
         }
 
+
+        #region אירוע-לחיצה על כפתור עדכן
+        private void updateProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (productToUpdate == beforUpdate!)
+                    throw new Exception("לא ביצעת עדכון עבור אף שדה...");
+
+                if (updateName_textBox.Text == "")
+                    throw new Exception("...הכנס את שם הספר");
+                if (updateAuthor_TextBox.Text == "")
+                    throw new Exception("...הכנס את שם הסופר");
+                if (updateCateg_commbbox.SelectedItem == null)
+                    throw new Exception("הכנס את קטגוריית הספר");
+
+                bl.BoProduct.UpdateProductDetails_forM(productToUpdate.CopyProductToBO());
+                MessageBox.Show("!הספר עודכן בהצלחה");
+
+                productToUpdate = new PO.Product();
+                this.DataContext = productToUpdate;
+                idComboBox.SelectedItem = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                    MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+            }
+
+        }
+        #endregion
+
+        #region אירוע-לחיצה על כפתור ביטול
+        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        #endregion
+
+        #region אירוע- שינוי הבחירה בתיבת מספר מזהה
         private void idComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (this.idComboBox.SelectedItem is BO.ProductForList)
@@ -48,63 +88,8 @@ namespace PL.Products
                 beforUpdate = productToUpdate.GetCopy();
             }
         }
-
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void updateProductButton_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                string? selectedcmb = "";
-                var comboBoxItem =idComboBox.SelectedItem;
-                if (comboBoxItem != null)
-                {
-                    selectedcmb = comboBoxItem.ToString();
-                }
-
-                bl.BoProduct.UpdateProductDetails_forM(productToUpdate.CopyProductToBO());
-                MessageBox.Show("!הספר עודכן בהצלחה");
-
-                productToUpdate = new PO.Product();
-                this.DataContext = productToUpdate;
-                idComboBox.SelectedItem = null;
-            }
-            catch (BO.Update_Exception ex)
-            {
-                MessageBox.Show(ex.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
-                    MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
-            }
-            catch
-            {
-                MessageBox.Show("תקלה בעדכון הקו", "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
-                    MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
-            }
-
-        }
-
-        #region כשהטקסט משתנה-לבדוק האם ניתן לפתוח את כפתור- עדכן ספר
-
-        private void updateProductButtonToEnable()
-        {
-            if (updateProductButton is null|| beforUpdate is null)
-                return;
-
-           if(productToUpdate!=beforUpdate!)
-                updateProductButton.IsEnabled = true;
-           else
-            updateProductButton.IsEnabled = false;
-        }
-
-
-
         #endregion
 
-        private void AddP_name_textBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            updateProductButtonToEnable();
-        }
+
     }
 }

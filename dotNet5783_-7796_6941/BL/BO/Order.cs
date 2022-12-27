@@ -51,7 +51,7 @@ public class Order
     /// <summary>
     /// רשימת הפריטים בהזמנה
     /// </summary>
-    public IEnumerable<OrderItem?>? Items { get; set; }
+    public List<OrderItem?>? Items { get; set; }
 
     /// <summary>
     /// המחיר לתשלום של כל ההזמנה

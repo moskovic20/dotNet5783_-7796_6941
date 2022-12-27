@@ -121,7 +121,7 @@ class Program
 
                         p.Category = (CATEGORY)category;
 
-                        //id = myP.Add(p);
+                        id = DL.Product.Add(p);
                         
                         Console.WriteLine("\n the id of this product is: {0}\n", id);
 

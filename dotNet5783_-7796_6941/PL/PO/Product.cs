@@ -60,8 +60,8 @@ namespace PL.PO
             }
         }
 
-        private PO.Hebrew_CATEGORY? _Category;
-        public PO.Hebrew_CATEGORY? Category
+        private PO.CATEGORY? _Category;
+        public PO.CATEGORY? Category
         {
             get { return _Category; }
             set
@@ -86,11 +86,37 @@ namespace PL.PO
             }
         }
 
-        
-        public double? Price { get; set; }
+        private double? _Price;
+        public double? Price
+        {
+            get
+            {
+                return _Price;
+            }
+            set
+            {
+                _Price = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("Price"));
 
+            }
+        }
 
-        public int? InStock { get; set; }
+        private int? _InStock;
+        public int? InStock
+        {
+            get
+            {
+                return _InStock;
+            }
+            set
+            {
+                _InStock = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("InStock"));
+
+            }
+        }
 
         private string? _Path;
         public string? Path
@@ -108,6 +134,9 @@ namespace PL.PO
             }
         }
 
+
+
+
         public PO.Product GetCopy()
         {
             return (Product)this.MemberwiseClone();
@@ -115,7 +144,7 @@ namespace PL.PO
 
         public static bool operator !=(Product p1, Product p2)
         {
-            if (p1.ID != p2.ID || p1.NameOfBook != p2.NameOfBook || p1.AuthorName != p2.AuthorName ||
+            if (p1?.ID != p2.ID || p1.NameOfBook != p2.NameOfBook || p1.AuthorName != p2.AuthorName ||
                 p1.Category != p2.Category || p1.InStock != p2.InStock || p1.Path != p2.Path ||
                 p1.Price != p2.Price || p1._Summary != p2._Summary)
                 return true;

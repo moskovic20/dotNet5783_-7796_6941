@@ -13,22 +13,28 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+using PL.PO;
 
 namespace PL.Products
 {
+
     /// <summary>
     /// Interaction logic for ProductListForM_Window.xaml
     /// </summary>
     public partial class ProductListForM_Window : Window
     {
         private IBl bl;
+        private ObservableCollection<PO.productForList> allBooks;
 
         public ProductListForM_Window(IBl bl)
         {
             InitializeComponent();
-
+          
             this.bl = bl;
-            //addButton.AddHandler();
+            allBooks = new();
+           // ToObserCollection(allBooks);
+            DataContext =allBooks;
 
             ProductListview.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
             cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));

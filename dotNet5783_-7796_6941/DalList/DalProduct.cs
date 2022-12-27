@@ -11,28 +11,43 @@ internal class DalProduct : IProduct
     DataSource _DS = DataSource.Instance!;
 
 
+    //public int Add(Product P)
+    //{
+    //    //P.IsDeleted = false;
+    //    Random random = new Random();
+    //    int indexOfMyP = _DS._Products.FindIndex(x => x?.ID == P.ID);
+
+    //    if (indexOfMyP == -1) //this product is not found in the data
+    //    {
+    //        while (!IdIsFound(P.ID)) //check if this id is not taken.
+    //        {
+    //            P.ID = random.Next(100000, 999999999);
+    //        }
+
+    //        _DS._Products.Add(P);
+    //        return P.ID;
+    //    }
+
+    //    if (_DS._Products[indexOfMyP].GetValueOrDefault().IsDeleted != true)
+    //        throw new AlreadyExistException("The product ID you entered already exists in the database");
+
+    //    _DS._Products.Add(P);
+    //    return P.ID;
+
+    //}
+
     public int Add(Product P)
     {
-        //P.IsDeleted = false;
-        Random random = new Random();
-        int indexOfMyP = _DS._Products.FindIndex(x => x?.ID == P.ID);
+        List<Product?> listOfThisID = _DS._Products.FindAll(x => x?.ID == P.ID );
+        int indexOfExist = listOfThisID.FindIndex(x => x?.IsDeleted != true);
 
-        if (indexOfMyP == -1) //this product is not found in the data
+        if(indexOfExist == -1)
         {
-            while (!IdIsFound(P.ID)) //check if this id is not taken.
-            {
-                P.ID = random.Next(100000, 999999999);
-            }
-
             _DS._Products.Add(P);
             return P.ID;
         }
-
-        if (_DS._Products[indexOfMyP].GetValueOrDefault().IsDeleted != true)
+        else
             throw new AlreadyExistException("The product ID you entered already exists in the database");
-
-        _DS._Products.Add(P);
-        return P.ID;
 
     }
 
@@ -57,7 +72,7 @@ internal class DalProduct : IProduct
 
     public Product GetById(int id)
     {
-        Product? ProductById = _DS._Products.FirstOrDefault(x => x?.ID == id && x?.IsDeleted==false);
+        Product? ProductById = _DS._Products.FirstOrDefault(x => x?.ID == id && x?.IsDeleted == false);
 
         return ProductById ?? throw new DoesntExistException("the product is not found");
     }
@@ -76,16 +91,16 @@ internal class DalProduct : IProduct
         Add(item);
     }
 
-    private bool IdIsFound(int myID)
-    {
-        int indexOfSameId = _DS._Products.FindIndex(x => x?.ID == myID);
+    //private bool IdIsFound(int myID)
+    //{
+    //    int indexOfSameId = _DS._Products.FindIndex(x => x?.ID == myID);
 
-        if (indexOfSameId == -1)
-            return true;
+    //    if (indexOfSameId == -1)
+    //        return true;
 
-        else
-            return false;
-    }
+    //    else
+    //        return false;
+    //}
 
 
     /// <summary>
@@ -96,7 +111,7 @@ internal class DalProduct : IProduct
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter = null)
     => from item in _DS._Products
        where item != null
-       where item?.IsDeleted==false
+       where item?.IsDeleted == false
        where filter != null ? filter(item) : true
        select item;
 
@@ -108,7 +123,7 @@ internal class DalProduct : IProduct
     /// <returns></returns>
     public IEnumerable<Product?> GetAlldeletted(Func<Product?, bool>? filter = null)
     => from item in _DS._Products
-       where item !=null
-       where filter != null ? filter(item): true
+       where item != null
+       where filter != null ? filter(item) : true
        select item;
 }

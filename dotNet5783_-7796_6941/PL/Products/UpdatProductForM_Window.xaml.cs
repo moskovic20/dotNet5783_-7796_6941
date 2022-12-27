@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.PO;
+using System.Collections.ObjectModel;
 
 namespace PL.Products
 {
@@ -25,17 +26,17 @@ namespace PL.Products
         private PO.Product productToUpdate;
         private PO.Product? beforUpdate;
 
-        public UpdatProductForM_Window(IBl bl)
+
+        public UpdatProductForM_Window(IBl bl, ProductForList pToUp)
         {
             InitializeComponent();
             this.bl = bl;
             productToUpdate = new();
+            productToUpdate = bl.BoProduct.GetProductDetails_forM(pToUp.ID).copyProductToPo();
             this.updateCateg_commbbox.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
 
             DataContext = productToUpdate;
-            this.idComboBox.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
-            this.idComboBox.DisplayMemberPath = "ID";
-            this.idComboBox.SelectedValuePath = "ID";
+            beforUpdate = productToUpdate.GetCopy();
         }
 
 
@@ -57,15 +58,15 @@ namespace PL.Products
                 bl.BoProduct.UpdateProductDetails_forM(productToUpdate.CopyProductToBO());
                 MessageBox.Show("!הספר עודכן בהצלחה");
 
-                productToUpdate = new PO.Product();
-                this.DataContext = productToUpdate;
-                idComboBox.SelectedItem = null;
+                this.Close();
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                     MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
             }
+            
 
         }
         #endregion
@@ -74,19 +75,6 @@ namespace PL.Products
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-        #endregion
-
-        #region אירוע- שינוי הבחירה בתיבת מספר מזהה
-        private void idComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (this.idComboBox.SelectedItem is BO.ProductForList)
-            {
-                this.productToUpdate = ((BO.ProductForList)this.idComboBox.SelectedItem).copyProductForListToPoProduct().GetCopy();
-                //AddP_categ_commbbox.SelectedValue = productToUpdate.Category;
-                this.DataContext = productToUpdate;
-                beforUpdate = productToUpdate.GetCopy();
-            }
         }
         #endregion
 

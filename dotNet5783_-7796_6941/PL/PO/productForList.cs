@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PL.PO
 {
-    public class productForList: INotifyPropertyChanged
+    public class ProductForList: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -59,8 +59,8 @@ namespace PL.PO
             }
         }
 
-        private PO.CATEGORY? _Category;
-        public PO.CATEGORY? Category
+        private PO.Hebrew_CATEGORY? _Category;
+        public PO.Hebrew_CATEGORY? Category
         {
             get { return _Category; }
             set
@@ -73,9 +73,15 @@ namespace PL.PO
         }
 
 
-        public PO.productForList GetCopy()
+        public PO.ProductForList GetCopy()
         {
-            return (productForList)this.MemberwiseClone();
+            return (ProductForList)this.MemberwiseClone();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("ID: {0}, NameOfBook : {1}, Price: {2},Category:{3}",
+              ID,NameOfBook,Price,Category.ToString());
         }
     }
 }

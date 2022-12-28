@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.PO;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 
 namespace PL.Products
 {
@@ -31,12 +32,13 @@ namespace PL.Products
         {
             InitializeComponent();
             this.bl = bl;
+
             productToUpdate = new();
             productToUpdate = bl.BoProduct.GetProductDetails_forM(pToUp.ID).copyProductToPo();
-            this.updateCateg_commbbox.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
-
             DataContext = productToUpdate;
             beforUpdate = productToUpdate.GetCopy();
+
+            this.updateCateg_commbbox.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
         }
 
 

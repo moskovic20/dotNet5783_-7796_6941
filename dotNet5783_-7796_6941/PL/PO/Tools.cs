@@ -24,7 +24,7 @@ namespace PL.PO
                 Summary = prodPO.Summary,
                 Price = prodPO.Price,
                 InStock = prodPO.InStock,
-                path = prodPO.Path,
+                Path = prodPO.Path,
                 Category = (BO.CATEGORY)prodPO.Category!
             };
             return copyProduct;
@@ -90,7 +90,7 @@ namespace PL.PO
                 AuthorName = productBO.AuthorName,
                 Price = pfl.Price,
                 Summary = productBO.Summary,
-                Path = productBO.path,
+                Path = productBO.Path,
                 InStock = productBO.InStock,
                 Category = (PO.CATEGORY)pfl.Category
  
@@ -135,7 +135,7 @@ namespace PL.PO
                 AuthorName = pfl.AuthorName,
                 Price = pfl.Price,
                 Summary = pfl.Summary,
-                Path = pfl.path,
+                Path = pfl.Path,
                 InStock = pfl.InStock,
                 Category = (PO.CATEGORY)pfl.Category
 
@@ -144,8 +144,29 @@ namespace PL.PO
             return product;
         }
 
+        //internal static BO.Product copyProductToPo(this PO.Product poProduct)
+        //{
+
+        //    BO.Product product = new BO.Product()
+        //    {
+        //        ID = poProduct.ID,
+        //        NameOfBook = poProduct.NameOfBook,
+        //        AuthorName = poProduct.AuthorName,
+        //        Price = poProduct.Price,
+        //        Summary = poProduct.Summary,
+        //        Path = poProduct.Path,
+        //        InStock = poProduct.InStock,
+        //        Category = (BO.CATEGORY)poProduct.Category!
+
+        //    };
+
+        //    return product;
+        //}
+
         public static ObservableCollection<PO.ProductForList> ToObserCollection(this ObservableCollection<PO.ProductForList> allBooks)
         {
+            allBooks.Clear();
+
             foreach (BO.ProductForList Book in bl.BoProduct.GetAllProductForList_forM())
                        allBooks.Add(Book.copyProductForListToPo());
            

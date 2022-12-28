@@ -42,7 +42,7 @@ public class Product
     /// <summary>
     /// Path for image to product
     /// </summary>
-    public string? path { get; set; }
+    public string? Path { get; set; }
 
     /// <summary>
     /// כמות המלאי של המוצר

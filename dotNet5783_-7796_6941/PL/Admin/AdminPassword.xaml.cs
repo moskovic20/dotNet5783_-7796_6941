@@ -1,5 +1,4 @@
-﻿using BlApi;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,28 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using PL.PO;
-using PL.Products;
-using MaterialDesignThemes.Wpf;
 
 namespace PL.Admin
 {
     /// <summary>
-    /// Interaction logic for AdminWindow.xaml
+    /// Interaction logic for AdminPassword.xaml
     /// </summary>
-    public partial class AdminWindow : Window
+    public partial class AdminPassword : Window
     {
-        IBl bl;
-        public AdminWindow(IBl bl)
+        public AdminPassword()
         {
             InitializeComponent();
-            this.bl = bl;
-        }
-
-        private void products_Click(object sender, RoutedEventArgs e)
-        {
-            new ProductListForM_Window(bl).Show();
-          
         }
     }
 }

@@ -9,10 +9,10 @@
     <StackPanel Orientation="Vertical" >
         <StackPanel  Orientation="Horizontal"
             x:Name="Options" Height="50" Width="800" VerticalAlignment="Top">
-            <Button x:Name="Admin"   Style="{StaticResource MyButtonStyle_1}" Content=" כניסת מנהל " Click="Admin_Click"  />
-            <Button x:Name="conectUs"  Style="{StaticResource MyButtonStyle_1}"  Content=" צור קשר " Width="60" Click="conectUs_Click" />
-            <Button x:Name="Cart"  Style="{StaticResource MyButtonStyle_1}"  Content=" עגלת קניות " Click="Cart_Click"/>
-            <Button x:Name="trakingOrder"  Style="{StaticResource MyButtonStyle_1}" Content=" מעקב הזמנה" Click="trakingOrder_Click" />
+            <Button x:Name="Admin"   Style="{DynamicResource MaterialDesignRaisedLightButton}" Content=" כניסת מנהל " Click="Admin_Click"  />
+            <Button x:Name="conectUs"  Style="{DynamicResource MaterialDesignRaisedLightButton}"  Content=" צור קשר " Width="60" Click="conectUs_Click" />
+            <Button x:Name="Cart"  Style="{DynamicResource MaterialDesignRaisedLightButton}"  Content=" עגלת קניות " Click="Cart_Click"/>
+            <Button x:Name="trakingOrder"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content=" מעקב הזמנה" Click="trakingOrder_Click" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <ComboBox

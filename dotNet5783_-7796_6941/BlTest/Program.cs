@@ -89,9 +89,9 @@ namespace BLTest
                             else throw new InvalidDataException();
 
 
-                            Console.Write("path for picture: ");
+                            Console.Write("Path for picture: ");
                             s = Console.ReadLine()!;
-                            newProduct.path = (s != "") ? s : null;
+                            newProduct.Path = (s != "") ? s : null;
 
                             Console.WriteLine(bl.BoProduct.AddProduct_forM(newProduct));
                             break;

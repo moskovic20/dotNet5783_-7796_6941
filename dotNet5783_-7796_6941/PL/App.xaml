@@ -4,18 +4,36 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
-        <Style x:Key="MyButtonStyle_1" TargetType="Button" >
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style/ListPageStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.WPF;component/Themes/MaterialDesignTheme.light.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.WPF;component/Themes/MaterialDesignTheme.Defaults.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Grey.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Yellow.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <!--<Style x:Key="MyButtonStyle_1" TargetType="Button" >
             <Setter Property="FontSize"
               Value="12" />
             <Setter Property="Foreground"
                     Value="White" />
             <Setter Property="Background" 
                     Value="#FF009BA6" />
+        </Style>
+
+        <Style x:Key="MyButtonStyle_2" TargetType="Button"
+           BasedOn="{StaticResource MyButtonStyle_1}">
             <Setter Property="Height"
                     Value="26" />
             <Setter Property="Width"
                     Value="148" />
+            <Setter Property="FontSize"
+              Value="12" />
+            <Setter Property="Foreground"
+                    Value="White" />
+            <Setter Property="Background" 
+                    Value="#FF009BA6" />
         </Style>
 
         <Style TargetType="TextBox">
@@ -45,7 +63,6 @@
                     Value="White"/>
             <Setter Property="IsTabStop"
                     Value="True"/>
-        </Style>
-        
+        </Style>-->
     </Application.Resources>
 </Application>

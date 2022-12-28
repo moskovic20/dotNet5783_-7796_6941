@@ -12,7 +12,6 @@ internal class BoOrder : IOrder
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
-    //
 
     #region חריגות זמנים אופציונליות
     private static void datePosibleExceptiones(Do.Order? or)

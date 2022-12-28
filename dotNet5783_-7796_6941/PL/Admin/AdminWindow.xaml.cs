@@ -1,19 +1,7 @@
 ﻿using BlApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using PL.PO;
+using PL.Order;
 using PL.Products;
+using System.Windows;
 
 namespace PL.Admin
 {
@@ -32,6 +20,11 @@ namespace PL.Admin
         private void products_Click(object sender, RoutedEventArgs e)
         {
             new ProductListForM_Window(bl).ShowDialog();
+        }
+
+        private void Orders_Click(object sender, RoutedEventArgs e)
+        {
+            new OrderForLstWindow(bl).Show();
         }
     }
 }

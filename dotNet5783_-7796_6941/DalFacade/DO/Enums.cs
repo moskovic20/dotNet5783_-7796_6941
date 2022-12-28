@@ -3,6 +3,6 @@ namespace DO;
 
 public enum CATEGORY
 {
-    mystery, fantasy, history, scinence, childen, romans, cookingAndBaking, psychology, Kodesh , all
+    mystery, fantasy, history, scinence, childen, romans, cookingAndBaking, psychology, Kodesh, all
 }
 

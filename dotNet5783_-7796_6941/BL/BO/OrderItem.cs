@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
+﻿using BlApi;
 namespace BO;
 
 
@@ -28,7 +23,7 @@ public class OrderItem
     ///מחיר של יחידת מוצר 1 
     /// </summary>
     public double? PriceOfOneItem { get; set; }
-    
+
     /// <summary>
     /// כמות הפריטים של מוצר זה בהזמנה
     /// </summary>

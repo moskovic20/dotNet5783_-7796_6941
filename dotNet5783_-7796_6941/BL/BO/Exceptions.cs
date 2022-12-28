@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace BO;
 
@@ -21,7 +15,7 @@ public class InvalidValue_Exception : Exception
 
     public override string ToString()
     {
-        return "InvalidValue_Exception: " + Message + "\n"+InnerException?.Message;
+        return "InvalidValue_Exception: " + Message + "\n" + InnerException?.Message;
     }
 }
 
@@ -49,8 +43,8 @@ public class GetAllForList_Exception : Exception
 public class Adding_Exception : Exception
 {
     //public int ID { get; set; }
-   // public string DataEntity { get; set; }
-    public Adding_Exception() : base() {  }
+    // public string DataEntity { get; set; }
+    public Adding_Exception() : base() { }
     public Adding_Exception(string message) : base(message) { }
     public Adding_Exception(string message, Exception inner) : base(message, inner) { }
     protected Adding_Exception(SerializationInfo info, StreamingContext context) : base(info, context) { }

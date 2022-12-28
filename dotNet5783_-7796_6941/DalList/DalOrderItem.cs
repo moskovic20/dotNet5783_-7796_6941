@@ -1,6 +1,5 @@
-﻿using Do;
-using DalApi;
-using System.Collections.Generic;
+﻿using DalApi;
+using Do;
 
 namespace Dal;
 
@@ -29,7 +28,7 @@ internal class DalOrderItem : IOrderItem
 
     public void Delete(int id)
     {
-        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x?.ID == id && x?.IsDeleted != true);  
+        int indexOfOItemById = _DS._OrderItems.FindIndex(x => x?.ID == id && x?.IsDeleted != true);
 
         if (indexOfOItemById == -1)
             throw new DoesntExistException("The order item you wanted to delete is not found");
@@ -49,7 +48,7 @@ internal class DalOrderItem : IOrderItem
     {
         OrderItem? OItem = _DS._OrderItems.FirstOrDefault(x => x?.ID == id && x?.IsDeleted != true);
 
-        return OItem?? throw new DoesntExistException("The order item is not found");
+        return OItem ?? throw new DoesntExistException("The order item is not found");
     }
 
     public void Update(OrderItem item)
@@ -65,7 +64,7 @@ internal class DalOrderItem : IOrderItem
         Delete(item.ID);
         Add(item);
     }
-    
+
     /// <summary>
     /// הפונקציה מקבלת מספר הזמנה ומחזירה רשימה של כל המוצרים שבהזמנה זו
     /// </summary>
@@ -78,11 +77,11 @@ internal class DalOrderItem : IOrderItem
         if (OrderID < 100000)
             throw new DoesntExistException("uncorect ID order");
 
-        var list= from item in _DS._OrderItems
-                  where item!=null && item?.OrderID == OrderID
-                  select item;
+        var list = from item in _DS._OrderItems
+                   where item != null && item?.OrderID == OrderID
+                   select item;
 
-        if (list.Count()==0)
+        if (list.Count() == 0)
             throw new DoesntExistException("The order items are not found or this order is't exist");
 
         return (IEnumerable<OrderItem?>)list;

@@ -1,14 +1,4 @@
-﻿using Dal;
-using DalApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BO;
-using BlApi;
-using BlImplementation;
-using System.Security.Cryptography;
+﻿using BO;
 
 
 
@@ -20,7 +10,7 @@ namespace BLTest
         static int integer;
         static double dbl;
         //static DateTime date;
-        static string s="";
+        static string s = "";
         static char option;
         static BO.Cart demoCart = new() { CustomerName = "demo name", CustomerEmail = "demo@email.com", CustomerAddress = "demo address", Items = new()! };
 
@@ -89,7 +79,7 @@ namespace BLTest
                             else throw new InvalidDataException();
 
 
-                            Console.Write("path for picture: ");
+                            Console.Write("ProductImagePath for picture: ");
                             s = Console.ReadLine()!;
                             newProduct.path = (s != "") ? s : null;
 
@@ -100,7 +90,7 @@ namespace BLTest
                         #region הבאת פרטי מוצר למנהל
                         case 'b':
                             Console.Write("Please insert an ID: ");
-                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000|| integer<=-100000)) throw new InvalidDataException("ID can't be ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000 || integer <= -100000)) throw new InvalidDataException("ID can't be ");
 
                             Console.WriteLine(bl.BoProduct.GetProductDetails_forM(integer));
                             break;
@@ -264,7 +254,7 @@ namespace BLTest
         static void OrdersSubMenu()
         {
             do
-            {                
+            {
                 Console.WriteLine("Please choose one of the following options:\n" +
                     "0. return to main menu\n" +
                     "a. get all orders\n" +
@@ -404,7 +394,7 @@ namespace BLTest
             );
 
         }
-                
+
     }
 
 }

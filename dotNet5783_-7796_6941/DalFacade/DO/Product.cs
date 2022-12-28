@@ -1,9 +1,4 @@
 ﻿using DO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Do;
 
@@ -55,7 +50,7 @@ public struct Product
     /// <summary>
     /// Path for image to product
     /// </summary>
-    public string? path { get; set; }
+    public string? ProductImagePath { get; set; }
 
 
     public override string ToString()

@@ -1,10 +1,4 @@
 ﻿using BlApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using System.Collections.ObjectModel;
 
 namespace PL.PO
@@ -24,7 +18,7 @@ namespace PL.PO
                 Summary = prodPO.Summary,
                 Price = prodPO.Price,
                 InStock = prodPO.InStock,
-                path = prodPO.Path,
+                ProductImagePath = prodPO.ProductImagePath,
                 Category = (BO.CATEGORY)prodPO.Category!
             };
             return copyProduct;
@@ -90,11 +84,11 @@ namespace PL.PO
                 AuthorName = productBO.AuthorName,
                 Price = pfl.Price,
                 Summary = productBO.Summary,
-                Path = productBO.path,
+                ProductImagePath = productBO.ProductImagePath,
                 InStock = productBO.InStock,
                 Category = (PO.CATEGORY)pfl.Category
- 
-           };
+
+            };
 
             return product;
         }
@@ -135,7 +129,7 @@ namespace PL.PO
                 AuthorName = pfl.AuthorName,
                 Price = pfl.Price,
                 Summary = pfl.Summary,
-                Path = pfl.path,
+                ProductImagePath = pfl.ProductImagePath,
                 InStock = pfl.InStock,
                 Category = (PO.CATEGORY)pfl.Category
 
@@ -147,8 +141,8 @@ namespace PL.PO
         public static ObservableCollection<PO.ProductForList> ToObserCollection(this ObservableCollection<PO.ProductForList> allBooks)
         {
             foreach (BO.ProductForList Book in bl.BoProduct.GetAllProductForList_forM())
-                       allBooks.Add(Book.copyProductForListToPo());
-           
+                allBooks.Add(Book.copyProductForListToPo());
+
             return allBooks;
         }
     }

@@ -95,14 +95,14 @@ public static class Tools
     #endregion
 
     #region  תחזור רשימה עם 3 איברים Tupleחישוב מסע ההזמנה ותיעוד ב
-      
+
 
     public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
     {
         List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>();
 
         //if (or.DateOrder != null)
-            list.Add(new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered"));
+        list.Add(new Tuple<DateTime, string>((DateTime)or.DateOrder, "order ordered"));
         if (or.ShippingDate != null)
             list.Add(new Tuple<DateTime, string>((DateTime)or.ShippingDate, "order shipped"));
         if (or.DeliveryDate != null)
@@ -195,7 +195,7 @@ public static class Tools
         if (product.InStock < item.AmountOfItems)
             throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:" + item.NameOfBook);
 
-        return true; 
+        return true;
     }
 
 }

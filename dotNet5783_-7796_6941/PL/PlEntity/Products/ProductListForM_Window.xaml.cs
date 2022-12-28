@@ -1,20 +1,10 @@
 ﻿using BlApi;
-using PL.BoProducts;
+using PL.PO;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using PL.PO;
 
 namespace PL.Products
 {
@@ -30,17 +20,17 @@ namespace PL.Products
         public ProductListForM_Window(IBl bl)
         {
             InitializeComponent();
-          
+
             this.bl = bl;
             allBooks = new();
             allBooks = allBooks.ToObserCollection();
-            DataContext =allBooks;
+            DataContext = allBooks;
 
-           // ProductListview.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
+            // ProductListview.ItemsSource = bl.BoProduct.GetAllProductForList_forM();
             cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.CATEGORY));
 
         }
-       
+
 
         private void categoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -54,7 +44,7 @@ namespace PL.Products
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            new AddProductForM_Window(bl,allBooks).ShowDialog(); 
+            new AddProductForM_Window(bl, allBooks).ShowDialog();
         }
 
         private void UpdatButton_Click(object sender, RoutedEventArgs e)
@@ -65,7 +55,7 @@ namespace PL.Products
 
         private void Products_DateGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            UpdatButton.IsEnabled= true;
+            UpdatButton.IsEnabled = true;
         }
     }
 }

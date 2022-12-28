@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
-using BO;
+﻿using BlApi;
 
 namespace BlImplementation;
 
@@ -35,7 +28,7 @@ internal class BoCart : ICart
                 TotalPrice = 0,
             };
 
-            if (item.AmountOfItems >= product.InStock) 
+            if (item.AmountOfItems >= product.InStock)
                 throw new BO.InvalidValue_Exception("The desired quantity for the book is not in stock:" + item.NameOfBook);
 
             if (item.AmountOfItems == 0) cart.Items.Add(item);//הוספה ראשונה של מוצר זה לסל הקניות
@@ -123,7 +116,7 @@ internal class BoCart : ICart
 
             int IdOfNewOrder = dal.Order.Add(newOrder);
 
-            IEnumerable<Do.OrderItem> afterCastingAndUpdat= cart.Items.Select(oi => oi.ListFromBoToDo(IdOfNewOrder));//casting orderItems from Bo to Do
+            IEnumerable<Do.OrderItem> afterCastingAndUpdat = cart.Items.Select(oi => oi.ListFromBoToDo(IdOfNewOrder));//casting orderItems from Bo to Do
 
             //foreach (BO.OrderItem item in cart.Items)//הכנסת המוצרים בסל למוצרים בהזמנה ועדכון פרטי המוצרים
             //{

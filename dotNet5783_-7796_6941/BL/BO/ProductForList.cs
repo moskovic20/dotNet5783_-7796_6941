@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
+﻿using BlApi;
 namespace BO;
 
 public class ProductForList
@@ -27,6 +22,11 @@ public class ProductForList
     /// קטגוריית המוצר- סוג הג'אנר
     /// </summary>
     public CATEGORY Category { get; set; }
+
+    /// <summary>
+    /// Path for image to product
+    /// </summary>
+    public string? ProductImagePath { get; set; }
 
     public override string ToString()
     {

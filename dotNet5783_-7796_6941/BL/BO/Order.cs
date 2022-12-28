@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
+﻿using BlApi;
 namespace BO;
 
 public class Order
@@ -16,12 +11,12 @@ public class Order
     /// <summary>
     /// כתובת האימייל של הלקוח
     /// </summary>
-    public string? CustomerEmail { get; set;}
+    public string? CustomerEmail { get; set; }
 
     /// <summary>
     /// כתובת הלקוח, אליה צריך לשלוח את ההזמנה
     /// </summary>
-    public string? ShippingAddress { get; set;}
+    public string? ShippingAddress { get; set; }
 
     /// <summary>
     /// תאריך יצירת הזמנה

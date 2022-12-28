@@ -1,20 +1,12 @@
 ﻿using BlApi;
 using PL.PO;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL.Products
 {
@@ -53,9 +45,9 @@ namespace PL.Products
                     throw new Exception("...הכנס את שם הסופר");
                 if (AddP_categ_commbbox.SelectedItem == null)
                     throw new Exception("הכנס את קטגוריית הספר");
-                   
 
-                int newID=bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
+
+                int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
 
                 //if(newID!=productToAdd.ID)
                 //    MessageBox.Show("!הספר בוצע בהצלחה"+"\n:שים לב- עקב כפילות של מספר המוצר מעתה מספר המוצר יהיה"+newID, "מזהה כפול", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -69,7 +61,7 @@ namespace PL.Products
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message +"\n"+ex.InnerException?.Message,"שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                     MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
             }
         }
@@ -103,7 +95,7 @@ namespace PL.Products
 
         }
 
-        
+
         #endregion
 
         #region הגבלות על הקלט

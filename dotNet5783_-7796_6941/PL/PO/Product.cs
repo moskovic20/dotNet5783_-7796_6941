@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows.Media.Imaging;
 
 namespace PL.PO
 {
@@ -66,7 +63,7 @@ namespace PL.PO
             get { return _Category; }
             set
             {
-               _Category = value;
+                _Category = value;
                 if (PropertyChanged != null)
                     PropertyChanged(this, new PropertyChangedEventArgs(""));
 
@@ -118,18 +115,30 @@ namespace PL.PO
             }
         }
 
-        private string? _Path;
-        public string? Path
+        public string? productImagePath;
+        public string? ProductImagePath
+        {
+            get => productImagePath;
+            set
+            {
+                productImagePath = value;
+
+                 image = new BitmapImage(new System.Uri(Environment.CurrentDirectory + productImagePath));
+            }
+        }
+
+        private BitmapImage? image;
+        public BitmapImage? Image
         {
             get
             {
-                return _Path;
+                return image;
             }
             set
             {
-                _Path= value;
+                image = value;
                 if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("Path"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Image"));
 
             }
         }
@@ -145,7 +154,7 @@ namespace PL.PO
         public static bool operator !=(Product p1, Product p2)
         {
             if (p1?.ID != p2.ID || p1.NameOfBook != p2.NameOfBook || p1.AuthorName != p2.AuthorName ||
-                p1.Category != p2.Category || p1.InStock != p2.InStock || p1.Path != p2.Path ||
+                p1.Category != p2.Category || p1.InStock != p2.InStock || p1.productImagePath != p2.productImagePath ||
                 p1.Price != p2.Price || p1._Summary != p2._Summary)
                 return true;
             return false;

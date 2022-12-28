@@ -1,6 +1,5 @@
 ﻿using DalApi;
 using Do;
-using System.Collections.Generic;
 
 namespace Dal;
 
@@ -89,7 +88,7 @@ internal class DalOrder : IOrder
     /// <returns></returns>
     public IEnumerable<Order?> GetAlldeletted(Func<Order?, bool>? filter = null)
     => from item in _DS._Orders
-       where filter is null ? true : item.Value.IsDeleted == true && filter(item) 
+       where filter is null ? true : item.Value.IsDeleted == true && filter(item)
        select item;
 
 }

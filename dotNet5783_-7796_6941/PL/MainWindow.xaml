@@ -7,13 +7,13 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
     <StackPanel Orientation="Vertical" >
-        <StackPanel  Orientation="Horizontal"
+        <WrapPanel  Orientation="Horizontal"
             x:Name="Options" Height="50" Width="800" VerticalAlignment="Top">
             <Button x:Name="Admin"   Style="{StaticResource MyButtonStyle_1}" Content=" כניסת מנהל " Click="Admin_Click"  />
             <Button x:Name="conectUs"  Style="{StaticResource MyButtonStyle_1}"  Content=" צור קשר " Width="60" Click="conectUs_Click" />
             <Button x:Name="Cart"  Style="{StaticResource MyButtonStyle_1}"  Content=" עגלת קניות " Click="Cart_Click"/>
             <Button x:Name="trakingOrder"  Style="{StaticResource MyButtonStyle_1}" Content=" מעקב הזמנה" Click="trakingOrder_Click" />
-        </StackPanel>
+            </WrapPanel >
         <StackPanel Orientation="Horizontal">
             <ComboBox
                 x:Name="cmbCategorySelector" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="400" Height="32" FontSize="22">
@@ -26,7 +26,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ListView x:Name="TvBox" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <ListView x:Name="TvBox" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="5" HorizontalAlignment="Stretch"/>
@@ -35,8 +35,8 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <Image Source="{Binding ImageData}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
-                            <TextBlock Text="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                            <Image Source="{Binding Image}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
+                            <TextBlock Text="{Binding NameOfBook}"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

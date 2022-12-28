@@ -39,6 +39,7 @@ VerticalAlignment="Stretch" Width="auto">
                 <DataGridTextColumn Header=" מספר מזהה"
                                     Binding="{Binding ID}"
                                     Width="150"/>
+              
             </DataGrid.Columns>
         </DataGrid>
         <Button  Name="addButton"  Style="{StaticResource MyButtonStyle_1}" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="622,0,0,0" Padding="5" Click="addButton_Click" Height="28" VerticalAlignment="Center">

@@ -116,19 +116,21 @@ namespace BLTest
 
                         #region הדפסת כל המוצרים עבור מנהל-כולל מוצרים עדכון מחיר
                         case 'd':
-                            foreach (var o in bl.BoProduct.GetAllProductForList_forM())
-                            {
-                                Console.WriteLine(o);
-                            }
+                            //foreach (var o in bl.BoProduct.GetAllProductForList_forM())
+                            //{
+                            //    Console.WriteLine(o);
+                            //}
+                            Console.WriteLine(string.Join("\n", bl.BoProduct.GetAllProductForList_forM()));
                             break;
                         #endregion
 
                         #region הדפסת כל המוצרים עבור לקוח
                         case 'e':
-                            foreach (var o in bl.BoProduct.GetAllProductForList_forC())
-                            {
-                                Console.WriteLine(o);
-                            }
+                            //foreach (var o in bl.BoProduct.GetAllProductForList_forC())
+                            //{
+                            //    Console.WriteLine(o);
+                            //}
+                            Console.WriteLine(string.Join("\n", bl.BoProduct.GetAllProductForList_forC()));
                             break;
                         #endregion
 

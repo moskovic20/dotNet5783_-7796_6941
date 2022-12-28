@@ -50,27 +50,10 @@ VerticalAlignment="Stretch" Width="auto">
                                     Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button  Name="addButton" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="673,0,0,0" Padding="5" Click="addButton_Click" Height="28" VerticalAlignment="Center">
-            <Button.Background>
-                <LinearGradientBrush>
-                    <GradientStop Color="pink"
-                        Offset="0" />
-                    <GradientStop Color= "Azure"
-                        Offset="1" />
-                </LinearGradientBrush>
-            </Button.Background>
+        <Button  Name="addButton"  Style="{StaticResource MyButtonStyle_1}" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="622,0,0,0" Padding="5" Click="addButton_Click" Height="28" VerticalAlignment="Center">
 
         </Button>
-        <Button  x:Name="UpdatButton" Content="Update Product"  IsEnabled="False" Grid.Row="2" HorizontalAlignment="Left" Margin="539,0,0,5" Padding="5" Click="UpdatButton_Click" Height="28" VerticalAlignment="Bottom">
-            <Button.Background>
-                <LinearGradientBrush>
-                    <GradientStop Color="pink"
-                        Offset="0" />
-                    <GradientStop Color= "Azure"
-                        Offset="1" />
-                </LinearGradientBrush>
-            </Button.Background>
-
+        <Button  x:Name="UpdatButton" Style="{StaticResource MyButtonStyle_1}" Content="Update Product"  IsEnabled="False" Grid.Row="2" HorizontalAlignment="Left" Margin="449,0,0,0" Padding="5" Click="UpdatButton_Click" Height="28" VerticalAlignment="Center">
         </Button>
     </Grid>
 

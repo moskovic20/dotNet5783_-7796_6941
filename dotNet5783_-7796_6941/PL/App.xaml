@@ -42,7 +42,7 @@
             <Setter Property="FontWeight"
                     Value="DemiBold" />
             <Setter Property="Foreground"
-                    Value="#FF4B6794"/>
+                    Value="White"/>
             <Setter Property="IsTabStop"
                     Value="True"/>
         </Style>

@@ -61,6 +61,7 @@ namespace PL.Products
         {
             new UpdatProductForM_Window(bl, (ProductForList)Products_DateGrid.SelectedItem).ShowDialog();
             UpdatButton.IsEnabled = false;
+            Products_DateGrid.SelectedItem=null;
         }
 
         private void Products_DateGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)

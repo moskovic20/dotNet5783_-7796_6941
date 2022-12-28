@@ -22,10 +22,19 @@ VerticalAlignment="Stretch" Width="auto">
             </Grid.ColumnDefinitions >
             <ComboBox x:Name="cmbCategorySelector" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Height="32" FontSize="22" SelectionChanged="categoryFilter_SelectionChanged">
             </ComboBox>
-
         </Grid>
+        
         <Label x:Name="category" Content="Category :" HorizontalAlignment="Left" VerticalAlignment="Center" Width="394" Height="32" Background="#FFEFDFDF" FontFamily="Sitka Text" FontSize="20"/>
-        <DataGrid x:Name="Products_DateGrid"  AreRowDetailsFrozen="False"  ItemsSource="{Binding}" IsReadOnly="True" CanUserAddRows="False"  AlternatingRowBackground="#FFFFF3E5" AlternationCount="2" HorizontalAlignment="Center" Margin="0,2,0,36" Grid.RowSpan="2" Width="780" Grid.Row="1" MouseDoubleClick="Products_DateGrid_MouseDoubleClick" Background="{x:Null}">
+
+        
+        <DataGrid x:Name="Products_DateGrid"  AreRowDetailsFrozen="False"  ItemsSource="{Binding}" IsReadOnly="True" CanUserAddRows="False"  AlternatingRowBackground="#FFFFF3E5" AlternationCount="3" HorizontalAlignment="Center" Margin="0,2,0,36" Grid.RowSpan="2" Width="780" Grid.Row="1" MouseDoubleClick="Products_DateGrid_MouseDoubleClick" Background="{x:Null}">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#FFDFB577"/>
+                    <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns >
                 <DataGridTextColumn Header=" מחיר"    
                                     Binding="{Binding Price}"

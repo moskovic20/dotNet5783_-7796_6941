@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions >
 
         <Rectangle HorizontalAlignment="Left" Height="47" Stroke="#FF009BA6" VerticalAlignment="Top" Width="816" Fill="#FF009BA6" Grid.ColumnSpan="2"/>
-        <Label x:Name="addProductL" Style="{StaticResource myTitel_1 }" Grid.Column="1" Content=":הכנס את פרטי הספר"  Margin="195,0,-26,0" VerticalAlignment="Top" Foreground="White" />
+        <Label x:Name="addProductL" Style="{StaticResource myTitel_1 }" Grid.Column="1" Content=":הכנס את פרטי הספר"  Margin="195,0,-26,0" VerticalAlignment="Top"  />
         <Label Grid.Column="1"  Content="שדות חובה*" HorizontalAlignment="Left" Margin="290,53,0,0" VerticalAlignment="Top" Width="86" Foreground="Red"/>
 
         <Button x:Name="addProductButton" Content="הוסף" Style="{StaticResource MyButtonStyle_1}" IsEnabled="True" HorizontalAlignment="Left" Margin="208,199,0,0" VerticalAlignment="Top" Height="29" Width="146"  Click="addProductButton_Click" Grid.Row="1" />

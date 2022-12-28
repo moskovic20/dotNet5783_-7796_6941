@@ -81,7 +81,7 @@ namespace BLTest
 
                             Console.Write("ProductImagePath for picture: ");
                             s = Console.ReadLine()!;
-                            newProduct.path = (s != "") ? s : null;
+                            newProduct.Path = (s != "") ? s : null;
 
                             Console.WriteLine(bl.BoProduct.AddProduct_forM(newProduct));
                             break;

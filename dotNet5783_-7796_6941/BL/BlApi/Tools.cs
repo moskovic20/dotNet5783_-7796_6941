@@ -127,15 +127,17 @@ public static class Tools
     {
         Do.Product product = dal.Product.GetById(orItem.ProductID); //הבאת פרטי מוצר
 
-        Do.OrderItem orderItem = orItem.CopyPropToStruct(new Do.OrderItem());//העתקת שדות זהים לאורדראייטם החדש
+        Do.OrderItem orderItem = new();
+        orderItem = orItem.CopyPropToStruct(orderItem);
         orderItem.OrderID = OrId;
 
-        dal.OrderItem.Add(orderItem);//עדכון שכבת הנתונים בפריט הזמנה חדש
+        dal.OrderItem.Add(orderItem);
 
-        Do.Product newProduct = product.CopyPropToStruct(new Do.Product());//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
+        Do.Product newProduct = new();//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
+        newProduct = product.CopyPropToStruct(newProduct);
         newProduct.InStock -= orItem.AmountOfItems;
 
-        dal.Product.Update(newProduct);//מעדכנים את הכמות של המוצר ברשימה
+        dal.Product.Update(newProduct);
 
         return orderItem;
     }

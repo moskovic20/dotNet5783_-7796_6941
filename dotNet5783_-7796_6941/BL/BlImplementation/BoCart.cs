@@ -116,24 +116,24 @@ internal class BoCart : ICart
 
             int IdOfNewOrder = dal.Order.Add(newOrder);
 
-            IEnumerable<Do.OrderItem> afterCastingAndUpdat = cart.Items.Select(oi => oi.ListFromBoToDo(IdOfNewOrder));//casting orderItems from Bo to Do
+          //אמור לעבוד במקום foreach.. var afterCastingAndUpdat = cart.Items.Select(oi => oi.ListFromBoToDo(IdOfNewOrder));//casting orderItems from Bo to Do
 
-            //foreach (BO.OrderItem item in cart.Items)//הכנסת המוצרים בסל למוצרים בהזמנה ועדכון פרטי המוצרים
-            //{
-            //    Do.Product product = dal.Product.GetById(item.ProductID); //הבאת פרטי מוצר
+            foreach (BO.OrderItem item in cart.Items)//הכנסת המוצרים בסל למוצרים בהזמנה ועדכון פרטי המוצרים
+            {
+                Do.Product product = dal.Product.GetById(item.ProductID); //הבאת פרטי מוצר
 
-            //    Do.OrderItem orderItem = new();
-            //    orderItem = item.CopyPropToStruct(orderItem);
-            //    orderItem.OrderID = IdOfNewOrder;
+                Do.OrderItem orderItem = new();
+                orderItem = item.CopyPropToStruct(orderItem);
+                orderItem.OrderID = IdOfNewOrder;
 
-            //    dal.OrderItem.Add(orderItem);
+                dal.OrderItem.Add(orderItem);
 
-            //    Do.Product newProduct = new();//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
-            //    newProduct = product.CopyPropToStruct(newProduct);
-            //    newProduct.InStock -= item.AmountOfItems;
+                Do.Product newProduct = new();//כדי לעדכן כמות במוצר שהוזמן, יוצרים אובייקט מוצר חדש עם אותם הערכים, רק בשינוי הכמות.
+                newProduct = product.CopyPropToStruct(newProduct);
+                newProduct.InStock -= item.AmountOfItems;
 
-            //    dal.Product.Update(newProduct);//מעדכנים את הכמות של המוצר ברשימה
-            //}
+                dal.Product.Update(newProduct);//מעדכנים את הכמות של המוצר ברשימה
+            }
             return IdOfNewOrder;
         }
         catch (Do.AlreadyExistException ex) { throw new BO.MakeOrder_Exception("cant create this cart", ex); }

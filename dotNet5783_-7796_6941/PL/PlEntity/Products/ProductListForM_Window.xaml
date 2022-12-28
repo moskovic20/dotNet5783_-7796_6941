@@ -4,57 +4,164 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Products"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="ProductListForM_Window" Height="450" Width="800">
+        Title="ProductListForM_Window" Height="450" Width="800"
+        FontFamily="Bahnschrift SemiLight">
+
+    <Window.Resources>
+        <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander x:Name="expander" IsExpanded="True"
+                                  Background="Transparent"
+                                  Foreground="#2b331f">
+                            <Expander.Header>
+                                <TextBlock Text="{Binding Name}"/>
+                            </Expander.Header>
+                            <ItemsPresenter/>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
 
     <Grid Name="MainGrid" ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="29*"/>
-            <RowDefinition Height="367*"/>
-            <RowDefinition Height="38*"/>
+            <RowDefinition Height="405*"/>
         </Grid.RowDefinitions>
 
-        <Grid Name="UpGrid" ShowGridLines="True" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-VerticalAlignment="Stretch" Width="auto">
+        <Grid Name="UpGrid"
+              ShowGridLines="True"
+              Height="auto" Grid.Row="0" Width="auto">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox x:Name="cmbCategorySelector" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="400" Height="32" FontSize="22" SelectionChanged="categoryFilter_SelectionChanged">
+
+            <ComboBox x:Name="cmbCategorySelector"
+                      Grid.Column="1"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      Width="400" Height="32"
+                      FontSize="22"
+                      SelectionChanged="categoryFilter_SelectionChanged">
             </ComboBox>
         </Grid>
-        
-        <Label x:Name="category" Content="Category :" HorizontalAlignment="Left" VerticalAlignment="Center" Width="394" Height="32" Background="#FFEFDFDF" FontFamily="Sitka Text" FontSize="20"/>
 
-        
-        <DataGrid x:Name="Products_DateGrid"  AreRowDetailsFrozen="False"  ItemsSource="{Binding}" IsReadOnly="True" CanUserAddRows="False"  AlternatingRowBackground="#FFFFF3E5" AlternationCount="3" HorizontalAlignment="Center" Margin="0,2,0,36" Grid.RowSpan="2" Width="780" Grid.Row="1" MouseDoubleClick="Products_DateGrid_MouseDoubleClick" Background="{x:Null}">
-            <DataGrid.Resources>
+        <Label x:Name="category"
+               Content="Category :" 
+               HorizontalAlignment="Left" 
+               VerticalAlignment="Center"
+               Width="394" Height="32"
+               Background="White" 
+               FontFamily="Sitka Text" FontSize="20" Foreground="#FFDAE3D4"/>
+
+        <DataGrid x:Name="Products_DateGrid"
+                  CanUserAddRows="False"
+                  materialDesign:DataGridAssist.CellPadding="10"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="30" 
+                  IsTextSearchEnabled="True" 
+                  GridLinesVisibility="Horizontal" 
+                  AreRowDetailsFrozen="True"
+                  AutoGenerateColumns="False"
+                  HorizontalGridLinesBrush="Transparent"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                  CanUserDeleteRows="False" 
+                  CanUserResizeRows="False"
+                  Foreground="Black"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding}" 
+                  HorizontalAlignment="Left"
+                  Margin="141,1,0,55"
+                  Width="659"
+                  Grid.Row="1"
+                  Background="{x:Null}">
+
+            <DataGrid.GroupStyle>
+                <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter/>
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+
+
+            <!--AlternatingRowBackground="#FFDAE3D4"
+                  AlternationCount="3"-->
+            <!--<DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Background" Value="#FFDFB577"/>
                     <Setter Property="BorderThickness" Value="0,0,1,2"/>
-                    <Setter Property="BorderBrush" Value="Black"/>
+                    -->
+            <!--<Setter Property="BorderBrush" Value="Black"/>-->
+            <!--
                 </Style>
-            </DataGrid.Resources>
+            </DataGrid.Resources>-->
+
             <DataGrid.Columns >
-                <DataGridTextColumn Header=" מחיר"    
+                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=Trash}"
+                                    MinWidth="10">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                    Height="30" Width="30"
+                                    HorizontalAlignment="Center"
+                                    Click="deleteProductButton_Click">
+                                <materialDesign:PackIcon Kind="Trash"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=Update}"
+                                    MinWidth="10">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                    Background="#FFF6F6F6"
+                                    Height="30" Width="30"
+                                    HorizontalAlignment="Center"
+                                    Click="UpdatButton_Click">
+                                <materialDesign:PackIcon Kind="Update"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="מחיר"    
                                     Binding="{Binding Price}"
-                                    Width="150"/>
-                <DataGridTextColumn Header=" קטגוריה"
+                                    MinWidth="100"/>
+                <DataGridTextColumn Header="קטגוריה"
                                     Binding="{Binding Category}"
-                                    Width="150" />
-                <DataGridTextColumn Header=" שם הספר"
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="שם הספר"
                                     Binding="{Binding NameOfBook}"
-                                    Width="150"/>
-                <DataGridTextColumn Header=" מספר מזהה"
+                                    MinWidth="100"/>
+                <DataGridTextColumn Header="מספר מזהה "
                                     Binding="{Binding ID}"
-                                    Width="150"/>
-              
+                                    MinWidth="100"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button  Name="addButton"  Style="{StaticResource MyButtonStyle_1}" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="622,0,0,0" Padding="5" Click="addButton_Click" Height="28" VerticalAlignment="Center">
+        <Button x:Name="AddTheStation"
+            Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
+                BorderBrush="#007E8C7F"
+                Width="50" Height="50"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Click="addButton_Click"
+                Background="#FF009BA6" Margin="713,323,0,0" Grid.Row="1" >
+            <materialDesign:PackIcon Kind="Plus" 
+                                         Foreground="Black"
+                                         Height="30" Width="30"/>
 
-        </Button>
-        <Button  x:Name="UpdatButton" Style="{StaticResource MyButtonStyle_1}" Content="Update Product"  IsEnabled="False" Grid.Row="2" HorizontalAlignment="Left" Margin="449,0,0,0" Padding="5" Click="UpdatButton_Click" Height="28" VerticalAlignment="Center">
         </Button>
     </Grid>
 

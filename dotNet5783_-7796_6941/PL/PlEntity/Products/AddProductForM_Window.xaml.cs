@@ -51,6 +51,8 @@ namespace PL.Products
 
                 //if(newID!=productToAdd.ID)
                 //    MessageBox.Show("!הספר בוצע בהצלחה"+"\n:שים לב- עקב כפילות של מספר המוצר מעתה מספר המוצר יהיה"+newID, "מזהה כפול", MessageBoxButton.OK, MessageBoxImage.Information);
+               
+                
                 allBooks.Add(productToAdd.copyProductToPFL());
                 MessageBox.Show("!הספר נוסף בהצלחה");
 

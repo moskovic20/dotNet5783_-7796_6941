@@ -138,8 +138,29 @@ namespace PL.PO
             return product;
         }
 
+        //internal static BO.Product copyProductToPo(this PO.Product poProduct)
+        //{
+
+        //    BO.Product product = new BO.Product()
+        //    {
+        //        ID = poProduct.ID,
+        //        NameOfBook = poProduct.NameOfBook,
+        //        AuthorName = poProduct.AuthorName,
+        //        Price = poProduct.Price,
+        //        Summary = poProduct.Summary,
+        //        Path = poProduct.Path,
+        //        InStock = poProduct.InStock,
+        //        Category = (BO.CATEGORY)poProduct.Category!
+
+        //    };
+
+        //    return product;
+        //}
+
         public static ObservableCollection<PO.ProductForList> ToObserCollection(this ObservableCollection<PO.ProductForList> allBooks)
         {
+            allBooks.Clear();
+
             foreach (BO.ProductForList Book in bl.BoProduct.GetAllProductForList_forM())
                 allBooks.Add(Book.copyProductForListToPo());
 

@@ -21,10 +21,10 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions >
         <Rectangle HorizontalAlignment="Left" Height="47" Stroke="#FF009BA6" VerticalAlignment="Top" Width="816" Fill="#FF009BA6" Grid.ColumnSpan="2"/>
-        <Label x:Name="addProductL" Style="{StaticResource myTitel_1 }" Grid.Column="1" Content=":עדכן את פרטי הספר"  Margin="200,7,-32,0" VerticalAlignment="Top"  />
+        <Label x:Name="addProductL"  Grid.Column="1" Content=":עדכן את פרטי הספר"  Margin="200,7,-32,0" VerticalAlignment="Top"  />
         <Label Grid.Column="1"  Content="שדות חובה*" HorizontalAlignment="Left" Margin="290,53,0,0" VerticalAlignment="Top" Width="86" Foreground="Red"/>
-        <Button x:Name="updateProductButton" Content="עדכן" Style="{StaticResource MyButtonStyle_1}" IsEnabled="True" HorizontalAlignment="Left" Margin="208,199,0,0" VerticalAlignment="Top" Height="29" Width="146"  Grid.Row="1" Click="updateProductButton_Click" FontWeight="Bold" />
-        <Button x:Name="cancelButton" Content="ביטול" Style="{StaticResource MyButtonStyle_1}" HorizontalAlignment="Left" Margin="50,199,0,0" VerticalAlignment="Top" Height="29" Width="146" Grid.Row="1" Click="cancelButton_Click" FontWeight="Bold"/>
+        <Button x:Name="updateProductButton" Content="עדכן" Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="208,199,0,0" VerticalAlignment="Top" Height="29" Width="146"  Grid.Row="1" Click="updateProductButton_Click" FontWeight="Bold" />
+        <Button x:Name="cancelButton" Content="ביטול" Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="50,199,0,0" VerticalAlignment="Top" Height="29" Width="146" Grid.Row="1" Click="cancelButton_Click" FontWeight="Bold"/>
         <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="54,66,28,143" Grid.Row="1">
             <TextBox x:Name="updateAuthor_TextBox" Text="{Binding AuthorName, Mode=TwoWay}" Height="30" Width="215" />
             <Label  Content="  :שם הסופר"  Width="74"/>
@@ -51,12 +51,6 @@
         <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="56,126,28,76" Grid.Row="1">
             <ComboBox x:Name="updateCateg_commbbox" Height="30" Width="215" VerticalAlignment="Top" 
                       SelectedItem="{Binding Category, Mode=TwoWay,Converter={StaticResource categoryToHebrew}}">
-                <ComboBox.Background>
-                    <LinearGradientBrush EndPoint="0,1">
-                        <GradientStop Color="#FFF0F0F0"/>
-                        <GradientStop Color="#FFAE7235" Offset="1"/>
-                    </LinearGradientBrush>
-                </ComboBox.Background>
             </ComboBox>
 
             <Label Content="    :קטגוריה"  Width="74"/>

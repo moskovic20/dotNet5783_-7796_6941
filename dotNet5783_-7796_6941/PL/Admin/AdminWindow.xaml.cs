@@ -2,6 +2,16 @@
 using PL.Order;
 using PL.Products;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using PL.PO;
+using PL.Products;
+using MaterialDesignThemes.Wpf;
 
 namespace PL.Admin
 {
@@ -19,7 +29,8 @@ namespace PL.Admin
 
         private void products_Click(object sender, RoutedEventArgs e)
         {
-            new ProductListForM_Window(bl).ShowDialog();
+            new ProductListForM_Window(bl).Show();
+          
         }
 
         private void Orders_Click(object sender, RoutedEventArgs e)

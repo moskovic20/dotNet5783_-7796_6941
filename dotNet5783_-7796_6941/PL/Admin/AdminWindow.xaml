@@ -7,12 +7,12 @@
         mc:Ignorable="d"
         Title="AdminWindow" Height="200" Width="300">
     <StackPanel Orientation="Vertical">
-        <Button x:Name="products" Content="עבור לרשימת הספרים בחנות" HorizontalAlignment="Stretch" Height="42" Click="products_Click">
+        <Button x:Name="products"   Style="{StaticResource MyButtonStyle_1}" Content="עבור לרשימת הספרים בחנות" HorizontalAlignment="Stretch" Height="42" Click="products_Click">
         </Button>
-        <Button  x:Name="Orders" Content="עבור לרשימת ההזמנות הקיימות" HorizontalAlignment="Stretch" Height="62"/>
+        <Button  x:Name="Orders"  Style="{StaticResource MyButtonStyle_1}"  Content="עבור לרשימת ההזמנות הקיימות" HorizontalAlignment="Stretch" Height="62"/>
         <StackPanel Orientation="Horizontal" Height="81">
-            <Button x:Name="NumOfVisitors" Content="מספר פניות" Width="85"/>
-            <Button x:Name="password" Content="שינוי סיסמה" Width="103"/>
+            <Button x:Name="NumOfVisitors"  Style="{StaticResource MyButtonStyle_1}" Content="מספר פניות" Width="85"/>
+            <Button x:Name="password"  Style="{StaticResource MyButtonStyle_1}" Content="שינוי סיסמה" Width="103"/>
         </StackPanel>
     </StackPanel>
 </Window>

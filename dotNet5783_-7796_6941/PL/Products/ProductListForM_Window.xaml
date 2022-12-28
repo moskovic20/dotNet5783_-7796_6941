@@ -24,7 +24,7 @@ VerticalAlignment="Stretch" Width="auto">
             </ComboBox>
 
         </Grid>
-        <Label x:Name="category" Content="Category :" HorizontalAlignment="Left" VerticalAlignment="Center" Width="394" Height="32" Background="#FFEFDFDF" FontFamily="Sitka Text" FontSize="20"/>
+        <Label x:Name="category" Content="Category :" HorizontalAlignment="Left" VerticalAlignment="Center" Width="394" Height="32" FontFamily="Sitka Text" FontSize="20"/>
         <DataGrid x:Name="Products_DateGrid"  AreRowDetailsFrozen="False"  ItemsSource="{Binding}" IsReadOnly="True" CanUserAddRows="False"  AlternatingRowBackground="#FFFFF3E5" AlternationCount="2" HorizontalAlignment="Center" Margin="0,2,0,36" Grid.RowSpan="2" Width="780" Grid.Row="1" MouseDoubleClick="Products_DateGrid_MouseDoubleClick" Background="{x:Null}">
             <DataGrid.Columns >
                 <DataGridTextColumn Header=" מחיר"    
@@ -41,27 +41,10 @@ VerticalAlignment="Stretch" Width="auto">
                                     Width="150"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button  Name="addButton" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="673,0,0,0" Padding="5" Click="addButton_Click" Height="28" VerticalAlignment="Center">
-            <Button.Background>
-                <LinearGradientBrush>
-                    <GradientStop Color="pink"
-                        Offset="0" />
-                    <GradientStop Color= "Azure"
-                        Offset="1" />
-                </LinearGradientBrush>
-            </Button.Background>
+        <Button  Name="addButton"  Style="{StaticResource MyButtonStyle_1}" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="622,0,0,0" Padding="5" Click="addButton_Click" Height="28" VerticalAlignment="Center">
 
         </Button>
-        <Button  x:Name="UpdatButton" Content="Update Product"  IsEnabled="False" Grid.Row="2" HorizontalAlignment="Left" Margin="539,0,0,5" Padding="5" Click="UpdatButton_Click" Height="28" VerticalAlignment="Bottom">
-            <Button.Background>
-                <LinearGradientBrush>
-                    <GradientStop Color="pink"
-                        Offset="0" />
-                    <GradientStop Color= "Azure"
-                        Offset="1" />
-                </LinearGradientBrush>
-            </Button.Background>
-
+        <Button  x:Name="UpdatButton" Style="{StaticResource MyButtonStyle_1}" Content="Update Product"  IsEnabled="False" Grid.Row="2" HorizontalAlignment="Left" Margin="449,0,0,0" Padding="5" Click="UpdatButton_Click" Height="28" VerticalAlignment="Center">
         </Button>
     </Grid>
 

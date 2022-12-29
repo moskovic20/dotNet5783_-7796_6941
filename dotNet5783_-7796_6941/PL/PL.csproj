@@ -25,4 +25,11 @@
     <Folder Include="PlEntity\Order\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="PlEntity\Products\ProductListForM_Window.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
 </Project>

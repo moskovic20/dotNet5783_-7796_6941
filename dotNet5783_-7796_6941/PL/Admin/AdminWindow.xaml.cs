@@ -9,7 +9,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.PO;
-using PL.Products;
 using MaterialDesignThemes.Wpf;
 
 namespace PL.Admin

@@ -1,5 +1,4 @@
 ﻿using BlApi;
-using PL.Order;
 using PL.Products;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,9 +32,9 @@ namespace PL.Admin
           
         }
 
-        private void Orders_Click(object sender, RoutedEventArgs e)
-        {
-            new OrderForLstWindow(bl).Show();
-        }
+        //private void Orders_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //new OrderForLstWindow(bl).Show();
+        //}
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PL.PO;
+﻿namespace PL.PO;
 
 public enum Hebrew_CATEGORY
 {
@@ -15,5 +9,7 @@ public enum CATEGORY
 {
     mystery, fantasy, history, scinence, childen, romans, cookingAndBaking, psychology, Kodesh, all
 }
+
+public enum OrderStatus { Pending = 1 /*ממתין ל*/ , Processing /*מעבד*/ , Completed /*הושלם*/ }
 
 

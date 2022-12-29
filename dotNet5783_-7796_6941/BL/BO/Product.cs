@@ -1,9 +1,4 @@
 ﻿using BlApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BO;
 
@@ -42,7 +37,7 @@ public class Product
     /// <summary>
     /// Path for image to product
     /// </summary>
-    public string? Path { get; set; }
+    public string? ProductImagePath { get; set; }
 
     /// <summary>
     /// כמות המלאי של המוצר

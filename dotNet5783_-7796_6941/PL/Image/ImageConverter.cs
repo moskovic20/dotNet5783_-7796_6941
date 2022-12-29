@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
 
-using System.IO;
-
-namespace PL.BoProducts;
+namespace PL.Image;
 
 class ImageConverter : IValueConverter
 {
@@ -24,7 +19,7 @@ class ImageConverter : IValueConverter
             Console.WriteLine(b.DpiX);
             return b;
         }
-        catch (Exception )
+        catch (Exception)
         {
             return new BitmapImage(new Uri(@"images\passport\empty_image.gif", UriKind.RelativeOrAbsolute));
         }

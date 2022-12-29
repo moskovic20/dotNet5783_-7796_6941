@@ -1,9 +1,5 @@
 ﻿using BlApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PL.Products;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,7 +9,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.PO;
-using PL.Products;
 using MaterialDesignThemes.Wpf;
 
 namespace PL.Admin
@@ -35,5 +30,10 @@ namespace PL.Admin
             new ProductListForM_Window(bl).Show();
           
         }
+
+        //private void Orders_Click(object sender, RoutedEventArgs e)
+        //{
+        //    //new OrderForLstWindow(bl).Show();
+        //}
     }
 }

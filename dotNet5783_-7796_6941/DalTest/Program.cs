@@ -1,12 +1,5 @@
 ﻿using Do;
-using DalApi;
-using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Diagnostics;
-using System;
 using DO;
-using Dal;
-using System.Collections.Specialized;
 
 namespace Dal;
 
@@ -122,7 +115,7 @@ class Program
                         p.Category = (CATEGORY)category;
 
                         id = DL.Product.Add(p);
-                        
+
                         Console.WriteLine("\n the id of this product is: {0}\n", id);
 
                         break;
@@ -597,7 +590,7 @@ d: to finish the update");
                         listOrderItems = (List<OrderItem?>)DL.OrderItem.GetListByOrderID(id);
                         foreach (OrderItem? item in listOrderItems)
                         {
-                            Console.WriteLine("\n" + item); 
+                            Console.WriteLine("\n" + item);
                         }
 
                         #endregion

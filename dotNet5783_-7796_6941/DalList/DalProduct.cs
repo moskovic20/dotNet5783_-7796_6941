@@ -1,7 +1,5 @@
-﻿using Do;
-using DalApi;
-using System.Collections.Generic;
-using System.Text;
+﻿using DalApi;
+using Do;
 
 namespace Dal;
 
@@ -38,10 +36,10 @@ internal class DalProduct : IProduct
 
     public int Add(Product P)
     {
-        List<Product?> listOfThisID = _DS._Products.FindAll(x => x?.ID == P.ID );
+        List<Product?> listOfThisID = _DS._Products.FindAll(x => x?.ID == P.ID);
         int indexOfExist = listOfThisID.FindIndex(x => x?.IsDeleted != true);
 
-        if(indexOfExist == -1)
+        if (indexOfExist == -1)
         {
             _DS._Products.Add(P);
             return P.ID;

@@ -1,9 +1,4 @@
 ﻿using BlApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BO;
 
@@ -15,27 +10,27 @@ public class Cart
     /// <summary>
     /// שם הלקוח
     /// </summary>
-    public string? CustomerName { get; set;}
+    public string? CustomerName { get; set; }
 
     /// <summary>
     /// כתובת האימייל של הלקוח
     /// </summary>
-    public string? CustomerEmail { get; set;}
+    public string? CustomerEmail { get; set; }
 
     /// <summary>
     /// הכתובת של הקונה
     /// </summary>
-    public string? CustomerAddress { get; set;}
+    public string? CustomerAddress { get; set; }
 
     /// <summary>
     /// רשימת הפריטים בהזמנה
     /// </summary>
-    public List<OrderItem>? Items { get; set;}
+    public List<OrderItem>? Items { get; set; }
 
     /// <summary>
     /// המחיר הכולל של ההזמנה
     /// </summary>
-    public double?  TotalPrice { get; set;}
+    public double? TotalPrice { get; set; }
 
     public override string ToString()
     {

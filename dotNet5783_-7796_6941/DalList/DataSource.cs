@@ -1,5 +1,4 @@
 ﻿using Do;
-using DalApi;
 using DO;
 
 namespace Dal;
@@ -7,8 +6,8 @@ namespace Dal;
 public class DataSource
 {
     static readonly Random R = new Random();
-    
-    private static DataSource? instance ;
+
+    private static DataSource? instance;
 
     private static readonly object key = new(); //Thread Safe
 
@@ -62,34 +61,53 @@ public class DataSource
 
     private void CreateProducts()
     {
-        string[] NameOfBook = { "Harry Poter", "Anne of Green Gables", "Bible", "aya Pluto",
+        Dictionary<string, CATEGORY> categories = Enum.GetValues(typeof(CATEGORY)).Cast<CATEGORY>()
+            .ToDictionary(name => name.ToString(), value => value);
+
+        //CATEGORY c = CATEGORY.fantasy;
+
+        IEnumerable<(CATEGORY, IEnumerable<string>)> productNames = Directory.EnumerateDirectories(@"images\productImages\")
+            .Select(folderName => (categories[folderName.Split(@"\").Last()],
+            Directory.EnumerateFiles(folderName).Select(n => n.Split(@"\").Last())));
+
+        string[] NameOfBook = { "Harry Potter", "Bible", "tanach", "Anne of Green Gables", "aya Pluto",
             "Raspberry juice", "Tell no one","the candidate","Alone in the battle","the giver","Broken Heart" };
         string[] NamesOfWriters = { "jeik.r", "mor.s", "noaa.f", "gaie.g", "noi.a", "doni.j", "rom.k" };
 
-        for (int i = 0; i < 10; i++)
+        int i = 0;
+
+        foreach (var category in productNames)
         {
-            Product myP = new Product
+            foreach (var name in category.Item2)
             {
-                ID = R.Next(100000, 999999999),
-                Price = (i>2)? R.Next(40, 150): null,
-                NameOfBook = NameOfBook[i],
-                AuthorName = NamesOfWriters[R.Next(0, 7)],
-                Category = (CATEGORY) R.Next(0, 9),
-                InStock = (i != 0) ? R.Next(20, 100) : 0,
 
-            };
+                Product myP = new Product
+                {
+                    ID = R.Next(100000, 999999999),
+                    Price = R.Next(40, 150),
+                    NameOfBook = name.Split('.').First(),
+                    AuthorName = NamesOfWriters[R.Next(0, 7)],
+                    Category = category.Item1,
+                    InStock = (i != 0) ? R.Next(20, 100) : 0,
+                    ProductImagePath = $@"\images\productImages\{category.Item1.ToString()}\{name}"
+                };
+                i++;
+                #region Makes sure id is unique
+                int pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
 
-            #region Makes sure id is unique
-            int pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
+                while (pWithTheSameId != -1)//To make sure this ID is unique.
+                {
+                    myP.ID = R.Next(100000, 999999999);
+                    pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
+                }
+                #endregion
 
-            while (pWithTheSameId !=-1)//To make sure this ID is unique.
-            {
-                myP.ID = R.Next(100000, 999999999);
-                pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
+                _Products.Add(myP);
             }
-            #endregion
 
-            _Products.Add(myP);
+
+
+
 
         }
     }
@@ -129,7 +147,7 @@ public class DataSource
 
         for (int i = 1; i < 21; i++)
         {
-            int _orderId = Config.s_startOrderNumber+i;
+            int _orderId = Config.s_startOrderNumber + i;
             int numOfItems = R.Next(1, 5);
             for (int j = 0; j < numOfItems; j++)
             {

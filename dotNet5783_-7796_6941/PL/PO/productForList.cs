@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace PL.PO
 {
-    public class ProductForList: INotifyPropertyChanged
+    public class ProductForList : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -81,7 +76,7 @@ namespace PL.PO
         public override string ToString()
         {
             return string.Format("ID: {0}, NameOfBook : {1}, Price: {2},Category:{3}",
-              ID,NameOfBook,Price,Category.ToString());
+              ID, NameOfBook, Price, Category.ToString());
         }
     }
 }

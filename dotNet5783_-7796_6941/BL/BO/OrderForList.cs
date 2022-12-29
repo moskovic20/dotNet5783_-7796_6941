@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
+﻿using BlApi;
 namespace BO;
 
 public class OrderForList
@@ -31,7 +26,7 @@ public class OrderForList
     /// <summary>
     /// מחיר סופי של ההזמה
     /// </summary>
-    public  double TotalPrice { get; set; }
+    public double TotalPrice { get; set; }
 
     public override string ToString()
     {

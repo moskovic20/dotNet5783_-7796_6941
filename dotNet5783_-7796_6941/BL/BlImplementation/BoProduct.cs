@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
+﻿using BlApi;
 
 
 namespace BlImplementation;
@@ -218,4 +211,3 @@ internal class BoProduct : IProduct
                 select doProduct.CopyPropTo(new BO.ProductForList())).ToList();
     }
 }
-  

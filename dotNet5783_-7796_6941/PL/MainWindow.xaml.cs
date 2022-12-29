@@ -40,24 +40,13 @@
 //}
 
 using BlApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using PL.BoProducts;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Collections.ObjectModel;
-using PL.PO;
 using PL.Admin;
-using PL.Image;
+using PL.PO;
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace PL;
 
@@ -67,21 +56,29 @@ namespace PL;
 public partial class MainWindow : Window
 {
     private IBl bl;
+    //private ObservableCollection<Product> products;
+    private Product pForShow;
+    private ObservableCollection<Product> allBooksForShow;
     public MainWindow()
     {
         InitializeComponent();
         this.bl = BlApi.Factory.GetBl();
         //this.cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
 
-        this.TvBox.ItemsSource = new BookData[]
-        {
-            new BookData{Title="Movie 1", ImageData=LoadImage("booksForBeakRound.jpg.")},
-            new BookData{Title="Movie 2", ImageData=LoadImage("booksForBeakRound.jpg")},
-            new BookData{Title="Movie 3", ImageData=LoadImage("booksForBeakRound.jpg")},
-            new BookData{Title="Movie 4", ImageData=LoadImage("booksForBeakRound.jpg")},
-            new BookData{Title="Movie 5", ImageData=LoadImage("booksForBeakRound.jpg")},
-            new BookData{Title="Movie 6", ImageData=LoadImage("booksForBeakRound.jpg")}
-        };
+        //this.TvBox.ItemsSource = new BookData[]
+        //{
+        //    new BookData{Title="Movie 1", ImageData=LoadImage("booksForBeakRound.jpg.")},
+        //    new BookData{Title="Movie 2", ImageData=LoadImage("booksForBeakRound.jpg")},
+        //    new BookData{Title="Movie 3", ImageData=LoadImage("booksForBeakRound.jpg")},
+        //    new BookData{Title="Movie 4", ImageData=LoadImage("booksForBeakRound.jpg")},
+        //    new BookData{Title="Movie 5", ImageData=LoadImage("booksForBeakRound.jpg")},
+        //    new BookData{Title="Movie 6", ImageData=LoadImage("booksForBeakRound.jpg")}
+        //};
+
+        allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.copyProductForListToPoProduct()));
+
+        this.DataContext = pForShow;//?
+        this.TvBox.ItemsSource = allBooksForShow;
 
     }
 

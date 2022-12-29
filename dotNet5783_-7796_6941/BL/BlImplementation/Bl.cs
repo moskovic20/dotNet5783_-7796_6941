@@ -28,7 +28,7 @@ sealed internal class Bl : IBl//from public to internul...ok?
 
     internal Bl() { }
 
-    public IOrder BoOrder {  get; } = new BoOrder();
+    public IOrder BoOrder { get; } = new BoOrder();
 
     public IProduct BoProduct { get; } = new BoProduct();
 

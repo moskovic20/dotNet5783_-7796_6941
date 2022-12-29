@@ -1,17 +1,11 @@
 ﻿using DalApi;
-using Do;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dal;
 
 sealed internal class DalList : IDal
 {
 
-    private static DalList? instance ;
+    private static DalList? instance;
 
     private static readonly object key = new(); //Thread Safe
 
@@ -31,7 +25,7 @@ sealed internal class DalList : IDal
             return instance;
         }
     }
- 
+
     static DalList() { }
     private DalList() { }
     public IOrder Order { get; } = new DalOrder();

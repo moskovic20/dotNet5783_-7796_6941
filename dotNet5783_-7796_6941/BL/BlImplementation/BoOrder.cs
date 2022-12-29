@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
+﻿using BlApi;
 
 namespace BlImplementation;
 
@@ -17,7 +11,7 @@ internal class BoOrder : IOrder
     private static void datePosibleExceptiones(Do.Order? or)
     {
 
-      
+
 
 
         //----------------לא נכון בשלב שכבה זו לבדוק כאלה חריגות---------------------
@@ -45,7 +39,7 @@ internal class BoOrder : IOrder
         try
         {
             var orderList = from O in dal.Order.GetAll()
-                           let p = O.GetValueOrDefault()
+                            let p = O.GetValueOrDefault()
                             select new BO.OrderForList()
                             {
                                 OrderID = p.ID,
@@ -80,12 +74,12 @@ internal class BoOrder : IOrder
             order = myOrder.CopyPropTo(order);
             order.Status = myOrder.calculateStatus();
             order.PaymentDate = myOrder.DateOrder;//should be nullable?                                  
-            var tempItems = dal.OrderItem.GetListByOrderID(myOrder.ID);            
+            var tempItems = dal.OrderItem.GetListByOrderID(myOrder.ID);
             order.Items = tempItems.Select(x => x.ListFromDoToBo()).ToList();//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
             return order;
-            
-         
+
+
         }
         catch (Do.DoesntExistException ex)
         {

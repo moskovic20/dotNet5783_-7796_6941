@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using PL.PO;
 using BO;
+using Do;
 
 namespace PL.Products;
 
@@ -32,12 +33,29 @@ public partial class ProductListForM_Window : Window
         InitializeComponent();
         this.bl = bl;
 
-        allBooks = new();
-        allBooks = allBooks.ToObserCollection_P();
+        allBooks = new ObservableCollection<ProductForList>(bl.BoProduct.GetAllProductForList_forM());
         DataContext = allBooks;
-
+        allBooks.CollectionChanged += AllBooks_CollectionChanged;
     }
 
+    private void AllBooks_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                break;
+            case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                break;
+            case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
+                break;
+            case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
+                break;
+            case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+                break;
+            default:
+                break;
+        }
+    }
 
     //private void categoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
     //{
@@ -52,8 +70,9 @@ public partial class ProductListForM_Window : Window
     #region אירוע-לחציה על כפתור הוסף ספר
     private void addButton_Click(object sender, RoutedEventArgs e)
     {
-        new AddProductForM_Window(bl, allBooks).ShowDialog();
-        allBooks = allBooks.ToObserCollection_P();
+        Action<int> action = productId => allBooks.Add(bl.BoProduct.GetProductForList(productId));
+        new AddProductForM_Window(bl, action).ShowDialog();
+        //allBooks = allBooks.ToObserCollection_P();
     }
     #endregion
 
@@ -61,7 +80,7 @@ public partial class ProductListForM_Window : Window
     private void UpdatButton_Click(object sender, RoutedEventArgs e)
     {
         new UpdatProductForM_Window(bl,(ProductForList)Products_DateGrid.SelectedItem).ShowDialog();
-        allBooks= allBooks.ToObserCollection_P();
+        
     }
     #endregion
 

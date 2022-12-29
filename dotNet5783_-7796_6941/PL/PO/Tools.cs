@@ -135,15 +135,10 @@ namespace PL.PO
 
         #endregion
 
-        public static ObservableCollection<ProductForList> ToObserCollection_P(this ObservableCollection<ProductForList> allBooks)
-        {
-            allBooks.Clear();
-
-            foreach (BO.ProductForList Book in bl.BoProduct.GetAllProductForList_forM())
-                allBooks.Add(Book);
-
-            return allBooks;
-        }
+        //public static ObservableCollection<ProductForList> ToObserCollection_P(this ObservableCollection<ProductForList> allBooks)
+        //{
+        //    return new ObservableCollection<ProductForList>(bl.BoProduct.GetAllProductForList_forM());
+        //}
 
 
         //___________________________________________orderTools__________________________________________________________

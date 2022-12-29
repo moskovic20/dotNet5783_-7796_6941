@@ -81,7 +81,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="54,102,28,1">
-            <TextBox x:Name="AddP_ID_textBox" PreviewTextInput="PreviewTextInput" MaxLength="9" Text="{Binding ID, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Height="30" Width="215" GotFocus="AddP_ID_textBox_GotFocus" LostFocus="AddP_ID_textBox_LostFocus" />
+            <TextBox x:Name="AddP_ID_textBox" PreviewTextInput="PreviewTextInput" MaxLength="9" Text="{Binding ID, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Height="30" Width="215" GotFocus="AddP_ID_textBox_GotFocus" LostFocus="AddP_ID_textBox_LostFocus"  />
             <Label Content=":מספר מזהה"  Width="74"/>
             <Label Foreground="Red" Content="*" Height="24" Width="25" RenderTransformOrigin="0.494,-0.763" HorizontalContentAlignment="Right" FontSize="16" VerticalAlignment="Top" >
                 <Label.RenderTransform>
@@ -109,6 +109,7 @@
             <Label Content=":תקציר"  Width="303" HorizontalContentAlignment="Right"/>
             <TextBox Text="{Binding Summary, Mode=TwoWay}"  AcceptsReturn="True" Width="304" TextAlignment="Right" Height="86"/>
         </StackPanel>
+        <Button Grid.Column="1" Content="Button" HorizontalAlignment="Left" Margin="358,219,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Button_Click"/>
 
     </Grid>
 </Window>

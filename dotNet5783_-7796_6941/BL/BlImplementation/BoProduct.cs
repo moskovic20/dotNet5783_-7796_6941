@@ -1,5 +1,5 @@
 ﻿using BlApi;
-
+using BO;
 
 namespace BlImplementation;
 
@@ -85,6 +85,11 @@ internal class BoProduct : IProduct
         {
             throw new BO.GetDetails_Exception("Can't get this product", ex);
         }
+    }
+
+    public ProductForList GetProductForList(int productId)
+    {
+        return dal.Product.GetById(productId).CopyPropTo(new ProductForList());
     }
 
     public int AddProduct_forM(BO.Product productToAdd)
@@ -210,4 +215,6 @@ internal class BoProduct : IProduct
         return (from Do.Product doProduct in doProductList
                 select doProduct.CopyPropTo(new BO.ProductForList())).ToList();
     }
+
+
 }

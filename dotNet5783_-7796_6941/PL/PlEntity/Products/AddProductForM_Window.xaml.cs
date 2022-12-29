@@ -8,6 +8,10 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using BO;
+using System.Windows.Data;
+using Microsoft.Win32;
+using System.Linq;
+using System.IO;
 
 namespace PL.Products
 {
@@ -18,13 +22,13 @@ namespace PL.Products
     {
         private IBl bl;
         PO.Product productToAdd;
-        ObservableCollection<ProductForList> allBooks;
 
-        public AddProductForM_Window(IBl bl, ObservableCollection<ProductForList> allBooks)
+        Action<int> action;
+        public AddProductForM_Window(IBl bl, Action<int> action)
         {
             InitializeComponent();
             this.bl = bl;
-            this.allBooks = allBooks;
+            this.action = action;
 
             productToAdd = new PO.Product();
             this.DataContext = productToAdd;
@@ -47,9 +51,13 @@ namespace PL.Products
                 if (AddP_categ_commbbox.SelectedItem == null)
                     throw new Exception("הכנס את קטגוריית הספר");
 
-
+                //if (!string.IsNullOrWhiteSpace(productToAdd.productImagePath))
+                //{
+                //    string[] s = productToAdd.productImagePath.Split("\\");
+                //    File.Move(productToAdd.productImagePath,)
+                //}
                 int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
-                allBooks.Add(productToAdd.copyProductToBoPFL());
+                action(newID);
                 MessageBox.Show("!הספר נוסף בהצלחה");
 
                 productToAdd = new PO.Product();
@@ -102,8 +110,20 @@ namespace PL.Products
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
         }
+
         #endregion
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            //openFileDialog.Filter
+            //openFileDialog.InitialDirectory
+            bool check = openFileDialog.ShowDialog() ?? false;
+            if (check)
+            {
+                productToAdd.ProductImagePath = openFileDialog.FileName;
+            }
 
+        }
     }
 }

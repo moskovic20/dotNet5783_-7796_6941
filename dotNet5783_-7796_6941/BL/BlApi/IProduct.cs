@@ -12,8 +12,8 @@ public interface IProduct
     ProductItem GetProductDetails_forC(int id, Cart cart);
     void DeleteProductByID_forM(int id);
     void UpdateProductDetails_forM(BO.Product product);
-
-    public IEnumerable<BO.ProductForList?> GetListedProducts(BO.Filters enumFilter = BO.Filters.None, Object? filterValue = null);
+     ProductForList GetProductForList(int productId);
+     IEnumerable<BO.ProductForList?> GetListedProducts(BO.Filters enumFilter = BO.Filters.None, Object? filterValue = null);
 
     // IEnumerable<ProductForList> GetProductDetails_forM();
 }

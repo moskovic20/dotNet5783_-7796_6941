@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Admin"
         mc:Ignorable="d"
-        Title="AdminWindow" Height="200" Width="300">
+        Title="AdminWindow" Height="200" Width="350">
     <StackPanel Orientation="Vertical">
         <Button x:Name="products"   Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="עבור לרשימת הספרים בחנות" HorizontalAlignment="Stretch" Height="42" Click="products_Click">
         </Button>
         <Button  x:Name="Orders"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="עבור לרשימת ההזמנות הקיימות" HorizontalAlignment="Stretch" Height="62" Click="Orders_Click"/>
-        <StackPanel Orientation="Horizontal" Height="81">
-            <Button x:Name="NumOfVisitors"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="מספר פניות" Width="85"/>
-            <Button x:Name="password"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="שינוי סיסמה" Width="103"/>
+        <StackPanel Orientation="Horizontal" Height="80" >
+            <Button x:Name="NumOfVisitors"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="מספר פניות" HorizontalAlignment="Stretch"/>
+            <Button x:Name="password"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="שינוי סיסמה"  HorizontalAlignment="Stretch"/>
         </StackPanel>
     </StackPanel>
 </Window>

@@ -81,7 +81,7 @@ namespace BLTest
 
                             Console.Write("ProductImagePath for picture: ");
                             s = Console.ReadLine()!;
-                            newProduct.Path = (s != "") ? s : null;
+                            newProduct.ProductImagePath = (s != "") ? s : null;
 
                             Console.WriteLine(bl.BoProduct.AddProduct_forM(newProduct));
                             break;
@@ -302,16 +302,31 @@ namespace BLTest
                             break;
 
                         case 'e': //update order
-                                  //int orderID, productID, newAmount;
-                                  //Console.Write("Please insert an order ID: ");
-                                  //if (!(int.TryParse(Console.ReadLine(), out orderID) && orderID > 0)) throw new InvalidDataException();
-                                  //Order order = bl.BoOrder.GetOrdertDetails(orderID);
-                                  //Console.WriteLine(order);
-                                  //Console.Write("Please insert a product ID: ");
-                                  //if (!(int.TryParse(Console.ReadLine(), out productID) && productID >= 100000)) throw new InvalidDataException();
-                                  //Console.Write("Please insert a new amount: ");
-                                  //if (!(int.TryParse(Console.ReadLine(), out newAmount) && integer >= 0)) throw new InvalidDataException();                       
-                                  //bl.BoOrder.UpdateOrder(orderID/*, productID, newAmount*/);
+                            //int orderID/*, productID, newAmount*/;
+
+
+                            //Console.Write("Please insert an order ID: ");
+                            //if (!(int.TryParse(Console.ReadLine(), out orderID) && orderID > 0)) throw new InvalidDataException();
+                            //Order order = bl.BoOrder.GetOrdertDetails(orderID);
+                            //Console.WriteLine(order);
+                            //Console.WriteLine(@"Please choose one of the following options:\n" +
+                            //                 "0. return to menu\n" +
+                            //                 "a. Changing the customer's email address\n" +
+                            //                 "b. Change order destination address\n" +
+                            //                 "c. Changing the quantity of products in the order\n");
+                            //char op;
+                            //bool orOption = char.TryParse(Console.ReadLine(), out op);
+                            //switch(op){
+                            //    case 0:
+                            //        break;
+                            //}
+
+
+                            //Console.Write("Please insert a product ID: ");
+                            //if (!(int.TryParse(Console.ReadLine(), out productID) && productID >= 100000)) throw new InvalidDataException();
+                            //Console.Write("Please insert a new amount: ");
+                            //if (!(int.TryParse(Console.ReadLine(), out newAmount) && integer >= 0)) throw new InvalidDataException();                       
+                            //bl.BoOrder.UpdateOrder(orderID/*, productID, newAmount*/);
                             Console.WriteLine("not redy for that option yet....:):)");
                             break;
 

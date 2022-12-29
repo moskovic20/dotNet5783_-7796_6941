@@ -22,8 +22,9 @@ namespace PL.Products
     {
         private IBl bl;
         PO.Product productToAdd;
-
         Action<int> action;
+
+
         public AddProductForM_Window(IBl bl, Action<int> action)
         {
             InitializeComponent();

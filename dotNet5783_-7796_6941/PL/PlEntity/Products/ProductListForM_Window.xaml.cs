@@ -15,7 +15,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using PL.PO;
-using BO;
 using Do;
 
 namespace PL.Products;
@@ -26,14 +25,23 @@ namespace PL.Products;
 public partial class ProductListForM_Window : Window
 {
     private IBl bl;
-    private ObservableCollection<ProductForList> allBooks;
+    private ObservableCollection<PO.ProductForList> allBooks;
 
     public ProductListForM_Window(IBl bl)
     {
         InitializeComponent();
         this.bl = bl;
 
-        allBooks = new ObservableCollection<ProductForList>(bl.BoProduct.GetAllProductForList_forM());
+        var list = from p in bl.BoProduct.GetAllProductForList_forM()
+                   select new PO.ProductForList
+                   {
+                       ID = p.ID,
+                       NameOfBook = p.NameOfBook,
+                       Price = p.Price,
+                       Category = (PO.CATEGORY)p.Category
+                   };
+
+        allBooks = new ObservableCollection<PO.ProductForList>(list);
         DataContext = allBooks;
         allBooks.CollectionChanged += AllBooks_CollectionChanged;
     }
@@ -70,16 +78,24 @@ public partial class ProductListForM_Window : Window
     #region אירוע-לחציה על כפתור הוסף ספר
     private void addButton_Click(object sender, RoutedEventArgs e)
     {
-        Action<int> action = productId => allBooks.Add(bl.BoProduct.GetProductForList(productId));
+        Action<int> action = productId => allBooks.Add(bl.BoProduct.GetProductForList(productId).CopyBoPflToPoPfl());
         new AddProductForM_Window(bl, action).ShowDialog();
-        //allBooks = allBooks.ToObserCollection_P();
     }
     #endregion
 
     #region אירוע- לחיצה על כפתור עדכון ספר
     private void UpdatButton_Click(object sender, RoutedEventArgs e)
     {
-        new UpdatProductForM_Window(bl,(ProductForList)Products_DateGrid.SelectedItem).ShowDialog();
+        Action<int> updateAction = (ProductID)=>
+        {
+            PO.ProductForList p = bl.BoProduct.GetProductForList(ProductID).CopyBoPflToPoPfl();
+            PO.ProductForList P_BeforUp = allBooks.FirstOrDefault(x=>x.ID==p.ID)!;
+            P_BeforUp.Price = p.Price; //עדכנו שדה שדה,לבדוק אם יש דרך חכמה יותר
+            P_BeforUp.Category = p.Category;
+            P_BeforUp.NameOfBook = p.NameOfBook;
+        };
+
+        new UpdatProductForM_Window(bl,(ProductForList)Products_DateGrid.SelectedItem,updateAction).ShowDialog();
         
     }
     #endregion

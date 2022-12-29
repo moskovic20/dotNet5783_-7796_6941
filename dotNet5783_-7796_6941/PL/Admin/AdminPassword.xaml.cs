@@ -39,7 +39,7 @@ namespace PL.Admin
 
         private void EnterPassword()
         {
-            if (PasswordBox.Password == "1234")
+            if (PasswordBox.Password == "1")
             {
                 AdminWindow homeManager = new(bl);
                 PasswordBox.Password = "";

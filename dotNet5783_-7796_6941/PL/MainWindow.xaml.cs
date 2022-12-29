@@ -75,7 +75,7 @@ public partial class MainWindow : Window
         //    new BookData{Title="Movie 6", ImageData=LoadImage("booksForBeakRound.jpg")}
         //};
 
-        allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.copyPflToPoProduct()));
+        allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.CopyPflToPoProduct()));
 
         this.DataContext = pForShow;//?
         this.TvBox.ItemsSource = allBooksForShow;

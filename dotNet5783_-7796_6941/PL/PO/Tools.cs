@@ -1,6 +1,10 @@
 ﻿using BlApi;
 using System.Collections.ObjectModel;
 using BO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System;
 
 namespace PL.PO
 {
@@ -8,8 +12,58 @@ namespace PL.PO
     {
         private static IBl bl = BlApi.Factory.GetBl();
 
+
+        public static Target CopyPropTo<Source, Target>(this Source source, Target target)
+        {
+            Dictionary<string, PropertyInfo> propertyInfoTarget = target!.GetType().GetProperties()
+                .ToDictionary(key => key.Name, value => value);
+
+            IEnumerable<PropertyInfo> propertyInfoSource = source!.GetType().GetProperties();
+
+            foreach (var item in propertyInfoSource)
+            {
+                if (propertyInfoTarget.ContainsKey(item.Name) && (item.PropertyType == typeof(string) || !item.PropertyType.IsClass))
+                {
+                    Type typeSource = Nullable.GetUnderlyingType(item.PropertyType)!;
+                    Type typeTarget = Nullable.GetUnderlyingType(propertyInfoTarget[item.Name].PropertyType)!;
+
+                    object value = item.GetValue(source)!;
+
+                    if (value is not null)
+                    {
+                        if (propertyInfoTarget[item.Name].PropertyType == item.PropertyType || item.PropertyType.IsEnum)
+                            propertyInfoTarget[item.Name].SetValue(target, value);
+
+                        else if (typeSource is not null && typeTarget is not null)
+                            value = Enum.ToObject(typeTarget, value);
+                    }
+                }
+            }
+
+
+            return target;
+        }
+
+        public static IEnumerable<Target> CopyListTo<Source, Target>(this IEnumerable<Source> sources) where Target : new()
+   => from source in sources
+      select source.CopyPropTo(new Target());
+
         //________________________________________productTools__________________________________________________________
 
+        internal static PO.ProductForList CopyBoPflToPoPfl(this BO.ProductForList p)
+        {
+
+            PO.ProductForList product = new ()
+            {
+                ID = p.ID,
+                NameOfBook = p.NameOfBook,
+                Price = p.Price,
+                Category = (PO.CATEGORY)p.Category
+
+            };
+
+            return product;
+        }
 
         #region convert from PO.Product to BO.Product and vice versa
 
@@ -52,7 +106,7 @@ namespace PL.PO
 
         #region convert from BO.ProductForList to PO.Product and vice versa
 
-        internal static PO.Product copyPflToPoProduct(this BO.ProductForList pfl)
+        internal static PO.Product CopyPflToPoProduct(this BO.ProductForList pfl)
         {
             BO.Product productBO = bl.BoProduct.GetProductDetails_forM(pfl.ID);
 
@@ -72,9 +126,9 @@ namespace PL.PO
             return product;
         }
 
-        internal static BO.ProductForList copyProductToBoPFL(this PO.Product p)
+        internal static BO.ProductForList CopyProductToBoPFL(this PO.Product p)
         {
-            ProductForList myNewPFL = new ProductForList()
+            BO.ProductForList myNewPFL = new BO.ProductForList()
             {
                 NameOfBook = p.NameOfBook,
                 ID = p.ID,

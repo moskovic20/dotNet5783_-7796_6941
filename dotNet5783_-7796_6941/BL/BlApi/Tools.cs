@@ -143,6 +143,7 @@ public static class Tools
     }
     #endregion
 
+    #region בדיקת תקינות קלט עבור כתובת אימייל
     public static bool IsValidEmail(this string email)
     {
         if (string.IsNullOrWhiteSpace(email))
@@ -186,7 +187,9 @@ public static class Tools
             return false;
         }
     }
+    #endregion
 
+    #region בדיקת זמינות של מוצרים
     public static bool ValidationChecks(this BO.OrderItem item)
     {
         Do.Product product = dal.Product.GetById(item.ProductID);
@@ -199,5 +202,5 @@ public static class Tools
 
         return true;
     }
-
+    #endregion
 }

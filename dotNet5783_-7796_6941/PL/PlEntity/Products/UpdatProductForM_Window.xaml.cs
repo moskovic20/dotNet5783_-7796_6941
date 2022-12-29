@@ -12,7 +12,6 @@ using System.Windows.Shapes;
 using PL.PO;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-using BO;
 
 namespace PL.Products
 {
@@ -24,12 +23,14 @@ namespace PL.Products
         private IBl bl;
         private PO.Product productToUpdate;
         private PO.Product? beforUpdate;
+        Action<int> action;
 
 
-        public UpdatProductForM_Window(IBl bl, ProductForList pToUp)
+        public UpdatProductForM_Window(IBl bl, ProductForList pToUp, Action<int> action)
         {
             InitializeComponent();
             this.bl = bl;
+            this.action=action;
 
             productToUpdate = new();
             productToUpdate = bl.BoProduct.GetProductDetails_forM(pToUp.ID).copyProductToPo();
@@ -56,6 +57,7 @@ namespace PL.Products
                     throw new Exception("הכנס את קטגוריית הספר");
 
                 bl.BoProduct.UpdateProductDetails_forM(productToUpdate.CopyProductToBO());
+                action(productToUpdate.ID);
                 MessageBox.Show("!הספר עודכן בהצלחה");
 
                 this.Close();

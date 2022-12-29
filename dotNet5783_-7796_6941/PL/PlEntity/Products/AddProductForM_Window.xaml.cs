@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using BO;
 
 namespace PL.Products
 {
@@ -48,12 +49,7 @@ namespace PL.Products
 
 
                 int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
-
-                //if(newID!=productToAdd.ID)
-                //    MessageBox.Show("!הספר בוצע בהצלחה"+"\n:שים לב- עקב כפילות של מספר המוצר מעתה מספר המוצר יהיה"+newID, "מזהה כפול", MessageBoxButton.OK, MessageBoxImage.Information);
-               
-                
-                allBooks.Add(productToAdd.copyProductToPFL());
+                allBooks.Add(productToAdd.copyProductToBoPFL());
                 MessageBox.Show("!הספר נוסף בהצלחה");
 
                 productToAdd = new PO.Product();

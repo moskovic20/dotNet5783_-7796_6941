@@ -19,7 +19,7 @@ internal class BoProduct : IProduct
         if (products.Count() == 0)
             throw new BO.GetAllForList_Exception("There are no products");
 
-        return products.CopyListTo<Do.Product?, BO.ProductForList>().ToList();
+        return products.CopyListTo<Do.Product?, BO.ProductForList>();
     }
 
     /// <summary>
@@ -34,7 +34,7 @@ internal class BoProduct : IProduct
         if (products.Count() == 0)
             throw new BO.GetAllForList_Exception("There are no products");
 
-        return products.CopyListTo<Do.Product?, BO.ProductForList>().ToList();
+        return products.CopyListTo<Do.Product?, BO.ProductForList>();
     }
 
     public BO.Product GetProductDetails_forM(int id)

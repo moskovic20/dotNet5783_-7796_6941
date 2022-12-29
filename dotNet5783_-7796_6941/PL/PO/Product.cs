@@ -123,7 +123,8 @@ namespace PL.PO
             {
                 productImagePath = value;
 
-                 image = new BitmapImage(new System.Uri(Environment.CurrentDirectory + productImagePath));
+                try { image = new BitmapImage(new System.Uri(Environment.CurrentDirectory + productImagePath)); }
+                catch { image = null; }
             }
         }
 

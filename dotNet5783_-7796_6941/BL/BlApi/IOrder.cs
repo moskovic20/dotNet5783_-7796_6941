@@ -9,6 +9,6 @@ public interface IOrder
     BO.Order UpdateOrderShipping(int id);
     BO.Order UpdateOrderDelivery(int id);
     BO.OrderTracking GetOrderTracking(int id);
-    void UpdateOrder(int id);
+    void UpdateOrder(int id, int option);
 
 }

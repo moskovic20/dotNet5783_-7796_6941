@@ -6,30 +6,6 @@ internal class BoOrder : IOrder
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
-
-    #region חריגות זמנים אופציונליות
-    private static void datePosibleExceptiones(Do.Order? or)
-    {
-
-
-
-
-        //----------------לא נכון בשלב שכבה זו לבדוק כאלה חריגות---------------------
-        //if (or.GetValueOrDefault().ShippingDate != null && or.GetValueOrDefault().DateOrder > or.GetValueOrDefault().ShippingDate)
-        //    throw new ArgumentException("rong information,cant be possible that DateOrder > ShippingDate");
-
-        //if (or.GetValueOrDefault().DeliveryDate != null && or.GetValueOrDefault().DateOrder > or.GetValueOrDefault().DeliveryDate)
-        //    throw new ArgumentException("rong information,cant be possiblecant be possible that DateOrder > DeliveryDate");
-
-        //if (or.GetValueOrDefault().ShippingDate != null && or.GetValueOrDefault().DeliveryDate != null
-        //                                                 && or.GetValueOrDefault().ShippingDate > or.GetValueOrDefault().DeliveryDate)
-        //    throw new ArgumentException("rong information,cant be possible ShippingDate > DeliveryDate");
-
-        if (or.GetValueOrDefault().ShippingDate != null && or.GetValueOrDefault().DeliveryDate != null)//evrything allready got heandeled
-            throw new ArgumentException("order allredy delivered");
-    }
-    #endregion
-
     /// <summary>
     /// הכנסת כל ההזמנות הלא ריקות לרשימה
     /// </summary>
@@ -78,8 +54,6 @@ internal class BoOrder : IOrder
             order.Items = tempItems.Select(x => x.ListFromDoToBo()).ToList();//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
             return order;
-
-
         }
         catch (Do.DoesntExistException ex)
         {
@@ -89,7 +63,6 @@ internal class BoOrder : IOrder
         {
             throw new BO.GetDetails_Exception("Can't get this order", ex);
         }
-
 
     }
 
@@ -104,23 +77,23 @@ internal class BoOrder : IOrder
             throw new BO.Update_Exception("Negative ID");
         try
         {
-            Do.Order myOrder = dal.Order.GetById(id);
-            //if (myOrder.DateOrder == null)
-            //    throw new BO.InvalidValue_Exception("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
+            BO.Order UpOrd = new();
+            UpOrd = dal.Order.GetById(id).CopyPropTo(UpOrd);
 
-            if (myOrder.DeliveryDate != null)//evrything allready got heandeled
+            if (UpOrd.DeliveryDate != null)//evrything allready got heandeled
                 throw new BO.InvalidValue_Exception("cant update status, order allredy delivered");
 
-            if (myOrder.ShippingDate == null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
+            if (UpOrd.ShippingDate == null && UpOrd.DeliveryDate == null) //____we can update like we was asked for____
             {
 
-                if (myOrder.DateOrder > DateTime.Now)
+                if (UpOrd.DateOrder > DateTime.Now)
                     throw new BO.InvalidValue_Exception("wrong information,cant be possible that DateOrder > ShippingDate"); //exceptions
                 else
                 {
-                    myOrder.ShippingDate = DateTime.Now;//עדכון תאריך שליחה
-                    dal.Order.Update(myOrder);//לעדכן גם את הבסיס נתונים בהתאם
-                    return GetOrdertDetails(id);//החזרת ההזמנה המעודכנת//    לטפל בחריגות מהפונק הזאת   
+                    UpOrd.ShippingDate = DateTime.Now;//עדכון תאריך שליחה
+                    Do.Order myOrder = new();
+                    dal.Order.Update(UpOrd.CopyPropToStruct(myOrder));
+                    return GetOrdertDetails(id);
                 }
             }
             else
@@ -149,23 +122,24 @@ internal class BoOrder : IOrder
             throw new BO.GetDetails_Exception("Negative ID");
         try
         {
-            Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
-            //if (myOrder.DateOrder == null)
-            //    throw new BO.InvalidValue_Exception("cant update status, there is no info");// בדיקות אם קיים בכלל עם מה לעבוד
+           // Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
+            BO.Order UpOrd = new();
+            UpOrd = dal.Order.GetById(id).CopyPropTo(UpOrd);
 
-            if (myOrder.DeliveryDate != null)//evrything allready got heandeled
+            if (UpOrd.DeliveryDate != null)//evrything allready got heandeled
                 throw new BO.InvalidValue_Exception("cant update status, order allredy delivered");
 
-            if (myOrder.ShippingDate != null && myOrder.DeliveryDate == null) //____we can update like we was asked for____
+            if (UpOrd.ShippingDate != null && UpOrd.DeliveryDate == null) //____we can update like we was asked for____
             {
 
-                if (myOrder.ShippingDate > DateTime.Now)
+                if (UpOrd.ShippingDate > DateTime.Now)
                     throw new ArgumentException("Wrong information,cant be possible that ShippingDate > DeliveryDate");
                 else
                 {
-                    myOrder.DeliveryDate = DateTime.Now;
-                    dal.Order.Update(myOrder);
-                    return GetOrdertDetails(id); ////לטפל בחריגות מהפונק הזאת  
+                    UpOrd.DeliveryDate = DateTime.Now;
+                    Do.Order myOrder = new();
+                    dal.Order.Update(UpOrd.CopyPropToStruct(myOrder));
+                    return GetOrdertDetails(id);
                 }
             }
             else
@@ -205,8 +179,24 @@ internal class BoOrder : IOrder
         }
     }
 
-    public void UpdateOrder(int id)
+    /* 
+     לבונוס - עדכון הזמנה (עבור מסך מנהל)
+יאפשר הוספה \ הורדה \ שינוי כמות של מוצר בהזמנה ע"י 
+    המנהל (שימו לב מתי מותר לעשות את זה!)
+אין יותר פירוט (כי זה לבונוס) - אך 
+    ניקוד הבונוס יינתן (בפרויקט הסופי) רק במקרה של 
+    השלמת כל הפונקציונליות (כולל בשכבת התצוגה) בצורה מלאה.
+ //throw new NotImplementedException("sorry, I'm not redy yet");
+    */
+    public void UpdateOrder(int id, int option)
     {
+        //BO.Order ordToUp = new();
+        //ordToUp=GetOrdertDetails(id);
+        //switch(option){
+        //    case 0:
+
+        //}
+
         throw new NotImplementedException("sorry, I'm not redy yet");
     }
 }

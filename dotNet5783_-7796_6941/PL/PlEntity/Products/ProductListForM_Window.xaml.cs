@@ -59,7 +59,8 @@ namespace PL.Products
         private void UpdatButton_Click(object sender, RoutedEventArgs e)
         {
             new UpdatProductForM_Window(bl, (ProductForList)Products_DateGrid.SelectedItem).ShowDialog();
-            DataContext = allBooks.ToObserCollection();
+            UpdatButton.IsEnabled = false;
+            Products_DateGrid.SelectedItem=null;
         }
 
 

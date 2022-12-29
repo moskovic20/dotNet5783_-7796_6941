@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using PL.PO;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using BO;
 
 namespace PL.Products
 {

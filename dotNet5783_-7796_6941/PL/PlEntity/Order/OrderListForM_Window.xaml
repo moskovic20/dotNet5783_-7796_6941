@@ -1,19 +1,16 @@
-﻿<Window x:Class="PL.Products.ProductListForM_Window"
+﻿<Window x:Class="PL.PlEntity.Order.OrderListForM_Window"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.IvalueConvertor"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PL.IvalueConvertor"
         mc:Ignorable="d"
-        Title="ProductListForM_Window" Height="450" Width="800"
-        FontFamily="Bahnschrift SemiLight">
+        Title="OrderListForM_Window" Height="600" Width="1000">
 
     <Window.Resources>
 
-
-
-        <local:CategoryToHebrew x:Key="categoryToHebrew"/>
+        <local:StatusToHebrew x:Key="statusToHebrew"/>
 
         <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
             <Setter Property="Template">
@@ -33,29 +30,28 @@
         </Style>
     </Window.Resources>
 
-
     <Grid Name="MainGrid" ShowGridLines="False">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="167*"/>
             <ColumnDefinition Width="633*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="27*"/>
-            <RowDefinition Height="190*"/>
+            <RowDefinition Height="72.669"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Rectangle HorizontalAlignment="Left" Height="54" VerticalAlignment="Center" Width="800" Fill="#FFF6F6F6" Grid.ColumnSpan="2"/>
-        <StackPanel Orientation="Horizontal" Margin="107,-5,10,5" Grid.Column="1">
+        <Rectangle HorizontalAlignment="Left" Height="72" VerticalAlignment="Center" Width="1000" Fill="#FFF6F6F6" Grid.ColumnSpan="2"/>
+        <StackPanel Orientation="Horizontal" Margin="284,-6,22,6" Grid.Column="1">
             <ComboBox Name="StatusComboBox" Margin="10"  Width="100"
                           materialDesign:HintAssist.Hint="()"
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
             <ComboBox Name="PriorityComboBox" 
                           Margin="10"  Width="100"
-                          materialDesign:HintAssist.Hint="(מחיר)"
+                          materialDesign:HintAssist.Hint="(שם לקוח)"
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
             <ComboBox Name="WeightComboBox"
                           Margin="10"  Width="100"
-                          materialDesign:HintAssist.Hint="(קטגוריה)"
+                          materialDesign:HintAssist.Hint="(סטטוס)"
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
             <Label Height="38" Content="סנן לפי"
                    FontSize="25" Foreground="#FF000F10"
@@ -70,7 +66,7 @@
                   materialDesign:DataGridAssist.ColumnHeaderPadding="30" 
                   IsTextSearchEnabled="True" 
                   GridLinesVisibility="Horizontal" 
-                  AreRowDetailsFrozen="True"
+                  AreRowDetailsFrozen="False"
                   AutoGenerateColumns="False"
                   HorizontalGridLinesBrush="Transparent"
                   ScrollViewer.VerticalScrollBarVisibility="Visible" 
@@ -79,10 +75,10 @@
                   Foreground="Black"
                   IsReadOnly="True"
                   ItemsSource="{Binding}" 
-                  HorizontalAlignment="Left"
-                  Margin="6,49,0,61"
-                  Width="627"
-                  Background="{x:Null}" Grid.RowSpan="2" Grid.Column="1">
+                  HorizontalAlignment="Center"
+                  Margin="0,10,0,35"
+                  Width="771"
+                  Background="{x:Null}" Grid.Column="1" Grid.Row="1">
 
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
@@ -102,8 +98,7 @@
                         <DataTemplate>
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Height="30" Width="30"
-                                    HorizontalAlignment="Center"
-                                    Click="deleteProductButton_Click">
+                                    HorizontalAlignment="Center">
                                 <materialDesign:PackIcon Kind="Trash"/>
                             </Button>
                         </DataTemplate>
@@ -116,25 +111,27 @@
                         <DataTemplate>
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Height="30" Width="30"
-                                    HorizontalAlignment="Center"
-                                    Click="UpdatButton_Click">
-                                <materialDesign:PackIcon Kind="BookEdit"/>
+                                    HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="PlaylistEdit"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="מחיר"    
-                                    Binding="{Binding Price}"
+                <DataGridTextColumn Header="מחיר סופי"    
+                                    Binding="{Binding TotalPrice}"
                                     MinWidth="100"/>
-                <DataGridTextColumn Header="קטגוריה"
-                                    Binding="{Binding Category ,Converter={StaticResource categoryToHebrew}}"
+                <DataGridTextColumn Header="כמות פריטים"    
+                                    Binding="{Binding AmountOfItems}"
+                                    MinWidth="100"/>
+                <DataGridTextColumn Header="סטטוס"
+                                    Binding="{Binding Status ,Converter={StaticResource statusToHebrew}}"
                                     MinWidth="100" />
-                <DataGridTextColumn Header="שם הספר"
-                                    Binding="{Binding NameOfBook}"
+                <DataGridTextColumn Header="שם הלקוח"
+                                    Binding="{Binding CustomerName}"
                                     MinWidth="100"/>
-                <DataGridTextColumn Header="מספר מזהה "
-                                    Binding="{Binding ID}"
+                <DataGridTextColumn Header="מספר הזמנה "
+                                    Binding="{Binding OrderID}"
                                     MinWidth="100"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -144,9 +141,8 @@
                 Width="50" Height="50"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
-                Click="addButton_Click"
-                Background="#FF009BA6" Margin="547,294,0,0" Grid.Row="1" Grid.Column="1" >
-            <materialDesign:PackIcon Kind="BookAdd" 
+                Background="#FF009BA6" Margin="54,5,0,0" >
+            <materialDesign:PackIcon Kind="PlaylistAdd" 
                                          Height="30" Width="30" 
                                          OpacityMask="Black" />
 
@@ -177,5 +173,4 @@
 
 
     </Grid>
-
 </Window>

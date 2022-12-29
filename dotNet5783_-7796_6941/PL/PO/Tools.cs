@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using System.Collections.ObjectModel;
+using BO;
 
 namespace PL.PO
 {
@@ -7,7 +8,11 @@ namespace PL.PO
     {
         private static IBl bl = BlApi.Factory.GetBl();
 
-        #region convert from PO.Product to BO.Product
+        //________________________________________productTools__________________________________________________________
+
+
+        #region convert from PO.Product to BO.Product and vice versa
+
         internal static BO.Product CopyProductToBO(this PO.Product prodPO)
         {
             BO.Product copyProduct = new()
@@ -23,6 +28,63 @@ namespace PL.PO
             };
             return copyProduct;
         }
+
+        internal static PO.Product copyProductToPo(this BO.Product p)
+        {
+
+            PO.Product product = new PO.Product()
+            {
+                ID = p.ID,
+                NameOfBook = p.NameOfBook,
+                AuthorName = p.AuthorName,
+                Price = p.Price,
+                Summary = p.Summary,
+                ProductImagePath = p.ProductImagePath,
+                InStock = p.InStock,
+                Category = (PO.CATEGORY)p.Category
+
+            };
+
+            return product;
+        }
+
+        #endregion
+
+        #region convert from BO.ProductForList to PO.Product and vice versa
+
+        internal static PO.Product copyPflToPoProduct(this BO.ProductForList pfl)
+        {
+            BO.Product productBO = bl.BoProduct.GetProductDetails_forM(pfl.ID);
+
+            PO.Product product = new PO.Product()
+            {
+                ID = pfl.ID,
+                NameOfBook = pfl.NameOfBook,
+                AuthorName = productBO.AuthorName,
+                Price = pfl.Price,
+                Summary = productBO.Summary,
+                ProductImagePath = productBO.ProductImagePath,
+                InStock = productBO.InStock,
+                Category = (PO.CATEGORY)pfl.Category
+
+            };
+
+            return product;
+        }
+
+        internal static BO.ProductForList copyProductToBoPFL(this PO.Product p)
+        {
+            ProductForList myNewPFL = new ProductForList()
+            {
+                NameOfBook = p.NameOfBook,
+                ID = p.ID,
+                Price = p.Price,
+                Category = (BO.CATEGORY)p.Category!
+            };
+
+            return myNewPFL;
+        }
+
         #endregion
 
         #region Converting the category from English to Hebrew and vice versa.
@@ -73,98 +135,28 @@ namespace PL.PO
 
         #endregion
 
-        internal static PO.Product copyProductForListToPoProduct(this BO.ProductForList pfl)
-        {
-            BO.Product productBO = bl.BoProduct.GetProductDetails_forM(pfl.ID);
-
-            PO.Product product = new PO.Product()
-            {
-                ID = pfl.ID,
-                NameOfBook = pfl.NameOfBook,
-                AuthorName = productBO.AuthorName,
-                Price = pfl.Price,
-                Summary = productBO.Summary,
-                ProductImagePath = productBO.ProductImagePath,
-                InStock = productBO.InStock,
-                Category = (PO.CATEGORY)pfl.Category
-
-            };
-
-            return product;
-        }
-
-        internal static PO.ProductForList copyProductForListToPo(this BO.ProductForList pfl)
-        {
-            PO.ProductForList myNewPFL = new PO.ProductForList()
-            {
-                NameOfBook = pfl.NameOfBook,
-                ID = pfl.ID,
-                Price = pfl.Price,
-                Category = ((PO.CATEGORY)pfl.Category).EnglishToHebewCategory()
-            };
-
-            return myNewPFL;
-        }
-
-        internal static PO.ProductForList copyProductToPFL(this PO.Product p)
-        {
-            PO.ProductForList myNewPFL = new PO.ProductForList()
-            {
-                NameOfBook = p.NameOfBook,
-                ID = p.ID,
-                Price = p.Price,
-                Category = ((PO.CATEGORY)p.Category!).EnglishToHebewCategory()
-            };
-
-            return myNewPFL;
-        }
-
-        internal static PO.Product copyProductToPo(this BO.Product pfl)
-        {
-
-            PO.Product product = new PO.Product()
-            {
-                ID = pfl.ID,
-                NameOfBook = pfl.NameOfBook,
-                AuthorName = pfl.AuthorName,
-                Price = pfl.Price,
-                Summary = pfl.Summary,
-                ProductImagePath = pfl.ProductImagePath,
-                InStock = pfl.InStock,
-                Category = (PO.CATEGORY)pfl.Category
-
-            };
-
-            return product;
-        }
-
-        //internal static BO.Product copyProductToPo(this PO.Product poProduct)
-        //{
-
-        //    BO.Product product = new BO.Product()
-        //    {
-        //        ID = poProduct.ID,
-        //        NameOfBook = poProduct.NameOfBook,
-        //        AuthorName = poProduct.AuthorName,
-        //        Price = poProduct.Price,
-        //        Summary = poProduct.Summary,
-        //        Path = poProduct.Path,
-        //        InStock = poProduct.InStock,
-        //        Category = (BO.CATEGORY)poProduct.Category!
-
-        //    };
-
-        //    return product;
-        //}
-
-        public static ObservableCollection<PO.ProductForList> ToObserCollection(this ObservableCollection<PO.ProductForList> allBooks)
+        public static ObservableCollection<ProductForList> ToObserCollection_P(this ObservableCollection<ProductForList> allBooks)
         {
             allBooks.Clear();
 
             foreach (BO.ProductForList Book in bl.BoProduct.GetAllProductForList_forM())
-                allBooks.Add(Book.copyProductForListToPo());
+                allBooks.Add(Book);
 
             return allBooks;
         }
+
+
+        //___________________________________________orderTools__________________________________________________________
+
+        public static ObservableCollection<OrderForList> ToObserCollection_O(this ObservableCollection<OrderForList> allOrders)
+        {
+            allOrders.Clear();
+
+            foreach (BO.OrderForList order in bl.BoOrder.GetAllOrderForList())
+                allOrders.Add(order);
+
+            return allOrders;
+        }
+
     }
 }

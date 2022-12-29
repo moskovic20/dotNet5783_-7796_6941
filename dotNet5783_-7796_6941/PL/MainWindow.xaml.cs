@@ -75,7 +75,7 @@ public partial class MainWindow : Window
         //    new BookData{Title="Movie 6", ImageData=LoadImage("booksForBeakRound.jpg")}
         //};
 
-        allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.copyProductForListToPoProduct()));
+        allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.copyPflToPoProduct()));
 
         this.DataContext = pForShow;//?
         this.TvBox.ItemsSource = allBooksForShow;
@@ -105,6 +105,6 @@ public partial class MainWindow : Window
 
     private void Admin_Click(object sender, RoutedEventArgs e)
     {
-        new AdminWindow(bl).ShowDialog();
+        new AdminPassword(bl).ShowDialog();
     }
 }

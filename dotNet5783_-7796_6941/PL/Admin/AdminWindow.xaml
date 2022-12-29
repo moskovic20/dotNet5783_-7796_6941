@@ -9,7 +9,7 @@
     <StackPanel Orientation="Vertical">
         <Button x:Name="products"   Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="עבור לרשימת הספרים בחנות" HorizontalAlignment="Stretch" Height="42" Click="products_Click">
         </Button>
-        <Button  x:Name="Orders"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="עבור לרשימת ההזמנות הקיימות" HorizontalAlignment="Stretch" Height="62"/>
+        <Button  x:Name="Orders"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="עבור לרשימת ההזמנות הקיימות" HorizontalAlignment="Stretch" Height="62" Click="Orders_Click"/>
         <StackPanel Orientation="Horizontal" Height="81">
             <Button x:Name="NumOfVisitors"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="מספר פניות" Width="85"/>
             <Button x:Name="password"  Style="{DynamicResource MaterialDesignRaisedLightButton}" Content="שינוי סיסמה" Width="103"/>

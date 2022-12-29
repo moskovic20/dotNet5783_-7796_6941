@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.PO;
 using MaterialDesignThemes.Wpf;
+using PL.PlEntity.Order;
 
 namespace PL.Admin
 {
@@ -29,6 +30,11 @@ namespace PL.Admin
         {
             new ProductListForM_Window(bl).Show();
           
+        }
+
+        private void Orders_Click(object sender, RoutedEventArgs e)
+        {
+            new OrderListForM_Window(bl).ShowDialog();
         }
 
         //private void Orders_Click(object sender, RoutedEventArgs e)

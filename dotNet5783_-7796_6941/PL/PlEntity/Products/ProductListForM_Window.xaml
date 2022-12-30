@@ -82,7 +82,8 @@
                   HorizontalAlignment="Left"
                   Margin="6,49,0,61"
                   Width="627"
-                  Background="{x:Null}" Grid.RowSpan="2" Grid.Column="1">
+                  Background="{x:Null}"
+ Grid.RowSpan="2" Grid.Column="1">
 
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">

@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL.IvalueConvertor"
         mc:Ignorable="d"
-        Title="OrderListForM_Window" Height="600" Width="1000">
+        Title="OrderListForM_Window" Height="600" Width="1100">
 
     <Window.Resources>
 
@@ -32,16 +32,16 @@
 
     <Grid Name="MainGrid" ShowGridLines="False">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="167*"/>
-            <ColumnDefinition Width="633*"/>
+            <ColumnDefinition Width="160*"/>
+            <ColumnDefinition Width="640*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="72.669"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Rectangle HorizontalAlignment="Left" Height="72" VerticalAlignment="Center" Width="1000" Fill="#FFF6F6F6" Grid.ColumnSpan="2"/>
-        <StackPanel Orientation="Horizontal" Margin="284,-6,22,6" Grid.Column="1">
+        <Rectangle HorizontalAlignment="Left" Height="72" VerticalAlignment="Center" Width="1100" Fill="#FFF6F6F6" Grid.ColumnSpan="2"/>
+        <StackPanel Orientation="Horizontal" Margin="366,-3,18,3" Grid.Column="1">
             <ComboBox Name="StatusComboBox" Margin="10"  Width="100"
                           materialDesign:HintAssist.Hint="()"
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
@@ -75,9 +75,9 @@
                   Foreground="Black"
                   IsReadOnly="True"
                   ItemsSource="{Binding}" 
-                  HorizontalAlignment="Center"
-                  Margin="0,10,0,35"
-                  Width="771"
+                  HorizontalAlignment="Left"
+                  Margin="50,10,0,35"
+                  Width="820"
                   Background="{x:Null}" Grid.Column="1" Grid.Row="1">
 
             <DataGrid.GroupStyle>

@@ -57,7 +57,7 @@ public partial class MainWindow : Window
 {
     private IBl bl;
     //private ObservableCollection<Product> products;
-    private Product pForShow;
+    //private Product pForShow;
     private ObservableCollection<Product> allBooksForShow;
     public MainWindow()
     {
@@ -77,7 +77,7 @@ public partial class MainWindow : Window
 
         allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.CopyPflToPoProduct()));
 
-        this.DataContext = pForShow;//?
+        //this.DataContext = pForShow;//?
         this.TvBox.ItemsSource = allBooksForShow;
 
     }

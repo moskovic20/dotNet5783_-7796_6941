@@ -3,16 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:po="clr-namespace:PL.PO" d:DataContext="{d:DesignInstance Type=po:Product}"
         xmlns:local="clr-namespace:PL.IvalueConvertor"
         mc:Ignorable="d"
-        Title="AddProductForM_Window" Height="450" Width="800">
+        Title="AddProductForM_Window" Height="520" Width="800">
 
     <Window.Resources>
         <local:CategoryToHebrew x:Key="categoryToHebrew"/>
     </Window.Resources>
 
-    <Grid Name="MainGrid" ShowGridLines="False" Margin="0,0,0,-6">
+    <Grid Name="MainGrid" ShowGridLines="False" Margin="0,0,0,-6" Background="#FFF6F6F6">
         <Grid.RowDefinitions>
             <RowDefinition Height="77*"/>
             <RowDefinition Height="130*"/>
@@ -22,17 +23,63 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions >
 
-        <Rectangle HorizontalAlignment="Left" Height="47" Stroke="#FF009BA6" VerticalAlignment="Top" Width="816" Fill="#FF009BA6" Grid.ColumnSpan="2"/>
-        <Label x:Name="addProductL" Grid.Column="1" Content=":הכנס את פרטי הספר"  Margin="195,0,-26,0" VerticalAlignment="Top"  />
-        <Label Grid.Column="1"  Content="שדות חובה*" HorizontalAlignment="Left" Margin="290,53,0,0" VerticalAlignment="Top" Width="86" Foreground="Red"/>
+        <Rectangle HorizontalAlignment="Left"
+                   Height="47"
+                   VerticalAlignment="Top"
+                   Width="816" 
+                   Grid.ColumnSpan="2" Stroke="#FF673AB7" Fill="#FF673AB7"/>
 
-        <Button x:Name="addProductButton" Content="הוסף" Style="{StaticResource MaterialDesignOutlinedDarkButton}" IsEnabled="True" HorizontalAlignment="Left" Margin="208,199,0,0" VerticalAlignment="Top" Height="29" Width="146"  Click="addProductButton_Click" Grid.Row="1" />
-        <Button x:Name="cancelButton" Content="ביטול" Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="50,199,0,0" VerticalAlignment="Top" Height="29" Width="146"  Grid.Row="1" Click="cancelButton_Click"/>
+        <Label x:Name="addProductL"
+               Grid.Column="1"
+               Content=":הכנס את פרטי הספר"
+               Style="{StaticResource myTitel_1}"
+               Margin="183,4,-14,113"  />
 
-        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="54,66,28,143" Grid.Row="1">
-            <TextBox x:Name="AddP_author_textBox" Text="{Binding AuthorName, Mode=TwoWay}" Height="30" Width="215" />
-            <Label  Content="  :שם הסופר"  Width="74"/>
-            <Label Foreground="Red" Content="*" Height="24" Width="25" RenderTransformOrigin="0.494,-0.763" HorizontalContentAlignment="Right" FontSize="16" VerticalAlignment="Top" >
+        <Label Grid.Column="1" 
+               Content="שדות חובה*"
+               HorizontalAlignment="Left"
+               Margin="294,53,0,0"
+               VerticalAlignment="Top"
+               Width="86"
+               Foreground="Red"/>
+
+        <Button x:Name="addProductButton"
+                Content="הוסף"
+                Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+                IsEnabled="True"
+                HorizontalAlignment="Left"
+                Margin="208,219,0,0"
+                VerticalAlignment="Top"
+                Height="29" Width="146"
+                Click="addProductButton_Click"
+                Grid.Row="1" />
+
+        <Button x:Name="cancelButton"
+                Content="ביטול"
+                Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+                HorizontalAlignment="Left"
+                Margin="50,219,0,0"
+                VerticalAlignment="Top"
+                Height="29" Width="146"
+                Grid.Row="1"
+                Click="cancelButton_Click"/>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1" 
+                    Margin="54,32,28,231"
+                    Grid.Row="1">
+            <TextBox x:Name="AddP_author_textBox"
+                     Text="{Binding AuthorName, Mode=TwoWay}"
+                     Height="30" Width="215" />
+            <Label  Content="  :שם הסופר"
+                    Width="74"/>
+            <Label Foreground="Red"
+                   Content="*"
+                   Height="24" Width="25"
+                   RenderTransformOrigin="0.494,-0.763"
+                   HorizontalContentAlignment="Right"
+                   FontSize="16"
+                   VerticalAlignment="Top" >
                 <Label.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="-1"/>
@@ -44,16 +91,33 @@
             </Label>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="56,184,68,22" Grid.Row="1">
-            <TextBox Text="{Binding Price, Mode=TwoWay}" Height="30" Width="215"/>
-            <Label Content="  :מחיר"  Width="74"/>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Margin="56,156,68,88"
+                    Grid.Row="1">
+            <TextBox Text="{Binding Price, Mode=TwoWay}"
+                     Height="30" Width="215"/>
+            <Label Content="  :מחיר"
+                   Width="74"/>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="56,126,28,76" Grid.Row="1">
-            <ComboBox x:Name="AddP_categ_commbbox" SelectedItem="{Binding Category, Mode=TwoWay,Converter={StaticResource categoryToHebrew}}" Height="30" Width="215" VerticalAlignment="Top"   >
-            </ComboBox>
-            <Label Content="    :קטגוריה"  Width="74"/>
-            <Label Foreground="Red" Content="*" Height="34" Width="19" RenderTransformOrigin="0.494,-0.763" HorizontalContentAlignment="Right" FontSize="16" VerticalAlignment="Top" >
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Margin="56,90,28,164"
+                    Grid.Row="1">
+            <ComboBox x:Name="AddP_categ_commbbox"
+                      SelectedItem="{Binding Category, Mode=TwoWay,Converter={StaticResource categoryToHebrew}}"
+                      Height="30" Width="215"
+                      VerticalAlignment="Top"  />
+
+            <Label Content="    :קטגוריה"  Width="74" Height="44"/>
+            <Label Foreground="Red"
+                   Content="*"
+                   Height="34" Width="19" 
+                   RenderTransformOrigin="0.494,-0.763"
+                   HorizontalContentAlignment="Right"
+                   FontSize="16" 
+                   VerticalAlignment="Top" >
                 <Label.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="1"/>
@@ -64,11 +128,21 @@
                 </Label.RenderTransform>
             </Label>
         </StackPanel>
-        
-        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="54,4,28,199" Grid.Row="1">
-            <TextBox x:Name="AddP_name_textBox" Text="{Binding NameOfBook, Mode=TwoWay}" Height="30" Width="215" />
+
+        <StackPanel Orientation="Horizontal"  
+                    Grid.Column="1"
+                    Margin="54,152,28,0">
+            <TextBox x:Name="AddP_name_textBox"
+                     Text="{Binding NameOfBook, Mode=TwoWay}"
+                     Height="30" Width="215" />
             <Label Content="   :שם הספר"  Width="74"/>
-            <Label Foreground="Red" Content="*" Height="24" Width="25" RenderTransformOrigin="0.494,-0.763" HorizontalContentAlignment="Right" FontSize="16" VerticalAlignment="Top" >
+            <Label Foreground="Red"
+                   Content="*"
+                   Height="24" Width="25"
+                   RenderTransformOrigin="0.494,-0.763"
+                   HorizontalContentAlignment="Right" 
+                   FontSize="16"
+                   VerticalAlignment="Top" >
                 <Label.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="-1"/>
@@ -80,10 +154,24 @@
             </Label>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="54,102,28,1">
-            <TextBox x:Name="AddP_ID_textBox" PreviewTextInput="PreviewTextInput" MaxLength="9" Text="{Binding ID, Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Height="30" Width="215" GotFocus="AddP_ID_textBox_GotFocus" LostFocus="AddP_ID_textBox_LostFocus"  />
+        <StackPanel Orientation="Horizontal" 
+                    Grid.Column="1" 
+                    Margin="54,96,28,7">
+            <TextBox x:Name="AddP_ID_textBox" 
+                     PreviewTextInput="PreviewTextInput" 
+                     MaxLength="9" 
+                     Text="{Binding ID, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"
+                     Height="30" Width="215"
+                     GotFocus="AddP_ID_textBox_GotFocus"
+                     LostFocus="AddP_ID_textBox_LostFocus"  />
             <Label Content=":מספר מזהה"  Width="74"/>
-            <Label Foreground="Red" Content="*" Height="24" Width="25" RenderTransformOrigin="0.494,-0.763" HorizontalContentAlignment="Right" FontSize="16" VerticalAlignment="Top" >
+            <Label Foreground="Red"
+                   Content="*" 
+                   Height="24" Width="25" 
+                   RenderTransformOrigin="0.494,-0.763"
+                   HorizontalContentAlignment="Right"
+                   FontSize="16"
+                   VerticalAlignment="Top" >
                 <Label.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="-1"/>
@@ -95,21 +183,35 @@
             </Label>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Margin="50,99,34,5">
-            <TextBox Text="{Binding InStock, Mode=TwoWay}" Height="30" Width="215"/>
-            <Label Content="  :כמות במלאי"  Width="87"/>
+        <StackPanel Orientation="Horizontal"
+                    Margin="55,219,29,35" Grid.Column="1" Grid.Row="1">
+            <TextBox Text="{Binding InStock, Mode=TwoWay}"
+                     Height="30" Width="215"/>
+            <Label Content="  :כמות במלאי"
+                   Width="87"/>
         </StackPanel>
 
-        <StackPanel  Margin="34,147,34,178" Grid.RowSpan="2">
-            <Label Content=":מיקום התמונה מחשב"  Width="303" HorizontalContentAlignment="Right"/>
-            <TextBox Text="{Binding Path, Mode=TwoWay}" Height="30" Width="306"/>
+        <StackPanel  Margin="26,72,26,235" Grid.RowSpan="2">
+            <Label Content=":תקציר" 
+                   Width="303"
+                   HorizontalContentAlignment="Right"/>
+            <TextBox Text="{Binding Summary, Mode=TwoWay}" 
+                     AcceptsReturn="True"
+                     Width="322" Height="103"
+                      TextAlignment="Right"/>
         </StackPanel>
-
-        <StackPanel  Margin="26,50,26,77" Grid.Row="1">
-            <Label Content=":תקציר"  Width="303" HorizontalContentAlignment="Right"/>
-            <TextBox Text="{Binding Summary, Mode=TwoWay}"  AcceptsReturn="True" Width="304" TextAlignment="Right" Height="86"/>
-        </StackPanel>
-        <Button Grid.Column="1" Content="Button" HorizontalAlignment="Left" Margin="358,219,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Button_Click"/>
-
+        <Button x:Name="AddTheStation"
+            Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
+                BorderBrush="#007E8C7F"
+                Width="50" Height="50"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Click="Button_Click"
+            Background="#FF009BA6" Margin="316,35,0,0" Grid.Row="1" >
+            <materialDesign:PackIcon Kind="ImageAdd" 
+                                         Height="30" Width="30" 
+                                         OpacityMask="Black" />
+        </Button>
+        <Image Name="productImage" HorizontalAlignment="Left"  Height="152" Margin="50,35,0,0" Grid.Row="1" VerticalAlignment="Top" Width="234"/>
     </Grid>
 </Window>

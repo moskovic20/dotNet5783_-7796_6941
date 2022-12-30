@@ -188,6 +188,12 @@ internal class BoOrder : IOrder
     השלמת כל הפונקציונליות (כולל בשכבת התצוגה) בצורה מלאה.
  //throw new NotImplementedException("sorry, I'm not redy yet");
     */
+
+    public void DeleteOrder_forM(int orderID)
+    {
+        dal.Order.Delete(orderID);
+    }
+
     public void UpdateOrder(int id, int option)
     {
         //BO.Order ordToUp = new();

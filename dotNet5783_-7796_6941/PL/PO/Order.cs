@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace PL.PO;
 
-public class Order : INotifyPropertyChanged
+internal class Order : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;//יטפל לנו בשינויים למסך ומהמסך
 
@@ -146,13 +147,11 @@ public class Order : INotifyPropertyChanged
     }
 
 
-    private List<OrderItem?>? _Items;
-    public List<OrderItem?>? Items
+    private ObservableCollection<OrderItem>? _Items;
+    public ObservableCollection<OrderItem>? Items
     {
         get
-        {
-            return _Items;
-        }
+        { return Items; }
         set
         {
             _Items = value;

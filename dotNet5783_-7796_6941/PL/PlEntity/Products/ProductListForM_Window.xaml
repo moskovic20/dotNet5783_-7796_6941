@@ -85,7 +85,7 @@
                   Background="{x:Null}"
  Grid.RowSpan="2" Grid.Column="1">
 
-            <DataGrid.GroupStyle>
+            <!--<DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
                     <GroupStyle.Panel>
                         <ItemsPanelTemplate>
@@ -93,7 +93,7 @@
                         </ItemsPanelTemplate>
                     </GroupStyle.Panel>
                 </GroupStyle>
-            </DataGrid.GroupStyle>
+            </DataGrid.GroupStyle>-->
 
 
             <DataGrid.Columns >

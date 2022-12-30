@@ -189,20 +189,37 @@ namespace PL.PO
 
         #endregion
 
-        //public static ObservableCollection<ProductForList> ToObserCollection_P(this ObservableCollection<ProductForList> allBooks)
-        //{
-        //    return new ObservableCollection<ProductForList>(bl.BoProduct.GetAllProductForList_forM());
-        //}
+        public static ObservableCollection<ProductForList> ToObserCollection_P(this ObservableCollection<ProductForList> allBooks)
+        {
+            var list = from p in bl.BoProduct.GetAllProductForList_forM()
+                       select new PO.ProductForList
+                       {
+                           ID = p.ID,
+                           NameOfBook = p.NameOfBook,
+                           Price = p.Price,
+                           Category = (PO.CATEGORY)p.Category
+                       };
+
+            allBooks = new ObservableCollection<PO.ProductForList>(list);
+            return allBooks;
+        }
 
 
-        //___________________________________________orderTools__________________________________________________________
+       // ___________________________________________orderTools__________________________________________________________
 
         public static ObservableCollection<OrderForList> ToObserCollection_O(this ObservableCollection<OrderForList> allOrders)
         {
-            allOrders.Clear();
+            var list = from O in bl.BoOrder.GetAllOrderForList()
+                       select new PO.OrderForList
+                       {
+                           OrderID = O.OrderID,
+                           CustomerName = O.CustomerName,
+                           Status = (PO.OrderStatus)O.Status,
+                           AmountOfItems = O.AmountOfItems,
+                           TotalPrice = O.TotalPrice
+                       };
 
-            foreach (BO.OrderForList order in bl.BoOrder.GetAllOrderForList())
-                allOrders.Add(order);
+            allOrders = new ObservableCollection<PO.OrderForList>(list);
 
             return allOrders;
         }

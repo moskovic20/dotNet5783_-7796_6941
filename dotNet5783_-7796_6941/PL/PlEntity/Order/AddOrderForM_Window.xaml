@@ -1,0 +1,177 @@
+﻿<Window x:Class="PL.PlEntity.Order.AddOrderForM_Window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PL.PlEntity.Order"
+        mc:Ignorable="d"
+        Title="AddOrderForM_Window" Height="450" Width="800">
+
+    <Grid Name="MainGrid" ShowGridLines="False" Margin="0,0,0,-6" Background="#FFF6F6F6">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="0*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions >
+
+        <Button x:Name="AddTheStation"
+            Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
+                BorderBrush="#007E8C7F"
+                Width="50" Height="50"
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Click="AddProductsToO"
+                Background="#FF009BA6" Margin="294,342,0,0" Grid.Column="1" >
+            <materialDesign:PackIcon Kind="BookAdd" 
+                                         Height="30" Width="30" 
+                                         OpacityMask="Black" VerticalAlignment="Center" />
+        </Button>
+
+        <Rectangle HorizontalAlignment="Left"
+                   Height="47"
+                   VerticalAlignment="Top"
+                   Width="816" 
+                   Grid.ColumnSpan="2" Stroke="#FF673AB7" Fill="#FF673AB7"/>
+
+        <Label Grid.Column="1" 
+               Content="שדות חובה*"
+               HorizontalAlignment="Left"
+               Margin="294,53,0,0"
+               VerticalAlignment="Top"
+               Width="86"
+               Foreground="Red" Height="24"/>
+
+        <Button x:Name="addProductButton"
+                Content="הוסף"
+                Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+                IsEnabled="True"
+                HorizontalAlignment="Left"
+                Margin="70,324,0,0"
+                VerticalAlignment="Top"
+                Height="29" Width="146"
+                Grid.Column="1" />
+
+        <Button x:Name="cancelButton"
+                Content="ביטול"
+                Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+                HorizontalAlignment="Left"
+                Margin="71,379,0,0"
+                VerticalAlignment="Top"
+                Height="29" Width="146"
+                 Grid.Column="1"/>
+
+        <StackPanel Orientation="Horizontal" 
+                    Grid.Column="1" 
+                    Margin="54,96,28,306">
+            <TextBox x:Name="NameC_textBox" 
+                     
+                     MaxLength="9" 
+                     Text="{Binding CustomerName, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"
+                     Height="30" Width="215"
+                     />
+            <Label Content=" :שם הלקוח"  Width="86" Height="28"/>
+            <Label Foreground="Red"
+                   Content="*" 
+                   Height="24" Width="25" 
+                   RenderTransformOrigin="0.494,-0.763"
+                   HorizontalContentAlignment="Right"
+                   FontSize="16"
+                   VerticalAlignment="Top" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0.3"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" 
+            Grid.Column="1" 
+            Margin="54,154,28,248">
+            <TextBox x:Name="NameC_textBox1" 
+                 
+                MaxLength="9" 
+                Text="{Binding CustomerEmail, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                Height="30" Width="215"
+                 />
+            <Label Content=" :כתובת אימייל"  Width="86" Height="28"/>
+            <Label Foreground="Red"
+                Content="*" 
+                Height="24" Width="25" 
+                RenderTransformOrigin="0.494,-0.763"
+                HorizontalContentAlignment="Right"
+                FontSize="16"
+                VerticalAlignment="Top" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0.3"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" 
+            Grid.Column="1" 
+            Margin="53,213,29,189">
+            <TextBox x:Name="NameC_textBox2" 
+                 
+                MaxLength="9" 
+                Text="{Binding CustomerAddress, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                Height="30" Width="215"
+                />
+            <Label Content=" :כתובת"  Width="87" Height="28"/>
+            <Label Foreground="Red"
+                Content="*" 
+                Height="24" Width="25" 
+                RenderTransformOrigin="0.494,-0.763"
+                HorizontalContentAlignment="Right"
+                FontSize="16"
+                VerticalAlignment="Top" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0.3"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" 
+            Grid.Column="1" 
+            Margin="54,268,28,134">
+            <TextBox x:Name="NameC_textBox3" 
+                
+                MaxLength="9" 
+                Text="{Binding CustomerName, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+                Height="30" Width="215"
+                 />
+            <Label Content="שם הלקוח"  Width="86" Height="28"/>
+            <Label Foreground="Red"
+                Content="*" 
+                Height="24" Width="25" 
+                RenderTransformOrigin="0.494,-0.763"
+                HorizontalContentAlignment="Right"
+                FontSize="16"
+                VerticalAlignment="Top" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0.3"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+        </StackPanel>
+    </Grid>
+</Window>

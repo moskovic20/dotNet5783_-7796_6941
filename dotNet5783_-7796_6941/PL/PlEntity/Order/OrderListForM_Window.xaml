@@ -78,7 +78,8 @@
                   HorizontalAlignment="Center"
                   Margin="0,10,0,35"
                   Width="771"
-                  Background="{x:Null}" Grid.Column="1" Grid.Row="1">
+                  Background="{x:Null}" Grid.Column="1" Grid.Row="1" 
+                  MouseDoubleClick="Products_DateGrid_DoubleClick">
 
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
@@ -111,7 +112,9 @@
                         <DataTemplate>
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Height="30" Width="30"
-                                    HorizontalAlignment="Center">
+                                    HorizontalAlignment="Center"
+                                    Click="UpdateOrder_Click">
+
                                 <materialDesign:PackIcon Kind="PlaylistEdit"/>
                             </Button>
                         </DataTemplate>
@@ -135,13 +138,13 @@
                                     MinWidth="100"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="AddTheStation"
+        <Button x:Name="AddOrder"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
                 BorderBrush="#007E8C7F"
                 Width="50" Height="50"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
-                Background="#FF009BA6" Margin="54,5,0,0" >
+                Background="#FF009BA6" Margin="54,5,0,0" Click="AddOrder_Click" >
             <materialDesign:PackIcon Kind="PlaylistAdd" 
                                          Height="30" Width="30" 
                                          OpacityMask="Black" />

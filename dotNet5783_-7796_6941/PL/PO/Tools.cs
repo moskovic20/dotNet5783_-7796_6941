@@ -197,15 +197,15 @@ namespace PL.PO
 
         //___________________________________________orderTools__________________________________________________________
 
-        public static ObservableCollection<OrderForList> ToObserCollection_O(this ObservableCollection<OrderForList> allOrders)
-        {
-            allOrders.Clear();
+        //public static ObservableCollection<OrderForList> ToObserCollection_O(this ObservableCollection<OrderForList> allOrders)
+        //{
+        //    allOrders.Clear();
 
-            foreach (BO.OrderForList order in bl.BoOrder.GetAllOrderForList())
-                allOrders.Add(order);
+        //    foreach (BO.OrderForList order in bl.BoOrder.GetAllOrderForList())
+        //        allOrders.Add(order);
 
-            return allOrders;
-        }
+        //    return allOrders;
+        //}
 
     }
 }

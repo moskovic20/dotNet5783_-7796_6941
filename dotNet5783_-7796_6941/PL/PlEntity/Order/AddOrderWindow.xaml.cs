@@ -1,6 +1,8 @@
-﻿using System;
+﻿using BlApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,12 +17,16 @@ using System.Windows.Shapes;
 namespace PL.PlEntity.Order;
 
 /// <summary>
-/// Interaction logic for orderTrakingForC_Window.xaml
+/// Interaction logic for AddOrderWindow.xaml
 /// </summary>
-public partial class orderTrakingForC_Window : Window
+public partial class AddOrderWindow : Window
 {
-    public orderTrakingForC_Window()
+    private IBl bl;
+    Action<int> action;
+    public AddOrderWindow(IBl bl, Action <int> action)
     {
         InitializeComponent();
+        this.bl = bl;
+        this.action = action;
     }
 }

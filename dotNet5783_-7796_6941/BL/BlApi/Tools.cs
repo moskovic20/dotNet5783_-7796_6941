@@ -203,4 +203,17 @@ public static class Tools
         return true;
     }
     #endregion
+
+    ////PLפונקציה ממש לא יפה וחסכונית בעקרון רק בשביל להעביד את ה
+    //public static OrderForList CastingOrToList(this BO.Order order)
+    //{
+    //    return new BO.OrderForList()
+    //    {
+    //        OrderID = order.ID,
+    //        CustomerName = dal.Order.GetById(order.ID).CustomerName,
+    //        Status = dal.Order.GetById(order.ID).calculateStatus(),
+    //        AmountOfItems = dal.Order.GetById(order.ID).CalculateAmountItems(),
+    //        TotalPrice = dal.Order.GetById(order.ID).CalculatePriceOfAllItems()
+    //    };
+    //}
 }

@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using PL.PO;
 using PL.Products;
 using BO;
+using Do;
 
 namespace PL.PlEntity.Order;
 
@@ -30,7 +31,7 @@ public partial class OrderListForM_Window : Window
     public OrderListForM_Window(IBl bl)
     {
         InitializeComponent();
-
+        
         this.bl = bl;
         var orderForLists = from order in bl.BoOrder.GetAllOrderForList()
                             select new PO.OrderForList()
@@ -45,14 +46,14 @@ public partial class OrderListForM_Window : Window
         DataContext = allOrders; //כדי שיקושר למסך נראה לי
     }
 
+    
+
     private void AddOrder_Click(object sender, RoutedEventArgs e)
     {
- 
-        Action<int> AddAction = (orderId)=>/*allOrders.Add(bl.BoOrde)*/
+        Action<int> AddAction = (orderId)=>
         {
-            PO.Order or = bl.BoOrder.GetOrdertDetails(orderId).CopyPropTo(new PO.Order());//צריך לבדוק אם הפונקציה עובדת
-            // כדי להכניס לאובזרבר צריך המרה מטיפוס ליסט ללא ליסט
-            //allOrders.Add(or);
+            PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
+            allOrders.Add(or);
         };
         new AddOrderWindow(bl, AddAction).ShowDialog();
 
@@ -75,9 +76,24 @@ public partial class OrderListForM_Window : Window
 
     #endregion
 
-    private void Products_DateGrid_DoubleClick(object sender, MouseButtonEventArgs e)
+    private void Orders_DateGrid_DoubleClick(object sender, MouseButtonEventArgs e)
     {
-        new OrderDetailsWindow(bl, (sender as DataGrid).SelectedItem as PO.OrderForList).ShowDialog();
+        //new OrderDetailsWindow(bl, (sender as DataGrid).SelectedItem as PO.OrderForList).ShowDialog();
+        new OrderDetailsWindow(bl, (PO.OrderForList)Orders_DateGrid.SelectedItem).ShowDialog();
+    }
 
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        // PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
+        Action<int> statusAction = (orderId) =>
+        {
+          //PO.ProductForList p = bl.BoProduct.GetProductForList(ProductID).CopyBoPflToPoPfl();
+          //  PO.ProductForList P_BeforUp = allBooks.FirstOrDefault(x => x.ID == p.ID)!;
+            PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());
+            PO.OrderForList orBeforUp = allOrders.FirstOrDefault(x => x.OrderID == or.OrderID)!;
+            orBeforUp.Status = or.Status;
+        };
+        //צריך לבדוק אם הפונקציה עובדת
+            new statusUpdatWindow(bl, (PO.OrderForList)Orders_DateGrid.SelectedItem, statusAction).ShowDialog();
     }
 }

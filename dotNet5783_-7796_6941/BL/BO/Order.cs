@@ -9,6 +9,11 @@ public class Order
     public int ID { get; set; }
 
     /// <summary>
+    /// The name of the customer
+    /// </summary>
+    public string? CustomerName { get; set; } //ערך מתאפס- בגלל הקומפיילקר
+
+    /// <summary>
     /// כתובת האימייל של הלקוח
     /// </summary>
     public string? CustomerEmail { get; set; }

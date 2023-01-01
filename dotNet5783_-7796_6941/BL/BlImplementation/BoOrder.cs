@@ -1,4 +1,5 @@
 ﻿using BlApi;
+using BO;
 
 namespace BlImplementation;
 
@@ -32,6 +33,14 @@ internal class BoOrder : IOrder
         }
     }
 
+    public OrderForList GetOrderForList(int orderID)
+    {
+        BO.Order order = GetOrdertDetails(orderID);
+        OrderForList or = order.CopyPropTo(new OrderForList());
+        or.AmountOfItems = order.Items!.Count();
+        return or;
+    }
+
     /// <summary>
     /// שליחת פרטי הזמנה לפי נתונים שמתאימים לשכבת הלוגיקה
     /// </summary>
@@ -49,7 +58,7 @@ internal class BoOrder : IOrder
             BO.Order order = new BO.Order();
             order = myOrder.CopyPropTo(order);
             order.Status = myOrder.calculateStatus();
-            order.PaymentDate = myOrder.DateOrder;//should be nullable?                                  
+            order.PaymentDate = myOrder.DateOrder;                                 
             var tempItems = dal.OrderItem.GetListByOrderID(myOrder.ID);
             order.Items = tempItems.Select(x => x.ListFromDoToBo()).ToList();//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
@@ -65,6 +74,8 @@ internal class BoOrder : IOrder
         }
 
     }
+
+    //public BO.OrderForList 
 
     /// <summary>
     /// עדכון שילוח הזמנה 

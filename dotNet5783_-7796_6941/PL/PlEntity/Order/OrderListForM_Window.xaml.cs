@@ -24,106 +24,97 @@ namespace PL.PlEntity.Order;
 public partial class OrderListForM_Window : Window
 {
     private IBl bl;
-    private ObservableCollection<PO.OrderForList> allOrders;
-namespace PL.PlEntity.Order
-{
-    /// <summary>
-    /// Interaction logic for OrderListForM_Window.xaml
-    /// </summary>
-    public partial class OrderListForM_Window : Window
+    private ObservableCollection<PO.OrderForList> allOrders = new();
+
+    public OrderListForM_Window(IBl bl)
     {
-        private IBl bl;
-        private ObservableCollection<PO.OrderForList> allOrders = new();
+        InitializeComponent();
 
-        public OrderListForM_Window(IBl bl)
-        {
-            InitializeComponent();
-
-            this.bl = bl;
-            allOrders=allOrders!.ToObserCollection_O();
-            DataContext = allOrders;
-        }
-
-        #region אירוע- לחיצה על כפתור מחיקת הזמנה
-        private void DeleteOrder_button(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-
-                OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
-                if (orderToD.Status == OrderStatus.Accepted)
-                {
-                    PL.PO.Order myOrder = bl.BoOrder.GetOrdertDetails(orderToD.OrderID).CopyBoOrderToPoOrder();
-                    myOrder.Items = myOrder.Items ?? new();
-
-                }
-
-
-
-
-                var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה למחוק הזמנה זו?", "מחיקת הזמנה", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-                switch (delete)
-                {
-                    case MessageBoxResult.Yes:
-
-                        if(orderToD.Status == OrderStatus.Processing)
-                        {
-                            bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
-                            allOrders.Remove(orderToD);
-                        }
-                        else
-                        {
-
-                        }
-                        MessageBox.Show("!ההזמנה נמחקה בהצלחה");
-                        break;
-                    case MessageBoxResult.No:
-                        Orders_DateGrid.SelectedItem = null;
-                        break;
-                }
-
-
-                bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
-
-            }
-            catch
-            {
-
-            }
-        }
-        #endregion
-
-
-        #region אירוע- לחיצה על כפתור עדכון הזמנה
-        private void UpdateOrder_Click(object sender, RoutedEventArgs e)
-        {
-            //Action<int> updateAction = (orderID) =>
-            //{
-            //    PO.Order o = bl.BoOrder.GetOrdertDetails(orderID).CopyBoOrderForListToPoOrder();
-            //    PO.Order O_BeforUp = allOrders.FirstOrDefault(x => x.OrderID == o.ID)!.CopyBoOrderForListToPoOrder();
-            //     //עדכנו שדה שדה,לבדוק אם יש דרך חכמה יותר
-
-            //};
-
-            //new UpdatProductForM_Window(bl, (ProductForList)Products_DateGrid.SelectedItem, updateAction).ShowDialog();
-
-        }
-
-        #endregion
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
-            Action<int> statusAction = (orderId) =>
-            {
-                //PO.ProductForList p = bl.BoProduct.GetProductForList(ProductID).CopyBoPflToPoPfl();
-                //  PO.ProductForList P_BeforUp = allBooks.FirstOrDefault(x => x.ID == p.ID)!;
-                PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());
-                PO.OrderForList orBeforUp = allOrders.FirstOrDefault(x => x.OrderID == or.OrderID)!;
-                orBeforUp.Status = or.Status;
-            };
-            //צריך לבדוק אם הפונקציה עובדת
-            new statusUpdatWindow(bl, (PO.OrderForList)Orders_DateGrid.SelectedItem, statusAction).ShowDialog();
-        }
+        this.bl = bl;
+        allOrders = allOrders!.ToObserCollection_O();
+        DataContext = allOrders;
     }
+
+
+    private void UpdateShip_Click(object sender, RoutedEventArgs e)
+    {
+        PO.OrderForList ordToUp = (PO.OrderForList)Orders_DateGrid.SelectedItem;
+        try
+        {
+            var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה לעדכן את שליחת הזמנה זו?", "עדכון סטטוס", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            switch (delete)
+            {
+                case MessageBoxResult.Yes:
+                    bl.BoOrder.UpdateOrderShipping(ordToUp.OrderID);
+                    MessageBox.Show("!ההזמנה נשלחה לדרך");
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+        ordToUp.Status = (PO.OrderStatus)bl.BoOrder.GetOrdertDetails(ordToUp.OrderID).Status;
+    }
+
+    private void UpdateDelivary_Click(object sender, RoutedEventArgs e)
+    {
+        PO.OrderForList ordToUp = (PO.OrderForList)Orders_DateGrid.SelectedItem;
+        try
+        {
+            var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה לעדכן ביצוע הזמנה זו?", "עדכון סטטוס", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            switch (delete)
+            {
+                case MessageBoxResult.Yes:
+                    bl.BoOrder.UpdateOrderDelivery(ordToUp.OrderID);
+                    MessageBox.Show("!ההזמנה בוצעה בהצלחה");
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+        ordToUp.Status = (PO.OrderStatus)bl.BoOrder.GetOrdertDetails(ordToUp.OrderID).Status;
+    }
+
+    #region אירוע- לחיצה על כפתור עדכון הזמנה
+    private void UpdateOrder_Click(object sender, RoutedEventArgs e)
+    {
+        //Action<int> updateAction = (orderID) =>
+        //{
+        //    PO.Order o = bl.BoOrder.GetOrdertDetails(orderID).CopyBoOrderForListToPoOrder();
+        //    PO.Order O_BeforUp = allOrders.FirstOrDefault(x => x.OrderID == o.orderID)!.CopyBoOrderForListToPoOrder();
+        //     //עדכנו שדה שדה,לבדוק אם יש דרך חכמה יותר
+
+        //};
+
+        //new UpdatProductForM_Window(bl, (ProductForList)Products_DateGrid.SelectedItem, updateAction).ShowDialog();
+
+    }
+
+    #endregion
+
+    //private void Button_Click(object sender, RoutedEventArgs e)
+    //{
+    //    // PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
+    //    Action<int> statusAction = (orderId) =>
+    //    {
+    //        //PO.ProductForList p = bl.BoProduct.GetProductForList(ProductID).CopyBoPflToPoPfl();
+    //        //  PO.ProductForList P_BeforUp = allBooks.FirstOrDefault(x => x.orderID == p.orderID)!;
+    //        PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());
+    //        PO.OrderForList orBeforUp = allOrders.FirstOrDefault(x => x.OrderID == or.OrderID)!;
+    //        orBeforUp.Status = or.Status;
+    //    };
+    //    //צריך לבדוק אם הפונקציה עובדת
+    //    //new statusUpdatWindow(bl, (PO.OrderForList)Orders_DateGrid.SelectedItem, statusAction).ShowDialog();
+    //}
 }
+
+

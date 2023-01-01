@@ -6,7 +6,7 @@ public class OrderTracking
     /// <summary>
     /// מזהה ההזמנה
     /// </summary>
-    public int ID { set; get; }
+    public int OrderID { set; get; }
 
     /// <summary>
     /// מצב ההזמנה

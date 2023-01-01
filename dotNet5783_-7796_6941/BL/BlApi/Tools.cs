@@ -209,11 +209,11 @@ public static class Tools
     //{
     //    return new BO.OrderForList()
     //    {
-    //        OrderID = order.ID,
-    //        CustomerName = dal.Order.GetById(order.ID).CustomerName,
-    //        Status = dal.Order.GetById(order.ID).calculateStatus(),
-    //        AmountOfItems = dal.Order.GetById(order.ID).CalculateAmountItems(),
-    //        TotalPrice = dal.Order.GetById(order.ID).CalculatePriceOfAllItems()
+    //        OrderID = order.orderID,
+    //        CustomerName = dal.Order.GetById(order.orderID).CustomerName,
+    //        Status = dal.Order.GetById(order.orderID).calculateStatus(),
+    //        AmountOfItems = dal.Order.GetById(order.orderID).CalculateAmountItems(),
+    //        TotalPrice = dal.Order.GetById(order.orderID).CalculatePriceOfAllItems()
     //    };
     //}
 }

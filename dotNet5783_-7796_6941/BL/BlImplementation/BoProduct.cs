@@ -39,7 +39,7 @@ internal class BoProduct : IProduct
 
     public BO.Product GetProductDetails_forM(int id)
     {
-        if (id < 0) throw new BO.InvalidValue_Exception("can't get this product because OrderID is negetive");
+        if (id < 0) throw new BO.InvalidValue_Exception("can't get this product because orderID is negetive");
 
         try
         {
@@ -56,7 +56,7 @@ internal class BoProduct : IProduct
 
     public BO.ProductItem GetProductDetails_forC(int id, BO.Cart cart)
     {
-        if (id < 0) throw new BO.InvalidValue_Exception("can't get this product because OrderID is negetive");
+        if (id < 0) throw new BO.InvalidValue_Exception("can't get this product because orderID is negetive");
 
         try
         {
@@ -149,7 +149,7 @@ internal class BoProduct : IProduct
             throw new ArgumentNullException("missing product");
 
         if (productToUp.ID < 100000)
-            throw new BO.Update_Exception("cant gets Negative OrderID");//מספר שלילי
+            throw new BO.Update_Exception("cant gets Negative orderID");//מספר שלילי
 
         if (productToUp.NameOfBook == "")
             throw new BO.Update_Exception("Name of book is missing");

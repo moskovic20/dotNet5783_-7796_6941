@@ -92,13 +92,16 @@ internal class BoOrder : IOrder
             UpOrd = dal.Order.GetById(id).CopyPropTo(UpOrd);
 
             if (UpOrd.DeliveryDate != null)//evrything allready got heandeled
-                throw new BO.InvalidValue_Exception("cant update status, order allredy delivered");
+                throw new BO.InvalidValue_Exception("לא יכול לעדכן הזמנה זו, מאחר והיא כבר בוצעה");
+
+            if (UpOrd.ShippingDate != null)//evrything allready got heandeled
+                throw new BO.InvalidValue_Exception("לא יכול לעדכן הזמנה זו, מאחר והיא כבר נשלחה");
 
             if (UpOrd.ShippingDate == null && UpOrd.DeliveryDate == null) //____we can update like we was asked for____
             {
 
                 if (UpOrd.DateOrder > DateTime.Now)
-                    throw new BO.InvalidValue_Exception("wrong information,cant be possible that DateOrder > ShippingDate"); //exceptions
+                    throw new BO.InvalidValue_Exception("wrong information,cant be possible that DateOrder > ShippingDate");
                 else
                 {
                     UpOrd.ShippingDate = DateTime.Now;//עדכון תאריך שליחה
@@ -108,16 +111,13 @@ internal class BoOrder : IOrder
                 }
             }
             else
-                throw new BO.GetDetails_Exception("Can't update this order correct ditales");//////ok exception?
+                throw new BO.GetDetails_Exception("Can't update this order correct ditales");
         }
         catch (Do.DoesntExistException ex)
         {
             throw new BO.GetDetails_Exception("Can't update shipping date", ex);
         }
-        catch (BO.InvalidValue_Exception ex)
-        {
-            throw new BO.GetDetails_Exception("Can't update shipping date", ex);
-        }
+        
     }
 
     /// <summary>
@@ -138,13 +138,13 @@ internal class BoOrder : IOrder
             UpOrd = dal.Order.GetById(id).CopyPropTo(UpOrd);
 
             if (UpOrd.DeliveryDate != null)//evrything allready got heandeled
-                throw new BO.InvalidValue_Exception("cant update status, order allredy delivered");
+                throw new BO.InvalidValue_Exception("לא יכול לעדכן הזמנה זו, מאחר והיא כבר נשלחה");
 
             if (UpOrd.ShippingDate != null && UpOrd.DeliveryDate == null) //____we can update like we was asked for____
             {
 
                 if (UpOrd.ShippingDate > DateTime.Now)
-                    throw new ArgumentException("Wrong information,cant be possible that ShippingDate > DeliveryDate");
+                    throw new BO.InvalidValue_Exception("Wrong information,cant be possible that ShippingDate > DeliveryDate");
                 else
                 {
                     UpOrd.DeliveryDate = DateTime.Now;
@@ -154,11 +154,15 @@ internal class BoOrder : IOrder
                 }
             }
             else
-                throw new BO.GetDetails_Exception("Can't update this order, uncorrect status ditales");//////ok exception?
+                throw new BO.GetDetails_Exception("לא ניתן לעדכן, אין לנו את כל הפרטים הנדרשים");
         }
-        catch (Exception ex)
+        catch (Do.AlreadyExistException ex)
         {
-            throw new BO.GetDetails_Exception("Can't get this order", ex);
+            throw new BO.GetDetails_Exception("לא יכול להגיע להזמנה זו", ex);
+        }
+        catch (Do.DoesntExistException ex)
+        {
+            throw new BO.GetDetails_Exception("לא יכול להגיע להזמנה זו", ex);
         }
 
     }
@@ -179,14 +183,14 @@ internal class BoOrder : IOrder
             Do.Order myOrder = dal.Order.GetById(id);
             return new BO.OrderTracking()
             {
-                ID = myOrder.ID,
+                OrderID = myOrder.ID,
                 Status = myOrder.calculateStatus(),///------אופציה להוסיף כבונוס תאריך משוער למה שלא קיים לו ערך-------
                 Tracking = myOrder.TrackingHealper()
             };
         }
         catch (Do.DoesntExistException ex)
         {
-            throw new BO.GetDetails_Exception("Can't get this order", ex);
+            throw new BO.GetDetails_Exception("לא יכול להגיע להזמנה זו", ex);
         }
     }
 

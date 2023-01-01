@@ -23,7 +23,7 @@ namespace PL.Admin
     public partial class AdminPassword : Window
     {
         private IBl bl;
-        private string password;
+        
 
         public AdminPassword(IBl bl)
         {

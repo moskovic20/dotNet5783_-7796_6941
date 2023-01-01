@@ -11,6 +11,7 @@ public interface IOrder
     BO.Order UpdateOrderDelivery(int id);
     BO.OrderTracking GetOrderTracking(int id);
     void UpdateOrder(int id, int option);
+    void DeleteOrder_forM(int id);
 
    
 

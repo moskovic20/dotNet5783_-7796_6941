@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace PL.PO;
 
-public class Order : INotifyPropertyChanged
+internal class Order : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler? PropertyChanged;//יטפל לנו בשינויים למסך ומהמסך
 
@@ -21,7 +22,7 @@ public class Order : INotifyPropertyChanged
             _ID = value;
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs("ID"));
+                PropertyChanged(this, new PropertyChangedEventArgs("OrderID"));
             }
         }
     }
@@ -39,6 +40,23 @@ public class Order : INotifyPropertyChanged
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs("CustomerEmail"));
+            }
+        }
+    }
+
+    private string? _CustomerName;
+    public string? CustomerName
+    {
+        get
+        {
+            return _CustomerName;
+        }
+        set
+        {
+            _CustomerName = value;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("CustomerName"));
             }
         }
     }
@@ -146,22 +164,20 @@ public class Order : INotifyPropertyChanged
     }
 
 
-    private List<OrderItem?>? _Items;
-    public List<OrderItem?>? Items
-    {
-        get
-        {
-            return _Items;
-        }
-        set
-        {
-            _Items = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("Items"));
-            }
-        }
-    }
+    //private ObservableCollection<OrderItem>? _Items;
+    public ObservableCollection<OrderItem>? Items;
+    //{
+    //    get
+    //    { return Items; }
+    //    set
+    //    {
+    //        _Items = value;
+    //        if (PropertyChanged != null)
+    //        {
+    //            PropertyChanged(this, new PropertyChangedEventArgs("Items"));
+    //        }
+    //    }
+    //}
 
     private double _TotalPrice;
     public double TotalPrice

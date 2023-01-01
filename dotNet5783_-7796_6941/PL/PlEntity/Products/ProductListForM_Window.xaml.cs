@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using PL.PO;
-using Do;
+//using Do;
 
 namespace PL.Products;
 
@@ -25,23 +25,13 @@ namespace PL.Products;
 public partial class ProductListForM_Window : Window
 {
     private IBl bl;
-    private ObservableCollection<PO.ProductForList> allBooks;
+    private ObservableCollection<PO.ProductForList> allBooks = new();
 
     public ProductListForM_Window(IBl bl)
     {
         InitializeComponent();
         this.bl = bl;
-
-        var list = from p in bl.BoProduct.GetAllProductForList_forM()
-                   select new PO.ProductForList
-                   {
-                       ID = p.ID,
-                       NameOfBook = p.NameOfBook,
-                       Price = p.Price,
-                       Category = (PO.CATEGORY)p.Category
-                   };
-
-        allBooks = new ObservableCollection<PO.ProductForList>(list);
+        allBooks = allBooks.ToObserCollection_P();
         DataContext = allBooks;
         allBooks.CollectionChanged += AllBooks_CollectionChanged;
     }

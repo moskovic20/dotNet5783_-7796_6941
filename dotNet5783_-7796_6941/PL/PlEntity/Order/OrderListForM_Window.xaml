@@ -32,8 +32,7 @@
 
     <Grid Name="MainGrid" ShowGridLines="False">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160*"/>
-            <ColumnDefinition Width="640*"/>
+
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="72.669"/>
@@ -41,7 +40,13 @@
         </Grid.RowDefinitions>
 
         <Rectangle HorizontalAlignment="Left" Height="72" VerticalAlignment="Center" Width="1100" Fill="#FFF6F6F6" Grid.ColumnSpan="2"/>
-        <StackPanel Orientation="Horizontal" Margin="366,-3,18,3" Grid.Column="1">
+        <Button x:Name="GroupBySenderButton"
+                        Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+                        Content="Group By Sender" 
+                    BorderBrush="#FF009BA6" Foreground="#FF009BA6" Margin="109,8,821,33"
+                       />
+
+        <StackPanel Orientation="Horizontal" Margin="590,-3,18,3">
             <ComboBox Name="StatusComboBox" Margin="10"  Width="100"
                           materialDesign:HintAssist.Hint="()"
                           Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
@@ -76,10 +81,9 @@
                   IsReadOnly="True"
                   ItemsSource="{Binding}" 
                   HorizontalAlignment="Left"
-                  Margin="50,10,0,35"
-                  Width="820"
-                  Background="{x:Null}" Grid.Column="1" Grid.Row="1"
-                  MouseDoubleClick="Orders_DateGrid_DoubleClick">
+                  Margin="155,10,0,35"
+                  Width="927"
+                  Background="{x:Null}" Grid.Row="1">
 
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
@@ -99,7 +103,8 @@
                         <DataTemplate>
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Height="30" Width="30"
-                                    HorizontalAlignment="Center">
+                                    HorizontalAlignment="Center"
+                                    Click="DeleteOrder_button">
                                 <materialDesign:PackIcon Kind="Trash"/>
                             </Button>
                         </DataTemplate>
@@ -121,29 +126,44 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
+                <DataGridTemplateColumn Header="בוצע"
+                                    MinWidth="10">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                    Height="30" Width="30"
+                                    Background="#FFF6F6F6"
+                                    HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="Done" Foreground="Gray" />
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="נשלח"
+                                    MinWidth="10">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                    Height="30" Width="30"
+                                    Background="#FFF6F6F6"
+                                    HorizontalAlignment="Center">
+                                <materialDesign:PackIcon Kind="TruckShipping" Foreground="Gray"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTextColumn Header="סטטוס"
+                                    Binding="{Binding Status ,Converter={StaticResource statusToHebrew}}"
+                                    MinWidth="100" />
+
                 <DataGridTextColumn Header="מחיר סופי"    
                                     Binding="{Binding TotalPrice}"
                                     MinWidth="100"/>
                 <DataGridTextColumn Header="כמות פריטים"    
                                     Binding="{Binding AmountOfItems}"
                                     MinWidth="100"/>
-                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=Update}"
-                                    MinWidth="10">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
-                                    Height="30" Width="30"
-                                   Click="Button_Click"
-                                    HorizontalAlignment="Center">
-                                <materialDesign:PackIcon Kind="Update"/>
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                <DataGridTextColumn Header="סטטוס"
-                                    Binding="{Binding Status ,Converter={StaticResource statusToHebrew}}"
-                                    
-                                    MinWidth="100" />
                 <DataGridTextColumn Header="שם הלקוח"
                                     Binding="{Binding CustomerName}"
                                     MinWidth="100"/>
@@ -158,7 +178,8 @@
                 Width="50" Height="50"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
-                Background="#FF009BA6" Margin="54,5,0,0" Click="AddOrder_Click" >
+                Background="#FF009BA6" Margin="54,5,0,0"
+               >
             <materialDesign:PackIcon Kind="PlaylistAdd" 
                                          Height="30" Width="30" 
                                          OpacityMask="Black" />
@@ -166,27 +187,7 @@
 
 
         </Button>
-        <StackPanel Grid.Row="1">
 
-            <Button Name="GroupBySenderButton"
-                        Style="{StaticResource MaterialDesignOutlinedDarkButton}"
-                        Content="Group By Sender" 
-                        Margin="10,40,10,0" 
-                    BorderBrush="#FF009BA6" Foreground="#FF009BA6"
-                       />
-            <Button Name="GroupByTargetButton"
-                        Style="{StaticResource MaterialDesignOutlinedDarkButton}"
-                        Content="Group By Target" 
-                        Margin="10,20,10,0" 
-                    BorderBrush="#FF009BA6" Foreground="#FF009BA6"
-                        />
-            <Button Name="RemoveGroup" Height="32"
-                        Style="{StaticResource MaterialDesignOutlinedDarkButton}"
-                        Background="White"
-                        Content="Remove Groups" 
-                        Margin="10,20,10,0" 
-                        BorderBrush="#FF009BA6" Foreground="#FF009BA6" />
-        </StackPanel>
 
 
     </Grid>

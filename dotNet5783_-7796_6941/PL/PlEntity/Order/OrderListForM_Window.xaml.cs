@@ -14,9 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.PO;
-using PL.Products;
-using BO;
-using Do;
+using System.Collections.Specialized;
 
 namespace PL.PlEntity.Order;
 
@@ -27,73 +25,105 @@ public partial class OrderListForM_Window : Window
 {
     private IBl bl;
     private ObservableCollection<PO.OrderForList> allOrders;
-
-    public OrderListForM_Window(IBl bl)
+namespace PL.PlEntity.Order
+{
+    /// <summary>
+    /// Interaction logic for OrderListForM_Window.xaml
+    /// </summary>
+    public partial class OrderListForM_Window : Window
     {
-        InitializeComponent();
-        
-        this.bl = bl;
-        var orderForLists = from order in bl.BoOrder.GetAllOrderForList()
-                            select new PO.OrderForList()
-                            {
-                                OrderID = order.OrderID,
-                                CustomerName = order.CustomerName,
-                                Status = (PO.OrderStatus)order.Status,
-                                AmountOfItems = order.AmountOfItems,
-                                TotalPrice = order.TotalPrice
-                            };
-        allOrders = new(orderForLists);
-        DataContext = allOrders; //כדי שיקושר למסך נראה לי
-    }
+        private IBl bl;
+        private ObservableCollection<PO.OrderForList> allOrders = new();
 
-    
-
-    private void AddOrder_Click(object sender, RoutedEventArgs e)
-    {
-        Action<int> AddAction = (orderId)=>
+        public OrderListForM_Window(IBl bl)
         {
-            PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
-            allOrders.Add(or);
-        };
-        new AddOrderWindow(bl, AddAction).ShowDialog();
+            InitializeComponent();
 
-    }
+            this.bl = bl;
+            allOrders=allOrders!.ToObserCollection_O();
+            DataContext = allOrders;
+        }
 
-    #region אירוע- לחיצה על כפתור עדכון הזמנה
-    private void UpdateOrder_Click(object sender, RoutedEventArgs e)
-    {
-        //Action<int> updateAction = (orderID) =>
-        //{
-        //    PO.Order o = bl.BoOrder.GetOrdertDetails(orderID).CopyBoOrderForListToPoOrder();
-        //    PO.Order O_BeforUp = allOrders.FirstOrDefault(x => x.OrderID == o.ID)!.CopyBoOrderForListToPoOrder();
-        //     //עדכנו שדה שדה,לבדוק אם יש דרך חכמה יותר
-            
-        //};
-
-        //new UpdatProductForM_Window(bl, (ProductForList)Products_DateGrid.SelectedItem, updateAction).ShowDialog();
-
-    }
-
-    #endregion
-
-    private void Orders_DateGrid_DoubleClick(object sender, MouseButtonEventArgs e)
-    {
-        //new OrderDetailsWindow(bl, (sender as DataGrid).SelectedItem as PO.OrderForList).ShowDialog();
-        new OrderDetailsWindow(bl, (PO.OrderForList)Orders_DateGrid.SelectedItem).ShowDialog();
-    }
-
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-        // PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
-        Action<int> statusAction = (orderId) =>
+        #region אירוע- לחיצה על כפתור מחיקת הזמנה
+        private void DeleteOrder_button(object sender, RoutedEventArgs e)
         {
-          //PO.ProductForList p = bl.BoProduct.GetProductForList(ProductID).CopyBoPflToPoPfl();
-          //  PO.ProductForList P_BeforUp = allBooks.FirstOrDefault(x => x.ID == p.ID)!;
-            PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());
-            PO.OrderForList orBeforUp = allOrders.FirstOrDefault(x => x.OrderID == or.OrderID)!;
-            orBeforUp.Status = or.Status;
-        };
-        //צריך לבדוק אם הפונקציה עובדת
+            try
+            {
+
+                OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
+                if (orderToD.Status == OrderStatus.Accepted)
+                {
+                    PL.PO.Order myOrder = bl.BoOrder.GetOrdertDetails(orderToD.OrderID).CopyBoOrderToPoOrder();
+                    myOrder.Items = myOrder.Items ?? new();
+
+                }
+
+
+
+
+                var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה למחוק הזמנה זו?", "מחיקת הזמנה", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                switch (delete)
+                {
+                    case MessageBoxResult.Yes:
+
+                        if(orderToD.Status == OrderStatus.Processing)
+                        {
+                            bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
+                            allOrders.Remove(orderToD);
+                        }
+                        else
+                        {
+
+                        }
+                        MessageBox.Show("!ההזמנה נמחקה בהצלחה");
+                        break;
+                    case MessageBoxResult.No:
+                        Orders_DateGrid.SelectedItem = null;
+                        break;
+                }
+
+
+                bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
+
+            }
+            catch
+            {
+
+            }
+        }
+        #endregion
+
+
+        #region אירוע- לחיצה על כפתור עדכון הזמנה
+        private void UpdateOrder_Click(object sender, RoutedEventArgs e)
+        {
+            //Action<int> updateAction = (orderID) =>
+            //{
+            //    PO.Order o = bl.BoOrder.GetOrdertDetails(orderID).CopyBoOrderForListToPoOrder();
+            //    PO.Order O_BeforUp = allOrders.FirstOrDefault(x => x.OrderID == o.ID)!.CopyBoOrderForListToPoOrder();
+            //     //עדכנו שדה שדה,לבדוק אם יש דרך חכמה יותר
+
+            //};
+
+            //new UpdatProductForM_Window(bl, (ProductForList)Products_DateGrid.SelectedItem, updateAction).ShowDialog();
+
+        }
+
+        #endregion
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
+            Action<int> statusAction = (orderId) =>
+            {
+                //PO.ProductForList p = bl.BoProduct.GetProductForList(ProductID).CopyBoPflToPoPfl();
+                //  PO.ProductForList P_BeforUp = allBooks.FirstOrDefault(x => x.ID == p.ID)!;
+                PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());
+                PO.OrderForList orBeforUp = allOrders.FirstOrDefault(x => x.OrderID == or.OrderID)!;
+                orBeforUp.Status = or.Status;
+            };
+            //צריך לבדוק אם הפונקציה עובדת
             new statusUpdatWindow(bl, (PO.OrderForList)Orders_DateGrid.SelectedItem, statusAction).ShowDialog();
+        }
     }
 }

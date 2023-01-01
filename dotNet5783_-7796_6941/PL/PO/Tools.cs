@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System;
+using System.Net.Mail;
+using System.Net;
+using System.Printing;
+using Do;
 
 namespace PL.PO
 {
@@ -48,8 +52,50 @@ namespace PL.PO
    => from source in sources
       select source.CopyPropTo(new Target());
 
+        public static bool Send(string receiverEmail, string ReceiverName, string subject, string body)
+        {
+            MailMessage mailMessage = new MailMessage();
+            MailAddress mailAddress = new MailAddress("moriyamoskos11@gmail.com", "Sender Name"); // abc@gmail.com = input Sender Email Address 
+            mailMessage.From = mailAddress;
+            mailAddress = new MailAddress(receiverEmail, ReceiverName);
+            mailMessage.To.Add(mailAddress);
+            mailMessage.Subject = subject;
+            mailMessage.Body = body;
+            mailMessage.IsBodyHtml = true;
+
+            SmtpClient mailSender = new SmtpClient("smtp.gmail.com", 587)
+            {
+                EnableSsl = true,
+                UseDefaultCredentials = false,
+                DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential("moriyamoskos11@gmail.com", "pass")   // abc@gmail.com = input sender email address  
+                                                                               //pass = sender email password
+            };
+
+            try
+            {
+                mailSender.Send(mailMessage);
+                return true;
+            }
+            catch (SmtpFailedRecipientException ex)
+            {
+                // Write the exception to a Log file.
+            }
+            catch (SmtpException ex)
+            {
+                // Write the exception to a Log file.
+            }
+            finally
+            {
+                mailSender = null;
+                mailMessage.Dispose();
+            }
+            return false;
+        }
+
         //________________________________________productTools__________________________________________________________
 
+        #region convert BO.productForList to PO.productForList
         internal static PO.ProductForList CopyBoPflToPoPfl(this BO.ProductForList p)
         {
 
@@ -64,6 +110,7 @@ namespace PL.PO
 
             return product;
         }
+        #endregion
 
         #region convert from PO.Product to BO.Product and vice versa
 
@@ -189,20 +236,71 @@ namespace PL.PO
 
         #endregion
 
-        //public static ObservableCollection<ProductForList> ToObserCollection_P(this ObservableCollection<ProductForList> allBooks)
-        //{
-        //    return new ObservableCollection<ProductForList>(bl.BoProduct.GetAllProductForList_forM());
-        //}
+        #region convert fron BO.order to PO.order
+        internal static PO.Order CopyBoOrderToPoOrder(this BO.Order boOrder)
+        {
+            PO.Order myNewOrder = new()
+            {
+                ID = boOrder.ID,
+                CustomerEmail=boOrder.CustomerEmail,
+                ShippingAddress=boOrder.ShippingAddress,
+                DateOrder=boOrder.DateOrder,
+                Status=(PO.OrderStatus)boOrder.Status,
+                PaymentDate=boOrder.PaymentDate,
+                ShippingDate=boOrder.ShippingDate,
+                DeliveryDate=boOrder.DeliveryDate
+            };
+
+            var list = from myOI in boOrder.Items
+                       select new OrderItem()
+                       {
+                           OrderID=myOI.OrderID,
+                           ProductID=myOI.ProductID,
+                           NameOfBook=myOI.NameOfBook,
+                           PriceOfOneItem=myOI.PriceOfOneItem,
+                           AmountOfItems=myOI.AmountOfItems,
+                           TotalPrice=myOI.TotalPrice
+                       };
+
+            myNewOrder.Items = new(list);
+            return myNewOrder;
+        }
+        #endregion
+
+        public static ObservableCollection<ProductForList> ToObserCollection_P(this ObservableCollection<ProductForList> allBooks)
+        {
+            var list = from p in bl.BoProduct.GetAllProductForList_forM()
+                       select new PO.ProductForList
+                       {
+                           ID = p.ID,
+                           NameOfBook = p.NameOfBook,
+                           Price = p.Price,
+                           Category = (PO.CATEGORY)p.Category
+                       };
+
+            allBooks = new ObservableCollection<PO.ProductForList>(list);
+            return allBooks;
+        }
 
 
-        //___________________________________________orderTools__________________________________________________________
+       // ___________________________________________orderTools__________________________________________________________
 
-        //public static ObservableCollection<OrderForList> ToObserCollection_O(this ObservableCollection<OrderForList> allOrders)
-        //{
-        //    allOrders.Clear();
+        public static ObservableCollection<OrderForList> ToObserCollection_O(this ObservableCollection<OrderForList> allOrders)
+        {
+            var list = from O in bl.BoOrder.GetAllOrderForList()
+                       select new PO.OrderForList
+                       {
+                           OrderID = O.OrderID,
+                           CustomerName = O.CustomerName,
+                           Status = (PO.OrderStatus)O.Status,
+                           AmountOfItems = O.AmountOfItems,
+                           TotalPrice = O.TotalPrice
+                       };
 
-        //    foreach (BO.OrderForList order in bl.BoOrder.GetAllOrderForList())
-        //        allOrders.Add(order);
+            allOrders = new ObservableCollection<PO.OrderForList>(list);
+
+            return allOrders;
+        }
 
         //    return allOrders;
         //}

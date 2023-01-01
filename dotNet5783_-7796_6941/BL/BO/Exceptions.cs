@@ -42,7 +42,7 @@ public class GetAllForList_Exception : Exception
 [Serializable]
 public class Adding_Exception : Exception
 {
-    //public int ID { get; set; }
+    //public int OrderID { get; set; }
     // public string DataEntity { get; set; }
     public Adding_Exception() : base() { }
     public Adding_Exception(string message) : base(message) { }

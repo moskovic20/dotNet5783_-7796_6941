@@ -50,7 +50,7 @@ internal class BoOrder : IOrder
     public BO.Order GetOrdertDetails(int id)
     {
         if (id < 0)
-            throw new BO.GetDetails_Exception("Negative ID");
+            throw new BO.GetDetails_Exception("Negative OrderID");
 
         try
         {
@@ -85,7 +85,7 @@ internal class BoOrder : IOrder
     public BO.Order UpdateOrderShipping(int id)
     {
         if (id < 0)
-            throw new BO.Update_Exception("Negative ID");
+            throw new BO.Update_Exception("Negative OrderID");
         try
         {
             BO.Order UpOrd = new();
@@ -130,7 +130,7 @@ internal class BoOrder : IOrder
     {
 
         if (id < 0)
-            throw new BO.GetDetails_Exception("Negative ID");
+            throw new BO.GetDetails_Exception("Negative OrderID");
         try
         {
            // Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
@@ -172,7 +172,7 @@ internal class BoOrder : IOrder
     public BO.OrderTracking GetOrderTracking(int id)
     {
         if (id < 0)
-            throw new BO.GetDetails_Exception("Negative ID");
+            throw new BO.GetDetails_Exception("Negative OrderID");
 
         try
         {
@@ -199,6 +199,12 @@ internal class BoOrder : IOrder
     השלמת כל הפונקציונליות (כולל בשכבת התצוגה) בצורה מלאה.
  //throw new NotImplementedException("sorry, I'm not redy yet");
     */
+
+    public void DeleteOrder_forM(int orderID)
+    {
+        dal.Order.Delete(orderID);
+    }
+
     public void UpdateOrder(int id, int option)
     {
         //BO.Order ordToUp = new();

@@ -47,6 +47,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using PL.PO;
+using System.Net.Mail;
 
 namespace PL;
 
@@ -100,7 +102,7 @@ public partial class MainWindow : Window
 
     private void trakingOrder_Click(object sender, RoutedEventArgs e)
     {
-
+        PL.PO.Tools.Send("moriyamoskos11@gmail.com", "vvv", "v", "v");
     }
 
     private void Admin_Click(object sender, RoutedEventArgs e)

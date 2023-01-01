@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using PL.PO;
+using System.Collections.Specialized;
 
 namespace PL.PlEntity.Order
 {
@@ -38,16 +39,35 @@ namespace PL.PlEntity.Order
         #region אירוע- לחיצה על כפתור מחיקת הזמנה
         private void DeleteOrder_button(object sender, RoutedEventArgs e)
         {
-            OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
             try
             {
+
+                OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
+                if (orderToD.Status == OrderStatus.Accepted)
+                {
+                    PL.PO.Order myOrder = bl.BoOrder.GetOrdertDetails(orderToD.OrderID).CopyBoOrderToPoOrder();
+                    myOrder.Items = myOrder.Items ?? new();
+
+                }
+
+
+
+
                 var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה למחוק הזמנה זו?", "מחיקת הזמנה", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                 switch (delete)
                 {
                     case MessageBoxResult.Yes:
-                        bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
-                        allOrders.Remove(orderToD);
-                        MessageBox.Show("!הספר נמחק בהצלחה");
+
+                        if(orderToD.Status == OrderStatus.Processing)
+                        {
+                            bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
+                            allOrders.Remove(orderToD);
+                        }
+                        else
+                        {
+
+                        }
+                        MessageBox.Show("!ההזמנה נמחקה בהצלחה");
                         break;
                     case MessageBoxResult.No:
                         Orders_DateGrid.SelectedItem = null;
@@ -64,10 +84,5 @@ namespace PL.PlEntity.Order
             }
         }
         #endregion
-
-        private void AddTheStation_Click(object sender, RoutedEventArgs e)
-        {
-            new AddOrderForM_Window().ShowDialog();
-        }
     }
 }

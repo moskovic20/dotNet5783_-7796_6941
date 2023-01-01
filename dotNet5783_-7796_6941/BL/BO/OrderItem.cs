@@ -7,7 +7,7 @@ public class OrderItem
     /// <summary>
     /// מזהה פריט ההזמנה
     /// </summary>
-    public int ID { get; set; }
+    public int OrderID { get; set; }
 
     /// <summary>
     /// מזהה מוצר

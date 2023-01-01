@@ -14,8 +14,8 @@ public enum CATEGORY
 
 //________________________________________orderEnums___________________________________________________
 
-public enum OrderStatus { Pending = 1 /*ממתין ל*/ , Processing /*מעבד*/ , Completed /*הושלם*/ }
+public enum OrderStatus { Accepted = 1 /*ממתין ל*/ , Processing /*מעבד*/ , Completed /*הושלם*/ }
 
-public enum Hebrew_OrderStatus { בהמתנה, בהכנה, בוצע}
+public enum Hebrew_OrderStatus { נקלטה, בהכנה, התבצעה}
 
 

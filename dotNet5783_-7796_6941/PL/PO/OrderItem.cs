@@ -11,19 +11,19 @@ internal class OrderItem
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    private int _ID;
-    public int ID
+    private int _OrderID;
+    public int OrderID
     {
         get
         {
-            return _ID;
+            return _OrderID;
         }
         set
         {
-            _ID = value;
+            _OrderID = value;
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs("ID"));
+                PropertyChanged(this, new PropertyChangedEventArgs("OrderID"));
             }
         }
     }

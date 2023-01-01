@@ -42,11 +42,11 @@ namespace BLTest
                             BO.Product newProduct = new();
                             Console.WriteLine("please enter the following details:");
 
-                            Console.Write("Product ID: ");
+                            Console.Write("Product OrderID: ");
                             s = Console.ReadLine()!;
-                            if (s == "") throw new BO.InvalidValue_Exception("You cannot add a product without ID");
+                            if (s == "") throw new BO.InvalidValue_Exception("You cannot add a product without OrderID");
                             if (int.TryParse(s, out integer) && (integer >= 100000 || integer <= -100000)) newProduct.ID = integer;
-                            else throw new BO.InvalidValue_Exception("ID sould be with 6 digits at list");
+                            else throw new BO.InvalidValue_Exception("OrderID sould be with 6 digits at list");
 
                             Console.Write("Product Name: ");
                             s = Console.ReadLine()!;
@@ -89,8 +89,8 @@ namespace BLTest
 
                         #region הבאת פרטי מוצר למנהל
                         case 'b':
-                            Console.Write("Please insert an ID: ");
-                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000 || integer <= -100000)) throw new InvalidDataException("ID can't be ");
+                            Console.Write("Please insert an OrderID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000 || integer <= -100000)) throw new InvalidDataException("OrderID can't be ");
 
                             Console.WriteLine(bl.BoProduct.GetProductDetails_forM(integer));
                             break;
@@ -98,7 +98,7 @@ namespace BLTest
 
                         #region הבאת פרטי מוצר עבור לקוח
                         case 'c':
-                            Console.Write("Please insert an ID: ");
+                            Console.Write("Please insert an OrderID: ");
                             if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000 || integer <= -100000)) throw new InvalidDataException();
                             Console.WriteLine(bl.BoProduct.GetProductDetails_forC(integer, demoCart));
                             break;
@@ -126,7 +126,7 @@ namespace BLTest
 
                         #region עדכון פרטי מוצר
                         case 'f':
-                            Console.Write("Please insert an ID: ");
+                            Console.Write("Please insert an OrderID: ");
                             if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000 || integer <= -100000)) throw new InvalidDataException();
 
                             Product product = bl.BoProduct.GetProductDetails_forM(integer);
@@ -175,7 +175,7 @@ namespace BLTest
 
                         #region מחיקת מוצר עבור מנהל
                         case 'g':
-                            Console.Write("Please insert an ID: ");
+                            Console.Write("Please insert an OrderID: ");
                             if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
 
                             //Console.WriteLine(bl.BoProduct.DeleteProductByID_forM(integer));
@@ -214,7 +214,7 @@ namespace BLTest
 
                         #region הוספת מוצר לסל הקניות
                         case 'a':
-                            Console.Write("Please insert a product ID: ");
+                            Console.Write("Please insert a product OrderID: ");
                             if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
                             Console.WriteLine(bl.Cart.AddProductToCart(demoCart, integer));
                             break;
@@ -223,7 +223,7 @@ namespace BLTest
                         #region עדכון כמות של מוצר בסל הקניות
                         case 'b':
                             int productID, amount;
-                            Console.Write("Please insert a product ID: ");
+                            Console.Write("Please insert a product OrderID: ");
                             if (!(int.TryParse(Console.ReadLine(), out productID) && integer >= 100000)) throw new InvalidDataException();
                             Console.Write("Please insert a new amount: ");
                             if (!(int.TryParse(Console.ReadLine(), out amount) && integer >= 0)) throw new InvalidDataException();
@@ -282,21 +282,21 @@ namespace BLTest
 
                         case 'b': //printing the requested order
 
-                            Console.Write("Please insert an ID: ");
-                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException("ID cant be negatine- check this error");// חריגה על מספר שלילי , צריך לבדא האם זה תקין לבדוק פה
+                            Console.Write("Please insert an OrderID: ");
+                            if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException("OrderID cant be negatine- check this error");// חריגה על מספר שלילי , צריך לבדא האם זה תקין לבדוק פה
                             Console.WriteLine(bl.BoOrder.GetOrdertDetails(integer));
                             break;
 
                         case 'c': //send update
 
-                            Console.Write("Please insert an ID: ");
+                            Console.Write("Please insert an OrderID: ");
                             if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
                             Console.WriteLine(bl.BoOrder.UpdateOrderShipping(integer));
                             break;
 
                         case 'd': //delivart update
 
-                            Console.Write("Please insert an ID: ");
+                            Console.Write("Please insert an OrderID: ");
                             if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
                             Console.WriteLine(bl.BoOrder.UpdateOrderDelivery(integer));
                             break;
@@ -305,7 +305,7 @@ namespace BLTest
                             //int orderID/*, productID, newAmount*/;
 
 
-                            //Console.Write("Please insert an order ID: ");
+                            //Console.Write("Please insert an order OrderID: ");
                             //if (!(int.TryParse(Console.ReadLine(), out orderID) && orderID > 0)) throw new InvalidDataException();
                             //Order order = bl.BoOrder.GetOrdertDetails(orderID);
                             //Console.WriteLine(order);
@@ -322,7 +322,7 @@ namespace BLTest
                             //}
 
 
-                            //Console.Write("Please insert a product ID: ");
+                            //Console.Write("Please insert a product OrderID: ");
                             //if (!(int.TryParse(Console.ReadLine(), out productID) && productID >= 100000)) throw new InvalidDataException();
                             //Console.Write("Please insert a new amount: ");
                             //if (!(int.TryParse(Console.ReadLine(), out newAmount) && integer >= 0)) throw new InvalidDataException();                       
@@ -332,7 +332,7 @@ namespace BLTest
 
                         case 'f':
 
-                            Console.Write("Please insert an ID: ");
+                            Console.Write("Please insert an OrderID: ");
                             if (!(int.TryParse(Console.ReadLine(), out integer) && integer > 0)) throw new InvalidDataException();
                             Console.WriteLine(bl.BoOrder.GetOrderTracking(integer));
                             break;

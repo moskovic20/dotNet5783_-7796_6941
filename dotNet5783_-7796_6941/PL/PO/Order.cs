@@ -22,7 +22,7 @@ internal class Order : INotifyPropertyChanged
             _ID = value;
             if (PropertyChanged != null)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs("ID"));
+                PropertyChanged(this, new PropertyChangedEventArgs("OrderID"));
             }
         }
     }
@@ -40,6 +40,23 @@ internal class Order : INotifyPropertyChanged
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs("CustomerEmail"));
+            }
+        }
+    }
+
+    private string? _CustomerName;
+    public string? CustomerName
+    {
+        get
+        {
+            return _CustomerName;
+        }
+        set
+        {
+            _CustomerName = value;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("CustomerName"));
             }
         }
     }
@@ -147,20 +164,20 @@ internal class Order : INotifyPropertyChanged
     }
 
 
-    private ObservableCollection<OrderItem>? _Items;
-    public ObservableCollection<OrderItem>? Items
-    {
-        get
-        { return Items; }
-        set
-        {
-            _Items = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("Items"));
-            }
-        }
-    }
+    //private ObservableCollection<OrderItem>? _Items;
+    public ObservableCollection<OrderItem>? Items;
+    //{
+    //    get
+    //    { return Items; }
+    //    set
+    //    {
+    //        _Items = value;
+    //        if (PropertyChanged != null)
+    //        {
+    //            PropertyChanged(this, new PropertyChangedEventArgs("Items"));
+    //        }
+    //    }
+    //}
 
     private double _TotalPrice;
     public double TotalPrice

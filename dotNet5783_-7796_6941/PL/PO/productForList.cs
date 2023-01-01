@@ -18,7 +18,7 @@ namespace PL.PO
             {
                 _ID = value;
                 if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("ID"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("OrderID"));
 
             }
         }
@@ -76,7 +76,7 @@ namespace PL.PO
 
         public override string ToString()
         {
-            return string.Format("ID: {0}, NameOfBook : {1}, Price: {2},Category:{3}",
+            return string.Format("OrderID: {0}, NameOfBook : {1}, Price: {2},Category:{3}",
               ID, NameOfBook, Price, Category.ToString());
         }
     }

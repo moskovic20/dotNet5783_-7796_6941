@@ -20,7 +20,7 @@ internal class BoCart : ICart
             BO.OrderItem item = cart.Items.FirstOrDefault(x => x?.ProductID == productID) //אם המוצר קיים בסל הקניות אז הוא מקבל אותו אם לא יוצר חדש
             ?? new()
             {
-                ID = 0,
+                OrderID = 0,
                 ProductID = productID,
                 NameOfBook = product.NameOfBook,
                 PriceOfOneItem = product.Price ?? throw new BO.Adding_Exception("cant add this product to the cart because No price has been entered for it yet"),//חריגה שלא אמורה לקרות

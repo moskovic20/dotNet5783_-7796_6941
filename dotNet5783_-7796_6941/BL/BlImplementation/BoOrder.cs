@@ -41,7 +41,7 @@ internal class BoOrder : IOrder
     public BO.Order GetOrdertDetails(int id)
     {
         if (id < 0)
-            throw new BO.GetDetails_Exception("Negative ID");
+            throw new BO.GetDetails_Exception("Negative OrderID");
 
         try
         {
@@ -74,7 +74,7 @@ internal class BoOrder : IOrder
     public BO.Order UpdateOrderShipping(int id)
     {
         if (id < 0)
-            throw new BO.Update_Exception("Negative ID");
+            throw new BO.Update_Exception("Negative OrderID");
         try
         {
             BO.Order UpOrd = new();
@@ -119,7 +119,7 @@ internal class BoOrder : IOrder
     {
 
         if (id < 0)
-            throw new BO.GetDetails_Exception("Negative ID");
+            throw new BO.GetDetails_Exception("Negative OrderID");
         try
         {
            // Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
@@ -161,7 +161,7 @@ internal class BoOrder : IOrder
     public BO.OrderTracking GetOrderTracking(int id)
     {
         if (id < 0)
-            throw new BO.GetDetails_Exception("Negative ID");
+            throw new BO.GetDetails_Exception("Negative OrderID");
 
         try
         {

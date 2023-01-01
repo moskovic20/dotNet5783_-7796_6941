@@ -63,7 +63,7 @@ public static class Tools
         if (or.ShippingDate != null)
             return OrderStatus.Processing;
         else
-            return OrderStatus.Pending;
+            return OrderStatus.Accepted;
     }
     #endregion
 
@@ -74,7 +74,7 @@ public static class Tools
         int amountOfItems = 0;
 
         //if (order == null)
-        //    throw new DoesntExistException("missing ID");
+        //    throw new DoesntExistException("missing OrderID");
 
         listforAmount = dal.OrderItem.GetListByOrderID(order.ID);
         amountOfItems = listforAmount.Sum(o => (o?.AmountOfItems != null) ? 1 : 0);
@@ -88,7 +88,7 @@ public static class Tools
     {
         double Price = 0;
 
-        IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his ID 
+        IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his OrderID 
         Price = listforAmount.Sum(o => (o?.AmountOfItems ?? 0) * (o?.PriceOfOneItem ?? 0));
         return Price;
     }
@@ -116,7 +116,7 @@ public static class Tools
     public static BO.OrderItem? ListFromDoToBo(this Do.OrderItem? orderItems)
     {
         BO.OrderItem oIHelp = orderItems.CopyPropTo(new BO.OrderItem());
-        oIHelp.NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook;//name of the product by his order ID
+        oIHelp.NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook;//name of the product by his order OrderID
         oIHelp.TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0);
         return oIHelp;
     }

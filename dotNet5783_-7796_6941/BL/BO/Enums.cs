@@ -1,6 +1,6 @@
 ﻿namespace BO;
 
-public enum OrderStatus { Pending = 1 /*ממתין ל*/ , Processing /*מעבד*/ , Completed /*הושלם*/ }
+public enum OrderStatus { Accepted = 1 /*ממתין ל*/ , Processing /*מעבד*/ , Completed /*הושלם*/ }
 
 public enum CATEGORY
 {

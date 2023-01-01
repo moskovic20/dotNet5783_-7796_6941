@@ -62,6 +62,7 @@ namespace PL.Products
                 action(newID);
                 MessageBox.Show("!הספר נוסף בהצלחה");
 
+                productImage.Source = null;
                 productToAdd = new PO.Product();
                 this.DataContext = productToAdd;
                 AddP_categ_commbbox.SelectedItem = null;

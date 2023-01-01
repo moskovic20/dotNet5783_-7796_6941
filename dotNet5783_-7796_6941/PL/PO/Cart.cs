@@ -58,20 +58,33 @@ internal class Cart
     }
 
     
-    public ObservableCollection<OrderItem>? Items { get; set; }
+    public ObservableCollection<OrderItem>? _Items { get; set; }
+    public ObservableCollection<OrderItem>? Items
+    {
+        get
+        { return Items; }
+        set
+        {
+            _Items = value;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("Items"));
+            }
+        }
+    }
 
 
-    //private double? _TotalPrice;
-    //public double? TotalPrice
-    //{
-    //    get => _TotalPrice;
-    //    set
-    //    {
-    //        _TotalPrice = value;
-    //        if (PropertyChanged != null)
-    //        {
-    //            PropertyChanged(this, new PropertyChangedEventArgs("TotalPrice"));
-    //        }
-    //    }
-    //}
+    private double? _TotalPrice;
+    public double? TotalPrice
+    {
+        get => _TotalPrice;
+        set
+        {
+            _TotalPrice = value;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("TotalPrice"));
+            }
+        }
+    }
 }

@@ -20,7 +20,7 @@ namespace PL.PO
             {
                 _ID = value;
                 if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("ID"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("OrderID"));
 
             }
         }

@@ -37,52 +37,68 @@ namespace PL.PlEntity.Order
         }
 
         #region אירוע- לחיצה על כפתור מחיקת הזמנה
-        private void DeleteOrder_button(object sender, RoutedEventArgs e)
+        private void CancleOrder_button(object sender, RoutedEventArgs e)
         {
             try
             {
-
+                
                 OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
-                if (orderToD.Status == OrderStatus.Accepted)
-                {
-                    PL.PO.Order myOrder = bl.BoOrder.GetOrdertDetails(orderToD.OrderID).CopyBoOrderToPoOrder();
-                    myOrder.Items = myOrder.Items ?? new();
 
-                }
+                if (orderToD.Status == OrderStatus.Processing)
+                    throw new Exception("אי אפשר לבטל הזמנה שנשלחה");
+                if (orderToD.Status == OrderStatus.Completed)
+                    throw new Exception("אי אפשר לבטל הזמנה שהושלמה");
 
-
-
-
-                var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה למחוק הזמנה זו?", "מחיקת הזמנה", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה לבטל הזמנה זו?", "ביטול הזמנה", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                 switch (delete)
                 {
                     case MessageBoxResult.Yes:
+                        bl.BoOrder.CancleOrder_forM(orderToD.OrderID);
+                        allOrders.Remove(orderToD);
 
-                        if(orderToD.Status == OrderStatus.Processing)
-                        {
-                            bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
-                            allOrders.Remove(orderToD);
-                        }
-                        else
-                        {
-
-                        }
-                        MessageBox.Show("!ההזמנה נמחקה בהצלחה");
+                        MessageBox.Show("!ההזמנה בוטלה בהצלחה");
                         break;
                     case MessageBoxResult.No:
                         Orders_DateGrid.SelectedItem = null;
                         break;
                 }
-
-
-                bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
-
             }
-            catch
+            catch (Exception ex)
             {
-
+                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                   MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
             }
         }
         #endregion
+
+        private void moveOrderToArchives(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
+                if (orderToD.Status != OrderStatus.Completed)
+                    throw new Exception("אי אפשר להעביר לארכיון הזמנה שאינה הושלמה ");
+
+                var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה להעביר הזמנה זו לארכיון?", "העברה לארכיון", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                switch (delete)
+                {
+                    case MessageBoxResult.Yes:
+                        bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
+                        allOrders.Remove(orderToD);
+
+                        MessageBox.Show("!ההזמנה הועברה בהצלחה");
+                        break;
+                    case MessageBoxResult.No:
+                        Orders_DateGrid.SelectedItem = null;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                   MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+            }
+        }
     }
 }

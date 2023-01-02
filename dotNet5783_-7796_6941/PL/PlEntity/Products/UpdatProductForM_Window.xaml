@@ -11,7 +11,7 @@
         <local:CategoryToHebrew x:Key="categoryToHebrew"/>
     </Window.Resources>
 
-    <Grid Name="MainGrid" ShowGridLines="False" Margin="0,0,0,-6">
+    <Grid Name="MainGrid" ShowGridLines="False" Background="#FFF6F6F6" Margin="0,0,0,-6">
         <Grid.RowDefinitions>
             <RowDefinition Height="77*"/>
             <RowDefinition Height="130*"/>
@@ -20,8 +20,8 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions >
-        <Rectangle HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="816" Fill="#FFF6F6F6" Grid.ColumnSpan="2"/>
-        <Label x:Name="addProductL"  Grid.Column="1" Content=":עדכן את פרטי הספר"  FontSize="20" Foreground="#FF512DBC" Margin="159,5,10,116" FontWeight="Bold" FontFamily="Cascadia Code SemiBold"  />
+        <Rectangle HorizontalAlignment="Left" Height="47" VerticalAlignment="Top" Width="816" Fill="#FF673AB7" Stroke="#FF673AB7" Grid.ColumnSpan="2"/>
+        <Label x:Name="addProductL"  Grid.Column="1" Content=":עדכן את פרטי הספר"  FontSize="20" Foreground="White" Margin="159,5,10,116" FontWeight="Bold" FontFamily="Cascadia Code SemiBold"  />
         <Label Grid.Column="1"  Content="שדות חובה*" HorizontalAlignment="Left" Margin="290,53,0,0" VerticalAlignment="Top" Width="86" Foreground="Red"/>
         <Button x:Name="updateProductButton" Content="עדכן" Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="208,199,0,0" VerticalAlignment="Top" Height="29" Width="146"  Grid.Row="1" Click="updateProductButton_Click" FontWeight="Bold" />
         <Button x:Name="cancelButton" Content="ביטול" Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="50,199,0,0" VerticalAlignment="Top" Height="29" Width="146" Grid.Row="1" Click="cancelButton_Click" FontWeight="Bold"/>

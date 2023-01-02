@@ -203,4 +203,13 @@ public static class Tools
         return true;
     }
     #endregion
+
+    #region עדכון כמות מוצר לאחר מחיקת הזמנה
+    public static void UpdateInStockAfterDeleteO(this OrderItem myOI)
+    {
+        Product myP = dal.Product.GetById(myOI.ProductID).CopyPropTo(new Product());
+        myP.InStock += myOI.AmountOfItems;
+        dal.Product.Update(myP.CopyPropToStruct(new Do.Product()));
+    }
+    #endregion
 }

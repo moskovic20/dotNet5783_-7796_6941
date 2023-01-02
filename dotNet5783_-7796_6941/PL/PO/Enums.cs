@@ -16,6 +16,6 @@ public enum CATEGORY
 
 public enum OrderStatus { Accepted = 1 /*ממתין ל*/ , Processing /*מעבד*/ , Completed /*הושלם*/ }
 
-public enum Hebrew_OrderStatus { נקלטה, בהכנה, התבצעה}
+public enum Hebrew_OrderStatus { נקלטה, נשלחה, הושלמה}
 
 

@@ -35,30 +35,40 @@ public partial class OrderListForM_Window : Window
         DataContext = allOrders;
     }
 
-
-    private void UpdateShip_Click(object sender, RoutedEventArgs e)
-    {
-        PO.OrderForList ordToUp = (PO.OrderForList)Orders_DateGrid.SelectedItem;
-        try
+        #region אירוע- לחיצה על כפתור מחיקת הזמנה
+        private void CancleOrder_button(object sender, RoutedEventArgs e)
         {
-            var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה לעדכן את שליחת הזמנה זו?", "עדכון סטטוס", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-            switch (delete)
+            try
             {
-                case MessageBoxResult.Yes:
-                    bl.BoOrder.UpdateOrderShipping(ordToUp.OrderID);
-                    MessageBox.Show("!ההזמנה נשלחה לדרך");
-                    break;
-                case MessageBoxResult.No:
-                    break;
+                
+                OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
+
+                if (orderToD.Status == OrderStatus.Processing)
+                    throw new Exception("אי אפשר לבטל הזמנה שנשלחה");
+                if (orderToD.Status == OrderStatus.Completed)
+                    throw new Exception("אי אפשר לבטל הזמנה שהושלמה");
+
+                var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה לבטל הזמנה זו?", "ביטול הזמנה", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                switch (delete)
+                {
+                    case MessageBoxResult.Yes:
+                        bl.BoOrder.CancleOrder_forM(orderToD.OrderID);
+                        allOrders.Remove(orderToD);
+
+                        MessageBox.Show("!ההזמנה בוטלה בהצלחה");
+                        break;
+                    case MessageBoxResult.No:
+                        Orders_DateGrid.SelectedItem = null;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                   MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
             }
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
-                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
-        }
-        ordToUp.Status = (PO.OrderStatus)bl.BoOrder.GetOrdertDetails(ordToUp.OrderID).Status;
-    }
+        #endregion
 
     private void UpdateDelivary_Click(object sender, RoutedEventArgs e)
     {
@@ -115,6 +125,37 @@ public partial class OrderListForM_Window : Window
     //    //צריך לבדוק אם הפונקציה עובדת
     //    //new statusUpdatWindow(bl, (PO.OrderForList)Orders_DateGrid.SelectedItem, statusAction).ShowDialog();
     //}
+
+    private void moveOrderToArchives(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+
+            OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
+            if (orderToD.Status != OrderStatus.Completed)
+                throw new Exception("אי אפשר להעביר לארכיון הזמנה שאינה הושלמה ");
+
+            var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה להעביר הזמנה זו לארכיון?", "העברה לארכיון", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            switch (delete)
+            {
+                case MessageBoxResult.Yes:
+                    bl.BoOrder.DeleteOrder_forM(orderToD.OrderID);
+                    allOrders.Remove(orderToD);
+
+                    MessageBox.Show("!ההזמנה הועברה בהצלחה");
+                    break;
+                case MessageBoxResult.No:
+                    Orders_DateGrid.SelectedItem = null;
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+               MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+    }
+}
 }
 
 

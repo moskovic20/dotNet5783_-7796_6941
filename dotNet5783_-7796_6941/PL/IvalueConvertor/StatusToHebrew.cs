@@ -22,9 +22,9 @@ internal class StatusToHebrew : IValueConverter
             return PO.Hebrew_OrderStatus.נקלטה;
 
         if (myStatus == PO.OrderStatus.Processing)
-            return PO.Hebrew_OrderStatus.בהכנה;
+            return PO.Hebrew_OrderStatus.נשלחה;
 
-        return PO.Hebrew_OrderStatus.התבצעה;
+        return PO.Hebrew_OrderStatus.הושלמה;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -37,7 +37,7 @@ internal class StatusToHebrew : IValueConverter
         if (hebrewStatus == PO.Hebrew_OrderStatus.נקלטה)
             return PO.OrderStatus.Accepted;
 
-        if (hebrewStatus == PO.Hebrew_OrderStatus.בהכנה)
+        if (hebrewStatus == PO.Hebrew_OrderStatus.נשלחה)
             return PO.OrderStatus.Processing;
 
         return PO.OrderStatus.Completed;

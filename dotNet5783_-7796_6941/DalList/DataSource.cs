@@ -67,8 +67,8 @@ public class DataSource
         //CATEGORY c = CATEGORY.fantasy;
 
         IEnumerable<(CATEGORY, IEnumerable<string>)> productNames = Directory.EnumerateDirectories(@"images\productImages\")
-            .Select(folderName => (categories[folderName.Split(@"\").Last()],
-            Directory.EnumerateFiles(folderName).Select(n => n.Split(@"\").Last())));
+           .Select(folderName => (categories[folderName.Split(@"\").Last()],
+           Directory.EnumerateFiles(folderName).Select(n => n.Split(@"\").Last())));
 
         string[] NameOfBook = { "Harry Potter", "Bible", "tanach", "Anne of Green Gables", "aya Pluto",
             "Raspberry juice", "Tell no one","the candidate","Alone in the battle","the giver","Broken Heart" };
@@ -89,7 +89,7 @@ public class DataSource
                     AuthorName = NamesOfWriters[R.Next(0, 7)],
                     Category = category.Item1,
                     InStock = (i != 0) ? R.Next(20, 100) : 0,
-                    ProductImagePath = $@"\images\productImages\{category.Item1.ToString()}\{name}"
+                    ProductImagePath = Environment.CurrentDirectory+ $@"\images\productImages\{category.Item1.ToString()}\{name}"
                 };
                 i++;
                 #region Makes sure id is unique

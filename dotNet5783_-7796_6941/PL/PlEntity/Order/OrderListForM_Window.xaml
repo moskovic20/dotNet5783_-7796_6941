@@ -81,8 +81,8 @@
                   IsReadOnly="True"
                   ItemsSource="{Binding}" 
                   HorizontalAlignment="Left"
-                  Margin="155,10,0,35"
-                  Width="927"
+                  Margin="109,10,0,35"
+                  Width="973"
                   Background="{x:Null}" Grid.Row="1">
 
             <DataGrid.GroupStyle>
@@ -96,31 +96,31 @@
             </DataGrid.GroupStyle>
 
 
-            <DataGrid.Columns>
-                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=Trash}"
+            <DataGrid.Columns >
+                <DataGridTemplateColumn Header="ארכיון"
                                     MinWidth="10">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Height="30" Width="30"
                                     HorizontalAlignment="Center"
+                                    Click="moveOrderToArchives"
                                     >
-                                <materialDesign:PackIcon Kind="Trash"/>
+                                <materialDesign:PackIcon Kind="ArchiveStar"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=BookEdit}"
+                <DataGridTemplateColumn Header="בטל"
                                     MinWidth="10">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Height="30" Width="30"
                                     HorizontalAlignment="Center"
-                                    Click="UpdateOrder_Click">
-
-                                <materialDesign:PackIcon Kind="PlaylistEdit"/>
+                                    Click="CancleOrder_button">
+                                <materialDesign:PackIcon Kind="Cancel"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

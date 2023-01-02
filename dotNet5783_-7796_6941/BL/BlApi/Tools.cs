@@ -204,6 +204,15 @@ public static class Tools
     }
     #endregion
 
+    #region עדכון כמות מוצר לאחר מחיקת הזמנה
+    public static void UpdateInStockAfterDeleteO(this OrderItem myOI)
+    {
+        Product myP = dal.Product.GetById(myOI.ProductID).CopyPropTo(new Product());
+        myP.InStock += myOI.AmountOfItems;
+        dal.Product.Update(myP.CopyPropToStruct(new Do.Product()));
+    }
+    #endregion
+
     ////PLפונקציה ממש לא יפה וחסכונית בעקרון רק בשביל להעביד את ה
     //public static OrderForList CastingOrToList(this BO.Order order)
     //{

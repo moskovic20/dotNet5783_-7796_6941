@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using System.Linq;
 using System.IO;
 using System.Windows.Media.Imaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PL.Products;
 
@@ -52,14 +53,21 @@ public partial class AddProductForM_Window : Window
             if (AddP_categ_commbbox.SelectedItem == null)
                 throw new Exception("הכנס את קטגוריית הספר");
 
-            //if (!string.IsNullOrWhiteSpace(productToAdd.productImagePath))
-            //{
-            //    string[] s = productToAdd.productImagePath.Split("\\");
-            //    File.Move(productToAdd.productImagePath,)
-            //}
-            int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
-            action(newID);
-            MessageBox.Show("!הספר נוסף בהצלחה");
+
+                if(!string.IsNullOrWhiteSpace(productToAdd.productImagePath))//העברת התמונה לתיקייה הרצויה לפי הקטגוריה וכן שינוי שם התמונה לשם הספר
+                {
+                   
+                    string sorce = productToAdd.productImagePath;
+                    string suffix = sorce.Split(@".").Last();
+                    string target = Environment.CurrentDirectory + "\\images\\productImages\\"+ productToAdd.Category + "\\"+productToAdd.NameOfBook+"."+suffix;
+                    File.Copy(sorce,target);
+                    productToAdd.productImagePath = target;
+                    
+                }
+
+                int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
+                action(newID);
+                MessageBox.Show("!הספר נוסף בהצלחה");
 
             productImage.Source = null;
             productToAdd = new PO.Product();
@@ -118,15 +126,16 @@ public partial class AddProductForM_Window : Window
     private void Button_Click(object sender, RoutedEventArgs e)
     {
 
-        OpenFileDialog op = new OpenFileDialog();
-        op.Title = "Select a picture";
-        op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-          "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-          "Portable Network Graphic (*.png)|*.png";
-        if (op.ShowDialog() == true)
-        {
-            productImage.Source = new BitmapImage(new Uri(op.FileName));
-        }
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                productToAdd.ProductImagePath = op.FileName;
+                productImage.Source = productToAdd.Image; 
+            }
 
         //OpenFileDialog openFileDialog = new OpenFileDialog();
         ////openFileDialog.Filter

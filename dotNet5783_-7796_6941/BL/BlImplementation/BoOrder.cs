@@ -133,7 +133,7 @@ internal class BoOrder : IOrder
             throw new BO.GetDetails_Exception("Negative OrderID");
         try
         {
-           // Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
+            // Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
             BO.Order UpOrd = new();
             UpOrd = dal.Order.GetById(id).CopyPropTo(UpOrd);
 
@@ -204,11 +204,6 @@ internal class BoOrder : IOrder
  //throw new NotImplementedException("sorry, I'm not redy yet");
     */
 
-    public void DeleteOrder_forM(int orderID)
-    {
-        dal.Order.Delete(orderID);
-    }
-
     public void UpdateOrder(int id, int option)
     {
         //BO.Order ordToUp = new();
@@ -219,5 +214,30 @@ internal class BoOrder : IOrder
         //}
 
         throw new NotImplementedException("sorry, I'm not redy yet");
+    }
+
+    public void DeleteOrder_forM(int orderID)
+    {
+        dal.Order.Delete(orderID);
+    }
+
+    public void CancleOrder_forM(int orderID)
+    {
+        Order myO = GetOrdertDetails(orderID);
+     
+        if (myO.Items==null)
+        { 
+            dal.Order.Delete(orderID);
+            return;
+        }
+
+        //myO.Items.Select(orderItem => orderItem.UpdateInStockAfterDeleteO());
+
+        foreach(OrderItem o in myO.Items)
+        {
+            o?.UpdateInStockAfterDeleteO();
+        }
+
+
     }
 }

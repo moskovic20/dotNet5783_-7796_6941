@@ -52,46 +52,27 @@ namespace PL.PO
    => from source in sources
       select source.CopyPropTo(new Target());
 
-        public static bool Send(string receiverEmail, string ReceiverName, string subject, string body)
-        {
-            MailMessage mailMessage = new MailMessage();
-            MailAddress mailAddress = new MailAddress("moriyamoskos11@gmail.com", "Sender Name"); // abc@gmail.com = input Sender Email Address 
-            mailMessage.From = mailAddress;
-            mailAddress = new MailAddress(receiverEmail, ReceiverName);
-            mailMessage.To.Add(mailAddress);
-            mailMessage.Subject = subject;
-            mailMessage.Body = body;
-            mailMessage.IsBodyHtml = true;
+        //public static string CategoryToString(this CATEGORY? categ)
+        //{
+        //    if (categ == CATEGORY.children)
+        //        return "children";
+        //    if (categ == CATEGORY.cookingAndBaking)
+        //        return "cookingAndBaking";
+        //    if (categ == CATEGORY.fantasy)
+        //        return "fantasy";
+        //    if (categ == CATEGORY.history)
+        //        return "history";
+        //    if (categ == CATEGORY.kodesh)
+        //        return "kodesh";
+        //    if (categ == CATEGORY.mystery)
+        //        return "mystery";
+        //    if (categ == CATEGORY.psychology)
+        //        return "psychology";
+        //    if (categ == CATEGORY.romans)
+        //        return "romans";
+        //    return "scinence";
 
-            SmtpClient mailSender = new SmtpClient("smtp.gmail.com", 587)
-            {
-                EnableSsl = true,
-                UseDefaultCredentials = false,
-                DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
-                Credentials = new NetworkCredential("moriyamoskos11@gmail.com", "pass")   // abc@gmail.com = input sender email address  
-                                                                               //pass = sender email password
-            };
-
-            try
-            {
-                mailSender.Send(mailMessage);
-                return true;
-            }
-            catch (SmtpFailedRecipientException ex)
-            {
-                // Write the exception to a Log file.
-            }
-            catch (SmtpException ex)
-            {
-                // Write the exception to a Log file.
-            }
-            finally
-            {
-                mailSender = null;
-                mailMessage.Dispose();
-            }
-            return false;
-        }
+        //}
 
         //________________________________________productTools__________________________________________________________
 
@@ -201,7 +182,7 @@ namespace PL.PO
             if (hebrewCategory == Hebrew_CATEGORY.מדע)
                 return PO.CATEGORY.scinence;
             if (hebrewCategory == Hebrew_CATEGORY.ילדים)
-                return PO.CATEGORY.childen;
+                return PO.CATEGORY.children;
             if (hebrewCategory == Hebrew_CATEGORY.רומן)
                 return PO.CATEGORY.romans;
             if (hebrewCategory == Hebrew_CATEGORY.בישול_ואפייה)
@@ -209,7 +190,7 @@ namespace PL.PO
             if (hebrewCategory == Hebrew_CATEGORY.פסיכולוגיה)
                 return PO.CATEGORY.psychology;
 
-            return PO.CATEGORY.Kodesh;
+            return PO.CATEGORY.kodesh;
         }
 
         public static Hebrew_CATEGORY EnglishToHebewCategory(this PO.CATEGORY myCategory)
@@ -222,7 +203,7 @@ namespace PL.PO
                 return Hebrew_CATEGORY.היסטוריה;
             if (myCategory == PO.CATEGORY.scinence)
                 return Hebrew_CATEGORY.מדע;
-            if (myCategory == PO.CATEGORY.childen)
+            if (myCategory == PO.CATEGORY.children)
                 return Hebrew_CATEGORY.ילדים;
             if (myCategory == PO.CATEGORY.romans)
                 return Hebrew_CATEGORY.רומן;

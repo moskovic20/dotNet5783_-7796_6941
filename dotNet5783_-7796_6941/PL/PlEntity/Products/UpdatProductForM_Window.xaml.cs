@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using PL.PO;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using Microsoft.Win32;
 
 namespace PL.Products
 {
@@ -72,14 +73,27 @@ namespace PL.Products
 
         }
         #endregion
-
+       
         #region אירוע-לחיצה על כפתור ביטול
         private void cancelButton_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
         #endregion
 
-
+        private void updateImage_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+              "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                productToUpdate.ProductImagePath = op.FileName;
+                productImage.Source = productToUpdate.Image;
+            }
+        }
     }
 }

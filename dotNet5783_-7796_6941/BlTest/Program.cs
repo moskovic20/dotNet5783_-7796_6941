@@ -405,7 +405,7 @@ namespace BLTest
                          5: romans
                          6: cookingAndBaking
                          7: psychology
-                         8: Kodesh"
+                         8: kodesh"
             );
 
         }

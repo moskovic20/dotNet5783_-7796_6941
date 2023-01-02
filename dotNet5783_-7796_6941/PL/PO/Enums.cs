@@ -9,7 +9,7 @@ public enum Hebrew_CATEGORY
 
 public enum CATEGORY
 {
-    mystery, fantasy, history, scinence, childen, romans, cookingAndBaking, psychology, Kodesh, all
+    mystery, fantasy, history, scinence, children, romans, cookingAndBaking, psychology, kodesh, all
 }
 
 //________________________________________orderEnums___________________________________________________

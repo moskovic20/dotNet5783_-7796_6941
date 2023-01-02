@@ -22,7 +22,7 @@ public class CategoryToHebrew : IValueConverter
             return PO.Hebrew_CATEGORY.היסטוריה;
         if (myCategory == PO.CATEGORY.scinence)
             return PO.Hebrew_CATEGORY.מדע;
-        if (myCategory == PO.CATEGORY.childen)
+        if (myCategory == PO.CATEGORY.children)
             return PO.Hebrew_CATEGORY.ילדים;
         if (myCategory == PO.CATEGORY.romans)
             return PO.Hebrew_CATEGORY.רומן;
@@ -50,7 +50,7 @@ public class CategoryToHebrew : IValueConverter
         if (hebrewCategory == Hebrew_CATEGORY.מדע)
             return PO.CATEGORY.scinence;
         if (hebrewCategory == Hebrew_CATEGORY.ילדים)
-            return PO.CATEGORY.childen;
+            return PO.CATEGORY.children;
         if (hebrewCategory == Hebrew_CATEGORY.רומן)
             return PO.CATEGORY.romans;
         if (hebrewCategory == Hebrew_CATEGORY.בישול_ואפייה)
@@ -58,6 +58,6 @@ public class CategoryToHebrew : IValueConverter
         if (hebrewCategory == Hebrew_CATEGORY.פסיכולוגיה)
             return PO.CATEGORY.psychology;
 
-        return PO.CATEGORY.Kodesh;
+        return PO.CATEGORY.kodesh;
     }
 }

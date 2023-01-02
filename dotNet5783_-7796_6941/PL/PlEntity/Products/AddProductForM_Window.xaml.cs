@@ -13,6 +13,7 @@ using Microsoft.Win32;
 using System.Linq;
 using System.IO;
 using System.Windows.Media.Imaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PL.Products
 {
@@ -53,11 +54,18 @@ namespace PL.Products
                 if (AddP_categ_commbbox.SelectedItem == null)
                     throw new Exception("הכנס את קטגוריית הספר");
 
-                //if (!string.IsNullOrWhiteSpace(productToAdd.productImagePath))
-                //{
-                //    string[] s = productToAdd.productImagePath.Split("\\");
-                //    File.Move(productToAdd.productImagePath,)
-                //}
+
+                if(!string.IsNullOrWhiteSpace(productToAdd.productImagePath))//העברת התמונה לתיקייה הרצויה לפי הקטגוריה וכן שינוי שם התמונה לשם הספר
+                {
+                   
+                    string sorce = productToAdd.productImagePath;
+                    string suffix = sorce.Split(@".").Last();
+                    string target = Environment.CurrentDirectory + "\\images\\productImages\\"+ productToAdd.Category + "\\"+productToAdd.NameOfBook+"."+suffix;
+                    File.Copy(sorce,target);
+                    productToAdd.productImagePath = target;
+                    
+                }
+
                 int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
                 action(newID);
                 MessageBox.Show("!הספר נוסף בהצלחה");
@@ -126,7 +134,8 @@ namespace PL.Products
               "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() == true)
             {
-                productImage.Source = new BitmapImage(new Uri(op.FileName));
+                productToAdd.ProductImagePath = op.FileName;
+                productImage.Source = productToAdd.Image; 
             }
 
             //OpenFileDialog openFileDialog = new OpenFileDialog();

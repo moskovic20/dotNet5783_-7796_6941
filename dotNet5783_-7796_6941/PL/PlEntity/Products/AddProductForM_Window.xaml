@@ -212,6 +212,11 @@
                                          Height="30" Width="30" 
                                          OpacityMask="Black" />
         </Button>
-        <Image Name="productImage" HorizontalAlignment="Left"  Height="152" Margin="50,35,0,0" Grid.Row="1" VerticalAlignment="Top" Width="234"/>
+        <Image Name="productImage"
+               HorizontalAlignment="Left" 
+               Height="152" Margin="50,35,0,0" 
+               Grid.Row="1" VerticalAlignment="Top"
+              
+               Width="234"/>
     </Grid>
 </Window>

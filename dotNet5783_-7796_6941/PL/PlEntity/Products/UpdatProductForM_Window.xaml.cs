@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
 using Microsoft.Win32;
+using System.Linq;
+using System.IO;
 
 namespace PL.Products
 {
@@ -55,6 +57,16 @@ namespace PL.Products
                     throw new Exception("...הכנס את שם הסופר");
                 if (updateCateg_commbbox.SelectedItem == null)
                     throw new Exception("הכנס את קטגוריית הספר");
+
+                if(PO.Tools.IsImageNeedCare(beforUpdate!,productToUpdate))
+                {
+                    string sorce = beforUpdate?.productImagePath!;
+
+                    string suffix = sorce.Split(@".").Last();
+                    string target = Environment.CurrentDirectory + "\\images\\productImages\\" + productToUpdate.Category + "\\" + productToUpdate.NameOfBook + "." + suffix;
+                    File.Copy(sorce, target);
+                    productToUpdate.productImagePath = target;
+                }
 
                 bl.BoProduct.UpdateProductDetails_forM(productToUpdate.CopyProductToBO());
                 action(productToUpdate.ID);

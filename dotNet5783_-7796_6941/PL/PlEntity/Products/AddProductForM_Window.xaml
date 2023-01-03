@@ -14,10 +14,7 @@
     </Window.Resources>
 
     <Grid Name="MainGrid" ShowGridLines="False" Margin="0,0,0,-6" Background="#FFF6F6F6">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="77*"/>
-            <RowDefinition Height="130*"/>
-        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -33,7 +30,7 @@
                Grid.Column="1"
                Content=":הכנס את פרטי הספר"
                Style="{StaticResource myTitel_1}"
-               Margin="183,4,-14,113"  />
+               Margin="183,4,-14,445"  />
 
         <Label Grid.Column="1" 
                Content="שדות חובה*"
@@ -48,26 +45,24 @@
                 Style="{StaticResource MaterialDesignOutlinedDarkButton}"
                 IsEnabled="True"
                 HorizontalAlignment="Left"
-                Margin="208,219,0,0"
+                Margin="216,425,0,0"
                 VerticalAlignment="Top"
                 Height="29" Width="146"
-                Click="addProductButton_Click"
-                Grid.Row="1" />
+                Click="addProductButton_Click" />
 
         <Button x:Name="cancelButton"
                 Content="ביטול"
                 Style="{StaticResource MaterialDesignOutlinedDarkButton}"
                 HorizontalAlignment="Left"
-                Margin="50,219,0,0"
+                Margin="54,425,0,0"
                 VerticalAlignment="Top"
                 Height="29" Width="146"
-                Grid.Row="1"
                 Click="cancelButton_Click"/>
 
         <StackPanel Orientation="Horizontal"
                     Grid.Column="1" 
-                    Margin="54,32,28,231"
-                    Grid.Row="1">
+                    Margin="64,211,18,245"
+                    >
             <TextBox x:Name="AddP_author_textBox"
                      Text="{Binding AuthorName, Mode=TwoWay}"
                      Height="30" Width="215" />
@@ -93,22 +88,11 @@
 
         <StackPanel Orientation="Horizontal"
                     Grid.Column="1"
-                    Margin="56,156,68,88"
-                    Grid.Row="1">
-            <TextBox Text="{Binding Price, Mode=TwoWay}"
-                     Height="30" Width="215"/>
-            <Label Content="  :מחיר"
-                   Width="74"/>
-        </StackPanel>
+                    Margin="66,259,18,182">
 
-        <StackPanel Orientation="Horizontal"
-                    Grid.Column="1"
-                    Margin="56,90,28,164"
-                    Grid.Row="1">
             <ComboBox x:Name="AddP_categ_commbbox"
-                      SelectedItem="{Binding Category, Mode=TwoWay,Converter={StaticResource categoryToHebrew}}"
-                      Height="30" Width="215"
-                      VerticalAlignment="Top"  />
+                      SelectedItem="{Binding Category, Converter={StaticResource categoryToHebrew}, Mode=TwoWay}"
+                      Height="30" Width="215"  />
 
             <Label Content="    :קטגוריה"  Width="74" Height="44"/>
             <Label Foreground="Red"
@@ -131,7 +115,7 @@
 
         <StackPanel Orientation="Horizontal"  
                     Grid.Column="1"
-                    Margin="54,152,28,0">
+                    Margin="64,152,18,306">
             <TextBox x:Name="AddP_name_textBox"
                      Text="{Binding NameOfBook, Mode=TwoWay}"
                      Height="30" Width="215" />
@@ -154,44 +138,15 @@
             </Label>
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" 
-                    Grid.Column="1" 
-                    Margin="54,96,28,7">
-            <TextBox x:Name="AddP_ID_textBox" 
-                     PreviewTextInput="PreviewTextInput" 
-                     MaxLength="9" 
-                     Text="{Binding ID, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"
-                     Height="30" Width="215"
-                     GotFocus="AddP_ID_textBox_GotFocus"
-                     LostFocus="AddP_ID_textBox_LostFocus"  />
-            <Label Content=":מספר מזהה"  Width="74"/>
-            <Label Foreground="Red"
-                   Content="*" 
-                   Height="24" Width="25" 
-                   RenderTransformOrigin="0.494,-0.763"
-                   HorizontalContentAlignment="Right"
-                   FontSize="16"
-                   VerticalAlignment="Top" >
-                <Label.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleX="-1"/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform X="0.3"/>
-                    </TransformGroup>
-                </Label.RenderTransform>
-            </Label>
-        </StackPanel>
-
         <StackPanel Orientation="Horizontal"
-                    Margin="55,219,29,35" Grid.Column="1" Grid.Row="1">
+                    Margin="64,412,20,33" Grid.Column="1">
             <TextBox Text="{Binding InStock, Mode=TwoWay}"
                      Height="30" Width="215"/>
             <Label Content="  :כמות במלאי"
                    Width="87"/>
         </StackPanel>
 
-        <StackPanel  Margin="26,72,26,235" Grid.RowSpan="2">
+        <StackPanel  Margin="26,66,26,285">
             <Label Content=":תקציר" 
                    Width="303"
                    HorizontalContentAlignment="Right"/>
@@ -207,16 +162,51 @@
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
                 Click="Button_Click"
-            Background="#FF009BA6" Margin="316,35,0,0" Grid.Row="1" >
+            Background="#FF009BA6" Margin="312,221,0,0" >
             <materialDesign:PackIcon Kind="ImageAdd" 
                                          Height="30" Width="30" 
                                          OpacityMask="Black" />
         </Button>
         <Image Name="productImage"
                HorizontalAlignment="Left" 
-               Height="152" Margin="50,35,0,0" 
-               Grid.Row="1" VerticalAlignment="Top"
+               Height="152" Margin="54,228,0,0" VerticalAlignment="Top"
               
                Width="234"/>
+        <StackPanel Orientation="Horizontal"
+            Grid.Column="1" 
+            Margin="64,94,18,358">
+            <TextBox x:Name="AddP_ID_textBox"
+                Text="{Binding ID, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"
+                Height="30" Width="215"
+                      PreviewTextInput="PreviewTextInput"
+                     GotFocus="AddP_ID_textBox_GotFocus"
+                     LostFocus="AddP_ID_textBox_LostFocus"
+                     MaxLength="9"/>
+            <Label  Content=":מספר מזהה"
+                Width="74"/>
+            <Label Foreground="Red"
+                Content="*"
+                Height="24" Width="25"
+                RenderTransformOrigin="0.494,-0.763"
+                HorizontalContentAlignment="Right"
+                FontSize="16"
+                VerticalAlignment="Top" >
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleX="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0.3"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+            Margin="64,348,20,97" Grid.Column="1">
+            <TextBox Text="{Binding Price, Mode=TwoWay}"
+                Height="30" Width="215"/>
+            <Label Content="  :מחיר"
+                Width="87"/>
+        </StackPanel>
     </Grid>
 </Window>

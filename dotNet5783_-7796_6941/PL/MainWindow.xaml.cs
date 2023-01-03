@@ -18,6 +18,7 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using PL.PO;
 using System.Net.Mail;
+using PL.PlEntity.Order;
 
 namespace PL;
 
@@ -71,7 +72,7 @@ public partial class MainWindow : Window
 
     private void trakingOrder_Click(object sender, RoutedEventArgs e)
     {
-        
+        new orderTrakingForC_Window(bl).Show();
     }
 
     private void Admin_Click(object sender, RoutedEventArgs e)

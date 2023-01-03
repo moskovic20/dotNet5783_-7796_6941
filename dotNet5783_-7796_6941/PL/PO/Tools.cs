@@ -52,32 +52,18 @@ namespace PL.PO
    => from source in sources
       select source.CopyPropTo(new Target());
 
-        //public static string CategoryToString(this CATEGORY? categ)
-        //{
-        //    if (categ == CATEGORY.children)
-        //        return "children";
-        //    if (categ == CATEGORY.cookingAndBaking)
-        //        return "cookingAndBaking";
-        //    if (categ == CATEGORY.fantasy)
-        //        return "fantasy";
-        //    if (categ == CATEGORY.history)
-        //        return "history";
-        //    if (categ == CATEGORY.kodesh)
-        //        return "kodesh";
-        //    if (categ == CATEGORY.mystery)
-        //        return "mystery";
-        //    if (categ == CATEGORY.psychology)
-        //        return "psychology";
-        //    if (categ == CATEGORY.romans)
-        //        return "romans";
-        //    return "scinence";
-
-        //}
+        public static bool IsImageNeedCare(PO.Product before,PO.Product after)
+        {
+            if (before.Category != after.Category || before.NameOfBook != after.NameOfBook
+                || before.ProductImagePath != after.ProductImagePath)
+                return true;
+            return false;
+        }
 
         //________________________________________productTools__________________________________________________________
 
         #region convert BO.productForList to PO.productForList
-        internal static PO.ProductForList CopyBoPflToPoPfl(this BO.ProductForList p)
+        public static PO.ProductForList CopyBoPflToPoPfl(this BO.ProductForList p)
         {
 
             PO.ProductForList product = new ()
@@ -283,7 +269,13 @@ namespace PL.PO
             return allOrders;
         }
 
-        //    return allOrders;
+        //public static int caseOrderTraking(DateTime? shipping,DateTime? delivery)
+        //{
+        //    if (shipping == null && delivery == null)
+        //        return 1;
+        //    if (shipping != null && delivery == null)
+        //        return 2;
+        //    return 3;
         //}
     }
 }

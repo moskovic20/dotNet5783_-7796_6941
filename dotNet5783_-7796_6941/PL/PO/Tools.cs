@@ -230,7 +230,8 @@ namespace PL.PO
                 Status=(PO.OrderStatus)boOrder.Status,
                 PaymentDate=boOrder.PaymentDate,
                 ShippingDate=boOrder.ShippingDate,
-                DeliveryDate=boOrder.DeliveryDate
+                DeliveryDate=boOrder.DeliveryDate,
+                TotalPrice=boOrder.TotalPrice
             };
 
             var list = from myOI in boOrder.Items

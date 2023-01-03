@@ -12,7 +12,7 @@ public class OrderItem
     /// <summary>
     /// מזהה מוצר
     /// </summary>
-    public int ProductID { get; set; }/////
+    public int ProductID { get; set; }
 
     /// <summary>
     /// שם המוצר

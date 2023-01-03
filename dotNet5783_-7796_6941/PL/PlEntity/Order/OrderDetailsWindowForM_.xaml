@@ -3,9 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.PlEntity.Order"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:PL.IvalueConvertor"
         mc:Ignorable="d"
-        Title="OrderDetailsWindowForM_" Height="450" Width="800">
+        Title="OrderDetailsWindowForM_" Height="450" Width="900">
+
+    <Window.Resources>
+
+        <local:StatusToHebrew x:Key="statusToHebrew"/>
+
+        <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                        <Expander x:Name="expander" IsExpanded="True"
+                                  Background="Transparent"
+                                  Foreground="#2b331f">
+                            <Expander.Header>
+                                <TextBlock Text="{Binding Name}"/>
+                            </Expander.Header>
+                            <ItemsPresenter/>
+                        </Expander>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid Name="MainGrid" ShowGridLines="False" Margin="0,0,0,-6" Background="#FFF6F6F6">
         <Grid.RowDefinitions>
             <RowDefinition Height="77*"/>
@@ -19,9 +43,8 @@
         <Rectangle HorizontalAlignment="Left"
                    Height="47"
                    VerticalAlignment="Top"
-                   Width="816" 
-                   Grid.ColumnSpan="2" Stroke="#FF673AB7" Fill="#FF673AB7"/>
-
+                   Width="1000" 
+                   Grid.ColumnSpan="2" Stroke="#FF673AB7" Fill="#FF673AB7" RenderTransformOrigin="0.533,0.405"/>
 
         <Label x:Name="addProductL"
                Grid.Column="1"
@@ -29,40 +52,51 @@
                Style="{StaticResource myTitel_1}"
                Margin="183,4,92,346"  />
 
-       
+        <Label
+               Content=":פרטי הספרים בהזמנה"
+               Style="{StaticResource myTitel_1}"
+               Margin="174,4,318,346" Grid.ColumnSpan="2"  />
+
 
 
         <StackPanel Orientation="Horizontal"
-                    Margin="117,64,-52,326" Grid.Column="1" >
+                    Margin="163,64,-98,326" Grid.Column="1" >
             <Label Content="{Binding ID, Mode=TwoWay}"
-                     Height="30" Width="138" />
+                     Height="30" Width="147" />
             <Label Content=":מספר הזמנה"
                    Width="89" FontWeight="Bold" Height="33" Foreground='Black'/>
 
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-                    Margin="48,96,8,296" Grid.Column="1">
-            <Label Content="{Binding CustomerEmail, Mode=TwoWay}"
-                     Height="30" Width="136" FontSize="11" />
-            <Label Content=":כתובת מייל"
-                   Width="74" Height="27" FontSize="11"/>
+                    Margin="164,96,-44,296" Grid.Column="1">
             <Label Content="{Binding CustomerName, Mode=TwoWay}"
-                   Width="96"  Height="29" FontWeight="Bold"/>
+                   Width="147"  Height="29" FontWeight="Bold"/>
+            <Label Content=":שם לקוח"
+                   Width="74" Height="27"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-                    Margin="111,122,-4,253" 
+                    Margin="168,128,-61,247" 
                     Grid.Column="1">
-            <Label Content="{Binding ShippingAddress, Mode=TwoWay}"
+            <Label Content="{Binding CustomerEmail, Mode=TwoWay}"
                      Height="30" Width="143" />
-            <Label Content=":כתובת לקוח"
+            <Label Content=":כתובת מייל"
                    Width="94" Height="40"/>
         </StackPanel>
 
+        <StackPanel Orientation="Horizontal"
+            Margin="167,164,-60,211" 
+            Grid.Column="1">
+            <Label Content="{Binding ShippingAddress, Mode=TwoWay}"
+                Height="30" Width="143" />
+            <Label Content=":כתובת לקוח"
+                Width="94" Height="40"/>
+        </StackPanel>
+
 
         <StackPanel Orientation="Horizontal"
-                    Margin="102,192,11,189" Grid.Column="1">
+                    Margin="158,234,-45,147" Grid.Column="1">
             <Label Content="{Binding DateOrder, Mode=TwoWay}"
                      Height="30" Width="153"/>
             <Label Content=":תאריך ביצוע הזמנה "
@@ -70,7 +104,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-                    Margin="102,311,20,86" Grid.Column="1">
+                    Margin="157,331,-35,66" Grid.Column="1">
             <Label Content="{Binding PaymentDate, Mode=TwoWay}"
                      Height="30" Width="153"/>
             <Label Content=":תאריך תשלום"
@@ -78,7 +112,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-                    Margin="102,226,11,165" 
+                    Margin="158,268,-45,123" 
                     Grid.Column="1">
             <Label Content="{Binding DateOrder, Mode=TwoWay}"
                      Height="30" Width="153"/>
@@ -87,7 +121,7 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-                    Margin="103,253,-38,132" 
+                    Margin="158,295,-93,90" 
                     Grid.Column="1">
             <Label Content="{Binding DateOrder, Mode=TwoWay}"
                       Height="30" Width="153" />
@@ -97,8 +131,8 @@
 
 
         <StackPanel Orientation="Horizontal"
-                    Margin="101,175,12,219" Grid.Column="1">
-            <Label Content="{Binding Status, Mode=TwoWay}"
+                    Margin="158,205,-45,189" Grid.Column="1">
+            <Label Content="{Binding Status,Converter={StaticResource statusToHebrew}, Mode=TwoWay}"
                       Height="30" Width="153"/>
             <Label Content=":מצב הזמנה"
                    Width="80" FontWeight="Bold"/>
@@ -106,23 +140,67 @@
 
 
         <StackPanel Orientation="Horizontal"
-                    Margin="102,348,-14,50" Grid.Column="1">
+                    Margin="157,366,-69,32" Grid.Column="1">
             <Label Content="{Binding TotalPrice, Mode=TwoWay}"
                       Height="30" Width="153"/>
             <Label Content=":עלות הזמנה"
                    Width="94" Height="33"/>
         </StackPanel>
 
+        <!--עמוד לפרטי הספרים-->
+
+        <DataGrid x:Name="OrderItems_DateGrid"
+                  CanUserAddRows="False"
+                  materialDesign:DataGridAssist.CellPadding="10"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="10" 
+                  IsTextSearchEnabled="True" 
+                  GridLinesVisibility="Horizontal" 
+                  AreRowDetailsFrozen="False"
+                  AutoGenerateColumns="False"
+                  HorizontalGridLinesBrush="Transparent"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                  CanUserDeleteRows="False" 
+                  CanUserResizeRows="False"
+                  Foreground="Black"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding}" 
+                  HorizontalAlignment="Left"
+                  Margin="10,66,0,38"
+                  Width="514"
+                  Background="{x:Null}" Grid.ColumnSpan="2">
+
+            <DataGrid.GroupStyle>
+                <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <DataGridRowsPresenter/>
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
 
 
+            <DataGrid.Columns >
 
+                <DataGridTextColumn Header="מחיר סופי"    
+                                    Binding="{Binding TotalPrice}"
+                                    MinWidth="5"/>
+                <DataGridTextColumn Header="כמות פריטים"    
+                                    Binding="{Binding AmountOfItems}"
+                                    MinWidth="5"/>
+                <DataGridTextColumn Header="עלות ליחידה"    
+                                    Binding="{Binding PriceOfOneItem}"
+                                    MinWidth="5"/>
+                <DataGridTextColumn Header="שם הספר"
+                                    Binding="{Binding NameOfBook}"
+                                    MinWidth="5"/>
+                <DataGridTextColumn Header="מספר מוצר "
+                                    Binding="{Binding ProductID}"
+                                    MinWidth="5"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="343" Margin="97,62,0,0" Stroke="#FF673AB7" VerticalAlignment="Top" Width="7"/>
 
-        <StackPanel  Margin="10,62,10,18">
-            <Label Content=":פרטי ספרים" 
-                   Width="303"
-                   HorizontalContentAlignment="Right" FontWeight="Bold"/>
-           
-        </StackPanel>
 
     </Grid>
 </Window>

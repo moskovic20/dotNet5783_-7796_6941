@@ -16,7 +16,6 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using PL.PO;
 using System.Net.Mail;
 
 namespace PL;

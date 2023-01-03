@@ -223,7 +223,8 @@ namespace PL.PO
             PO.Order myNewOrder = new()
             {
                 ID = boOrder.ID,
-                CustomerEmail=boOrder.CustomerEmail,
+                CustomerName= boOrder.CustomerName,
+                CustomerEmail =boOrder.CustomerEmail,
                 ShippingAddress=boOrder.ShippingAddress,
                 DateOrder=boOrder.DateOrder,
                 Status=(PO.OrderStatus)boOrder.Status,

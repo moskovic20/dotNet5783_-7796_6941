@@ -27,23 +27,6 @@ internal class Order : INotifyPropertyChanged
         }
     }
 
-    private string? _CustomerEmail;
-    public string? CustomerEmail
-    {
-        get
-        {
-            return _CustomerEmail;
-        }
-        set
-        {
-            _CustomerEmail = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("CustomerEmail"));
-            }
-        }
-    }
-
     private string? _CustomerName;
     public string? CustomerName
     {
@@ -57,6 +40,23 @@ internal class Order : INotifyPropertyChanged
             if (PropertyChanged != null)
             {
                 PropertyChanged(this, new PropertyChangedEventArgs("CustomerName"));
+            }
+        }
+    }
+
+    private string? _CustomerEmail;
+    public string? CustomerEmail
+    {
+        get
+        {
+            return _CustomerEmail;
+        }
+        set
+        {
+            _CustomerEmail = value;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("CustomerEmail"));
             }
         }
     }

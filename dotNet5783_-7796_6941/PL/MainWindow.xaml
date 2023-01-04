@@ -26,7 +26,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ListView x:Name="TvBox" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView x:Name="Catalog" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="5" HorizontalAlignment="Stretch"/>
@@ -37,6 +37,8 @@
                         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                             <Image Source="{Binding Image}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
                             <TextBlock Text="{Binding NameOfBook}"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                            <TextBlock Text="{Binding Price}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                            <Button x:Name="addToCart" Content="הוסף לסל" MouseDoubleClick="addToCard_Click"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -32,5 +32,5 @@ sealed internal class Bl : IBl//from public to internul...ok?
 
     public IProduct BoProduct { get; } = new BoProduct();
 
-    public ICart Cart { get; } = new BoCart();
+    public ICart BoCart { get; } = new BoCart();
 }

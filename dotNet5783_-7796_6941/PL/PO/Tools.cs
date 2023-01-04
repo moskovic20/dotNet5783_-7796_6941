@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using System.Collections.ObjectModel;
-using BO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -285,7 +284,56 @@ namespace PL.PO
             return allOrders;
         }
 
-        //    return allOrders;
-        //}
+        public static BO.Cart CastingFromPoToBoCart(this PO.Cart cart)
+        {
+            var list = from myOI in cart.Items
+                       select new BO.OrderItem()
+                       {
+                           OrderID = myOI.OrderID,
+                           ProductID = myOI.ProductID,
+                           NameOfBook = myOI.NameOfBook,
+                           PriceOfOneItem = myOI.PriceOfOneItem,
+                           AmountOfItems = myOI.AmountOfItems,
+                           TotalPrice = myOI.TotalPrice
+                       };
+
+            BO.Cart newCart = new BO.Cart()
+            {
+                CustomerName = cart.CustomerName,
+                CustomerEmail = cart.CustomerEmail,
+                CustomerAddress = cart.CustomerAddress,
+                Items= list.ToList(),
+                TotalPrice= cart.TotalPrice
+
+            };
+           
+            return newCart;
+        }
+
+        public static PO.Cart CastingFromBoToPoCart(this BO.Cart cart)
+        {
+            var list = from myOI in cart.Items
+                       select new PO.OrderItem()
+                       {
+                           OrderID = myOI.OrderID,
+                           ProductID = myOI.ProductID,
+                           NameOfBook = myOI.NameOfBook,
+                           PriceOfOneItem = myOI.PriceOfOneItem,
+                           AmountOfItems = myOI.AmountOfItems,
+                           TotalPrice = myOI.TotalPrice
+                       };
+
+            PO.Cart newCart = new PO.Cart()
+            {
+                CustomerName = cart.CustomerName,
+                CustomerEmail = cart.CustomerEmail,
+                CustomerAddress = cart.CustomerAddress,
+                Items = list.ToList(),
+                TotalPrice = cart.TotalPrice
+
+            };
+
+            return newCart;
+        }
     }
 }

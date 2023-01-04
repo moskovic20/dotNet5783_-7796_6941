@@ -17,6 +17,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Net.Mail;
+using PL.PlEntity.Order;
 
 namespace PL;
 
@@ -29,12 +30,13 @@ public partial class MainWindow : Window
     //private ObservableCollection<Product> products;
     //private Product pForShow;
     private ObservableCollection<Product> allBooksForShow;
+    private Cart myCart= new();
     public MainWindow()
     {
         InitializeComponent();
         this.bl = BlApi.Factory.GetBl();
-        //this.cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
 
+        //this.cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
         //this.TvBox.ItemsSource = new BookData[]
         //{
         //    new BookData{Title="Movie 1", ImageData=LoadImage("booksForBeakRound.jpg.")},
@@ -48,7 +50,7 @@ public partial class MainWindow : Window
         allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.CopyPflToPoProduct()));
 
         //this.DataContext = pForShow;//?
-        this.TvBox.ItemsSource = allBooksForShow;
+        this.Catalog.ItemsSource = allBooksForShow;
 
     }
 
@@ -77,4 +79,21 @@ public partial class MainWindow : Window
     {
         new AdminPassword(bl).ShowDialog();
     }
+
+    private void addToCard_Click(object sender, RoutedEventArgs e)
+    {
+        PO.Product p= (PO.Product)Catalog.SelectedItem;
+        try
+        {
+            // bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID);//הוספת המוצר לשכבה מתחת
+            myCart = bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+
+    }
+    
 }

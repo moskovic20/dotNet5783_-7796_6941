@@ -54,6 +54,21 @@ internal class BoProduct : IProduct
         }
     }
 
+    public BO.Product GetProductByName(string name)
+    {
+        try
+        {
+            Do.Product? myP = dal.Product.GetByName(name); //הבאת המוצר מבשכבת הנתונים
+            BO.Product BoMyP = new();
+            BoMyP = myP.CopyPropTo(BoMyP);//העתקת הנתונים החופפים לישות הנתונים של מוצר בשכבת הלוגיקה
+            return BoMyP;
+        }
+        catch (Do.DoesntExistException ex)
+        {
+            throw new BO.GetDetails_Exception("cant give details of this product", ex);
+        }
+    }
+
     public BO.ProductItem GetProductDetails_forC(int id, BO.Cart cart)
     {
         if (id < 0) throw new BO.InvalidValue_Exception("can't get this product because orderID is negetive");
@@ -172,6 +187,16 @@ internal class BoProduct : IProduct
             throw new BO.Update_Exception("Can't update product", ex);
         }
     }
+
+    #region GetPartOfProduct
+    //public IEnumerable<ProductForList> GetPartOfProduct(Predicate<ProductForList> filter)
+    //{
+    //    var query = (from product in GetAllProductForList_forM()
+    //                 where filter(product)
+    //                 select product).ToList();
+    //    return query;
+    //}
+    #endregion
 
 
     //______________________________________________________פונקציה של נורית עבור סינון בתצוגה

@@ -52,6 +52,8 @@ public partial class AddProductForM_Window : Window
                 throw new Exception("...הכנס את שם הסופר");
             if (AddP_categ_commbbox.SelectedItem == null)
                 throw new Exception("הכנס את קטגוריית הספר");
+            //if(inStock_TextBox.Text=="0")
+            //    throw new Exception("אין להזין 0 בכמות במלאי, ניתן להשאיר שדה זה ריק");
 
 
             if (!string.IsNullOrWhiteSpace(productToAdd.productImagePath))//העברת התמונה לתיקייה הרצויה לפי הקטגוריה וכן שינוי שם התמונה לשם הספר
@@ -122,10 +124,14 @@ public partial class AddProductForM_Window : Window
     #endregion
 
     #region הגבלות על הקלט
-    private new void PreviewTextInput(object sender, TextCompositionEventArgs e)
+    private void PreviewTextInputToDouble(object sender, TextCompositionEventArgs e)
     {
-        Regex regex = new Regex("[^0-9]+");
-        e.Handled = regex.IsMatch(e.Text);
+       e.limitInputToDouble();
+    }
+
+    private void PreviewTextInputToInt(object sender, TextCompositionEventArgs e)
+    {
+        e.limitInputToInt();
     }
 
     #endregion
@@ -152,6 +158,11 @@ public partial class AddProductForM_Window : Window
         //}
         //    productToAdd.ProductImagePath = openFileDialog.FileName;
         //}
+
+    }
+
+    private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+    {
 
     }
 }

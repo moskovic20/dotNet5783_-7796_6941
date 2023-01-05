@@ -24,6 +24,11 @@ public class ProductForList
     public CATEGORY Category { get; set; }
 
     /// <summary>
+    /// כמות המלאי של המוצר
+    /// </summary>
+    public int? InStock { get; set; }
+
+    /// <summary>
     /// Path for image to product
     /// </summary>
     public string? ProductImagePath { get; set; }

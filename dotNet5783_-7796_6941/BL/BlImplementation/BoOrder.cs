@@ -19,7 +19,7 @@ internal class BoOrder : IOrder
                             let p = O.GetValueOrDefault()
                             select new BO.OrderForList()
                             {
-                                OrderID = p.ID,
+                                OrderID = p.OrderID,
                                 CustomerName = p.CustomerName,
                                 Status = p.calculateStatus(),
                                 AmountOfItems = p.CalculateAmountItems(),
@@ -59,7 +59,7 @@ internal class BoOrder : IOrder
             order = myOrder.CopyPropTo(order);
             order.Status = myOrder.calculateStatus();
             order.PaymentDate = myOrder.DateOrder;                                 
-            var tempItems = dal.OrderItem.GetListByOrderID(myOrder.ID);
+            var tempItems = dal.OrderItem.GetListByOrderID(myOrder.OrderID);
             order.Items = tempItems.Select(x => x.ListFromDoToBo()).ToList();//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
             return order;
@@ -183,7 +183,7 @@ internal class BoOrder : IOrder
             Do.Order myOrder = dal.Order.GetById(id);
             return new BO.OrderTracking()
             {
-                OrderID = myOrder.ID,
+                OrderID = myOrder.OrderID,
                 Status = myOrder.calculateStatus(),///------אופציה להוסיף כבונוס תאריך משוער למה שלא קיים לו ערך-------
                 Tracking = myOrder.TrackingHealper()
             };

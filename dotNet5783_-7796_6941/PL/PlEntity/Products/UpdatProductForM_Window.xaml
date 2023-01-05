@@ -10,6 +10,7 @@
 
     <Window.Resources>
         <local:CategoryToHebrew x:Key="categoryToHebrew"/>
+        <local:NullToEmptyString x:Key="nullToEmptyString"/>
     </Window.Resources>
 
     <Grid x:Name="MainGrid" ShowGridLines="False" Background="#FFF6F6F6" Margin="0,0,0,-6">
@@ -26,7 +27,7 @@
         <Label Grid.Column="1"  Content="שדות חובה*" HorizontalAlignment="Left" Margin="290,53,0,0" VerticalAlignment="Top" Width="86" Foreground="Red" Height="24"/>
         <Button x:Name="updateProductButton" Content="עדכן" Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="208,235,0,0" VerticalAlignment="Top" Height="29" Width="146"  Grid.Row="1" Click="updateProductButton_Click" FontWeight="Bold" />
         <Button x:Name="cancelButton" Content="ביטול" Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="50,235,0,0" VerticalAlignment="Top" Height="29" Width="146" Grid.Row="1" Click="cancelButton_Click" FontWeight="Bold"/>
-        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="54,66,28,110" Grid.Row="1">
+        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="54,66,28,235" Grid.Row="1">
             <TextBox x:Name="updateAuthor_TextBox" Text="{Binding AuthorName, Mode=TwoWay}" Height="30" Width="215" />
             <Label  Content="  :שם הסופר"  Width="74"/>
             <Label Foreground="Red" Content="*" Height="24" Width="25" RenderTransformOrigin="0.494,-0.763" HorizontalContentAlignment="Right" FontSize="16" VerticalAlignment="Top" >
@@ -42,14 +43,17 @@
 
 
         </StackPanel>
-        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="56,190,68,-14" Grid.Row="1">
-            <TextBox Text="{Binding Price, Mode=TwoWay}" Height="30" Width="215"/>
+        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="56,190,68,102" Grid.Row="1">
+            <TextBox Text="{Binding Price, Mode=TwoWay,Converter={StaticResource nullToEmptyString}}" 
+                     PreviewTextInput="PreviewTextInputToDouble"
+                     MaxLength="7"
+                     Height="30" Width="215"/>
 
             <Label Content="  :מחיר"  Width="74"/>
 
 
         </StackPanel>
-        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="56,126,28,50" Grid.Row="1">
+        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="56,126,28,173" Grid.Row="1">
             <ComboBox x:Name="updateCateg_commbbox" Height="30" Width="215" VerticalAlignment="Top" 
                       SelectedItem="{Binding Category, Converter={StaticResource categoryToHebrew}, Mode=TwoWay}"/>
 
@@ -67,7 +71,7 @@
 
 
         </StackPanel>
-        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="54,4,28,172" Grid.Row="1">
+        <StackPanel Orientation="Horizontal"   Grid.Column="1" Margin="54,4,28,295" Grid.Row="1">
             <TextBox x:Name="updateName_textBox" Text="{Binding NameOfBook, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Height="30" Width="215"  />
             <Label Content="   :שם הספר"  Width="74"/>
             <Label Foreground="Red" Content="*" Height="24" Width="25" RenderTransformOrigin="0.494,-0.763" HorizontalContentAlignment="Right" FontSize="16" VerticalAlignment="Top" >
@@ -83,8 +87,11 @@
 
 
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="60,249,24,-73" Grid.Column="1" Grid.Row="1">
-            <TextBox Text="{Binding InStock, Mode=TwoWay}" Height="30" Width="215"/>
+        <StackPanel Orientation="Horizontal" Margin="56,249,28,51" Grid.Column="1" Grid.Row="1">
+            <TextBox Text="{Binding InStock, Mode=TwoWay,Converter={StaticResource nullToEmptyString}}"
+                     PreviewTextInput="PreviewTextInputToInt"
+                     MaxLength="4"
+                     Height="30" Width="215"/>
             <Label Content="  :כמות במלאי"  Width="87"/>
 
 

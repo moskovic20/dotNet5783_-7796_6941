@@ -6,7 +6,7 @@ public class Order
     /// <summary>
     /// מזהה ההזמנה
     /// </summary>
-    public int ID { get; set; }
+    public int OrderID { get; set; }
 
     /// <summary>
     /// The name of the customer

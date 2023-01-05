@@ -9,6 +9,8 @@ using System.Net.Mail;
 using System.Net;
 using System.Printing;
 using Do;
+using System.Windows.Input;
+using System.Text.RegularExpressions;
 
 namespace PL.PO
 {
@@ -52,6 +54,18 @@ namespace PL.PO
    => from source in sources
       select source.CopyPropTo(new Target());
 
+        public static void limitInputToInt(this TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
+        public static void limitInputToDouble(this TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9.]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+
         public static bool IsImageNeedCare(PO.Product before,PO.Product after)
         {
             if (before.Category != after.Category || before.NameOfBook != after.NameOfBook
@@ -71,12 +85,29 @@ namespace PL.PO
                 ID = p.ID,
                 NameOfBook = p.NameOfBook,
                 Price = p.Price,
-                Category = (PO.CATEGORY)p.Category
-
+                Category = (PO.CATEGORY)p.Category,
+                InStock=p.InStock
             };
 
             return product;
         }
+        #endregion
+
+        #region convert from PO.ProductForList to BO.Product 
+
+        internal static PO.ProductForList CopyBoProductToPoPFL(this BO.Product prodPO)
+        {
+            PO.ProductForList copyProduct = new()
+            {
+                ID = prodPO.ID,
+                NameOfBook = prodPO.NameOfBook,
+                Price = prodPO.Price,
+                InStock = prodPO.InStock,
+                Category = (PO.CATEGORY)prodPO.Category!
+            };
+            return copyProduct;
+        }
+
         #endregion
 
         #region convert from PO.Product to BO.Product and vice versa
@@ -157,7 +188,7 @@ namespace PL.PO
 
         #region Converting the category from English to Hebrew and vice versa.
 
-        public static PO.CATEGORY HebrewToEnglishCategory(this PO.Hebrew_CATEGORY? hebrewCategory)
+        public static PO.CATEGORY HebrewToEnglishCategory(this PO.Hebrew_CATEGORY hebrewCategory)
         {
             if (hebrewCategory == Hebrew_CATEGORY.מסתורין)
                 return PO.CATEGORY.mystery;
@@ -179,7 +210,7 @@ namespace PL.PO
             return PO.CATEGORY.kodesh;
         }
 
-        public static Hebrew_CATEGORY EnglishToHebewCategory(this PO.CATEGORY myCategory)
+        public static Hebrew_CATEGORY EnglishToHebewCategory(this PO.CATEGORY? myCategory)
         {
             if (myCategory == PO.CATEGORY.mystery)
                 return Hebrew_CATEGORY.מסתורין;
@@ -203,52 +234,15 @@ namespace PL.PO
 
         #endregion
 
-        #region convert fron BO.order to PO.order
-        internal static PO.Order CopyBoOrderToPoOrder(this BO.Order boOrder)
-        {
-            PO.Order myNewOrder = new()
-            {
-                ID = boOrder.ID,
-                CustomerName= boOrder.CustomerName,
-                CustomerEmail =boOrder.CustomerEmail,
-                ShippingAddress=boOrder.ShippingAddress,
-                DateOrder=boOrder.DateOrder,
-                Status=(PO.OrderStatus)boOrder.Status,
-                PaymentDate=boOrder.PaymentDate,
-                ShippingDate=boOrder.ShippingDate,
-                DeliveryDate=boOrder.DeliveryDate,
-                TotalPrice=boOrder.TotalPrice
-            };
+       
 
-            var list = from myOI in boOrder.Items
-                       select new OrderItem()
-                       {
-                           OrderID=myOI.OrderID,
-                           ProductID=myOI.ProductID,
-                           NameOfBook=myOI.NameOfBook,
-                           PriceOfOneItem=myOI.PriceOfOneItem,
-                           AmountOfItems=myOI.AmountOfItems,
-                           TotalPrice=myOI.TotalPrice
-                       };
-
-            myNewOrder.Items = new(list);
-            return myNewOrder;
-        }
-        #endregion
-
-        public static ObservableCollection<ProductForList> ToObserCollection_P(this ObservableCollection<ProductForList> allBooks)
+        public static List<ProductForList> GetAllProductInPO()
         {
             var list = from p in bl.BoProduct.GetAllProductForList_forM()
-                       select new PO.ProductForList
-                       {
-                           ID = p.ID,
-                           NameOfBook = p.NameOfBook,
-                           Price = p.Price,
-                           Category = (PO.CATEGORY)p.Category
-                       };
+                       select p.CopyBoPflToPoPfl();
 
-            allBooks = new ObservableCollection<PO.ProductForList>(list);
-            return allBooks;
+            return list.ToList();
+
         }
 
 
@@ -271,13 +265,38 @@ namespace PL.PO
             return allOrders;
         }
 
-        //public static int caseOrderTraking(DateTime? shipping,DateTime? delivery)
-        //{
-        //    if (shipping == null && delivery == null)
-        //        return 1;
-        //    if (shipping != null && delivery == null)
-        //        return 2;
-        //    return 3;
-        //}
+        #region convert fron BO.order to PO.order
+        internal static PO.Order CopyBoOrderToPoOrder(this BO.Order boOrder)
+        {
+            PO.Order myNewOrder = new()
+            {
+                ID = boOrder.OrderID,
+                CustomerName = boOrder.CustomerName,
+                CustomerEmail = boOrder.CustomerEmail,
+                ShippingAddress = boOrder.ShippingAddress,
+                DateOrder = boOrder.DateOrder,
+                Status = (PO.OrderStatus)boOrder.Status,
+                PaymentDate = boOrder.PaymentDate,
+                ShippingDate = boOrder.ShippingDate,
+                DeliveryDate = boOrder.DeliveryDate,
+                TotalPrice = boOrder.TotalPrice
+            };
+
+            var list = from myOI in boOrder.Items
+                       select new OrderItem()
+                       {
+                           OrderID = myOI.OrderID,
+                           ProductID = myOI.ProductID,
+                           NameOfBook = myOI.NameOfBook,
+                           PriceOfOneItem = myOI.PriceOfOneItem,
+                           AmountOfItems = myOI.AmountOfItems,
+                           TotalPrice = myOI.TotalPrice
+                       };
+
+            myNewOrder.Items = new(list);
+            return myNewOrder;
+        }
+        #endregion
+
     }
 }

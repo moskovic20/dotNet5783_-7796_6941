@@ -11,7 +11,7 @@ internal class DalOrderItem : IOrderItem
     {
         int indexOfMyOrderItem = _DS._OrderItems.FindIndex(x => x?.ID == myOrderItem.ID);
 
-        if (indexOfMyOrderItem == -1) //myOrderItem.ID is not found in _OrderItems
+        if (indexOfMyOrderItem == -1) //myOrderItem.OrderID is not found in _OrderItems
         {
             myOrderItem.ID = DataSource.Config.NextOrderItem;
             _DS._OrderItems.Add(myOrderItem);
@@ -75,7 +75,7 @@ internal class DalOrderItem : IOrderItem
     {
 
         if (OrderID < 100000)
-            throw new DoesntExistException("uncorect ID order");
+            throw new DoesntExistException("uncorect OrderID order");
 
         var list = from item in _DS._OrderItems
                    where item != null && item?.OrderID == OrderID

@@ -11,26 +11,26 @@ internal class DalOrder : IOrder
     {
         //Order temp = myOrder;
 
-        int indexOfMyOrder = _DS._Orders.FindIndex(x => x?.ID == myOrder.ID);
+        int indexOfMyOrder = _DS._Orders.FindIndex(x => x?.OrderID == myOrder.OrderID);
 
-        if (indexOfMyOrder == -1) //myOrder.ID is not found in _OrderS
+        if (indexOfMyOrder == -1) //myOrder.OrderID is not found in _OrderS
         {
-            myOrder.ID = DataSource.Config.NextOrderNumber;
+            myOrder.OrderID = DataSource.Config.NextOrderNumber;
             _DS._Orders.Add(myOrder);
-            return myOrder.ID;
+            return myOrder.OrderID;
         }
 
         if (_DS._Orders[indexOfMyOrder]?.IsDeleted == false)
             throw new AlreadyExistException("The order you wish to add is already exists\n");
 
         _DS._Orders.Add(myOrder);
-        return myOrder.ID;
+        return myOrder.OrderID;
 
     }
 
     public void Delete(int id)
     {
-        int indexOfOrderById = _DS._Orders.FindIndex(x => x?.ID == id && x?.IsDeleted == false);
+        int indexOfOrderById = _DS._Orders.FindIndex(x => x?.OrderID == id && x?.IsDeleted == false);
 
         if (indexOfOrderById == -1)
             throw new DoesntExistException("The order you wanted to delete is not found\n");
@@ -48,7 +48,7 @@ internal class DalOrder : IOrder
 
     public Order GetById(int id)
     {
-        Order? myOrder = _DS._Orders.FirstOrDefault(x => x?.ID == id && x?.IsDeleted == false);
+        Order? myOrder = _DS._Orders.FirstOrDefault(x => x?.OrderID == id && x?.IsDeleted == false);
 
         return myOrder ?? throw new DoesntExistException("The Order is not found\n"); ;
     }
@@ -57,14 +57,14 @@ internal class DalOrder : IOrder
     {
         try
         {
-            GetById(item.ID);
+            GetById(item.OrderID);
         }
         catch
         {
             throw new DoesntExistException("the order you wish to update does not exist");
         }
 
-        Delete(item.ID);
+        Delete(item.OrderID);
         Add(item);
     }
 

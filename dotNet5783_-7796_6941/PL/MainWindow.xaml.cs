@@ -34,21 +34,8 @@ public partial class MainWindow : Window
     {
         InitializeComponent();
         this.bl = BlApi.Factory.GetBl();
-        //this.cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
-
-        //this.TvBox.ItemsSource = new BookData[]
-        //{
-        //    new BookData{Title="Movie 1", ImageData=LoadImage("booksForBeakRound.jpg.")},
-        //    new BookData{Title="Movie 2", ImageData=LoadImage("booksForBeakRound.jpg")},
-        //    new BookData{Title="Movie 3", ImageData=LoadImage("booksForBeakRound.jpg")},
-        //    new BookData{Title="Movie 4", ImageData=LoadImage("booksForBeakRound.jpg")},
-        //    new BookData{Title="Movie 5", ImageData=LoadImage("booksForBeakRound.jpg")},
-        //    new BookData{Title="Movie 6", ImageData=LoadImage("booksForBeakRound.jpg")}
-        //};
 
         allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.CopyPflToPoProduct()));
-
-        //this.DataContext = pForShow;//?
         this.TvBox.ItemsSource = allBooksForShow;
 
     }
@@ -76,6 +63,6 @@ public partial class MainWindow : Window
 
     private void Admin_Click(object sender, RoutedEventArgs e)
     {
-        new AdminPassword(bl).ShowDialog();
+        new AdminPassword(bl).Show();
     }
 }

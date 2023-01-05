@@ -4,7 +4,7 @@ namespace DalApi;
 public interface IOrderItem : ICrud<OrderItem>
 {
     /// <summary>
-    /// return list for all the orderitems in the order by the order ID
+    /// return list for all the orderitems in the order by the order OrderID
     /// </summary>
     /// <param name="OrderID"></param>
     /// <returns></returns>

@@ -14,7 +14,7 @@ class DateTimeToString : IValueConverter
             return "";
 
         DateTime myDT = (DateTime)value;
-        return myDT.ToLongDateString();
+        return myDT.ToShortDateString();
        
     }
 

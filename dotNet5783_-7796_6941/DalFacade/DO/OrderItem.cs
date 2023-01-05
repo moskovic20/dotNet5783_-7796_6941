@@ -12,12 +12,12 @@ public struct OrderItem
     public int ID { get; set; }
 
     /// <summary>
-    /// ID for the Order to connect all his product to the same costumer's order
+    /// OrderID for the Order to connect all his product to the same costumer's order
     /// </summary>
     public int OrderID { get; set; }
 
     /// <summary>
-    /// ID of the product in store
+    /// OrderID of the product in store
     /// </summary>
     public int ProductID { get; set; }
 

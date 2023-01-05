@@ -11,6 +11,7 @@
 
     <Window.Resources>
         <local:CategoryToHebrew x:Key="categoryToHebrew"/>
+        <local:NullToEmptyString x:Key="nullToEmptyString"/>
     </Window.Resources>
 
     <Grid Name="MainGrid" ShowGridLines="False" Margin="0,0,0,-6" Background="#FFF6F6F6">
@@ -140,8 +141,10 @@
 
         <StackPanel Orientation="Horizontal"
                     Margin="64,412,20,33" Grid.Column="1">
-            <TextBox Text="{Binding InStock, Mode=TwoWay}"
-                     Height="30" Width="215"/>
+            <TextBox x:Name="inStock_TextBox" Text="{Binding InStock, Mode=TwoWay,Converter={StaticResource nullToEmptyString}}"
+                     Height="30" Width="215"
+                     PreviewTextInput="PreviewTextInputToInt"
+                     MaxLength="4"/>
             <Label Content="  :כמות במלאי"
                    Width="87"/>
         </StackPanel>
@@ -178,7 +181,7 @@
             <TextBox x:Name="AddP_ID_textBox"
                 Text="{Binding ID, Mode=TwoWay,UpdateSourceTrigger=LostFocus}"
                 Height="30" Width="215"
-                      PreviewTextInput="PreviewTextInput"
+                     PreviewTextInput="PreviewTextInputToDouble"
                      GotFocus="AddP_ID_textBox_GotFocus"
                      LostFocus="AddP_ID_textBox_LostFocus"
                      MaxLength="9"/>
@@ -203,8 +206,10 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal"
             Margin="64,348,20,97" Grid.Column="1">
-            <TextBox Text="{Binding Price, Mode=TwoWay}"
-                Height="30" Width="215"/>
+            <TextBox Text="{Binding Price, Mode=TwoWay,Converter={StaticResource nullToEmptyString}}"
+                     PreviewTextInput="PreviewTextInputToDouble"
+                     MaxLength="7"
+                      Height="30" Width="215"/>
             <Label Content="  :מחיר"
                 Width="87"/>
         </StackPanel>

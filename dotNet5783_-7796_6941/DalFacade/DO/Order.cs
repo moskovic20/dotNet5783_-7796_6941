@@ -11,7 +11,7 @@ public struct Order
     /// <summary>
     /// Unique identifier for order
     /// </summary>
-    public int ID { get; set; }
+    public int OrderID { get; set; }
 
     /// <summary>
     /// The name of the customer

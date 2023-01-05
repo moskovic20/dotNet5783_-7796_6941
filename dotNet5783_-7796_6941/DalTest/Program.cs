@@ -124,7 +124,7 @@ class Program
                     case 'b':
                         #region print product by id
 
-                        Console.WriteLine("enter the the ID of the product: ");
+                        Console.WriteLine("enter the the OrderID of the product: ");
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
@@ -212,7 +212,7 @@ c: category");
 
                     case 'e':
                         #region delete product by id
-                        Console.WriteLine("enter the the ID of the product you want delete: ");
+                        Console.WriteLine("enter the the OrderID of the product you want delete: ");
 
                         if (int.TryParse(Console.ReadLine(), out id))
                             DL.Product.Delete(id);
@@ -271,7 +271,7 @@ c: category");
 
                         //if (!int.TryParse(Console.ReadLine(), out id))
                         //    throw new Exception("The conversion failed");
-                        //ord.ID = id;
+                        //ord.OrderID = id;
 
                         ord.CustomerName = Console.ReadLine();
                         ord.CustomerEmail = Console.ReadLine();
@@ -296,7 +296,7 @@ c: category");
 
                     case 'b':
                         #region print order by id
-                        Console.WriteLine("enter the ID of the order: ");
+                        Console.WriteLine("enter the OrderID of the order: ");
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
@@ -392,7 +392,7 @@ d: delivery date");
 
                     case 'e':
                         #region delete order by id
-                        Console.WriteLine("enter the the ID of the order you want delete: ");
+                        Console.WriteLine("enter the the OrderID of the order you want delete: ");
 
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
@@ -456,7 +456,7 @@ d: delivery date");
 
                         //if (!int.TryParse(Console.ReadLine(), out id))
                         //    throw new Exception("The conversion failed");
-                        //OI.ID = id;
+                        //OI.OrderID = id;
 
                         if (!int.TryParse(Console.ReadLine(), out idOrder))
                             throw new Exception("The conversion failed");
@@ -478,7 +478,7 @@ d: delivery date");
 
                     case 'b':
                         #region print orderItem by id
-                        Console.WriteLine("enter the the ID of the orderItem: ");
+                        Console.WriteLine("enter the the OrderID of the orderItem: ");
                         if (!int.TryParse(Console.ReadLine(), out id))
                             throw new Exception("The conversion failed");
 
@@ -521,14 +521,14 @@ d: to finish the update");
                             switch (choose)
                             {
                                 case 'a':
-                                    Console.WriteLine("enter the new ID: ");
+                                    Console.WriteLine("enter the new OrderID: ");
                                     if (!int.TryParse(Console.ReadLine(), out idOrder))
                                         throw new Exception("The conversion failed");
                                     OI.OrderID = idOrder;
                                     break;
 
                                 case 'b':
-                                    Console.WriteLine("enter the new ID: ");
+                                    Console.WriteLine("enter the new OrderID: ");
                                     if (!int.TryParse(Console.ReadLine(), out idProduct))
                                         throw new Exception("The conversion failed");
                                     OI.ProductID = idProduct;
@@ -558,7 +558,7 @@ d: to finish the update");
 
                     case 'e':
                         #region delete orderIrem by id
-                        Console.WriteLine("enter the the ID of the orderItem you want delete: ");
+                        Console.WriteLine("enter the the OrderID of the orderItem you want delete: ");
 
                         if (int.TryParse(Console.ReadLine(), out id))
                             DL.OrderItem.Delete(id);

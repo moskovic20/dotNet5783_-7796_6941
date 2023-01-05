@@ -24,11 +24,11 @@ public partial class OrderDetailsWindowForM_ : Window
     IBl bl;
     PO.Order orderToShow;
     
-    public OrderDetailsWindowForM_(IBl bl, OrderForList order)
+    public OrderDetailsWindowForM_(IBl bl, int orderID)
     {
         InitializeComponent();
         this.bl = bl;
-        this.orderToShow = bl.BoOrder.GetOrdertDetails(order.OrderID).CopyBoOrderToPoOrder();
+        this.orderToShow = bl.BoOrder.GetOrdertDetails(orderID).CopyBoOrderToPoOrder();
         this.DataContext = orderToShow;
         this.OrderItems_DateGrid.DataContext = orderToShow.Items;
 

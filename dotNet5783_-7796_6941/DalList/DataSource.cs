@@ -95,7 +95,7 @@ public class DataSource
                 #region Makes sure id is unique
                 int pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
 
-                while (pWithTheSameId != -1)//To make sure this ID is unique.
+                while (pWithTheSameId != -1)//To make sure this OrderID is unique.
                 {
                     myP.ID = R.Next(100000, 999999999);
                     pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
@@ -127,7 +127,7 @@ public class DataSource
         {
             Order myOrder = new Order
             {
-                ID = Config.NextOrderNumber,
+                OrderID = Config.NextOrderNumber,
                 DateOrder = DateTime.Now - new TimeSpan(R.Next(11, 41), R.Next(24), R.Next(60), R.Next(60)),
                 CustomerName = customerNames[R.Next(0, 20)],
                 ShippingAddress = address[R.Next(0, 20)],

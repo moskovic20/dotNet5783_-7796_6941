@@ -9,7 +9,7 @@
         Title="OrderDetailsWindowForM_" Height="450" Width="900">
 
     <Window.Resources>
-
+        <local:DateTimeToString x:Key="DateTimeToString"/>
         <local:StatusToHebrew x:Key="statusToHebrew"/>
 
         <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
@@ -97,7 +97,7 @@
 
         <StackPanel Orientation="Horizontal"
                     Margin="158,234,-45,147" Grid.Column="1">
-            <Label Content="{Binding DateOrder, Mode=TwoWay}"
+            <Label Content="{Binding DateOrder,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                      Height="30" Width="153"/>
             <Label Content=":תאריך ביצוע הזמנה "
                    Width="116" Height="28"/>
@@ -105,7 +105,7 @@
 
         <StackPanel Orientation="Horizontal"
                     Margin="157,331,-35,66" Grid.Column="1">
-            <Label Content="{Binding PaymentDate, Mode=TwoWay}"
+            <Label Content="{Binding PaymentDate,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                      Height="30" Width="153"/>
             <Label Content=":תאריך תשלום"
                    Width="86" Height="25"/>
@@ -114,7 +114,7 @@
         <StackPanel Orientation="Horizontal"
                     Margin="158,268,-45,123" 
                     Grid.Column="1">
-            <Label Content="{Binding DateOrder, Mode=TwoWay}"
+            <Label Content="{Binding ShippingDate,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                      Height="30" Width="153"/>
             <Label Content=":תאריך יציאה ליעד"
                    Width="102" Height="33"/>
@@ -123,7 +123,7 @@
         <StackPanel Orientation="Horizontal"
                     Margin="158,295,-93,90" 
                     Grid.Column="1">
-            <Label Content="{Binding DateOrder, Mode=TwoWay}"
+            <Label Content="{Binding DeliveryDate,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                       Height="30" Width="153" />
             <Label Content=":תאריך הגעה ליעד"
                    Width="101" Height="39"/>
@@ -165,8 +165,8 @@
                   IsReadOnly="True"
                   ItemsSource="{Binding}" 
                   HorizontalAlignment="Left"
-                  Margin="10,66,0,38"
-                  Width="514"
+                  Margin="40,64,0,40"
+                  Width="475"
                   Background="{x:Null}" Grid.ColumnSpan="2">
 
             <DataGrid.GroupStyle>

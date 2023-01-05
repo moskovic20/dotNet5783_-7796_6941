@@ -25,6 +25,7 @@ public partial class OrderListForM_Window : Window
 {
     private IBl bl;
     private ObservableCollection<PO.OrderForList> allOrders = new();
+    private ObservableCollection<OrderForList> orderSearch = new();
 
     public OrderListForM_Window(IBl bl)
     {
@@ -35,42 +36,42 @@ public partial class OrderListForM_Window : Window
         DataContext = allOrders;
     }
 
-        #region אירוע- לחיצה על כפתור מחיקת הזמנה
-        private void CancleOrder_button(object sender, RoutedEventArgs e)
+    #region אירוע- לחיצה על כפתור ביטול הזמנה
+    private void CancleOrder_button(object sender, RoutedEventArgs e)
+    {
+        try
         {
-            try
+
+            OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
+
+            if (orderToD.Status == OrderStatus.Processing)
+                throw new Exception("אי אפשר לבטל הזמנה שנשלחה");
+            if (orderToD.Status == OrderStatus.Completed)
+                throw new Exception("אי אפשר לבטל הזמנה שהושלמה");
+
+            var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה לבטל הזמנה זו?", "ביטול הזמנה", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            switch (delete)
             {
-                
-                OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
+                case MessageBoxResult.Yes:
+                    bl.BoOrder.CancleOrder_forM(orderToD.OrderID);
+                    allOrders.Remove(orderToD);
 
-                if (orderToD.Status == OrderStatus.Processing)
-                    throw new Exception("אי אפשר לבטל הזמנה שנשלחה");
-                if (orderToD.Status == OrderStatus.Completed)
-                    throw new Exception("אי אפשר לבטל הזמנה שהושלמה");
-
-                var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה לבטל הזמנה זו?", "ביטול הזמנה", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-                switch (delete)
-                {
-                    case MessageBoxResult.Yes:
-                        bl.BoOrder.CancleOrder_forM(orderToD.OrderID);
-                        allOrders.Remove(orderToD);
-
-                        MessageBox.Show("!ההזמנה בוטלה בהצלחה");
-                        break;
-                    case MessageBoxResult.No:
-                        Orders_DateGrid.SelectedItem = null;
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
-                   MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+                    MessageBox.Show("!ההזמנה בוטלה בהצלחה");
+                    break;
+                case MessageBoxResult.No:
+                    Orders_DateGrid.SelectedItem = null;
+                    break;
             }
         }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+               MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+    }
     #endregion
 
-
+    #region עדכון שילוח והגעה של ההזמנה
     private void UpdateShip_Click(object sender, RoutedEventArgs e)
     {
         PO.OrderForList ordToUp = (PO.OrderForList)Orders_DateGrid.SelectedItem;
@@ -118,6 +119,7 @@ public partial class OrderListForM_Window : Window
         }
         ordToUp.Status = (PO.OrderStatus)bl.BoOrder.GetOrdertDetails(ordToUp.OrderID).Status;
     }
+    #endregion
 
     #region אירוע- לחיצה על כפתור עדכון הזמנה
     private void UpdateOrder_Click(object sender, RoutedEventArgs e)
@@ -138,12 +140,12 @@ public partial class OrderListForM_Window : Window
 
     //private void Button_Click(object sender, RoutedEventArgs e)
     //{
-    //    // PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
-    //    Action<int> statusAction = (orderId) =>
+    //    // PO.OrderForList or = bl.BoOrder.GetOrderForList(id).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
+    //    Action<int> statusAction = (id) =>
     //    {
     //        //PO.ProductForList p = bl.BoProduct.GetProductForList(ProductID).CopyBoPflToPoPfl();
     //        //  PO.ProductForList P_BeforUp = allBooks.FirstOrDefault(x => x.orderID == p.orderID)!;
-    //        PO.OrderForList or = bl.BoOrder.GetOrderForList(orderId).CopyPropTo(new PO.OrderForList());
+    //        PO.OrderForList or = bl.BoOrder.GetOrderForList(id).CopyPropTo(new PO.OrderForList());
     //        PO.OrderForList orBeforUp = allOrders.FirstOrDefault(x => x.OrderID == or.OrderID)!;
     //        orBeforUp.Status = or.Status;
     //    };
@@ -151,6 +153,7 @@ public partial class OrderListForM_Window : Window
     //    //new statusUpdatWindow(bl, (PO.OrderForList)Orders_DateGrid.SelectedItem, statusAction).ShowDialog();
     //}
 
+    #region מחיקת הזמנה שהושלמה מהמערכת
     private void moveOrderToArchives(object sender, RoutedEventArgs e)
     {
         try
@@ -180,11 +183,93 @@ public partial class OrderListForM_Window : Window
                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
         }
     }
+    #endregion
 
+    #region לחיצה על הזמנה לצפייה בפרטי הזמנה
     private void Orders_DateGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        PO.OrderForList or= (PO.OrderForList)Orders_DateGrid.SelectedItem;
-        new OrderDetailsWindowForM_(bl,or).Show();
+        PO.OrderForList or = (PO.OrderForList)Orders_DateGrid.SelectedItem;
+        new OrderDetailsWindowForM_(bl, or.OrderID).Show();
+    }
+    #endregion
+
+    #region קבץ לפי סטטוס
+    private void GroupByStatus_Click(object sender, RoutedEventArgs e)
+    {
+       
+
+        if ((string)GroupByStatus.Content == "קבץ לפי סטטוס")
+        {
+            GroupByStatus.Content = "בטל קיבוץ";
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(Orders_DateGrid.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
+            view.GroupDescriptions.Add(groupDescription);
+        }
+        else
+        {
+            GroupByStatus.Content = "קבץ לפי סטטוס";
+            remoteGroup();
+        }
+
+
+
+    }
+
+    private void remoteGroup()
+    {
+        CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(allOrders);
+        view.GroupDescriptions.Clear();
+    }
+    #endregion
+
+    private void search_Click(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+
+            string myString = nameClaientOrID.Text;
+
+            if (iconSearch.Kind == MaterialDesignThemes.Wpf.PackIconKind.Close)
+            {
+                nameClaientOrID.Text = "";
+                iconSearch.Kind = MaterialDesignThemes.Wpf.PackIconKind.Search;
+                DataContext = allOrders;
+                GroupByStatus.IsEnabled = true;
+            }
+            else
+            {
+                OrderForList myOrder = new();
+
+                int id;
+
+                bool isID = int.TryParse(myString, out id);
+                if (isID)
+                {
+                    myOrder = bl.BoOrder.GetOrderForList(id).CopyPropTo(new OrderForList());
+                    remoteGroup();
+                    orderSearch.Clear();
+                    orderSearch.Add(myOrder);
+                }
+                else
+                {
+                    //myOrder = bl.BoOrder.GetOrderForList(;
+                    //remoteGroup();
+                    //orderSearch.Clear();
+                    //orderSearch.Add(myOrder);
+                }
+
+                iconSearch.Kind = MaterialDesignThemes.Wpf.PackIconKind.Close;
+                DataContext = orderSearch;
+                GroupByStatus.Content = "קבץ לפי קטגוריה";
+                GroupByStatus.IsEnabled = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+              MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+
     }
 }
 

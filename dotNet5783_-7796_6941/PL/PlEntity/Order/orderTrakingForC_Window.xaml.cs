@@ -24,7 +24,8 @@ namespace PL.PlEntity.Order;
 public partial class orderTrakingForC_Window : Window
 {
     private IBl bl;
-    //PO.Order myOrder = new();
+    PO.Order myOrder = new();
+    int id;
 
     public orderTrakingForC_Window(IBl bl)
     {
@@ -36,14 +37,12 @@ public partial class orderTrakingForC_Window : Window
     {
         try
         {
-            int id;
             bool isFine = int.TryParse(orderID.Text, out id);
             if (!isFine)
                 throw new Exception("לא יכול להמיר מספר זה");
-            PO.Order myOrder = bl.BoOrder.GetOrdertDetails(id).CopyBoOrderToPoOrder();
 
-            orderDate.Content = myOrder.DateOrder.ToShortDateString();
-            //icon1.Foreground = System.Windows.Media.Brushes.Yellow;
+            myOrder = bl.BoOrder.GetOrdertDetails(id).CopyBoOrderToPoOrder();
+            DataContext = myOrder;
 
             orderDate_label.Visibility = Visibility;
             shippingDate_label.Visibility = Visibility;
@@ -53,38 +52,32 @@ public partial class orderTrakingForC_Window : Window
             ShippingDate.Visibility = Visibility;
             DeliveryDate.Visibility = Visibility;
 
+            orderDetails.Visibility = Visibility;
+
             circle1.Visibility = Visibility;
 
             if (myOrder.ShippingDate != null)
             {
-                ShippingDate.Content = myOrder.ShippingDate?.ToShortDateString();
                 circle2.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF009BA6")!;
                 circle2.Stroke = System.Windows.Media.Brushes.Yellow;
-             //   icon2.Foreground = System.Windows.Media.Brushes.Yellow;
                 circle2.Visibility = Visibility;
             }
             else
             {
-                ShippingDate.Content = "";
                 circle2.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFC2C3C9")!;
                 circle2.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF009BA6")!;
-               // icon2.Foreground = System.Windows.Media.Brushes.White;
                 circle2.Visibility = Visibility;
             }
             if (myOrder.DeliveryDate != null)
             {
-                DeliveryDate.Content = myOrder.DeliveryDate?.ToShortDateString();
                 circle3.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF009BA6")!;
                 circle3.Stroke = System.Windows.Media.Brushes.Yellow;
-             //   icon3.Foreground = System.Windows.Media.Brushes.Yellow;
                 circle3.Visibility = Visibility;
             }
             else
             {
-                DeliveryDate.Content = "";
                 circle3.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFC2C3C9")!;
                 circle3.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF009BA6")!;
-              //  icon3.Foreground = System.Windows.Media.Brushes.White;
                 circle3.Visibility = Visibility;
             }
 
@@ -94,8 +87,9 @@ public partial class orderTrakingForC_Window : Window
             errorOrderID.Visibility = Visibility.Visible;
 
             if (orderDate.Visibility == Visibility)
-
             {
+                orderDetails.Visibility = Visibility.Hidden;
+
                 orderDate_label.Visibility = Visibility.Hidden;
                 shippingDate_label.Visibility = Visibility.Hidden;
                 deliveryDate_label.Visibility = Visibility.Hidden;
@@ -107,11 +101,6 @@ public partial class orderTrakingForC_Window : Window
                 circle1.Visibility = Visibility.Hidden;
                 circle2.Visibility = Visibility.Hidden;
                 circle3.Visibility = Visibility.Hidden;
-
-                //icon1.Foreground= System.Windows.Media.Brushes.White;
-             //   icon2.Foreground = System.Windows.Media.Brushes.White;
-              //  icon3.Foreground = System.Windows.Media.Brushes.White;
-
             }
 
         }
@@ -134,5 +123,10 @@ public partial class orderTrakingForC_Window : Window
     private void orderID_GotFocus(object sender, RoutedEventArgs e)
     {
         errorOrderID.Visibility = Visibility.Hidden;
+    }
+
+    private void orderDetails_Click(object sender, RoutedEventArgs e)
+    {
+        new OrderDetailsWindowForM_(bl, id).Show();
     }
 }

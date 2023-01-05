@@ -60,12 +60,15 @@ namespace PL.Products
 
                 if(PO.Tools.IsImageNeedCare(beforUpdate!,productToUpdate))
                 {
+
+                    productImage.Source = null;
                     string sorce = beforUpdate?.productImagePath!;
 
                     string suffix = sorce.Split(@".").Last();
                     string target = Environment.CurrentDirectory + "\\images\\productImages\\" + productToUpdate.Category + "\\" + productToUpdate.NameOfBook + "." + suffix;
-                    File.Copy(sorce, target);
+                    File.Move(sorce, target);
                     productToUpdate.productImagePath = target;
+                    productImage.Source = productToUpdate.Image;
                 }
 
                 bl.BoProduct.UpdateProductDetails_forM(productToUpdate.CopyProductToBO());
@@ -105,6 +108,16 @@ namespace PL.Products
                 productToUpdate.ProductImagePath = op.FileName;
                 productImage.Source = productToUpdate.Image;
             }
+        }
+
+        private void PreviewTextInputToInt(object sender, TextCompositionEventArgs e)
+        {
+            e.limitInputToInt();
+        }
+
+        private void PreviewTextInputToDouble(object sender, TextCompositionEventArgs e)
+        {
+            e.limitInputToDouble();
         }
     }
 }

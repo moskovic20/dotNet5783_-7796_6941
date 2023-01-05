@@ -68,6 +68,18 @@ namespace PL.PO
             }
         }
 
+        private int? _InStock;
+        public int? InStock
+        {
+            get => _InStock;
+            set
+            {
+                _InStock = value;
+                if (PropertyChanged != null)
+                    PropertyChanged(this, new PropertyChangedEventArgs("InStock"));
+            }
+        }
+
 
         public PO.ProductForList GetCopy()
         {

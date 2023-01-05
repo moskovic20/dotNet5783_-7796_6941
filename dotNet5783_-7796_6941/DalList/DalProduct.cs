@@ -13,24 +13,24 @@ internal class DalProduct : IProduct
     //{
     //    //P.IsDeleted = false;
     //    Random random = new Random();
-    //    int indexOfMyP = _DS._Products.FindIndex(x => x?.ID == P.ID);
+    //    int indexOfMyP = _DS._Products.FindIndex(x => x?.OrderID == P.OrderID);
 
     //    if (indexOfMyP == -1) //this product is not found in the data
     //    {
-    //        while (!IdIsFound(P.ID)) //check if this id is not taken.
+    //        while (!IdIsFound(P.OrderID)) //check if this id is not taken.
     //        {
-    //            P.ID = random.Next(100000, 999999999);
+    //            P.OrderID = random.Next(100000, 999999999);
     //        }
 
     //        _DS._Products.Add(P);
-    //        return P.ID;
+    //        return P.OrderID;
     //    }
 
     //    if (_DS._Products[indexOfMyP].GetValueOrDefault().IsDeleted != true)
-    //        throw new AlreadyExistException("The product ID you entered already exists in the database");
+    //        throw new AlreadyExistException("The product OrderID you entered already exists in the database");
 
     //    _DS._Products.Add(P);
-    //    return P.ID;
+    //    return P.OrderID;
 
     //}
 
@@ -45,7 +45,7 @@ internal class DalProduct : IProduct
             return P.ID;
         }
         else
-            throw new AlreadyExistException("The product ID you entered already exists in the database");
+            throw new AlreadyExistException("The product OrderID you entered already exists in the database");
 
     }
 
@@ -61,6 +61,7 @@ internal class DalProduct : IProduct
             {
                 Product ChangingStatusOfProductIsdeleted = _DS._Products[getIdOfProduct].GetValueOrDefault();
                 ChangingStatusOfProductIsdeleted.IsDeleted = true;
+                ChangingStatusOfProductIsdeleted.ProductImagePath = null;
                 _DS._Products[getIdOfProduct] = ChangingStatusOfProductIsdeleted;
             }
         }
@@ -71,6 +72,13 @@ internal class DalProduct : IProduct
     public Product GetById(int id)
     {
         Product? ProductById = _DS._Products.FirstOrDefault(x => x?.ID == id && x?.IsDeleted == false);
+
+        return ProductById ?? throw new DoesntExistException("the product is not found");
+    }
+
+    public Product GetByName(string name)
+    {
+        Product? ProductById = _DS._Products.FirstOrDefault(x => x?.NameOfBook==name && x?.IsDeleted == false);
 
         return ProductById ?? throw new DoesntExistException("the product is not found");
     }
@@ -91,7 +99,7 @@ internal class DalProduct : IProduct
 
     //private bool IdIsFound(int myID)
     //{
-    //    int indexOfSameId = _DS._Products.FindIndex(x => x?.ID == myID);
+    //    int indexOfSameId = _DS._Products.FindIndex(x => x?.OrderID == myID);
 
     //    if (indexOfSameId == -1)
     //        return true;

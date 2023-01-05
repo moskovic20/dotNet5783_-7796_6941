@@ -10,20 +10,19 @@
         FontFamily="Bahnschrift SemiLight">
 
     <Window.Resources>
-
-
-
         <local:CategoryToHebrew x:Key="categoryToHebrew"/>
 
         <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type GroupItem}">
-                        <Expander x:Name="expander" IsExpanded="True"
+                        <Expander x:Name="expander" IsExpanded="False"
                                   Background="Transparent"
                                   Foreground="#2b331f">
                             <Expander.Header>
-                                <TextBlock Text="{Binding Name}"/>
+                                <TextBlock Text="{Binding Name,Converter={StaticResource categoryToHebrew}}"
+                                               FontSize="14" FontWeight="Bold" Foreground="#FF009BA6" HorizontalAlignment="Right">
+                                </TextBlock>
                             </Expander.Header>
                             <ItemsPresenter/>
                         </Expander>
@@ -35,34 +34,54 @@
 
 
     <Grid Name="MainGrid" ShowGridLines="False">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="167*"/>
-            <ColumnDefinition Width="633*"/>
-        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="27*"/>
-            <RowDefinition Height="190*"/>
+            <RowDefinition Height="79*"/>
+            <RowDefinition Height="355*"/>
         </Grid.RowDefinitions>
 
-        <Rectangle HorizontalAlignment="Left" Height="54" VerticalAlignment="Center" Width="800" Fill="#FFF6F6F6" Grid.ColumnSpan="2"/>
-        <StackPanel Orientation="Horizontal" Margin="107,-5,10,5" Grid.Column="1">
-            <ComboBox Name="StatusComboBox" Margin="10"  Width="100"
-                          materialDesign:HintAssist.Hint="()"
-                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-            <ComboBox Name="PriorityComboBox" 
-                          Margin="10"  Width="100"
-                          materialDesign:HintAssist.Hint="(מחיר)"
-                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-            <ComboBox Name="WeightComboBox"
-                          Margin="10"  Width="100"
-                          materialDesign:HintAssist.Hint="(קטגוריה)"
-                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" />
-            <Label Height="38" Content="סנן לפי"
-                   FontSize="25" Foreground="#FF000F10"
-                   Margin="20,0,20,0" FontWeight="Bold"
-                   FontFamily="Cascadia Code SemiBold" />
+        <Rectangle HorizontalAlignment="Center" Height="84" VerticalAlignment="Top" Width="800" Fill="#FFF6F6F6" Margin="0,-5,0,0"/>
 
-        </StackPanel>
+        <Label
+            HorizontalAlignment="Left"
+            Margin="692,0,0,0"
+            VerticalAlignment="Center" Height="44"
+            RenderTransformOrigin="0.5,0.5" FontSize="16" Content=":חפש ספר" Foreground="#DD000000" FontStyle="Italic" Width="79">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-9.782"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-4.828"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+
+        <TextBox x:Name="nameOrID"
+                 
+            materialDesign:HintAssist.Hint="מספר/שם הספר" 
+                 Style="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
+                 materialDesign:HintAssist.Foreground="Black"
+                                  materialDesign:TextFieldAssist.UnderlineBrush="Black"
+                 MaxLength="9"
+                 HorizontalAlignment="Left"
+                 Margin="477,22,0,0"
+                 Width="208" Height="30" VerticalAlignment="Top"
+                 RenderTransformOrigin="0.837,0.756"
+                 
+                 />
+
+        <Button x:Name="search"
+                Click="search_Click"
+                HorizontalAlignment="Left"
+                Margin="409,22,0,0"
+                Width="50" Height="28"
+                VerticalAlignment="Top">
+            <materialDesign:PackIcon x:Name="iconSearch" Kind="Search" 
+                                         Height="14" Width="20" 
+                                         OpacityMask="Black" />
+        </Button>
+
 
         <DataGrid x:Name="Products_DateGrid"
                   CanUserAddRows="False"
@@ -79,11 +98,10 @@
                   Foreground="Black"
                   IsReadOnly="True"
                   ItemsSource="{Binding}" 
-                  HorizontalAlignment="Left"
-                  Margin="6,49,0,61"
-                  Width="627"
-                  Background="{x:Null}"
- Grid.RowSpan="2" Grid.Column="1">
+                  HorizontalAlignment="Center"
+                  Margin="0,64,0,33"
+                  Width="748"
+                  Background="{x:Null}" Grid.RowSpan="2">
 
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
@@ -105,7 +123,7 @@
                                     Height="30" Width="30"
                                     HorizontalAlignment="Center"
                                     Click="deleteProductButton_Click">
-                                 <materialDesign:PackIcon Kind="Trash"/>
+                                <materialDesign:PackIcon Kind="Trash"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -125,6 +143,9 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
+                <DataGridTextColumn Header="כמות במלאי"    
+                                    Binding="{Binding InStock }"
+                                    MinWidth="100"/>
                 <DataGridTextColumn Header="מחיר"    
                                     Binding="{Binding Price}"
                                     MinWidth="100"/>
@@ -142,40 +163,25 @@
         <Button x:Name="AddTheStation"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
                 BorderBrush="#007E8C7F"
-                Width="50" Height="50"
+                Width="45" Height="45"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
                 Click="addButton_Click"
-                Background="#FF009BA6" Margin="542,290,0,0" Grid.Row="1" Grid.Column="1" >
+                Background="#FF009BA6" Margin="22,14,0,0" >
             <materialDesign:PackIcon Kind="BookAdd" 
-                                         Height="30" Width="30" 
+                                         Height="25" Width="25" 
                                          OpacityMask="Black" />
 
 
 
         </Button>
-        <StackPanel Grid.Row="1">
 
-            <Button Name="GroupBySenderButton"
-                        Style="{StaticResource MaterialDesignOutlinedDarkButton}"
-                        Content="Group By Sender" 
-                        Margin="10,40,10,0" 
-                    BorderBrush="#FF009BA6" Foreground="#FF009BA6"
+        <Button x:Name="GroupByCategory"
+            Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+            Content="קבץ לפי קטגוריה" 
+            BorderBrush="#FF009BA6" Foreground="#FF009BA6" Margin="87,22,0,0"
+            Click="GroupByCategory_Click" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="138"
                        />
-            <Button Name="GroupByTargetButton"
-                        Style="{StaticResource MaterialDesignOutlinedDarkButton}"
-                        Content="Group By Target" 
-                        Margin="10,20,10,0" 
-                    BorderBrush="#FF009BA6" Foreground="#FF009BA6"
-                        />
-            <Button Name="RemoveGroup" Height="32"
-                        Style="{StaticResource MaterialDesignOutlinedDarkButton}"
-                        Background="White"
-                        Content="Remove Groups" 
-                        Margin="10,20,10,0" 
-                        BorderBrush="#FF009BA6" Foreground="#FF009BA6" />
-        </StackPanel>
-
 
     </Grid>
 

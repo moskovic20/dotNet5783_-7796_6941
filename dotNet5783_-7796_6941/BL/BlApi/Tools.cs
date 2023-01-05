@@ -76,7 +76,7 @@ public static class Tools
         //if (order == null)
         //    throw new DoesntExistException("missing OrderID");
 
-        listforAmount = dal.OrderItem.GetListByOrderID(order.ID);
+        listforAmount = dal.OrderItem.GetListByOrderID(order.OrderID);
         amountOfItems = listforAmount.Sum(o => (o?.AmountOfItems != null) ? 1 : 0);
 
         return amountOfItems;
@@ -88,7 +88,7 @@ public static class Tools
     {
         double Price = 0;
 
-        IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.ID); //list of OrderItem in this current order from dal by his OrderID 
+        IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.OrderID); //list of OrderItem in this current order from dal by his OrderID 
         Price = listforAmount.Sum(o => (o?.AmountOfItems ?? 0) * (o?.PriceOfOneItem ?? 0));
         return Price;
     }

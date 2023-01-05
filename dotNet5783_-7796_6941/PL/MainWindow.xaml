@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
@@ -13,7 +14,13 @@
             <Button x:Name="conectUs"  Style="{StaticResource MyButtonStyle_1}"  Content=" צור קשר " Width="60" Click="conectUs_Click" />
             <Button x:Name="Cart"  Style="{StaticResource MyButtonStyle_1}"  Content=" עגלת קניות " Click="Cart_Click"/>
             <Button x:Name="trakingOrder"  Style="{StaticResource MyButtonStyle_1}" Content=" מעקב הזמנה" Click="trakingOrder_Click" />
-            </WrapPanel >
+            <Button x:Name="ListPrefered" Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" BorderBrush="#007E8C7F"
+                                    Width="35" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Click="seePrefered_Click" Background="#FF009BA6">
+                <materialDesign:PackIcon Kind="Heart"
+                                         Height="20" Width="20" 
+                                         OpacityMask="Black" HorizontalAlignment="Center" />
+            </Button>
+        </WrapPanel >
         <StackPanel Orientation="Horizontal">
             <ComboBox
                 x:Name="cmbCategorySelector" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Width="400" Height="32" FontSize="22">
@@ -36,13 +43,20 @@
                     <DataTemplate>
                         <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                             <Image Source="{Binding Image}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
-                            <TextBlock Text="{Binding NameOfBook}"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                            <TextBlock Text="{Binding NameOfBook}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Foreground="#FF009BA6"/>
                             <TextBlock Text="{Binding Price}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
-                            <Button x:Name="addToCart" Content="הוסף לסל" MouseDoubleClick="addToCard_Click"/>
+                            <Button x:Name="addToCart"  Content="הוסף לסל" MouseDoubleClick="addToCard_Click" />
+                            <Button x:Name="Prefered" Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" BorderBrush="#007E8C7F"
+                                    Width="35" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Click="addToLoved_Click" Background="#FF009BA6">
+                                <materialDesign:PackIcon Kind="Heart"
+                                         Height="20" Width="20" 
+                                         OpacityMask="Black" HorizontalAlignment="Center" />
+                            </Button>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+           
         </Grid>
 
     </StackPanel>

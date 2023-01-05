@@ -8,6 +8,8 @@ using System.Net.Mail;
 using System.Net;
 using System.Printing;
 using Do;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 
 namespace PL.PO
 {
@@ -286,27 +288,44 @@ namespace PL.PO
 
         public static BO.Cart CastingFromPoToBoCart(this PO.Cart cart)
         {
-            var list = from myOI in cart.Items
-                       select new BO.OrderItem()
-                       {
-                           OrderID = myOI.OrderID,
-                           ProductID = myOI.ProductID,
-                           NameOfBook = myOI.NameOfBook,
-                           PriceOfOneItem = myOI.PriceOfOneItem,
-                           AmountOfItems = myOI.AmountOfItems,
-                           TotalPrice = myOI.TotalPrice
-                       };
+            BO.Cart newCart;
 
-            BO.Cart newCart = new BO.Cart()
+            if (cart.Items !=null)
             {
-                CustomerName = cart.CustomerName,
-                CustomerEmail = cart.CustomerEmail,
-                CustomerAddress = cart.CustomerAddress,
-                Items= list.ToList(),
-                TotalPrice= cart.TotalPrice
+                var list = from myOI in cart.Items
+                            select new BO.OrderItem()
+                            {
+                                OrderID = myOI.OrderID,
+                                ProductID = myOI.ProductID,
+                                NameOfBook = myOI.NameOfBook,
+                                PriceOfOneItem = myOI.PriceOfOneItem,
+                                AmountOfItems = myOI.AmountOfItems,
+                                TotalPrice = myOI.TotalPrice
+                            };
+                newCart = new BO.Cart()
+                {
+                    CustomerName = cart.CustomerName,
+                    CustomerEmail = cart.CustomerEmail,
+                    CustomerAddress = cart.CustomerAddress,
+                    Items = list.ToList(),
+                    TotalPrice = cart.TotalPrice
 
-            };
-           
+                };
+            }
+            else {
+                newCart = new BO.Cart()
+                {
+                    CustomerName = cart.CustomerName,
+                    CustomerEmail = cart.CustomerEmail,
+                    CustomerAddress = cart.CustomerAddress,
+
+                    TotalPrice = cart.TotalPrice
+
+                };
+            }
+
+
+
             return newCart;
         }
 

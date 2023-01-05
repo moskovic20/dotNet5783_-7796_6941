@@ -18,6 +18,13 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Net.Mail;
 using PL.PlEntity.Order;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Collections.Generic;
+using PL.Catalog;
+using MaterialDesignThemes.Wpf;
+using System.Windows.Documents;
+
 
 namespace PL;
 
@@ -30,7 +37,10 @@ public partial class MainWindow : Window
     //private ObservableCollection<Product> products;
     //private Product pForShow;
     private ObservableCollection<Product> allBooksForShow;
-    private Cart myCart= new();
+
+    private ObservableCollection<Product> lovedBooks;
+
+    private PL.PO.Cart myCart;
     public MainWindow()
     {
         InitializeComponent();
@@ -48,10 +58,17 @@ public partial class MainWindow : Window
         //};
 
         allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.CopyPflToPoProduct()));
-
+        myCart = new PL.PO.Cart(
+                    //CustomerName = null,
+                    //CustomerEmail = null,
+                    //CustomerAddress = null,
+                    //Items = new List<PO.OrderItem>(),
+                    //TotalPrice = null
+            );
         //this.DataContext = pForShow;//?
         this.Catalog.ItemsSource = allBooksForShow;
-
+        // Catalog.FontStyle = Heebo;
+        lovedBooks = new();
     }
 
     // for this code image needs to be a project resource
@@ -83,6 +100,7 @@ public partial class MainWindow : Window
     private void addToCard_Click(object sender, RoutedEventArgs e)
     {
         PO.Product p= (PO.Product)Catalog.SelectedItem;
+        //.ProductItem pI= (BO.ProductItem)Catalog.SelectedItem; //המסך יודע להמיר משו שלא דיפנדנסי?
         try
         {
             // bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID);//הוספת המוצר לשכבה מתחת
@@ -95,5 +113,21 @@ public partial class MainWindow : Window
         }
 
     }
-    
+
+    /// <summary>
+    /// שמירת ספרים כספרים אהובים
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void addToLoved_Click(object sender, RoutedEventArgs e)
+    {
+        PO.Product p = (PO.Product)Catalog.SelectedItem;
+        lovedBooks.Add(p);
+    }
+
+    private void seePrefered_Click(object sender, RoutedEventArgs e)
+    {
+        new FavouritesForC_Window(bl, lovedBooks);
+
+    }
 }

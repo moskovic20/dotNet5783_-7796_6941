@@ -18,6 +18,13 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Net.Mail;
 using PL.PlEntity.Order;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Collections.Generic;
+using PL.Catalog;
+using MaterialDesignThemes.Wpf;
+using System.Windows.Documents;
+
 
 namespace PL;
 
@@ -30,14 +37,27 @@ public partial class MainWindow : Window
     //private ObservableCollection<Product> products;
     //private Product pForShow;
     private ObservableCollection<Product> allBooksForShow;
+
+    private ObservableCollection<Product> lovedBooks;
+
+    private PL.PO.Cart myCart;
     public MainWindow()
     {
         InitializeComponent();
         this.bl = BlApi.Factory.GetBl();
 
         allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.CopyPflToPoProduct()));
-        this.TvBox.ItemsSource = allBooksForShow;
-
+        myCart = new PL.PO.Cart(
+                    //CustomerName = null,
+                    //CustomerEmail = null,
+                    //CustomerAddress = null,
+                    //Items = new List<PO.OrderItem>(),
+                    //TotalPrice = null
+            );
+        //this.DataContext = pForShow;//?
+        this.Catalog.ItemsSource = allBooksForShow;
+        // Catalog.FontStyle = Heebo;
+        lovedBooks = new();
     }
 
     // for this code image needs to be a project resource
@@ -64,5 +84,44 @@ public partial class MainWindow : Window
     private void Admin_Click(object sender, RoutedEventArgs e)
     {
         new AdminPassword(bl).Show();
+    }
+
+    private void addToCard_Click(object sender, RoutedEventArgs e)
+    {
+        PO.Product p= (PO.Product)Catalog.SelectedItem;
+        //.ProductItem pI= (BO.ProductItem)Catalog.SelectedItem; //המסך יודע להמיר משו שלא דיפנדנסי?
+        ToCart(p.ID);
+
+    }
+    private void ToCart(int pID)
+    {
+        try
+        {
+            // bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID);//הוספת המוצר לשכבה מתחת
+            myCart = bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), pID).CastingFromBoToPoCart();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+    }
+
+    /// <summary>
+    /// שמירת ספרים כספרים אהובים
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void addToLoved_Click(object sender, RoutedEventArgs e)
+    {
+        PO.Product p = (PO.Product)Catalog.SelectedItem;
+        lovedBooks.Add(p);
+    }
+
+    private void seePrefered_Click(object sender, RoutedEventArgs e) //window for marked as loved books, with optian to add to cart
+    {
+        Action<int> CartAction = productId => ToCart(productId); 
+        new FavouritesForC_Window(bl, lovedBooks, CartAction).ShowDialog();
+      
     }
 }

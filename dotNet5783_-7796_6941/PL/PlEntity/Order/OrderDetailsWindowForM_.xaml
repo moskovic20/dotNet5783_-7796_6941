@@ -199,7 +199,7 @@
                                     MinWidth="5"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="343" Margin="97,62,0,0" Stroke="#FF673AB7" VerticalAlignment="Top" Width="7"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="343" Margin="97,60,0,0" Stroke="#FF673AB7" VerticalAlignment="Top" Width="7"/>
 
 
     </Grid>

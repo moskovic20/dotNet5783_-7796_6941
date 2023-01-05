@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using System.Collections.ObjectModel;
-using BO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -8,7 +7,6 @@ using System;
 using System.Net.Mail;
 using System.Net;
 using System.Printing;
-using Do;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 
@@ -234,7 +232,33 @@ namespace PL.PO
 
         #endregion
 
-       
+        #region convert fron BO.order to PO.order
+        internal static PO.Order CopyBoOrderToPoOrder(this BO.Order boOrder)
+        {
+            PO.Order myNewOrder = new()
+            {
+                ID = boOrder.ID,
+                CustomerName= boOrder.CustomerName,
+                CustomerEmail =boOrder.CustomerEmail,
+                ShippingAddress=boOrder.ShippingAddress,
+                DateOrder=boOrder.DateOrder,
+                Status=(PO.OrderStatus)boOrder.Status,
+                PaymentDate=boOrder.PaymentDate,
+                ShippingDate=boOrder.ShippingDate,
+                DeliveryDate=boOrder.DeliveryDate,
+                TotalPrice=boOrder.TotalPrice
+            };
+
+            var list = from myOI in boOrder.Items
+                       select new OrderItem()
+                       {
+                           OrderID=myOI.OrderID,
+                           ProductID=myOI.ProductID,
+                           NameOfBook=myOI.NameOfBook,
+                           PriceOfOneItem=myOI.PriceOfOneItem,
+                           AmountOfItems=myOI.AmountOfItems,
+                           TotalPrice=myOI.TotalPrice
+                       };
 
         public static List<ProductForList> GetAllProductInPO()
         {
@@ -298,5 +322,82 @@ namespace PL.PO
         }
         #endregion
 
+        public static BO.Cart CastingFromPoToBoCart(this PO.Cart cart)
+        {
+            BO.Cart newCart;
+
+            if (cart.Items !=null)
+            {
+                var list = from myOI in cart.Items
+                            select new BO.OrderItem()
+                            {
+                                OrderID = myOI.OrderID,
+                                ProductID = myOI.ProductID,
+                                NameOfBook = myOI.NameOfBook,
+                                PriceOfOneItem = myOI.PriceOfOneItem,
+                                AmountOfItems = myOI.AmountOfItems,
+                                TotalPrice = myOI.TotalPrice
+                            };
+                newCart = new BO.Cart()
+                {
+                    CustomerName = cart.CustomerName,
+                    CustomerEmail = cart.CustomerEmail,
+                    CustomerAddress = cart.CustomerAddress,
+                    Items = list.ToList(),
+                    TotalPrice = cart.TotalPrice
+
+                };
+            }
+            else {
+                newCart = new BO.Cart()
+                {
+                    CustomerName = cart.CustomerName,
+                    CustomerEmail = cart.CustomerEmail,
+                    CustomerAddress = cart.CustomerAddress,
+
+                    TotalPrice = cart.TotalPrice
+
+                };
+            }
+
+
+
+            return newCart;
+        }
+
+        public static PO.Cart CastingFromBoToPoCart(this BO.Cart cart)
+        {
+            var list = from myOI in cart.Items
+                       select new PO.OrderItem()
+                       {
+                           OrderID = myOI.OrderID,
+                           ProductID = myOI.ProductID,
+                           NameOfBook = myOI.NameOfBook,
+                           PriceOfOneItem = myOI.PriceOfOneItem,
+                           AmountOfItems = myOI.AmountOfItems,
+                           TotalPrice = myOI.TotalPrice
+                       };
+
+            PO.Cart newCart = new PO.Cart()
+            {
+                CustomerName = cart.CustomerName,
+                CustomerEmail = cart.CustomerEmail,
+                CustomerAddress = cart.CustomerAddress,
+                Items = list.ToList(),
+                TotalPrice = cart.TotalPrice
+
+            };
+
+            return newCart;
+        }
     }
+
+    //public static int caseOrderTraking(DateTime? shipping,DateTime? delivery)
+    //{
+    //    if (shipping == null && delivery == null)
+    //        return 1;
+    //    if (shipping != null && delivery == null)
+    //        return 2;
+    //    return 3;
+    //}
 }

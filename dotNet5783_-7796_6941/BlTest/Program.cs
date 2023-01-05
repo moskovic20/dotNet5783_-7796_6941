@@ -216,7 +216,7 @@ namespace BLTest
                         case 'a':
                             Console.Write("Please insert a product orderID: ");
                             if (!(int.TryParse(Console.ReadLine(), out integer) && integer >= 100000)) throw new InvalidDataException();
-                            Console.WriteLine(bl.Cart.AddProductToCart(demoCart, integer));
+                            Console.WriteLine(bl.BoCart.AddProductToCart(demoCart, integer));
                             break;
                         #endregion
 
@@ -227,14 +227,14 @@ namespace BLTest
                             if (!(int.TryParse(Console.ReadLine(), out productID) && integer >= 100000)) throw new InvalidDataException();
                             Console.Write("Please insert a new amount: ");
                             if (!(int.TryParse(Console.ReadLine(), out amount) && integer >= 0)) throw new InvalidDataException();
-                            Console.WriteLine(bl.Cart.UpdateProductAmountInCart(demoCart, productID, amount));
+                            Console.WriteLine(bl.BoCart.UpdateProductAmountInCart(demoCart, productID, amount));
                             break;
                         #endregion
 
                         #region ביצוע ההזמנה של סל הקניות
                         case 'c':
                             Console.WriteLine("Please enter customer's name, Email and address (separeated with the Enter key)");
-                            Console.WriteLine("Your order number is: " + bl.Cart.MakeOrder(demoCart));
+                            Console.WriteLine("Your order number is: " + bl.BoCart.MakeOrder(demoCart));
                             break;
                         #endregion
 

@@ -101,17 +101,21 @@ public partial class MainWindow : Window
     {
         PO.Product p= (PO.Product)Catalog.SelectedItem;
         //.ProductItem pI= (BO.ProductItem)Catalog.SelectedItem; //המסך יודע להמיר משו שלא דיפנדנסי?
+        ToCart(p.ID);
+
+    }
+    private void ToCart(int pID)
+    {
         try
         {
             // bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID);//הוספת המוצר לשכבה מתחת
-            myCart = bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart();
+            myCart = bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), pID).CastingFromBoToPoCart();
         }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                 MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
         }
-
     }
 
     /// <summary>
@@ -125,9 +129,10 @@ public partial class MainWindow : Window
         lovedBooks.Add(p);
     }
 
-    private void seePrefered_Click(object sender, RoutedEventArgs e)
+    private void seePrefered_Click(object sender, RoutedEventArgs e) //window for marked as loved books, with optian to add to cart
     {
-        new FavouritesForC_Window(bl, lovedBooks);
-
+        Action<int> CartAction = productId => ToCart(productId); 
+        new FavouritesForC_Window(bl, lovedBooks, CartAction).ShowDialog();
+      
     }
 }

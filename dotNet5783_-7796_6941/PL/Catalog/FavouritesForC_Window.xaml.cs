@@ -24,11 +24,13 @@ namespace PL.Catalog
     {
         private IBl bl;
         private ObservableCollection<Product> Favourites;
-        public FavouritesForC_Window(IBl bl, ObservableCollection<Product> favourites)
+        private Action<int> addToCAction;
+        public FavouritesForC_Window(IBl bl, ObservableCollection<Product> favourites, Action<int> CartAction)
         {
             InitializeComponent();
             this.bl = bl;
-            this.Favourites = favourites; 
+            this.Favourites = favourites;
+            this.addToCAction= CartAction;
         }
     }
 }

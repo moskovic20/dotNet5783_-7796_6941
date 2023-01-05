@@ -89,7 +89,7 @@ public partial class MainWindow : Window
 
     private void trakingOrder_Click(object sender, RoutedEventArgs e)
     {
-        
+        new orderTrakingForC_Window(bl).Show();
     }
 
     private void Admin_Click(object sender, RoutedEventArgs e)

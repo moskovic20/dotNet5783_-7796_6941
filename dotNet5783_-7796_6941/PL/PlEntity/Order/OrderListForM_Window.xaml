@@ -150,7 +150,7 @@
                                     Height="30" Width="30"
                                     Background="#FFF6F6F6"
                                     HorizontalAlignment="Center"
-                                    Click="UpdateShip_Click">
+                                    >
                                 <materialDesign:PackIcon Kind="TruckShipping" Foreground="Gray"/>
                             </Button>
                         </DataTemplate>

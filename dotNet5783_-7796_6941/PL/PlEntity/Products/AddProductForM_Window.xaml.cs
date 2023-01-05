@@ -54,20 +54,27 @@ public partial class AddProductForM_Window : Window
                 throw new Exception("הכנס את קטגוריית הספר");
 
 
-                if(!string.IsNullOrWhiteSpace(productToAdd.productImagePath))//העברת התמונה לתיקייה הרצויה לפי הקטגוריה וכן שינוי שם התמונה לשם הספר
-                {
-                   
-                    string sorce = productToAdd.productImagePath;
-                    string suffix = sorce.Split(@".").Last();
-                    string target = Environment.CurrentDirectory + "\\images\\productImages\\"+ productToAdd.Category + "\\"+productToAdd.NameOfBook+"."+suffix;
-                    File.Copy(sorce,target);
-                    productToAdd.productImagePath = target;
-                    
-                }
+            if (!string.IsNullOrWhiteSpace(productToAdd.productImagePath))//העברת התמונה לתיקייה הרצויה לפי הקטגוריה וכן שינוי שם התמונה לשם הספר
+            {
 
-                int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
-                action(newID);
-                MessageBox.Show("!הספר נוסף בהצלחה");
+                string sorce = productToAdd.productImagePath;
+                string suffix = sorce.Split(@".").Last();
+                string target = Environment.CurrentDirectory + "\\images\\productImages\\" + productToAdd.Category + "\\" + productToAdd.NameOfBook + "." + suffix;
+                File.Copy(sorce, target);
+                productToAdd.productImagePath = target;
+
+            }
+            else //תמונת ברירת מחדל
+            { 
+                string sorce = Environment.CurrentDirectory+ "\\images\\Default\\Default.jpeg";
+                string target = Environment.CurrentDirectory + "\\images\\productImages\\" + productToAdd.Category + "\\" + productToAdd.NameOfBook + ".jpeg";
+                File.Copy(sorce, target);
+                productToAdd.ProductImagePath = target;
+            }
+
+            int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
+            action(newID);
+            MessageBox.Show("!הספר נוסף בהצלחה");
 
             productImage.Source = null;
             productToAdd = new PO.Product();
@@ -126,16 +133,16 @@ public partial class AddProductForM_Window : Window
     private void Button_Click(object sender, RoutedEventArgs e)
     {
 
-            OpenFileDialog op = new OpenFileDialog();
-            op.Title = "Select a picture";
-            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-              "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-              "Portable Network Graphic (*.png)|*.png";
-            if (op.ShowDialog() == true)
-            {
-                productToAdd.ProductImagePath = op.FileName;
-                productImage.Source = productToAdd.Image; 
-            }
+        OpenFileDialog op = new OpenFileDialog();
+        op.Title = "Select a picture";
+        op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+          "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+          "Portable Network Graphic (*.png)|*.png";
+        if (op.ShowDialog() == true)
+        {
+            productToAdd.ProductImagePath = op.FileName;
+            productImage.Source = productToAdd.Image;
+        }
 
         //OpenFileDialog openFileDialog = new OpenFileDialog();
         ////openFileDialog.Filter

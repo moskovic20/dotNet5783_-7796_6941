@@ -83,7 +83,8 @@
                   HorizontalAlignment="Left"
                   Margin="109,10,0,35"
                   Width="973"
-                  Background="{x:Null}" Grid.Row="1">
+                  Background="{x:Null}" Grid.Row="1
+                  " MouseDoubleClick="Orders_DateGrid_MouseDoubleClick">
 
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">

@@ -68,7 +68,32 @@ public partial class OrderListForM_Window : Window
                    MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
             }
         }
-        #endregion
+    #endregion
+
+
+    private void UpdateShip_Click(object sender, RoutedEventArgs e)
+    {
+        PO.OrderForList ordToUp = (PO.OrderForList)Orders_DateGrid.SelectedItem;
+        try
+        {
+            var delete = MessageBox.Show("האם אתה בטוח שאתה רוצה לעדכן שליחת הזמנה זו?", "עדכון סטטוס", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            switch (delete)
+            {
+                case MessageBoxResult.Yes:
+                    bl.BoOrder.UpdateOrderShipping(ordToUp.OrderID);
+                    MessageBox.Show("!ההזמנה יצאה לדרך");
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+        ordToUp.Status = (PO.OrderStatus)bl.BoOrder.GetOrdertDetails(ordToUp.OrderID).Status;
+    }
 
     private void UpdateDelivary_Click(object sender, RoutedEventArgs e)
     {
@@ -154,6 +179,12 @@ public partial class OrderListForM_Window : Window
             MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
         }
+    }
+
+    private void Orders_DateGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+    {
+        PO.OrderForList or= (PO.OrderForList)Orders_DateGrid.SelectedItem;
+        new OrderDetailsWindowForM_(bl,or).Show();
     }
 }
 

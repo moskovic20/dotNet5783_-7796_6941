@@ -42,7 +42,6 @@ internal class OrderItem
         }
     }
 
-
     private string? _NameOfBook;
     public string? NameOfBook
     {
@@ -70,7 +69,6 @@ internal class OrderItem
             }
         }
     }
-
 
     private int _AmountOfItems;
     public int AmountOfItems

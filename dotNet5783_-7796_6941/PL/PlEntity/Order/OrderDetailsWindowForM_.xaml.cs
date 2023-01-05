@@ -17,12 +17,22 @@ using System.Windows.Shapes;
 namespace PL.PlEntity.Order;
 
 /// <summary>
-/// Interaction logic for OrderDetailsWindow.xaml
+/// Interaction logic for OrderDetailsWindowForM_.xaml
 /// </summary>
-public partial class OrderDetailsWindow : Window
+public partial class OrderDetailsWindowForM_ : Window
 {
-    public OrderDetailsWindow(IBl bl, OrderForList order)
+    IBl bl;
+    PO.Order orderToShow;
+    
+    public OrderDetailsWindowForM_(IBl bl, OrderForList order)
     {
         InitializeComponent();
+        this.bl = bl;
+        this.orderToShow = bl.BoOrder.GetOrdertDetails(order.OrderID).CopyBoOrderToPoOrder();
+        this.DataContext = orderToShow;
+        this.OrderItems_DateGrid.DataContext = orderToShow.Items;
+
+
     }
+
 }

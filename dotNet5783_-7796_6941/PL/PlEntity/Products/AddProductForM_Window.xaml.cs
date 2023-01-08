@@ -22,7 +22,18 @@ namespace PL.Products;
 public partial class AddProductForM_Window : Window
 {
     private IBl bl;
-    PO.Product productToAdd;
+
+
+    public PO.Product productToAdd
+    {
+        get { return (PO.Product)GetValue(productToAddProperty); }
+        set { SetValue(productToAddProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for productToAdd.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty productToAddProperty =
+        DependencyProperty.Register("productToAdd", typeof(PO.Product), typeof(AddProductForM_Window));
+
     Action<int> action;
 
 
@@ -33,7 +44,7 @@ public partial class AddProductForM_Window : Window
         this.action = action;
 
         productToAdd = new PO.Product();
-        this.DataContext = productToAdd;
+        
 
         this.AddP_categ_commbbox.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
     }
@@ -80,7 +91,7 @@ public partial class AddProductForM_Window : Window
 
             productImage.Source = null;
             productToAdd = new PO.Product();
-            this.DataContext = productToAdd;
+            
             AddP_categ_commbbox.SelectedItem = null;
 
         }
@@ -138,17 +149,20 @@ public partial class AddProductForM_Window : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-
-        OpenFileDialog op = new OpenFileDialog();
-        op.Title = "Select a picture";
-        op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
-          "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
-          "Portable Network Graphic (*.png)|*.png";
-        if (op.ShowDialog() == true)
-        {
-            productToAdd.ProductImagePath = op.FileName;
-            productImage.Source = productToAdd.Image;
-        }
+    //    using (OpenFileDialog op = new())
+    //    {
+    //        op.Title = "Select a picture";
+    //        op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+    //          "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+    //          "Portable Network Graphic (*.png)|*.png";
+    //        if (op.ShowDialog() == true)
+    //        {
+    //            productToAdd.ProductImagePath = op.FileName;
+    //            productImage.Source = productToAdd.Image;
+    //        }
+     }
+    //    ;
+      
 
         //OpenFileDialog openFileDialog = new OpenFileDialog();
         ////openFileDialog.Filter
@@ -159,7 +173,7 @@ public partial class AddProductForM_Window : Window
         //    productToAdd.ProductImagePath = openFileDialog.FileName;
         //}
 
-    }
+    
 
     private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
     {

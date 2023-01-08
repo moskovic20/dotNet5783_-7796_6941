@@ -14,12 +14,12 @@
             <Button x:Name="conectUs"  Style="{StaticResource MyButtonStyle_1}"  Content=" צור קשר " Width="60" Click="conectUs_Click" />
             <Button x:Name="Cart"  Style="{StaticResource MyButtonStyle_1}"  Content=" עגלת קניות " Click="Cart_Click"/>
             <Button x:Name="trakingOrder"  Style="{StaticResource MyButtonStyle_1}" Content=" מעקב הזמנה" Click="trakingOrder_Click" />
-            <Button x:Name="ListPrefered" Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" BorderBrush="#007E8C7F"
+            <!--Button x:Name="ListPrefered" Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" BorderBrush="#007E8C7F"
                                     Width="35" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Click="seePrefered_Click" Background="#FF009BA6">
                 <materialDesign:PackIcon Kind="Heart"
                                          Height="20" Width="20" 
                                          OpacityMask="Black" HorizontalAlignment="Center" />
-            </Button>
+            </Button-->
         </WrapPanel >
         <StackPanel Orientation="Horizontal">
             <ComboBox
@@ -33,30 +33,34 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <ListView x:Name="Catalog" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView x:Name="Catalog" HorizontalAlignment="Stretch" VerticalAlignment="Top" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      ItemsSource="{Binding}"  >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="5" HorizontalAlignment="Stretch"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <ListView.ItemTemplate >
+                    <DataTemplate >
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
                             <Image Source="{Binding Image}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
-                            <TextBlock Text="{Binding NameOfBook}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Foreground="#FF009BA6"/>
+                            <TextBlock x:Name="bookName" Text="{Binding NameOfBook}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Foreground="#FF009BA6"/>
                             <TextBlock Text="{Binding Price}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
-                            <Button x:Name="addToCart"  Content="הוסף לסל" MouseDoubleClick="addToCard_Click" />
-                            <Button x:Name="Prefered" Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" BorderBrush="#007E8C7F"
-                                    Width="35" Height="35" HorizontalAlignment="Left" VerticalAlignment="Top" Click="addToLoved_Click" Background="#FF009BA6">
-                                <materialDesign:PackIcon Kind="Heart"
+                            <Button x:Name="addToCart"  Click="addToCard_Click" Content="הוסף לסל" />
+                            <!--Button x:Name="Prefered" Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" BorderBrush="#007E8C7F"
+                                    Width="35" Height="35" HorizontalAlignment="Left"  VerticalAlignment="Top" Click="addToLoved_Click" Background="#FF009BA6">
+                                <materialDesign:PackIcon Kind="HeartOutline"
                                          Height="20" Width="20" 
                                          OpacityMask="Black" HorizontalAlignment="Center" />
-                            </Button>
+                            </Button-->
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+   
             </ListView>
-           
+
+            
+            
         </Grid>
 
     </StackPanel>

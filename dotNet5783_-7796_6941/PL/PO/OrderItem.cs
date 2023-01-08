@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace PL.PO;
 
-internal class OrderItem
+public class OrderItem : MainPo
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     private int _OrderID;
     public int OrderID
@@ -21,10 +20,7 @@ internal class OrderItem
         set
         {
             _OrderID = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("OrderID"));
-            }
+            OnPropertyChanged("OrderID");
         }
     }
 
@@ -35,10 +31,7 @@ internal class OrderItem
         set
         {
             _ProductID = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("ProductID"));
-            }
+            OnPropertyChanged("ProductID");
         }
     }
 
@@ -49,10 +42,7 @@ internal class OrderItem
         set
         {
             _NameOfBook = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("ProductID"));
-            }
+            OnPropertyChanged("NameOfBook");
         }
     }
 
@@ -63,10 +53,7 @@ internal class OrderItem
         set
         {
             _PriceOfOneItem = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("PriceOfOneItem"));
-            }
+            OnPropertyChanged("PriceOfOneItem");
         }
     }
 
@@ -77,10 +64,7 @@ internal class OrderItem
         set
         {
             _AmountOfItems = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("AmountOfItems"));
-            }
+            OnPropertyChanged("AmountOfItems");
         }
     }
 
@@ -91,10 +75,7 @@ internal class OrderItem
         set
         {
             _TotalPrice = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("TotalPrice"));
-            }
+            OnPropertyChanged("TotalPrice");
         }
     }
 }

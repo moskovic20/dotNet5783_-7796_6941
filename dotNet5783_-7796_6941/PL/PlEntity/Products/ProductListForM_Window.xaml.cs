@@ -114,7 +114,7 @@ public partial class ProductListForM_Window : Window
             switch (delete)
             {
                 case MessageBoxResult.Yes:
-                    //File.Delete(bl.BoProduct.GetProductDetails_forM(pToD.ID).ProductImagePath!);
+                    //File.Delete(bl.BoProduct.GetProductDetails_forM(pToD.OrderID).ProductImagePath!);
                     bl.BoProduct.DeleteProductByID_forM(pToD.ID);
                     ProductForList temp=allBooks.First(x=>x.ID==pToD.ID);
                     allBooks.Remove(temp);

@@ -10,21 +10,17 @@ using System.Collections.ObjectModel;
 
 namespace PL.PO;
 
-internal class Cart
+internal class Cart : MainPo
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
-
+    
     private string? _CustomerName;
     public string? CustomerName
     {
         get=> _CustomerName;
         set
         {
-            _CustomerName = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged!(this, new PropertyChangedEventArgs("CustomerName"));
-            }
+            _CustomerName = value;     
+             OnPropertyChanged("CustomerName");
         }
     }
 
@@ -36,10 +32,9 @@ internal class Cart
         set
         {
             _CustomerEmail = value;
-            if(PropertyChanged != null)
-            {
-                PropertyChanged!(this, new PropertyChangedEventArgs("CustomerEmail"));
-            }
+
+            OnPropertyChanged("CustomerEmail");
+            
         }
     }
 
@@ -50,28 +45,23 @@ internal class Cart
         set
         {
             _CustomerAddress = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged!(this, new PropertyChangedEventArgs("CustomerAddress"));
-            }
+            OnPropertyChanged("CustomerAddress");
         }
     }
 
-    
-    public List<OrderItem>? Items { get; set; }
-    //public ObservableCollection<OrderItem>? Items
-    //{
-    //    get
-    //    { return Items; }
-    //    set
-    //    {
-    //        _Items = value;
-    //        if (PropertyChanged != null)
-    //        {
-    //            PropertyChanged(this, new PropertyChangedEventArgs("Items"));
-    //        }
-    //    }
-    //}
+
+    private ObservableCollection<OrderItem>? _Items;
+    public ObservableCollection<OrderItem>? Items
+    {
+        get
+        {
+            return _Items; }
+        set
+        {
+            _Items = value;
+            OnPropertyChanged("Items");
+        }
+    }
 
 
     private double? _TotalPrice;
@@ -81,10 +71,8 @@ internal class Cart
         set
         {
             _TotalPrice = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("TotalPrice"));
-            }
+            OnPropertyChanged("TotalPrice");
+           
         }
     }
 }

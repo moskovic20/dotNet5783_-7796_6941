@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace PL.PO;
-public class ProductItem : INotifyPropertyChanged
+public class ProductItem : MainPo
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -21,9 +21,7 @@ public class ProductItem : INotifyPropertyChanged
         set
         {
             _ID = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("ID"));
-
+            OnPropertyChanged("ID");
         }
     }
 
@@ -37,9 +35,7 @@ public class ProductItem : INotifyPropertyChanged
         set
         {
             _NameOfBook = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("NameOfBook"));
-
+            OnPropertyChanged("NameOfBook");
         }
     }
 
@@ -53,9 +49,7 @@ public class ProductItem : INotifyPropertyChanged
         set
         {
             _Price = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("Price"));
-
+            OnPropertyChanged("Price");
         }
     }
 
@@ -69,9 +63,7 @@ public class ProductItem : INotifyPropertyChanged
         set
         {
             _Category = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("Category"));
-
+            OnPropertyChanged("Category");
         }
     }
 
@@ -85,13 +77,11 @@ public class ProductItem : INotifyPropertyChanged
         set
         {
             _Summary = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("Summary"));
-
+            OnPropertyChanged("Summary");
         }
     }
 
-    private int? _AmountInCart; //filing good like i should (-_-) ;P :} i hate nullableeeeee!
+    private int? _AmountInCart;
     public int? AmountInCart
     {
         get
@@ -101,9 +91,7 @@ public class ProductItem : INotifyPropertyChanged
         set
         {
             _AmountInCart = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("AmountInCart"));
-
+            OnPropertyChanged("AmountInCart");
         }
     }
 
@@ -117,9 +105,7 @@ public class ProductItem : INotifyPropertyChanged
         set
         {
             _InStock = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("InStock"));
-
+            OnPropertyChanged("InStock");
         }
     }
 
@@ -147,9 +133,7 @@ public class ProductItem : INotifyPropertyChanged
         set
         {
             image = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("Image"));
-
+            OnPropertyChanged("Image");
         }
     }
 

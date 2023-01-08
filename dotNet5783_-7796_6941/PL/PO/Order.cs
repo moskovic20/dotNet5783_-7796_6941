@@ -6,12 +6,11 @@ using System.Collections.ObjectModel;
 
 namespace PL.PO;
 
-internal class Order : INotifyPropertyChanged
+public class Order : MainPo
 {
-    public event PropertyChangedEventHandler? PropertyChanged;//יטפל לנו בשינויים למסך ומהמסך
-
+ 
     private int _ID;
-    public int ID
+    public int OrderID
     {
         get
         {
@@ -20,10 +19,7 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _ID = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("OrderID"));
-            }
+            OnPropertyChanged("OrderID");
         }
     }
 
@@ -37,10 +33,7 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _CustomerName = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("CustomerName"));
-            }
+            OnPropertyChanged("CustomerName");
         }
     }
 
@@ -54,10 +47,7 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _CustomerEmail = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("CustomerEmail"));
-            }
+            OnPropertyChanged("CustomerEmail");
         }
     }
 
@@ -71,10 +61,7 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _ShippingAddress = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("ShippingAddress"));
-            }
+            OnPropertyChanged("ShippingAddress");
         }
     }
 
@@ -88,10 +75,7 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _DateOrder = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("DateOrder"));
-            }
+            OnPropertyChanged("DateOrder");
         }
     }
 
@@ -105,10 +89,7 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _Status = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("Status"));
-            }
+            OnPropertyChanged("Status");
         }
     }
 
@@ -122,10 +103,7 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _PaymentDate = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("PaymentDate"));
-            }
+            OnPropertyChanged("PaymentDate");
         }
     }
 
@@ -139,10 +117,7 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _ShippingDate = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("ShippingDate"));
-            }
+            OnPropertyChanged("ShippingDate");
         }
     }
 
@@ -156,28 +131,24 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _DeliveryDate = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("DeliveryDate"));
-            }
+            OnPropertyChanged("DeliveryDate");
         }
     }
 
 
-    //private ObservableCollection<OrderItem>? _Items;
-    public ObservableCollection<OrderItem>? Items;
-    //{
-    //    get
-    //    { return Items; }
-    //    set
-    //    {
-    //        _Items = value;
-    //        if (PropertyChanged != null)
-    //        {
-    //            PropertyChanged(this, new PropertyChangedEventArgs("Items"));
-    //        }
-    //    }
-    //}
+    private ObservableCollection<OrderItem>? _Items;
+    public ObservableCollection<OrderItem>? Items
+    {
+        get
+        { 
+        return Items; 
+        }
+        set
+        {
+            _Items = value;
+            OnPropertyChanged("Items");
+        }
+    }
 
     private double _TotalPrice;
     public double TotalPrice
@@ -189,13 +160,9 @@ internal class Order : INotifyPropertyChanged
         set
         {
             _TotalPrice = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("TotalPrice"));
-            }
+            OnPropertyChanged("TotalPrice");
         }
     }
-
 
 }
 

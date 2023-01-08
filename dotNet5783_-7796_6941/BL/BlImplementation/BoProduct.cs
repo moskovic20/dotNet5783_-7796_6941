@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using Do;
 
 namespace BlImplementation;
 
@@ -21,6 +22,38 @@ internal class BoProduct : IProduct
 
         return products.CopyListTo<Do.Product?, BO.ProductForList>();
     }
+
+
+    /// <summary>
+    /// מחזירה רשימה של פרודוקטאייטם בשביל מסך תצוגה לקונה
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="BO.GetAllForList_Exception"></exception>
+    public IEnumerable<BO.ProductItem> GetAllProductItems_forC()
+    {
+        var products = dal.Product.GetAll((Do.Product? p) => { return p?.Price == null ? false : true; });
+
+        if (products.Count() == 0)
+            throw new BO.GetAllForList_Exception("There are no products");
+
+
+        var ProductItems = from pI in dal.Product.GetAll()
+                           let p = pI.GetValueOrDefault()
+                           select new BO.ProductItem()
+                           {
+                               ID = p.ID,
+                               NameOfBook = p.NameOfBook,
+                               Price = p.Price,
+                               Category = (BO.CATEGORY)p.Category,
+                               Summary = p.Summary,
+                               AmountInCart = null,
+                               InStock = (p.InStock > 0) ? true : false,
+                               ProductImagePath=p.ProductImagePath
+                           };
+        return ProductItems!;
+
+    }
+
 
     /// <summary>
     /// הפונקציה מחזירה את רשמת המוצרים בחנות ללקוח- רק מוצרים שהוזן עבורם מחיר

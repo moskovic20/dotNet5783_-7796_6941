@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:po="clr-namespace:PL.PO" d:DataContext="{d:DesignInstance Type=po:Product}"
+        xmlns:po="clr-namespace:PL.PO" 
+        DataContext="{Binding productToAdd, RelativeSource={ RelativeSource self}}"
         xmlns:local="clr-namespace:PL.IvalueConvertor"
         mc:Ignorable="d"
         Title="AddProductForM_Window" Height="520" Width="800">

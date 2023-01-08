@@ -29,3 +29,19 @@ public class DalConfigException : Exception
     public DalConfigException(string msg) : base(msg) { }
     public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }
+
+//LoadingException
+
+
+public class LoadingException : Exception
+{
+    string? filePath;
+    public LoadingException() : base() { }
+    public LoadingException(string message) : base(message) { }
+    public LoadingException(string message, Exception inner) : base(message, inner) { }
+
+    public LoadingException(string path, string messege, Exception inner) => filePath = path;
+    protected LoadingException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+}
+

@@ -3,9 +3,8 @@ using System.Runtime.CompilerServices;
 
 namespace PL.PO
 {
-    public class ProductForList : INotifyPropertyChanged
+    public class ProductForList : MainPo
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         private int _ID;
         public int ID
@@ -17,9 +16,7 @@ namespace PL.PO
             set
             {
                 _ID = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("OrderID"));
-
+                OnPropertyChanged("ID");
             }
         }
 
@@ -33,9 +30,7 @@ namespace PL.PO
             set
             {
                 _NameOfBook = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("NameOfBook"));
-
+                OnPropertyChanged("NameOfBook");
             }
         }
 
@@ -49,9 +44,7 @@ namespace PL.PO
             set
             {
                 _Price = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("Price"));
-
+                OnPropertyChanged("Price");
             }
         }
 
@@ -62,9 +55,7 @@ namespace PL.PO
             set
             {
                 _Category = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs(""));
-
+                OnPropertyChanged("Category");
             }
         }
 
@@ -75,8 +66,7 @@ namespace PL.PO
             set
             {
                 _InStock = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("InStock"));
+                OnPropertyChanged("InStock");
             }
         }
 

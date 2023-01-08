@@ -3,9 +3,9 @@
 namespace PL.PO;
 
 
-public class OrderForList : INotifyPropertyChanged
+public class OrderForList : MainPo
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
+
 
     private int _OrderID;
     public int OrderID
@@ -17,9 +17,7 @@ public class OrderForList : INotifyPropertyChanged
         set
         {
             _OrderID = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("OrderID"));
-
+            OnPropertyChanged("OrderID");
         }
     }
 
@@ -33,9 +31,7 @@ public class OrderForList : INotifyPropertyChanged
         set
         {
             _CustomerName = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("CustomerName"));
-
+            OnPropertyChanged("CustomerName");
         }
     }
 
@@ -49,10 +45,7 @@ public class OrderForList : INotifyPropertyChanged
         set
         {
             _Status = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("Status"));
-            }
+            OnPropertyChanged("Status");
         }
     }
 
@@ -66,8 +59,7 @@ public class OrderForList : INotifyPropertyChanged
         set
         {
             _AmountOfItems = value;
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs("AmountOfItems"));
+            OnPropertyChanged("AmountOfItems");
 
         }
     }
@@ -82,10 +74,7 @@ public class OrderForList : INotifyPropertyChanged
         set
         {
             _TotalPrice = value;
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs("TotalPrice"));
-            }
+            OnPropertyChanged("TotalPrice");
         }
     }
 }

@@ -22,7 +22,18 @@ namespace PL.Products;
 public partial class AddProductForM_Window : Window
 {
     private IBl bl;
-    PO.Product productToAdd;
+
+
+    public PO.Product productToAdd
+    {
+        get { return (PO.Product)GetValue(productToAddProperty); }
+        set { SetValue(productToAddProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for productToAdd.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty productToAddProperty =
+        DependencyProperty.Register("productToAdd", typeof(PO.Product), typeof(AddProductForM_Window));
+
     Action<int> action;
 
 
@@ -33,7 +44,7 @@ public partial class AddProductForM_Window : Window
         this.action = action;
 
         productToAdd = new PO.Product();
-        this.DataContext = productToAdd;
+        //this.DataContext = productToAdd;
 
         this.AddP_categ_commbbox.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
     }
@@ -80,7 +91,7 @@ public partial class AddProductForM_Window : Window
 
             productImage.Source = null;
             productToAdd = new PO.Product();
-            this.DataContext = productToAdd;
+            //this.DataContext = productToAdd;
             AddP_categ_commbbox.SelectedItem = null;
 
         }

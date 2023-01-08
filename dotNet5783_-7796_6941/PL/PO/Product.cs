@@ -5,9 +5,8 @@ using System.Windows.Media.Imaging;
 namespace PL.PO
 {
 
-    public class Product : INotifyPropertyChanged
+    public class Product : MainPo
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
 
         private int _ID;
         public int ID
@@ -19,9 +18,7 @@ namespace PL.PO
             set
             {
                 _ID = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("orderID"));
-
+                OnPropertyChanged("ID");
             }
         }
 
@@ -35,8 +32,7 @@ namespace PL.PO
             set
             {
                 _NameOfBook = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("NameOfBook"));
+                OnPropertyChanged("NameOfBook");
 
             }
         }
@@ -51,9 +47,7 @@ namespace PL.PO
             set
             {
                 _AuthorName = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("AuthorName"));
-
+                OnPropertyChanged("AuthorName");
             }
         }
 
@@ -64,8 +58,7 @@ namespace PL.PO
             set
             {
                 _Category = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs(""));
+                OnPropertyChanged("Category");
 
             }
         }
@@ -77,8 +70,7 @@ namespace PL.PO
             set
             {
                 _Summary = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("Summary"));
+                OnPropertyChanged("Summary");
 
             }
         }
@@ -93,8 +85,7 @@ namespace PL.PO
             set
             {
                 _Price = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("Price"));
+                OnPropertyChanged("Price");
 
             }
         }
@@ -109,8 +100,7 @@ namespace PL.PO
             set
             {
                 _InStock = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("InStock"));
+                OnPropertyChanged("InStock");
 
             }
         }
@@ -139,14 +129,10 @@ namespace PL.PO
             set
             {
                 image = value;
-                if (PropertyChanged != null)
-                    PropertyChanged(this, new PropertyChangedEventArgs("Image"));
+                OnPropertyChanged("Image");
 
             }
         }
-
-
-
 
         public PO.Product GetCopy()
         {

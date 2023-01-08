@@ -32,12 +32,17 @@ public class ProductItem
     /// <summary>
     /// כמות המוצר בסל הקניות של הלקוח
     /// </summary>
-    public int AmountInCart { get; set; }
+    public int? AmountInCart { get; set; }
 
     /// <summary>
     /// האם המוצר במלאי
     /// </summary>
     public bool InStock { get; set; }
+
+    /// <summary>
+    /// Path for image to product
+    /// </summary>
+    public string? ProductImagePath { get; set; }
 
     public override string ToString()
     {

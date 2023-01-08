@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using PL.Catalog;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Documents;
+using System.Collections;
 using Microsoft.VisualBasic;
 
 namespace PL;
@@ -34,34 +35,52 @@ namespace PL;
 public partial class MainWindow : Window
 {
     private IBl bl;
-    BO.Cart myCart = new();
-    private ObservableCollection<Product> allBooksForShow;
+
+    private ObservableCollection<ProductItem> allBooksForShow;
+    private PL.PO.Cart myCart;
 
     public MainWindow()
     {
         InitializeComponent();
         this.bl = BlApi.Factory.GetBl();
 
-        allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.CopyPflToPoProduct()));
+        //allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.CopyPflToPoProduct()));
+        allBooksForShow = new(bl.BoProduct.GetAllProductItems_forC().Select(p => p.CopyProductItemFromBoToPo()));
+        myCart = new PL.PO.Cart();
         this.Catalog.ItemsSource = allBooksForShow;
+        // Catalog.FontStyle = Heebo;
+        
+        this.DataContext = Catalog;
     }
 
+    #region טעינת תמונות ---------יש מה לעבוד עוד-----------
     // for this code image needs to be a project resource
     private BitmapImage LoadImage(string filename)
     {
-        return new BitmapImage(new Uri(@"Image\" + filename, UriKind.RelativeOrAbsolute));//@"Image/"/"pack://application:,,,/Image/" + filename)*/
+        return new BitmapImage(new Uri(@"Image\" + filename, UriKind.RelativeOrAbsolute));/*/*@"Image/"/"pack://application:,,,/Image/" + filename)*/
     }
+    #endregion
+
+    #region כפתור צור קשר
+    private void conectUs_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+    #endregion
 
     private void connectToSystem_Click(object sender, RoutedEventArgs e)
     {
         new adminPassword(bl).Show();
         this.Close();
     }
+    #endregion
 
-    private void goToOrderTracking_Click(object sender, RoutedEventArgs e)
+    #region כפתור מסע משלוח
+    private void trakingOrder_Click(object sender, RoutedEventArgs e)
     {
         new orderTrakingForC_Window(bl).Show();
     }
+    #endregion
 
     private void addToCart_Click(object sender, RoutedEventArgs e)
     {
@@ -69,7 +88,7 @@ public partial class MainWindow : Window
         {
             Button button = (sender as Button)!;
             PO.Product p = (button.DataContext as PO.Product)!;
-            bl.BoCart.AddProductToCart(myCart, p.ID);
+            bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), pID).CastingFromBoToPoCart(); //הוספת המוצר לשכבה מתחת 
             MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
         }
         catch (Exception ex)
@@ -80,5 +99,27 @@ public partial class MainWindow : Window
     }
 }
 
+/*
+ אם נוסיף אופציה לאהובים..
+private ObservableCollection<Product> lovedBooks;
+lovedBooks = new();
 
+ /// <summary>
+    /// שמירת ספרים כספרים אהובים
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+  private void addToLoved_Click(object sender, RoutedEventArgs e)
+    {
+        PO.ProductItem p = (PO.ProductItem)Catalog.SelectedItem;
+        lovedBooks.Add(p);
+    }
 
+    private void seePrefered_Click(object sender, RoutedEventArgs e) //window for marked as loved books, with optian to add to cart
+    {
+        Action<int> CartAction = productId => ToCart(productId); 
+        new FavouritesForC_Window(bl, lovedBooks, CartAction).ShowDialog();
+      
+    }
+
+ */

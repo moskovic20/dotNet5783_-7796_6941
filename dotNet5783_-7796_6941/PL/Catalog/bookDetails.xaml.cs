@@ -2,7 +2,6 @@
 using PL.PO;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,24 +12,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PL.Catalog
 {
     /// <summary>
-    /// Interaction logic for FavouritesForC_Window.xaml
+    /// Interaction logic for bookDetails.xaml
     /// </summary>
-    public partial class FavouritesForC_Window : Window
+    public partial class bookDetails : Page
     {
-        private IBl bl;
-        private ObservableCollection<Product> Favourites;
-        private Action<int> addToCAction;
-        public FavouritesForC_Window(IBl bl, ObservableCollection<Product> favourites, Action<int> CartAction)
+        //IBl bl;
+     //    myProduct;
+
+        public bookDetails(int ID,IBl bl)
         {
             InitializeComponent();
-            this.bl = bl;
-            this.Favourites = favourites;
-            this.addToCAction= CartAction;
+
+          //  myProduct = bl.BoProduct.GetProductDetails_forC()
         }
     }
 }

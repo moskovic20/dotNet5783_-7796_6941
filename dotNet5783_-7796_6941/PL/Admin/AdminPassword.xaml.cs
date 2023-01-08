@@ -15,20 +15,16 @@ using System.Windows.Shapes;
 
 namespace PL.Admin
 {
-
-
     /// <summary>
-    /// Interaction logic for AdminPassword.xaml
+    /// Interaction logic for adminPassword.xaml
     /// </summary>
-    public partial class AdminPassword : Window
+    public partial class adminPassword : Window
     {
-        private IBl bl;
-        
+        IBl bl;
 
-        public AdminPassword(IBl bl)
+        public adminPassword(IBl bl)
         {
             InitializeComponent();
-
             this.bl = bl;
         }
 
@@ -41,13 +37,14 @@ namespace PL.Admin
         {
             if (PasswordBox.Password == "1")
             {
-                AdminWindow homeManager = new(bl);
+                adminMenu adminHome = new(bl);
                 PasswordBox.Password = "";
-                homeManager.ShowDialog();
+                adminHome.Show();
+                this.Close();
             }
-            else 
+            else
             {
-                PasswordBox.Password ="";
+                PasswordBox.Password = "";
                 errorPassword.Visibility = Visibility.Visible;
             }
         }
@@ -55,6 +52,12 @@ namespace PL.Admin
         private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
         {
             errorPassword.Visibility = Visibility.Collapsed;
+        }
+
+        private void goHome_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            this.Close();
         }
     }
 }

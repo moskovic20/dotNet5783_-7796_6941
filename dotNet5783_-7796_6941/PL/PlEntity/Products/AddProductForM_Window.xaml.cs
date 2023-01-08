@@ -136,7 +136,7 @@ public partial class AddProductForM_Window : Window
 
     #endregion
 
-    private void Button_Click(object sender, RoutedEventArgs e)
+    private void choosePicture(object sender, RoutedEventArgs e)
     {
 
         OpenFileDialog op = new OpenFileDialog();
@@ -149,20 +149,6 @@ public partial class AddProductForM_Window : Window
             productToAdd.ProductImagePath = op.FileName;
             productImage.Source = productToAdd.Image;
         }
-
-        //OpenFileDialog openFileDialog = new OpenFileDialog();
-        ////openFileDialog.Filter
-        ////openFileDialog.InitialDirectory
-        //bool check = openFileDialog.ShowDialog() ?? false;
-        //if (check)
-        //}
-        //    productToAdd.ProductImagePath = openFileDialog.FileName;
-        //}
-
-    }
-
-    private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-    {
 
     }
 }

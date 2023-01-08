@@ -164,7 +164,7 @@
                 Width="50" Height="50"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
-                Click="Button_Click"
+                Click="choosePicture"
             Background="#FF009BA6" Margin="312,221,0,0" >
             <materialDesign:PackIcon Kind="ImageAdd" 
                                          Height="30" Width="30" 

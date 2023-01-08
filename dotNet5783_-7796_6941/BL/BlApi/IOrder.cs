@@ -13,7 +13,9 @@ public interface IOrder
     void UpdateOrder(int id, int option);
     void CancleOrder_forM(int id);
     public void DeleteOrder_forM(int orderID);
+    public IEnumerable<BO.OrderForList> getAllOrderOfClaient(string name);
+    //public BO.Order GetOrdertDetails(string CustomerName);
 
-   
+
 
 }

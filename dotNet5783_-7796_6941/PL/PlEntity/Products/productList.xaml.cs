@@ -1,7 +1,8 @@
 ﻿using BlApi;
-//using PL.BoProducts;
+using PL.Products;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,25 +13,22 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 using PL.PO;
-using System.IO;
 
-//using Do;
-
-namespace PL.Products;
+namespace PL.PlEntity.Products;
 
 /// <summary>
-/// Interaction logic for ProductListForM_Window.xaml
+/// Interaction logic for productList.xaml
 /// </summary>
-public partial class ProductListForM_Window : Window
+public partial class productList : Page
 {
     private IBl bl;
     private ObservableCollection<PO.ProductForList> allBooks = new();
     private ObservableCollection<ProductForList> productSearch = new();
 
-    public ProductListForM_Window(IBl bl)
+    public productList(IBl bl)
     {
         InitializeComponent();
         this.bl = bl;
@@ -39,6 +37,7 @@ public partial class ProductListForM_Window : Window
         DataContext = allBooks;
     }
 
+  
     //private void AllBooks_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     //{
     //    switch (e.Action)
@@ -88,7 +87,7 @@ public partial class ProductListForM_Window : Window
             P_BeforUp.NameOfBook = p.NameOfBook;
             P_BeforUp.InStock = p.InStock;
 
-            if(DataContext== productSearch)
+            if (DataContext == productSearch)
             {
                 PO.ProductForList P_BeforUp2 = productSearch[0]!;
                 P_BeforUp2.Price = p.Price; //עדכנו שדה שדה,לבדוק אם יש דרך חכמה יותר
@@ -114,14 +113,19 @@ public partial class ProductListForM_Window : Window
             switch (delete)
             {
                 case MessageBoxResult.Yes:
+
                     //File.Delete(bl.BoProduct.GetProductDetails_forM(pToD.ID).ProductImagePath!);
+
                     bl.BoProduct.DeleteProductByID_forM(pToD.ID);
-                    ProductForList temp=allBooks.First(x=>x.ID==pToD.ID);
+                    ProductForList temp = allBooks.First(x => x.ID == pToD.ID);
                     allBooks.Remove(temp);
+
                     if (DataContext == productSearch)
                         productSearch.Clear();
+
                     MessageBox.Show("!הספר נמחק בהצלחה");
                     break;
+
                 case MessageBoxResult.No:
                     Products_DateGrid.SelectedItem = null;
                     break;
@@ -169,7 +173,7 @@ public partial class ProductListForM_Window : Window
 
             string myString = nameOrID.Text;
 
-            if (iconSearch.Kind== MaterialDesignThemes.Wpf.PackIconKind.Close)
+            if (iconSearch.Kind == MaterialDesignThemes.Wpf.PackIconKind.Close)
             {
                 nameOrID.Text = "";
                 iconSearch.Kind = MaterialDesignThemes.Wpf.PackIconKind.Search;
@@ -177,7 +181,7 @@ public partial class ProductListForM_Window : Window
                 GroupByCategory.IsEnabled = true;
             }
             else
-            { 
+            {
                 ProductForList myProduct = new();
 
                 int id;

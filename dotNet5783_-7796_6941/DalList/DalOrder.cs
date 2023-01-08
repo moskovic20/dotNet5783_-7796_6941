@@ -53,6 +53,13 @@ internal class DalOrder : IOrder
         return myOrder ?? throw new DoesntExistException("The Order is not found\n"); ;
     }
 
+    //public Order GetByCustomerName(string name)
+    //{
+    //    Order? myOrder = _DS._Orders.FirstOrDefault(x => x?.CustomerName == name && x?.IsDeleted == false);
+
+    //    return myOrder ?? throw new DoesntExistException("The Order is not found\n"); ;
+    //}
+
     public void Update(Order item)
     {
         try

@@ -12,8 +12,8 @@ public interface IOrder
     BO.OrderTracking GetOrderTracking(int id);
     void UpdateOrder(int id, int option);
     void CancleOrder_forM(int id);
-    public void DeleteOrder_forM(int orderID);
-    public IEnumerable<BO.OrderForList> getAllOrderOfClaient(string name);
+    void DeleteOrder_forM(int orderID);
+    IEnumerable<BO.OrderForList> getAllOrderOfClaient(string name);
     //public BO.Order GetOrdertDetails(string CustomerName);
 
 

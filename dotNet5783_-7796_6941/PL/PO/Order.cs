@@ -141,7 +141,7 @@ public class Order : MainPo
     {
         get
         { 
-        return Items; 
+        return _Items; 
         }
         set
         {

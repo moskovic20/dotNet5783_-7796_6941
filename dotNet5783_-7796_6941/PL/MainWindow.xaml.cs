@@ -11,6 +11,7 @@
 using BlApi;
 using PL.Admin;
 using PL.PO;
+using PL.PlEntity.Cart;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -26,6 +27,7 @@ using MaterialDesignThemes.Wpf;
 using System.Windows.Documents;
 using System.Collections;
 using Microsoft.VisualBasic;
+using PL.PlEntity.Products;
 
 namespace PL;
 
@@ -68,6 +70,7 @@ public partial class MainWindow : Window
     }
     #endregion
 
+    #region מנהל
     private void connectToSystem_Click(object sender, RoutedEventArgs e)
     {
         new adminPassword(bl).Show();
@@ -82,13 +85,13 @@ public partial class MainWindow : Window
     }
     #endregion
 
-    private void addToCart_Click(object sender, RoutedEventArgs e)
+    private void addToCard_Click(object sender, RoutedEventArgs e)
     {
         try
         {
             Button button = (sender as Button)!;
-            PO.Product p = (button.DataContext as PO.Product)!;
-            bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), pID).CastingFromBoToPoCart(); //הוספת המוצר לשכבה מתחת 
+            PO.ProductItem p = (button.DataContext as PO.ProductItem)!;
+            bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart(); //הוספת המוצר לשכבה מתחת 
             MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
         }
         catch (Exception ex)
@@ -96,6 +99,11 @@ public partial class MainWindow : Window
             MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                 MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
         }
+    }
+
+    private void GoToCart_Click(object sender, RoutedEventArgs e)
+    {
+        this.myFrame.Content = new PlEntity.Cart.Cart(bl, myCart);
     }
 }
 

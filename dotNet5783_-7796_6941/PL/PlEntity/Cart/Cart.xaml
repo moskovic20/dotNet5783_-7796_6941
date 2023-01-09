@@ -59,31 +59,31 @@
                Margin="174,4,40,437"  />
 
         <StackPanel Orientation="Horizontal"
-            Margin="174,74,10,437" Grid.Column="1">
-            <TextBox Text="{Binding Price, Mode=TwoWay}"
+            Margin="159,98,25,413" Grid.Column="1">
+            <TextBox x:Name="NameC" Text="{Binding CustomerName, Mode=TwoWay}"
                       Height="30" Width="201"/>
             <Label Content="  :שם לקוח"
                 Width="97"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-            Margin="174,128,10,383" Grid.Column="1">
-            <TextBox Text="{Binding Price, Mode=TwoWay}"
+            Margin="159,152,25,359" Grid.Column="1">
+            <TextBox x:Name="MailC" Text="{Binding CustomerEmail, Mode=TwoWay}"
                 Height="30" Width="201"/>
             <Label Content="  :כתובת מייל"
                 Width="97"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-            Margin="174,186,10,325" Grid.Column="1">
-            <TextBox Text="{Binding Price, Mode=TwoWay}"
+            Margin="159,210,25,301" Grid.Column="1">
+            <TextBox x:Name="AdressC" Text="{Binding CustomerAddress, Mode=TwoWay}"
                 Height="30" Width="177"/>
             <Label Content=":כתובת לשליחת ההזמנה"
                 Width="141"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
-            Margin="282,242,6,269" Grid.Column="1">
-            <TextBox Text="{Binding Price, Mode=TwoWay}"
+            Margin="267,266,21,245" Grid.Column="1">
+            <TextBlock Text="{Binding TotalPrice, Mode=TwoWay}"
                 Height="30" Width="93"/>
             <Label Content="  :מחיר לתשלום"
                 Width="97"/>
@@ -107,8 +107,8 @@
                   IsReadOnly="True"
                   ItemsSource="{Binding}" 
                   HorizontalAlignment="Left"
-                  Margin="38,64,0,113"
-                  Width="530"
+                  Margin="31,64,0,113"
+                  Width="570"
                   Background="{x:Null}" Grid.ColumnSpan="2">
 
             <DataGrid.GroupStyle>
@@ -123,15 +123,59 @@
 
 
             <DataGrid.Columns >
-                
+
                 <!--רק חסר מספר הזמנה לאורדראייטם אבל לא קיים עדיין נראה לי-->
-                
+
+                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=Trash}"
+                                    MinWidth="10">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                    Height="30" Width="30"
+                                    HorizontalAlignment="Center"
+                                    Click="deleteOrderItem_Click">
+                                <materialDesign:PackIcon Kind="Trash"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
                 <DataGridTextColumn Header="מחיר סופי"    
                                     Binding="{Binding TotalPrice}"
                                     MinWidth="5"/>
                 <DataGridTextColumn Header="כמות פריטים"    
                                     Binding="{Binding AmountOfItems}"
                                     MinWidth="5"/>
+
+                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=ArrowBottomDropCircleOutline}"
+                                    MinWidth="10">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                    Height="30" Width="30"
+                                    HorizontalAlignment="Center"
+                                    Click="reduceNum_Click">
+                                <materialDesign:PackIcon Kind="ArrowBottomDropCircleOutline"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=ArrowUpDropCircleOutline}"
+                                    MinWidth="10">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                    Height="30" Width="30"
+                                    HorizontalAlignment="Center"
+                                    Click="incresNum_Click">
+                                <materialDesign:PackIcon Kind="ArrowBottom"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
                 <DataGridTextColumn Header="עלות ליחידה"    
                                     Binding="{Binding PriceOfOneItem}"
                                     MinWidth="5"/>
@@ -143,7 +187,9 @@
                                     MinWidth="5"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="393" Margin="97,62,0,0" Stroke="#FF673AB7" VerticalAlignment="Top" Width="7"/>
-        <Button Content="בצע הזמנה" HorizontalAlignment="Left" Margin="104,500,0,0" VerticalAlignment="Top"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="393" Margin="127,62,0,0" Stroke="#FF673AB7" VerticalAlignment="Top" Width="7"/>
+        <Button x:Name="MakeOrder" Content="בצע הזמנה" HorizontalAlignment="Left" Margin="104,479,0,0" VerticalAlignment="Top" Click="MakeOrder_Click"/>
+        <Button x:Name="CancleOrder" Content="בטל הזמנה" HorizontalAlignment="Left" Margin="263,479,0,0" VerticalAlignment="Top"/>
+        <Label Grid.Column="1"  Content="כל השדות הינם חובה*" HorizontalAlignment="Left" Margin="343,59,0,0" VerticalAlignment="Top" Width="124" Foreground="Red" Height="24"/>
     </Grid>
 </Page>

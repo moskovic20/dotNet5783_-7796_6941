@@ -27,15 +27,16 @@ namespace PL.Catalog
         IBl bl;
         Frame myFrame;
         Cart myCart;
+        //private Action<int> AddToC;
         private ObservableCollection<ProductItem>? allBooksForShow;
 
-        public catalog(IBl bl, Cart cart, Frame frame)
+        public catalog(IBl bl, Cart cart, Frame frame/*, Action<int> myAction*/)
         {
             InitializeComponent();
             this.bl = bl;
             myFrame = frame;
             myCart = cart;
-
+            //this.AddToC= myAction;
             allBooksForShow = new(bl.BoProduct.GetAllProductItems_forC().Select(p => p.CopyProductItemFromBoToPo()));
             DataContext = allBooksForShow;
 
@@ -55,8 +56,10 @@ namespace PL.Catalog
             {
                 Button button = (sender as Button)!;
                 PO.ProductItem p = (button.DataContext as PO.ProductItem)!;
-                bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart(); //הוספת המוצר לשכבה מתחת 
+                myCart=bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart(); //הוספת המוצר לשכבה מתחת 
+                //AddToC(p.ID);
                 MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
+                
             }
             catch (Exception ex)
             {

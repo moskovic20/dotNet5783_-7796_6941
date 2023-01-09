@@ -13,7 +13,7 @@
                Width="1000"
                Height="560" Margin="-2,0,2,0"
                VerticalAlignment="Bottom"/>
-        <Rectangle HorizontalAlignment="Center" Height="74" VerticalAlignment="Top" Width="1000" Fill="#FFEAE1D5"/>
+        <Rectangle HorizontalAlignment="Center" Height="74" VerticalAlignment="Top" Width="1000" Fill="#FFF6F6F6"/>
 
         <Button x:Name="connectToSystem"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
@@ -80,11 +80,11 @@
             Width="50" Height="50"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Margin="204,15,0,0" 
+            Margin="274,11,0,0" 
                 Click="trakingOrder_Click">
             <materialDesign:PackIcon Kind="ArchiveSearchOutline" 
                 Height="25" Width="25" 
-                OpacityMask="Black" />
+                OpacityMask="Black" HorizontalAlignment="Center" />
         </Button>
 
 

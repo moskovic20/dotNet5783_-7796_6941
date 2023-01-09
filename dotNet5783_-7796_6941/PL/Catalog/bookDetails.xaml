@@ -6,12 +6,15 @@
       xmlns:local="clr-namespace:PL.Catalog"
       mc:Ignorable="d" 
       d:DesignHeight="560" d:DesignWidth="1000"
-      Title="bookDetails">
+      Title="bookDetails" >
 
     <Grid>
-        <Image HorizontalAlignment="Left" Height="375" Margin="695,50,0,0" VerticalAlignment="Top" Width="250"/>
-        <StackPanel Margin="375,50,360,435"/>
-        <TextBlock HorizontalAlignment="Left" Margin="55,145,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="195" Width="585"/>
+        <Image HorizontalAlignment="Left" Height="298" Source="{Binding Image}" Margin="705,50,0,0" VerticalAlignment="Top" Width="245"/>
+        <TextBlock HorizontalAlignment="Left" Margin="79,190,0,0" TextWrapping="Wrap" Text="{Binding Summary}" VerticalAlignment="Top" Height="300" Width="554" Foreground="Black" TextAlignment="Right"/>
+        <local:NumericUpDownControl x:Name="gradeNumUpDown" Margin="767,397,93,108" />
+        <Label Content="{Binding NameOfBook}" Margin="338,50,0,0" VerticalAlignment="Top" Height="65" Width="296" HorizontalContentAlignment="Right" HorizontalAlignment="Left" FontSize="24" FontWeight="Bold"/>
+        <Label Content="{Binding AuthorName}" HorizontalAlignment="Left" Margin="332,96,0,0" VerticalAlignment="Top" Height="50" Width="296" HorizontalContentAlignment="Right" FontSize="18" Foreground="#FF6D1DB6"/>
+        <Label Content="....................................." HorizontalAlignment="Left" Margin="332,115,0,0" VerticalAlignment="Top" Height="31" Width="296" HorizontalContentAlignment="Right" FontSize="22" Foreground="#FF6D1DB6"/>
 
     </Grid>
 </Page>

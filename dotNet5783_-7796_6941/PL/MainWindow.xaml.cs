@@ -36,21 +36,14 @@ public partial class MainWindow : Window
 {
     private IBl bl;
 
-    private ObservableCollection<ProductItem> allBooksForShow;
-    private PL.PO.Cart myCart;
+    private ObservableCollection<ProductItem>? allBooksForShow;
+    private PL.PO.Cart myCart=new();
 
     public MainWindow()
     {
         InitializeComponent();
         this.bl = BlApi.Factory.GetBl();
-
-        //allBooksForShow = new(bl.BoProduct.GetAllProductForList_forC().Select(p => p.CopyPflToPoProduct()));
-        allBooksForShow = new(bl.BoProduct.GetAllProductItems_forC().Select(p => p.CopyProductItemFromBoToPo()));
-        myCart = new PL.PO.Cart();
-        this.Catalog.ItemsSource = allBooksForShow;
-        // Catalog.FontStyle = Heebo;
-        
-        this.DataContext = Catalog;
+        this.myFrame.Content = new catalog(bl, myCart, this.myFrame);
     }
 
     #region טעינת תמונות ---------יש מה לעבוד עוד-----------
@@ -68,6 +61,7 @@ public partial class MainWindow : Window
     }
     #endregion
 
+    #region התחברות מנהל למערכת
     private void connectToSystem_Click(object sender, RoutedEventArgs e)
     {
         new adminPassword(bl).Show();
@@ -82,21 +76,6 @@ public partial class MainWindow : Window
     }
     #endregion
 
-    private void addToCart_Click(object sender, RoutedEventArgs e)
-    {
-        try
-        {
-            Button button = (sender as Button)!;
-            PO.Product p = (button.DataContext as PO.Product)!;
-            bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), pID).CastingFromBoToPoCart(); //הוספת המוצר לשכבה מתחת 
-            MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
-                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
-        }
-    }
 }
 
 /*

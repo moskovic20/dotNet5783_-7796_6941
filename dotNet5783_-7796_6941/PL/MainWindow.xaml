@@ -74,54 +74,38 @@
                 OpacityMask="Black" />
         </Button>
 
-        <Button x:Name="goToOrderTracking"
+        <Button x:Name="trakingOrder"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
             BorderBrush="#007E8C7F"
             Width="50" Height="50"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
             Margin="204,15,0,0" 
-                Click="goToOrderTracking_Click">
+                Click="trakingOrder_Click">
             <materialDesign:PackIcon Kind="ArchiveSearchOutline" 
                 Height="25" Width="25" 
                 OpacityMask="Black" />
         </Button>
 
-        <TextBox x:Name="nameOrID"   
-            materialDesign:HintAssist.Hint="איזה ספר את/ה מחפש/ת?"     
-            Style="{DynamicResource MaterialDesignFilledTextBox }"
-            materialDesign:HintAssist.Foreground="Black"
-            materialDesign:TextFieldAssist.UnderlineBrush="Black"
-            HorizontalAlignment="Left"
-            Margin="594,27,0,0"
-            Width="210" Height="31" VerticalAlignment="Top"
-            RenderTransformOrigin="0.837,0.756" Text=""/>
-
-        <ComboBox Name="TakenChargeSlotsComboBox"
-                          Margin="320,20,580,0"  Width="100"
-                          materialDesign:HintAssist.Hint="(קטגוריה)"
-                          Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-                          VerticalAlignment="Top"/>
-
-        <ComboBox x:Name="TakenChargeSlotsComboBox_Copy"
-            Margin="448,20,452,0"  Width="100"
-            materialDesign:HintAssist.Hint="(סדר לפי)"
-            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
-            VerticalAlignment="Top"/>
 
 
-
-        <ListView HorizontalAlignment="Center" Height="569" VerticalAlignment="Top" Width="1000"
+        <!--<ListView HorizontalAlignment="Center" Height="569" VerticalAlignment="Top" Width="1000"
             x:Name="Catalog" 
-                      ItemsSource="{Binding}" Margin="0,79,0,0"  >
-            <ItemsControl.ItemsPanel>
+                      ItemsSource="{Binding}" Margin="0,79,0,0" MouseDoubleClick="Catalog_MouseDoubleClick"  >
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="5" HorizontalAlignment="Stretch"/>
+                    <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
+                              RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                              ItemWidth="{Binding (ListView.View).ItemWidth,
+                              RelativeSource={RelativeSource AncestorType=ListView}}"
+                              MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
+                              ItemHeight="{Binding (ListView.View).ItemHeight, 
+                              RelativeSource={RelativeSource AncestorType=ListView}}"/>
                 </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+            </ListView.ItemsPanel>
             <ListView.ItemTemplate >
                 <DataTemplate >
-                    <StackPanel  Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
                         <Image Source="{Binding Image}" Width="100" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
                         <TextBlock x:Name="bookName" Text="{Binding NameOfBook}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FF009BA6"/>
                         <TextBlock HorizontalAlignment="Center"  Text="{Binding Price}"  VerticalAlignment="Bottom" />
@@ -134,7 +118,7 @@
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>
+        </ListView>-->
 
 
     </Grid>

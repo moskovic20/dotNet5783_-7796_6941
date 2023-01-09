@@ -22,14 +22,18 @@ namespace PL.Catalog
     /// </summary>
     public partial class bookDetails : Page
     {
-        //IBl bl;
-     //    myProduct;
+        IBl bl;
+        Product myProduct;
 
         public bookDetails(int ID,IBl bl)
         {
             InitializeComponent();
 
-          //  myProduct = bl.BoProduct.GetProductDetails_forC()
+            this.bl = bl;
+            myProduct = bl.BoProduct.GetProductDetails_forM(ID).copyProductToPo();
+            DataContext = myProduct;
         }
+
+
     }
 }

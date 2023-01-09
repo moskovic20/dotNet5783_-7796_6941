@@ -10,7 +10,7 @@ using System.Collections.ObjectModel;
 
 namespace PL.PO;
 
-internal class Cart : MainPo
+public class Cart : MainPo
 {
     
     private string? _CustomerName;

@@ -8,7 +8,7 @@ namespace PL.PO;
 
 public class Order : MainPo
 {
- 
+
     private int _ID;
     public int OrderID
     {
@@ -140,8 +140,8 @@ public class Order : MainPo
     public ObservableCollection<OrderItem>? Items
     {
         get
-        { 
-        return Items; 
+        {
+            return _Items;
         }
         set
         {

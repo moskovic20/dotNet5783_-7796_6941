@@ -1,0 +1,70 @@
+﻿<Page x:Class="PL.Catalog.catalog"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:PL.Catalog"
+      mc:Ignorable="d" 
+      d:DesignHeight="560" d:DesignWidth="1000"
+      Title="catalog">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="25*"/>
+        </Grid.RowDefinitions>
+        <Rectangle HorizontalAlignment="Center" Height="60" Stroke="Black" VerticalAlignment="Center" Width="1000" Fill="#FFF6F6F6"/>
+        <TextBox x:Name="nameOrID"   
+            materialDesign:HintAssist.Hint="איזה ספר את/ה מחפש/ת?"     
+            Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
+            materialDesign:HintAssist.Foreground="Black"
+            materialDesign:TextFieldAssist.UnderlineBrush="Black"
+            HorizontalAlignment="Left"
+            Margin="686,0,0,0"
+            Width="210" Height="40" VerticalAlignment="Top"
+            RenderTransformOrigin="0.837,0.756" Text=""/>
+
+        <ComboBox Name="TakenChargeSlotsComboBox"
+                          Margin="435,4,465,0"  Width="100"
+                          materialDesign:HintAssist.Hint="(קטגוריה)"
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Top"/>
+
+        <ComboBox x:Name="TakenChargeSlotsComboBox_Copy"
+            Margin="560,4,340,0"  Width="100"
+            materialDesign:HintAssist.Hint="(סדר לפי)"
+            Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Top"/>
+
+        <ListView HorizontalAlignment="Center" Height="583" VerticalAlignment="Top" Width="1000"
+            x:Name="Catalog" 
+                      ItemsSource="{Binding}" Margin="0,5,0,0" MouseDoubleClick="Catalog_MouseDoubleClick" Grid.Row="1"  >
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
+                              RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
+                              ItemWidth="{Binding (ListView.View).ItemWidth,
+                              RelativeSource={RelativeSource AncestorType=ListView}}"
+                              MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
+                              ItemHeight="{Binding (ListView.View).ItemHeight, 
+                              RelativeSource={RelativeSource AncestorType=ListView}}"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate >
+                <DataTemplate >
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
+                        <Image Source="{Binding Image}" Width="100" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
+                        <TextBlock x:Name="bookName" Text="{Binding NameOfBook}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FF009BA6"/>
+                        <TextBlock HorizontalAlignment="Center"  Text="{Binding Price}"  VerticalAlignment="Bottom" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Margin="5,5,5,5">
+                            <materialDesign:PackIcon Kind="HeartOutline"
+                                            Height="20" Width="20" 
+                                            OpacityMask="Black" HorizontalAlignment="Center"  Foreground="Red"/>
+                            <Button x:Name="addToCart" Margin="5,5,5,5" Content="הוסף לסל" Click="addToCart_Click" Style="{StaticResource MaterialDesignOutlinedDarkButton}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Page>

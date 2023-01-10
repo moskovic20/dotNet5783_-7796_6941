@@ -94,7 +94,7 @@ namespace PL.Catalog
         {
             if (textNumber == null || textNumber.Text == "" || textNumber.Text == "-")
             {
-                Value = null;
+                Value = 0;
                 return;
             }
 

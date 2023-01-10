@@ -13,30 +13,28 @@
                Width="1000"
                Height="560" Margin="-2,0,2,0"
                VerticalAlignment="Bottom"/>
-        <Rectangle HorizontalAlignment="Center" Height="74" VerticalAlignment="Top" Width="1000" Fill="#FFF6F6F6"/>
+        <Rectangle HorizontalAlignment="Center" Height="74" VerticalAlignment="Top" Width="1000" Fill="#FFF0F0F0"/>
 
-        <Button x:Name="connectToSystem"
+        <StackPanel Margin="906,11,19,565">
+            <Button x:Name="connectToSystem"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
                 BorderBrush="#007E8C7F"
-                Width="30" Height="30"
-                HorizontalAlignment="Left" 
-                VerticalAlignment="Top" 
+                Width="30" Height="30" 
                 Click="connectToSystem_Click"
-                Background="#FF009BA6"
-                Margin="929,10,0,0" >
-            <materialDesign:PackIcon Kind="Person" 
+                Background="#FF009BA6" >
+                <materialDesign:PackIcon Kind="Person" 
                                      Height="20" Width="20" 
                                      OpacityMask="Black"
                                      VerticalAlignment="Center" />
-        </Button>
-
-        <Label HorizontalAlignment="Left"
-               Height="26" Width="76"
-               Margin="906,38,0,0"
-               VerticalAlignment="Top" 
+            </Button>
+            <Label
+               Height="26" Width="76" 
                Content="התחברות" 
                FontSize="14"
                FontWeight="Bold"/>
+        </StackPanel>
+
+
 
         <Button x:Name="AddTheStation"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
@@ -86,6 +84,7 @@
                 Height="25" Width="25" 
                 OpacityMask="Black" />
         </Button>
+        
 
 
 

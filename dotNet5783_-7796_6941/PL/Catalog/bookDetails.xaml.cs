@@ -24,16 +24,21 @@ namespace PL.Catalog
     {
         IBl bl;
         Product myProduct;
+        Cart myCart;
 
-        public bookDetails(int ID,IBl bl)
+        public bookDetails(int ID,IBl bl,Cart Cart)
         {
             InitializeComponent();
 
             this.bl = bl;
+            myCart = Cart;
             myProduct = bl.BoProduct.GetProductDetails_forM(ID).copyProductToPo();
             DataContext = myProduct;
         }
 
-
+        private void addToCart_Click(object sender, RoutedEventArgs e)
+        {
+            myCart = bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), myProduct.ID, (int)gradeNumUpDown.Value ).CastingFromBoToPoCart();
+        }
     }
 }

@@ -76,6 +76,10 @@ public partial class MainWindow : Window
     }
     #endregion
 
+    private void goToCatalog_Click(object sender, RoutedEventArgs e)
+    {
+        this.myFrame.Content = new catalog(bl, myCart, this.myFrame);
+    }
 }
 
 /*

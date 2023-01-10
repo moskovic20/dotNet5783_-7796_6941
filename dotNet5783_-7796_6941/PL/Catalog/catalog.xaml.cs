@@ -45,7 +45,7 @@ namespace PL.Catalog
         {
 
             ProductItem p = (ProductItem)Catalog.SelectedItem;
-            this.myFrame.Content = new bookDetails(p.ID, bl);
+            this.myFrame.Content = new bookDetails(p.ID, bl,myCart);
 
         }
 
@@ -55,7 +55,7 @@ namespace PL.Catalog
             {
                 Button button = (sender as Button)!;
                 PO.ProductItem p = (button.DataContext as PO.ProductItem)!;
-                bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart(); //הוספת המוצר לשכבה מתחת 
+                myCart=bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart(); //הוספת המוצר לשכבה מתחת 
                 MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
             }
             catch (Exception ex)

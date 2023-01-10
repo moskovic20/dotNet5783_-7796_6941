@@ -46,7 +46,7 @@ namespace PL.Catalog
         {
 
             ProductItem p = (ProductItem)Catalog.SelectedItem;
-            this.myFrame.Content = new bookDetails(p.ID, bl);
+            this.myFrame.Content = new bookDetails(p.ID, bl,myCart);
 
         }
 
@@ -54,6 +54,7 @@ namespace PL.Catalog
         {
             try
             {
+
                 Button button = (sender as Button)!;
                 PO.ProductItem p = (button.DataContext as PO.ProductItem)!;
                 PO.Cart Temp= bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart();//הוספת המוצר לשכבה מתחת 

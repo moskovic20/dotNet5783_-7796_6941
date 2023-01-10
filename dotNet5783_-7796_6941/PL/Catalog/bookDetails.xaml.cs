@@ -24,14 +24,30 @@ namespace PL.Catalog
     {
         IBl bl;
         Product myProduct;
+        Cart myCart;
 
-        public bookDetails(int ID,IBl bl)
+        public bookDetails(int ID,IBl bl,Cart Cart)
         {
             InitializeComponent();
 
             this.bl = bl;
+            myCart = Cart;
             myProduct = bl.BoProduct.GetProductDetails_forM(ID).copyProductToPo();
             DataContext = myProduct;
+        }
+
+        private void addToCart_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), myProduct.ID, (int)gradeNumUpDown.Value).putTo(myCart);
+                MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                    MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+            }
         }
 
 

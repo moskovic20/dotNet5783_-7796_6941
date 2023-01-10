@@ -5,8 +5,6 @@ namespace BlImplementation;
 internal class BoCart : ICart
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
-    //DalApi.IDal? dal = DalApi.Factory.Get();לפי דן!
-
 
     public BO.Cart AddProductToCart(BO.Cart cart, int productID)
     {
@@ -55,7 +53,26 @@ internal class BoCart : ICart
 
             Do.Product product = dal.Product.GetById(productID);//הבאת פרטי מוצר
 
-            BO.OrderItem item = cart.Items.Find(x => x.ProductID == productID) ?? throw new Exception("There is no product to update - an exception that should not happen");
+            BO.OrderItem? item = cart.Items.Find(x => x.ProductID == productID);
+
+            if(item==null)//המוצר לא נמצא בסל הקניות עדיין
+            {
+                if (NewAmount == 0)
+                    return cart;
+
+                item = new()
+                {
+                    ProductID=product.ID,
+                    NameOfBook=product.NameOfBook,
+                    AmountOfItems = NewAmount,
+                    PriceOfOneItem=product.Price,
+                    TotalPrice=NewAmount*product.Price
+                };
+
+                cart.Items.Add(item);
+                return cart;
+
+            }
 
             if (NewAmount == 0)//הסרת מוצר זה מסל הקניות
             {

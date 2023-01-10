@@ -11,29 +11,29 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="25*"/>
+            <RowDefinition Height="19*"/>
+            <RowDefinition Height="93*"/>
         </Grid.RowDefinitions>
-        <Rectangle HorizontalAlignment="Center" Height="60" Stroke="Black" VerticalAlignment="Center" Width="1000" Fill="#FFF6F6F6"/>
+        <Rectangle HorizontalAlignment="Center" Height="95" VerticalAlignment="Center" Width="1000" Fill="#FFF6F6F6"/>
         <TextBox x:Name="nameOrID"   
             materialDesign:HintAssist.Hint="איזה ספר את/ה מחפש/ת?"     
             Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
             materialDesign:HintAssist.Foreground="Black"
             materialDesign:TextFieldAssist.UnderlineBrush="Black"
             HorizontalAlignment="Left"
-            Margin="686,0,0,0"
+            Margin="686,26,0,0"
             Width="210" Height="40" VerticalAlignment="Top"
             RenderTransformOrigin="0.837,0.756" Text=""/>
 
         <ComboBox Name="TakenChargeSlotsComboBox"
-                          Margin="435,4,465,0"  Width="100"
+                          Margin="435,31,465,0"
                           materialDesign:HintAssist.Hint="(קטגוריה)"
-                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Top"/>
+                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="37" VerticalAlignment="Top"/>
 
         <ComboBox x:Name="TakenChargeSlotsComboBox_Copy"
-            Margin="560,4,340,0"  Width="100"
+            Margin="560,31,340,0"
             materialDesign:HintAssist.Hint="(סדר לפי)"
-            Style="{StaticResource MaterialDesignFloatingHintComboBox}" VerticalAlignment="Top"/>
+            Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="37" VerticalAlignment="Top"/>
 
         <ListView HorizontalAlignment="Center" Height="583" VerticalAlignment="Top" Width="1000"
             x:Name="Catalog" 

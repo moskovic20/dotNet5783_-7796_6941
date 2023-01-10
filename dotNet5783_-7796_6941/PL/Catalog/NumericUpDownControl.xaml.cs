@@ -35,6 +35,7 @@ namespace PL.Catalog
 
 
 
+
         public static object ValueCoerceValueCallback(DependencyObject d, object baseValue)
         {
             float? value = baseValue as float?;
@@ -94,7 +95,7 @@ namespace PL.Catalog
         {
             if (textNumber == null || textNumber.Text == "" || textNumber.Text == "-")
             {
-                Value = null;
+                Value = 0;
                 return;
             }
 

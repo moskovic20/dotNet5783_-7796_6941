@@ -76,6 +76,11 @@ public partial class MainWindow : Window
         this.myFrame.Content = new PlEntity.Cart.Cart(bl, myCart);
     }
     #endregion
+
+    private void goToCatalog_Click(object sender, RoutedEventArgs e)
+    {
+        this.myFrame.Content = new catalog(bl, myCart, this.myFrame);
+    }
 }
 
 #region אופציה לספרים אהובים..
@@ -104,3 +109,4 @@ lovedBooks = new();
 
  */
 #endregion
+

@@ -8,13 +8,14 @@
       d:DesignHeight="560" d:DesignWidth="1000"
       Title="bookDetails" >
 
-    <Grid>
+    <Grid Background="#FFF6F6F6">
+        
         <Image HorizontalAlignment="Left" Height="298" Source="{Binding Image}" Margin="705,50,0,0" VerticalAlignment="Top" Width="245"/>
         <TextBlock HorizontalAlignment="Left" Margin="79,190,0,0" TextWrapping="Wrap" Text="{Binding Summary}" VerticalAlignment="Top" Height="300" Width="554" Foreground="Black" TextAlignment="Right"/>
-        <local:NumericUpDownControl x:Name="gradeNumUpDown" Margin="767,397,93,108" />
+        <local:NumericUpDownControl x:Name="gradeNumUpDown" MaxValue="{Binding InStock}" MinValue="1" Margin="743,373,117,0" Height="35" VerticalAlignment="Top" />
         <Label Content="{Binding NameOfBook}" Margin="338,50,0,0" VerticalAlignment="Top" Height="65" Width="296" HorizontalContentAlignment="Right" HorizontalAlignment="Left" FontSize="24" FontWeight="Bold"/>
         <Label Content="{Binding AuthorName}" HorizontalAlignment="Left" Margin="332,96,0,0" VerticalAlignment="Top" Height="50" Width="296" HorizontalContentAlignment="Right" FontSize="18" Foreground="#FF6D1DB6"/>
-        <Label Content="....................................." HorizontalAlignment="Left" Margin="332,115,0,0" VerticalAlignment="Top" Height="31" Width="296" HorizontalContentAlignment="Right" FontSize="22" Foreground="#FF6D1DB6"/>
-
+        <Label Content=".........................................." HorizontalAlignment="Left" Margin="332,131,0,0" VerticalAlignment="Top" Height="50" Width="296" HorizontalContentAlignment="Right" FontSize="20" Foreground="#FF6D1DB6"/>
+        <Button x:Name="addToCart" Click="addToCart_Click" Content="הוסף לסל"  Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="737,433,0,0" VerticalAlignment="Top" Height="33" Width="149"/>
     </Grid>
 </Page>

@@ -72,6 +72,8 @@
                 OpacityMask="Black" />
         </Button>
 
+        <Button x:Name="goToCatalog" Click="goToCatalog_Click" Content="חזרה לקטלוג"  Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="720,19,0,0" VerticalAlignment="Top" Height="34" Width="149"/>
+
         <Button x:Name="trakingOrder"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
             BorderBrush="#007E8C7F"
@@ -84,7 +86,7 @@
                 Height="25" Width="25" 
                 OpacityMask="Black" HorizontalAlignment="Center" />
         </Button>
-        
+
 
 
 

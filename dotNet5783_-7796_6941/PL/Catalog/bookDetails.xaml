@@ -9,10 +9,10 @@
       Title="bookDetails" >
 
     <Grid Background="#FFF6F6F6">
-        <Button x:Name="goToCatalog" Click="goToCatalog_Click" Content="חזרה לקטלוג"  Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="31,25,0,0" VerticalAlignment="Top" Height="34" Width="149"/>
+        
         <Image HorizontalAlignment="Left" Height="298" Source="{Binding Image}" Margin="705,50,0,0" VerticalAlignment="Top" Width="245"/>
         <TextBlock HorizontalAlignment="Left" Margin="79,190,0,0" TextWrapping="Wrap" Text="{Binding Summary}" VerticalAlignment="Top" Height="300" Width="554" Foreground="Black" TextAlignment="Right"/>
-        <local:NumericUpDownControl x:Name="gradeNumUpDown" Margin="743,373,117,0" Height="35" VerticalAlignment="Top" />
+        <local:NumericUpDownControl x:Name="gradeNumUpDown" MaxValue="{Binding InStock}" MinValue="1" Margin="743,373,117,0" Height="35" VerticalAlignment="Top" />
         <Label Content="{Binding NameOfBook}" Margin="338,50,0,0" VerticalAlignment="Top" Height="65" Width="296" HorizontalContentAlignment="Right" HorizontalAlignment="Left" FontSize="24" FontWeight="Bold"/>
         <Label Content="{Binding AuthorName}" HorizontalAlignment="Left" Margin="332,96,0,0" VerticalAlignment="Top" Height="50" Width="296" HorizontalContentAlignment="Right" FontSize="18" Foreground="#FF6D1DB6"/>
         <Label Content=".........................................." HorizontalAlignment="Left" Margin="332,131,0,0" VerticalAlignment="Top" Height="50" Width="296" HorizontalContentAlignment="Right" FontSize="20" Foreground="#FF6D1DB6"/>

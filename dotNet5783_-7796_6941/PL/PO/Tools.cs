@@ -10,6 +10,8 @@ using System.Printing;
 using System.Windows.Input;
 using System.Text.RegularExpressions;
 using DalApi;
+using PL.Catalog;
+using System.Windows.Controls;
 
 namespace PL.PO;
 
@@ -270,11 +272,11 @@ static class Tools
         return copyProduct;
     }
 
-   
-        public static List<ProductForList> GetAllProductInPO()
-        {
-            var list = from p in bl.BoProduct.GetAllProductForList_forM()
-                       select p.CopyBoPflToPoPfl();
+
+    public static List<ProductForList> GetAllProductInPO()
+    {
+        var list = from p in bl.BoProduct.GetAllProductForList_forM()
+                   select p.CopyBoPflToPoPfl();
 
         return list.ToList();
 
@@ -341,7 +343,7 @@ static class Tools
     {
         BO.Cart newCart;
 
-        if (cart.Items!=null )
+        if (cart.Items != null)
         {
             var list = from myOI in cart.Items
                        select new BO.OrderItem()
@@ -363,7 +365,7 @@ static class Tools
 
             };
         }
-       else
+        else
         {
             newCart = new BO.Cart()
             {
@@ -379,33 +381,46 @@ static class Tools
         return newCart;
     }
 
-
-
     public static PO.Cart CastingFromBoToPoCart(this BO.Cart cart)
     {
-             
-            var list = from myOI in cart.Items
-                       select new PO.OrderItem()
-                       {
-                           OrderID = myOI.OrderID,
-                           ProductID = myOI.ProductID,
-                           NameOfBook = myOI.NameOfBook,
-                           PriceOfOneItem = myOI.PriceOfOneItem,
-                           AmountOfItems = myOI.AmountOfItems,
-                           TotalPrice = myOI.TotalPrice
-                       };
+
+        var list = from myOI in cart.Items
+                   select new PO.OrderItem()
+                   {
+                       OrderID = myOI.OrderID,
+                       ProductID = myOI.ProductID,
+                       NameOfBook = myOI.NameOfBook,
+                       PriceOfOneItem = myOI.PriceOfOneItem,
+                       AmountOfItems = myOI.AmountOfItems,
+                       TotalPrice = myOI.TotalPrice
+                   };
 
 
-            PO.Cart newCart = new PO.Cart()
-            {
-                CustomerName = cart.CustomerName,
-                CustomerEmail = cart.CustomerEmail,
-                CustomerAddress = cart.CustomerAddress,
-                Items = new(list.ToList()),
-                TotalPrice = cart.TotalPrice
-
-            };
-         
+        PO.Cart newCart = new PO.Cart()
+        {
+            CustomerName = cart.CustomerName,
+            CustomerEmail = cart.CustomerEmail,
+            CustomerAddress = cart.CustomerAddress,
+            Items = new(list.ToList()),
+            TotalPrice = cart.TotalPrice
+        };
         return newCart;
+    }
+
+    public static void putTo(this BO.Cart sorce, PO.Cart target)
+    {
+        var list = from myOI in sorce.Items
+                   select new PO.OrderItem()
+                   {
+                       OrderID = myOI.OrderID,
+                       ProductID = myOI.ProductID,
+                       NameOfBook = myOI.NameOfBook,
+                       PriceOfOneItem = myOI.PriceOfOneItem,
+                       AmountOfItems = myOI.AmountOfItems,
+                       TotalPrice = myOI.TotalPrice
+                   };
+
+        target.Items = new(list.ToList());
+        target.TotalPrice = sorce.TotalPrice;
     }
 }

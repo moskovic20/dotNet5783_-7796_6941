@@ -38,7 +38,18 @@ namespace PL.Catalog
 
         private void addToCart_Click(object sender, RoutedEventArgs e)
         {
-            myCart = bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), myProduct.ID, (int)gradeNumUpDown.Value ).CastingFromBoToPoCart();
+            try
+            {
+                bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), myProduct.ID, (int)gradeNumUpDown.Value).putTo(myCart);
+                MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                    MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+            }
         }
+
+
     }
 }

@@ -169,7 +169,7 @@
                                     Height="30" Width="30"
                                     HorizontalAlignment="Center"
                                     Click="incresNum_Click">
-                                <materialDesign:PackIcon Kind="ArrowBottom"/>
+                                <materialDesign:PackIcon Kind="ArrowUpDropCircleOutline"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

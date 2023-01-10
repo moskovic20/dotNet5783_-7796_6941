@@ -57,7 +57,10 @@ namespace PL.Catalog
 
                 Button button = (sender as Button)!;
                 PO.ProductItem p = (button.DataContext as PO.ProductItem)!;
-                myCart.Items=bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart().Items; //הוספת המוצר לשכבה מתחת 
+                PO.Cart Temp= bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).CastingFromBoToPoCart();//הוספת המוצר לשכבה מתחת 
+                myCart.Items = Temp.Items;
+                myCart.TotalPrice = Temp.TotalPrice;
+                //AddToC(p.ID);
                 MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
                 
             }

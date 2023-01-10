@@ -71,6 +71,7 @@ public partial class Cart : Page
             PO.OrderItem toChangeP = (PO.OrderItem)OrderItems_DateGrid.SelectedItem;
             myCart = bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, toChangeP.AmountOfItems + 1).CastingFromBoToPoCart();
             this.DataContext = myCart;//צריך?
+            this.OrderItems_DateGrid.DataContext = myCart.Items;
         }
         catch (Exception ex)
         {
@@ -88,7 +89,9 @@ public partial class Cart : Page
             //PO.OrderItem toChangeP = (PO.OrderItem)sender;
             PO.OrderItem toChangeP = (PO.OrderItem)OrderItems_DateGrid.SelectedItem;
             myCart =bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, toChangeP.AmountOfItems - 1).CastingFromBoToPoCart();
-            this.DataContext = myCart;//צריך?
+            this.DataContext = myCart;
+            this.OrderItems_DateGrid.DataContext = myCart.Items;
+
         }
         catch (Exception ex)
         {
@@ -106,6 +109,7 @@ public partial class Cart : Page
             PO.OrderItem toChangeP = (PO.OrderItem)sender;
             bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, 0);
             this.DataContext = myCart;//צריך?
+            this.OrderItems_DateGrid.DataContext = myCart.Items;
         }
         catch (Exception ex)
         {

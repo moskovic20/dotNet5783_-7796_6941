@@ -36,13 +36,13 @@
 
 
 
-        <Button x:Name="AddTheStation"
+        <Button x:Name="GoToCart"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
                 BorderBrush="#007E8C7F"
                 Width="50" Height="50"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
-                Margin="24,16,0,0"  >
+                Margin="24,10,0,0" Click="GoToCart_Click" >
             <materialDesign:PackIcon Kind="Cart" 
                                          Height="25" Width="25" 
                                          OpacityMask="Black" />
@@ -54,7 +54,7 @@
             Width="50" Height="50"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Margin="83,16,0,0"  >
+            Margin="103,10,0,0"  >
             <materialDesign:PackIcon Kind="cardShearToutline" 
                 Height="25" Width="25" 
                 OpacityMask="Black" HorizontalAlignment="Center" />
@@ -66,7 +66,7 @@
             Width="50" Height="50"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Margin="143,16,0,0"  >
+            Margin="187,10,0,0"  >
             <materialDesign:PackIcon Kind="EmailAdd" 
                 Height="25" Width="25" 
                 OpacityMask="Black" />
@@ -78,11 +78,11 @@
             Width="50" Height="50"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Margin="204,15,0,0" 
+            Margin="274,11,0,0" 
                 Click="trakingOrder_Click">
             <materialDesign:PackIcon Kind="ArchiveSearchOutline" 
                 Height="25" Width="25" 
-                OpacityMask="Black" />
+                OpacityMask="Black" HorizontalAlignment="Center" />
         </Button>
         
 

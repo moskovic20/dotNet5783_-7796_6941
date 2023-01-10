@@ -140,8 +140,8 @@ public class Order : MainPo
     public ObservableCollection<OrderItem>? Items
     {
         get
-        {
-            return _Items;
+        { 
+        return _Items; 
         }
         set
         {

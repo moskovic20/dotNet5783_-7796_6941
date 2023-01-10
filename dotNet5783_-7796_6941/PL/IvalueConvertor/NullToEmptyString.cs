@@ -11,7 +11,7 @@ namespace PL.IvalueConvertor;
 
 internal class NullToEmptyString: IValueConverter
 {
-    private string kind;
+    private string? kind;
 
     public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

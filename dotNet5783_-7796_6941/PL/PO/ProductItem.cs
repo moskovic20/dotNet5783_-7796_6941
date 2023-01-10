@@ -9,7 +9,6 @@ using System.Windows.Media.Imaging;
 namespace PL.PO;
 public class ProductItem : MainPo
 {
-    public event PropertyChangedEventHandler? PropertyChanged;
 
     private int _ID;
     public int ID

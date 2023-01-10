@@ -1,16 +1,7 @@
-﻿//using BlApi;
-//using BlImplementation;
-//using PL.BoProducts;
-//using PL.Products;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-
-using BlApi;
+﻿using BlApi;
 using PL.Admin;
 using PL.PO;
+using PL.PlEntity.Cart;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -26,6 +17,7 @@ using MaterialDesignThemes.Wpf;
 using System.Windows.Documents;
 using System.Collections;
 using Microsoft.VisualBasic;
+using PL.PlEntity.Products;
 
 namespace PL;
 
@@ -36,17 +28,19 @@ public partial class MainWindow : Window
 {
     private IBl bl;
 
-    private ObservableCollection<ProductItem>? allBooksForShow;
-    private PL.PO.Cart myCart=new();
+    //private ObservableCollection<ProductItem>? allBooksForShow;
+    private PL.PO.Cart myCart;
 
     public MainWindow()
     {
         InitializeComponent();
         this.bl = BlApi.Factory.GetBl();
+        this.myCart = new();
         this.myFrame.Content = new catalog(bl, myCart, this.myFrame);
+
     }
 
-    #region טעינת תמונות ---------יש מה לעבוד עוד-----------
+    #region טעינת תמונות | יש מה לעבוד עוד
     // for this code image needs to be a project resource
     private BitmapImage LoadImage(string filename)
     {
@@ -54,7 +48,7 @@ public partial class MainWindow : Window
     }
     #endregion
 
-    #region כפתור צור קשר
+    #region כפתור צור קשר | חסר לנו פונקציית מייל 
     private void conectUs_Click(object sender, RoutedEventArgs e)
     {
 
@@ -76,12 +70,15 @@ public partial class MainWindow : Window
     }
     #endregion
 
-    private void goToCatalog_Click(object sender, RoutedEventArgs e)
+    #region עמוד ההזמנה
+    private void GoToCart_Click(object sender, RoutedEventArgs e)
     {
-        this.myFrame.Content = new catalog(bl, myCart, this.myFrame);
+        this.myFrame.Content = new PlEntity.Cart.Cart(bl, myCart);
     }
+    #endregion
 }
 
+#region אופציה לספרים אהובים..
 /*
  אם נוסיף אופציה לאהובים..
 private ObservableCollection<Product> lovedBooks;
@@ -106,3 +103,4 @@ lovedBooks = new();
     }
 
  */
+#endregion

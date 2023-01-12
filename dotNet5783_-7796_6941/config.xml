@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfConfigtNumbers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	
+	<configNumbers>
+		<numberSaved>100000</numberSaved>
+		<typeOfnumber>Minimum Num For Order ID</typeOfnumber>
+	</configNumbers>
+	
+	<configNumbers>
+		<numberSaved>100000</numberSaved>
+		<typeOfnumber>Minimum Num For OrderItem ID</typeOfnumber>
+	</configNumbers>
+	
+</ArrayOfConfigtNumbers>

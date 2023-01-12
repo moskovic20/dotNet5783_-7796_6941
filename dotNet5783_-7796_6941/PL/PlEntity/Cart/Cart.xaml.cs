@@ -53,7 +53,7 @@ public partial class Cart : Page
             
             MessageBox.Show("מספר הזמנתך הוא "+ OrderId + "!ההזמנה נקלטה במערכת");
 
-            myCart.reboot();
+            myCart.reboot(); //לבדוק מה זה
             myFrame.Content = new catalog(bl, myCart, this.myFrame);
         }
         catch (Exception ex)

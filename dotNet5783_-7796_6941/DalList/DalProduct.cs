@@ -86,6 +86,27 @@ internal class DalProduct : IProduct
         Add(item);
     }
 
+    
+
+
+    //    int indexOfSameId = _DS._Products.FindIndex(x => x?.OrderID == myID);
+
+    //    if (indexOfSameId == -1)
+    //        return true;
+
+    //    else
+    //        return false;
+    //}
+
+
+    //    int indexOfSameId = _DS._Products.FindIndex(x => x?.OrderID == myID);
+
+    //    if (indexOfSameId == -1)
+    //        return true;
+
+    //    else
+    //        return false;
+    //}
 
 
     /// <summary>

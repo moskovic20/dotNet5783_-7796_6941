@@ -158,7 +158,7 @@
                 VerticalAlignment="Top" 
                 Click="addButton_Click"
                 Background="#FF009BA6" Margin="60,16,0,0" >
-            <materialDesign:PackIcon Kind="BookAdd" 
+            <materialDesign:PackIcon Kind="BookAlert"
                                          Height="25" Width="25" 
                                          OpacityMask="Black" />
         </Button>

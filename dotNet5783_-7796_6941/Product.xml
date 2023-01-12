@@ -1,4 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ProDuct>
-	
-</ProDuct>
+<Products>
+	<Product>
+		<ID> </ID>
+		<NameOfBook> </NameOfBook>
+		<AuthorName> </AuthorName>
+		<Category> </Category>
+		<Summary> </Summary>
+		<Price> </Price>
+		<InStock> </InStock>
+		<IsDeleted> </IsDeleted>
+		<ProductImagePath> </ProductImagePath>
+	</Product>
+</Products>

@@ -1,4 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Order>
+<ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	
-</Order>
+	<Order>
+		<OrderID> </OrderID>
+		<CustomerName> </CustomerName>
+		<CustomerEmail> </CustomerEmail>
+		<ShippingAddress> </ShippingAddress>
+		<DateOrder> </DateOrder>
+		<ShippingDate> </ShippingDate>
+		<DeliveryDate> </DeliveryDate>
+		<IsDeleted> </IsDeleted>
+	</Order>
+	
+</ArrayOfOrder>

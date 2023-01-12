@@ -10,10 +10,10 @@ namespace Dal;
 
 internal class DalXml : IDal
 {
+    #region singelton
+
     private static DalXml? instance;
-
     private static readonly object key = new(); //Thread Safe
-
     public static DalXml? Instance
     {
         get
@@ -29,12 +29,36 @@ internal class DalXml : IDal
 
             return instance;
         }
+      
+    } 
+    static DalXml() { }
+
+    #endregion
+
+    public struct configNumbers
+    {
+        public double numberSaved { get; set; }
+        public string typeOfnumber { get; set; }
     }
 
-    static DalXml() { }
-    private DalXml() { }
 
+    private DalXml()
+    {
+    
+    
+    }
+
+    #region ממשקים לשימוש
     public IOrder Order { get; } = new Dal.Order();
     public IProduct Product { get; } = new Dal.Product();
     public IOrderItem OrderItem { get; } = new Dal.OrderItem();
+    #endregion
+
+    #region DS xml file
+
+    internal string OrderPath = @"Order.xml"; // path to name of file..
+    internal string OrderItemPath = @"OrderItem.xml";
+    internal string ProductPath = @"Product.xml";
+
+    #endregion
 }

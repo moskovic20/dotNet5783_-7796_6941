@@ -51,6 +51,8 @@ public partial class Cart : Page
 
             myCart = new();
             this.DataContext = myCart;//מקווה שככה אמורים
+            this.OrderItems_DateGrid.DataContext = myCart.Items;
+            
         }
         catch (Exception ex)
         {
@@ -106,7 +108,7 @@ public partial class Cart : Page
     {
         try
         {
-            PO.OrderItem toChangeP = (PO.OrderItem)sender;
+            PO.OrderItem toChangeP = (PO.OrderItem)OrderItems_DateGrid.SelectedItem;
             bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, 0);
             this.DataContext = myCart;//צריך?
             this.OrderItems_DateGrid.DataContext = myCart.Items;

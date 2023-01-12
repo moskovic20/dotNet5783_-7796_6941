@@ -126,7 +126,7 @@
 
                 <!--רק חסר מספר הזמנה לאורדראייטם אבל לא קיים עדיין נראה לי-->
 
-                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=Trash}"
+                <DataGridTemplateColumn Header="{materialDesign:PackIcon Kind=Bible}"
                                     MinWidth="10">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

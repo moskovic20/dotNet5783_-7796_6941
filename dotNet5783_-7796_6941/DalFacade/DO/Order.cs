@@ -26,7 +26,7 @@ public struct Order
     /// <summary>
     /// The address to which the order should be sent
     /// </summary>
-    public string? ShippingAddress { get; set; }
+    public string? CustomerAddress { get; set; }
 
     /// <summary>
     /// The date the order was created

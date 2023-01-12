@@ -7,10 +7,14 @@ internal class DalOrder : IOrder
 {
     DataSource _DS = DataSource.Instance!;
 
+    /// <summary>
+    /// הוספת הזמנה 
+    /// </summary>
+    /// <param name="myOrder"></param>
+    /// <returns></returns>
+    /// <exception cref="AlreadyExistException"></exception>
     public int Add(Order myOrder)
     {
-        //Order temp = myOrder;
-
         int indexOfMyOrder = _DS._Orders.FindIndex(x => x?.OrderID == myOrder.OrderID);
 
         if (indexOfMyOrder == -1) //myOrder.OrderID is not found in _OrderS
@@ -21,45 +25,54 @@ internal class DalOrder : IOrder
         }
 
         if (_DS._Orders[indexOfMyOrder]?.IsDeleted == false)
-            throw new AlreadyExistException("The order you wish to add is already exists\n");
+            throw new AlreadyExistException("ההזמנה שאתה רוצה להוסיף כבר קיימת\n");
 
         _DS._Orders.Add(myOrder);
         return myOrder.OrderID;
 
     }
 
+    /// <summary>
+    ///מחיקת הזמנה
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DoesntExistException"></exception>
     public void Delete(int id)
     {
         int indexOfOrderById = _DS._Orders.FindIndex(x => x?.OrderID == id && x?.IsDeleted == false);
 
         if (indexOfOrderById == -1)
-            throw new DoesntExistException("The order you wanted to delete is not found\n");
+            throw new DoesntExistException("ההזמנה שרצית למחוק לא נמצאה במערכת\n");
 
 
         Order myOrder = _DS._Orders[indexOfOrderById] ?? new();
 
         if (myOrder.IsDeleted == true)
-            throw new DoesntExistException("The order you wanted to delete has already been deleted\n");
+            throw new DoesntExistException("ההזמנה שרצית למחוק-כבר נמחקה\n");
 
 
         myOrder.IsDeleted = true;
         _DS._Orders[indexOfOrderById] = myOrder;
     }
 
+    /// <summary>
+    /// הפונקציה מקבלת מספר מוצר ומחזירה אותו
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="DoesntExistException"></exception>
     public Order GetById(int id)
     {
         Order? myOrder = _DS._Orders.FirstOrDefault(x => x?.OrderID == id && x?.IsDeleted == false);
 
-        return myOrder ?? throw new DoesntExistException("The Order is not found\n"); ;
+        return myOrder ?? throw new DoesntExistException("ההזמנה לא נמצאה במערכת\n"); ;
     }
 
-    //public Order GetByCustomerName(string name)
-    //{
-    //    Order? myOrder = _DS._Orders.FirstOrDefault(x => x?.CustomerName == name && x?.IsDeleted == false);
-
-    //    return myOrder ?? throw new DoesntExistException("The Order is not found\n"); ;
-    //}
-
+    /// <summary>
+    /// עדכון ההזמנה
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DoesntExistException"></exception>
     public void Update(Order item)
     {
         try
@@ -68,7 +81,7 @@ internal class DalOrder : IOrder
         }
         catch
         {
-            throw new DoesntExistException("the order you wish to update does not exist");
+            throw new DoesntExistException("ההזמנה שרצית לעדכן לא נמצאה במערכת");
         }
 
         Delete(item.OrderID);

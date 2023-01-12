@@ -130,7 +130,7 @@ public class DataSource
                 OrderID = Config.NextOrderNumber,
                 DateOrder = DateTime.Now - new TimeSpan(R.Next(11, 41), R.Next(24), R.Next(60), R.Next(60)),
                 CustomerName = customerNames[R.Next(0, 20)],
-                ShippingAddress = address[R.Next(0, 20)],
+                CustomerAddress = address[R.Next(0, 20)],
             };
 
             myOrder.CustomerEmail = myOrder.CustomerName + "@gmail.com";

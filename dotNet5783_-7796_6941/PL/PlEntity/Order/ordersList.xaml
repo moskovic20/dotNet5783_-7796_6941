@@ -51,23 +51,13 @@
                         BorderBrush="#FF009BA6" Foreground="#FF009BA6" Margin="29,17,805,24"
                        />
 
-        <Button x:Name="search"
-                Click="search_Click"
-                HorizontalAlignment="Left"
-                Margin="568,20,0,0"
-                Width="50" Height="28"
-                VerticalAlignment="Top">
-            <materialDesign:PackIcon x:Name="iconSearch" Kind="Search" 
-                                         Height="14" Width="20" 
-                                         OpacityMask="Black" />
-        </Button>
-
         <TextBox x:Name="nameClaientOrID"
                  
             materialDesign:HintAssist.Hint="מספר הזמנה/שם לקוח" 
                  Style="{DynamicResource MaterialDesignDataGridTextColumnEditingStyle}"
                  materialDesign:HintAssist.Foreground="Black"
                                   materialDesign:TextFieldAssist.UnderlineBrush="Black"
+                 TextChanged="nameClaientOrID_TextChanged"
                  MaxLength="9"
                  HorizontalAlignment="Left"
                  Margin="635,16,0,0"

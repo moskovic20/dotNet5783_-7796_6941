@@ -23,7 +23,6 @@ internal class BoProduct : IProduct
         return products.CopyListTo<Do.Product?, BO.ProductForList>();
     }
 
-
     /// <summary>
     /// מחזירה רשימה של פרודוקטאייטם בשביל מסך תצוגה לקונה
     /// </summary>
@@ -31,13 +30,13 @@ internal class BoProduct : IProduct
     /// <exception cref="BO.GetAllForList_Exception"></exception>
     public IEnumerable<BO.ProductItem> GetAllProductItems_forC()
     {
-        var products = dal.Product.GetAll((Do.Product? p) => { return p?.Price == null ? false : true; });
+        var products = dal.Product.GetAll((Do.Product? p) => { return (p?.Price == null)? false : true; });
 
         if (products.Count() == 0)
             throw new BO.GetAllForList_Exception("There are no products");
 
 
-        var ProductItems = from pI in dal.Product.GetAll()
+        var ProductItems = from pI in products
                            let p = pI.GetValueOrDefault()
                            select new BO.ProductItem()
                            {
@@ -53,7 +52,6 @@ internal class BoProduct : IProduct
         return ProductItems!;
 
     }
-
 
     /// <summary>
     /// הפונקציה מחזירה את רשמת המוצרים בחנות ללקוח- רק מוצרים שהוזן עבורם מחיר
@@ -87,14 +85,12 @@ internal class BoProduct : IProduct
         }
     }
 
-    public BO.Product GetProductByName(string name)
+    public IEnumerable<ProductForList> GetProductsByName(string name)
     {
         try
         {
-            Do.Product? myP = dal.Product.GetByName(name); //הבאת המוצר מבשכבת הנתונים
-            BO.Product BoMyP = new();
-            BoMyP = myP.CopyPropTo(BoMyP);//העתקת הנתונים החופפים לישות הנתונים של מוצר בשכבת הלוגיקה
-            return BoMyP;
+            return from p in dal.Product.GetAll(x => x?.NameOfBook.Contains(name) ?? false)
+                   select GetProductForList(p?.ID ?? throw new Exception("problem"));
         }
         catch (Do.DoesntExistException ex)
         {
@@ -221,58 +217,16 @@ internal class BoProduct : IProduct
         }
     }
 
-    #region GetPartOfProduct
-    //public IEnumerable<ProductForList> GetPartOfProduct(Predicate<ProductForList> filter)
-    //{
-    //    var query = (from product in GetAllProductForList_forM()
-    //                 where filter(product)
-    //                 select product).ToList();
-    //    return query;
-    //}
-    #endregion
-
-
-    //______________________________________________________פונקציה של נורית עבור סינון בתצוגה
-
-    public IEnumerable<BO.ProductForList?> GetListedProducts(BO.Filters enumFilter = BO.Filters.None, Object? filterValue = null)
-
+    public IEnumerable<ProductForList> GetAllProductByNumber(int number)
     {
-
-        IEnumerable<Do.Product?> doProductList =
-
-        enumFilter switch
-
-        {
-
-            BO.Filters.filterBYCategory =>
-
-                //DO.Category categ = filterValue != null ? (DO.Category)filterValue : DO.Category.all;
-
-                dal!.Product.GetAll(dp => dp?.Category == (filterValue != null ? (DO.CATEGORY)filterValue : DO.CATEGORY.all)),
-
-            BO.Filters.filterBYName =>
-
-                dal!.Product.GetAll(dp => dp?.NameOfBook == (string?)filterValue),
-
-            BO.Filters.filterBYBiggerThanPrice =>
-
-                dal!.Product.GetAll(dp => dp?.Price >= (double?)filterValue),
-
-            BO.Filters.filterBYSmallerThanPrice =>
-
-                dal!.Product.GetAll(dp => dp?.Price <= (double?)filterValue),
-
-            BO.Filters.None =>
-
-                dal!.Product.GetAll(),
-
-            _ => dal!.Product.GetAll(),
-
-        };
-
-        return (from Do.Product doProduct in doProductList
-                select doProduct.CopyPropTo(new BO.ProductForList())).ToList();
+        var query = (from product in GetAllProductForList_forM()
+                     where BlApi.Tools.ContainsNumber(number,product.ID)
+                     select product).ToList();
+        return query;
     }
+
+    
+
 
 
 }

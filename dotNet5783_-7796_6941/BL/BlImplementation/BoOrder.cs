@@ -35,7 +35,7 @@ internal class BoOrder : IOrder
 
     public IEnumerable<BO.OrderForList> getAllOrderOfClaient(string name)
     {
-        return from o in dal.Order.GetAll(x => x?.CustomerName == name)
+        return from o in dal.Order.GetAll(x => x?.CustomerName.Contains(name)?? false)
                select GetOrderForList(o?.OrderID ?? throw new Exception("problem"));
     }
 
@@ -245,30 +245,12 @@ internal class BoOrder : IOrder
 
     }
 
-   // public BO.Order GetOrdertDetails(string CustomerName)
-    //{
-    //    try
-    //    {
-    //        Do.Order myOrder = dal.Order.GetByCustomerName(CustomerName);
-    //        BO.Order order = new BO.Order();
-    //        order = myOrder.CopyPropTo(order);
-    //        order.Status = myOrder.calculateStatus();
-    //        order.PaymentDate = myOrder.DateOrder;
-    //        var tempItems = dal.OrderItem.GetListByOrderID(myOrder.OrderID);
-    //        order.Items = tempItems.Select(x => x.ListFromDoToBo()).ToList();//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
-    //        order.TotalPrice = myOrder.CalculatePriceOfAllItems();
-    //        return order;
-    //    }
-        //catch (Do.DoesntExistException ex)
-        //{
-        //    throw new BO.GetDetails_Exception("Can't get this order", ex);
-        //}
-        //catch (BO.InvalidValue_Exception ex)
-        //{
-        //    throw new BO.GetDetails_Exception("Can't get this order", ex);
-        //}
-
-    //}
-
+    public IEnumerable<OrderForList> GetAllOrdersByNumber(int number)
+    {
+        var query = (from order in GetAllOrderForList()
+                     where BlApi.Tools.ContainsNumber(number, order.OrderID)
+                     select order).ToList();
+        return query;
+    }
 
 }

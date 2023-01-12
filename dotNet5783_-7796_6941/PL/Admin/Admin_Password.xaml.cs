@@ -11,22 +11,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PL.Admin
 {
     /// <summary>
-    /// Interaction logic for adminPassword.xaml
+    /// Interaction logic for Admin_Password.xaml
     /// </summary>
-    public partial class adminPassword : Window
+    public partial class Admin_Password : Page
     {
         IBl bl;
-
-        public adminPassword(IBl bl)
+        public Admin_Password(IBl bl)
         {
             InitializeComponent();
             this.bl = bl;
         }
+
+       
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -40,7 +42,6 @@ namespace PL.Admin
                 adminMenu adminHome = new(bl);
                 PasswordBox.Password = "";
                 adminHome.Show();
-                this.Close();
             }
             else
             {
@@ -53,11 +54,6 @@ namespace PL.Admin
         {
             errorPassword.Visibility = Visibility.Collapsed;
         }
-
-        private void goHome_Click(object sender, RoutedEventArgs e)
-        {
-            new MainWindow().Show();
-            this.Close();
-        }
     }
 }
+

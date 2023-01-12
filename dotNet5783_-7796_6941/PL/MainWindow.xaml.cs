@@ -28,15 +28,15 @@ public partial class MainWindow : Window
 {
     private IBl bl;
 
-    //private ObservableCollection<ProductItem>? allBooksForShow;
+    //private ObservableCollection<ProductItem>? BooksForShow;
     private PL.PO.Cart myCart;
 
     public MainWindow()
     {
         InitializeComponent();
-        this.bl = BlApi.Factory.GetBl();
-        this.myCart = new();
-        this.myFrame.Content = new catalog(bl, myCart, this.myFrame);
+        bl = BlApi.Factory.GetBl();
+        myCart = new();
+        myFrame.Content = new catalog(bl, myCart, this.myFrame);
 
     }
 
@@ -58,8 +58,8 @@ public partial class MainWindow : Window
     #region התחברות מנהל למערכת
     private void connectToSystem_Click(object sender, RoutedEventArgs e)
     {
-        new adminPassword(bl).Show();
-        this.Close();
+        this.myFrame.Content = new Admin_Password(bl);
+       // this.Close();
     }
     #endregion
 
@@ -73,14 +73,16 @@ public partial class MainWindow : Window
     #region עמוד ההזמנה
     private void GoToCart_Click(object sender, RoutedEventArgs e)
     {
-        this.myFrame.Content = new PlEntity.Cart.Cart(bl, myCart);
+        this.myFrame.Content = new PlEntity.Cart.Cart(bl,myCart,myFrame);
     }
     #endregion
 
+    #region כפתור-מעבר לקטלוג
     private void goToCatalog_Click(object sender, RoutedEventArgs e)
     {
         this.myFrame.Content = new catalog(bl, myCart, this.myFrame);
     }
+    #endregion
 }
 
 #region אופציה לספרים אהובים..

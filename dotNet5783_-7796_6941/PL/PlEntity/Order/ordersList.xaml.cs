@@ -83,7 +83,7 @@ namespace PL.PlEntity.Order
         {
             try
             {
-                PO.OrderForList ordToUp = (PO.OrderForList)Orders_DateGrid.SelectedItem;
+                PO.OrderForList ordToUp = (OrderForList)Orders_DateGrid.SelectedItem;
                 if (ordToUp.Status != OrderStatus.Accepted)
                     throw new Exception("כבר הוזן תאריך שילוח להזמנה זו");
 
@@ -153,45 +153,13 @@ namespace PL.PlEntity.Order
         }
         #endregion
 
-        #region אירוע- לחיצה על כפתור עדכון הזמנה
-        private void UpdateOrder_Click(object sender, RoutedEventArgs e)
-        {
-            //Action<int> updateAction = (orderID) =>
-            //{
-            //    PO.Order o = bl.BoOrder.GetOrdertDetails(orderID).CopyBoOrderForListToPoOrder();
-            //    PO.Order O_BeforUp = allOrders.FirstOrDefault(x => x.OrderID == o.orderID)!.CopyBoOrderForListToPoOrder();
-            //     //עדכנו שדה שדה,לבדוק אם יש דרך חכמה יותר
-
-            //};
-
-            //new UpdatProductForM_Window(bl, (ProductForList)Products_DateGrid.SelectedItem, updateAction).ShowDialog();
-
-        }
-
-        #endregion
-
-        //private void choosePicture(object sender, RoutedEventArgs e)
-        //{
-        //    // PO.OrderForList or = bl.BoOrder.GetOrderForList(id).CopyPropTo(new PO.OrderForList());//צריך לבדוק אם הפונקציה עובדת
-        //    Action<int> statusAction = (id) =>
-        //    {
-        //        //PO.ProductForList p = bl.BoProduct.GetProductForList(ProductID).CopyBoPflToPoPfl();
-        //        //  PO.ProductForList P_BeforUp = allBooks.FirstOrDefault(x => x.orderID == p.orderID)!;
-        //        PO.OrderForList or = bl.BoOrder.GetOrderForList(id).CopyPropTo(new PO.OrderForList());
-        //        PO.OrderForList orBeforUp = allOrders.FirstOrDefault(x => x.OrderID == or.OrderID)!;
-        //        orBeforUp.Status = or.Status;
-        //    };
-        //    //צריך לבדוק אם הפונקציה עובדת
-        //    //new statusUpdatWindow(bl, (PO.OrderForList)Orders_DateGrid.SelectedItem, statusAction).ShowDialog();
-        //}
-
         #region מחיקת הזמנה שהושלמה מהמערכת
         private void moveOrderToArchives(object sender, RoutedEventArgs e)
         {
             try
             {
 
-                OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
+                OrderForList orderToD =(OrderForList)((DataGrid)sender).SelectedItem;
                 if (orderToD.Status != OrderStatus.Completed)
                     throw new Exception("אי אפשר להעביר לארכיון הזמנה שאינה הושלמה ");
 
@@ -225,7 +193,7 @@ namespace PL.PlEntity.Order
         #region לחיצה על הזמנה לצפייה בפרטי הזמנה
         private void Orders_DateGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            PO.OrderForList or = (PO.OrderForList)Orders_DateGrid.SelectedItem;
+            PO.OrderForList or =(OrderForList)((DataGrid)sender).SelectedItem;
             new OrderDetailsWindowForM_(bl, or.OrderID).Show();
         }
         #endregion
@@ -260,17 +228,16 @@ namespace PL.PlEntity.Order
         #endregion
 
         #region חיפוש הזמנה לפי מספר הזמנה\שם לקוח
-        private void search_Click(object sender, RoutedEventArgs e)
+        private void nameClaientOrID_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
 
                 string myString = nameClaientOrID.Text;
 
-                if (iconSearch.Kind == MaterialDesignThemes.Wpf.PackIconKind.Close)
+
+                if (myString == "" || myString == null)
                 {
-                    nameClaientOrID.Text = "";
-                    iconSearch.Kind = MaterialDesignThemes.Wpf.PackIconKind.Search;
                     DataContext = allOrders;
                     GroupByStatus.IsEnabled = true;
                 }
@@ -283,10 +250,18 @@ namespace PL.PlEntity.Order
                     bool isID = int.TryParse(myString, out id);
                     if (isID)
                     {
-                        myOrder = bl.BoOrder.GetOrdertDetails(id).CopyPropTo(new OrderForList());
+                        var list = from o in bl.BoOrder.GetAllOrdersByNumber(id)
+                                   select new OrderForList
+                                   {
+                                       CustomerName = o.CustomerName,
+                                       OrderID = o.OrderID,
+                                       AmountOfItems = o.AmountOfItems,
+                                       Status = (PO.OrderStatus)o.Status,
+                                       TotalPrice = o.TotalPrice,
+                                   };
                         remoteGroup();
                         orderSearch.Clear();
-                        orderSearch.Add(myOrder);
+                        orderSearch = new(list);
                     }
                     else
                     {
@@ -305,7 +280,6 @@ namespace PL.PlEntity.Order
 
                     }
 
-                    iconSearch.Kind = MaterialDesignThemes.Wpf.PackIconKind.Close;
                     DataContext = orderSearch;
                     GroupByStatus.Content = "קבץ לפי קטגוריה";
                     GroupByStatus.IsEnabled = false;
@@ -319,5 +293,7 @@ namespace PL.PlEntity.Order
 
         }
         #endregion
+
+       
     }
 }

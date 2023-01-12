@@ -39,11 +39,5 @@ namespace PL.Admin
         {
             this.adminFrame.Content = new ordersList(bl);
         }
-
-        private void goHome_Click(object sender, RoutedEventArgs e)
-        {
-            new MainWindow().Show();
-            //this.Close();
-        }
     }
 }

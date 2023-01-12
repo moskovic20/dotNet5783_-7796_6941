@@ -210,48 +210,48 @@ static class Tools
 
     #region Converting the category from English to Hebrew and vice versa.
 
-    public static PO.CATEGORY HebrewToEnglishCategory(this PO.Hebrew_CATEGORY hebrewCategory)
-    {
-        if (hebrewCategory == Hebrew_CATEGORY.מסתורין)
-            return PO.CATEGORY.mystery;
-        if (hebrewCategory == Hebrew_CATEGORY.פנטזיה)
-            return PO.CATEGORY.fantasy;
-        if (hebrewCategory == Hebrew_CATEGORY.היסטוריה)
-            return PO.CATEGORY.history;
-        if (hebrewCategory == Hebrew_CATEGORY.מדע)
-            return PO.CATEGORY.scinence;
-        if (hebrewCategory == Hebrew_CATEGORY.ילדים)
-            return PO.CATEGORY.children;
-        if (hebrewCategory == Hebrew_CATEGORY.רומן)
-            return PO.CATEGORY.romans;
-        if (hebrewCategory == Hebrew_CATEGORY.בישול_ואפייה)
-            return PO.CATEGORY.cookingAndBaking;
-        if (hebrewCategory == Hebrew_CATEGORY.פסיכולוגיה)
-            return PO.CATEGORY.psychology;
+    //public static PO.CATEGORY HebrewToEnglishCategory(this PO.Hebrew_CATEGORY hebrewCategory)
+    //{
+    //    if (hebrewCategory == Hebrew_CATEGORY.מסתורין)
+    //        return PO.CATEGORY.mystery;
+    //    if (hebrewCategory == Hebrew_CATEGORY.פנטזיה)
+    //        return PO.CATEGORY.fantasy;
+    //    if (hebrewCategory == Hebrew_CATEGORY.היסטוריה)
+    //        return PO.CATEGORY.history;
+    //    if (hebrewCategory == Hebrew_CATEGORY.מדע)
+    //        return PO.CATEGORY.scinence;
+    //    if (hebrewCategory == Hebrew_CATEGORY.ילדים)
+    //        return PO.CATEGORY.children;
+    //    if (hebrewCategory == Hebrew_CATEGORY.רומן)
+    //        return PO.CATEGORY.romans;
+    //    if (hebrewCategory == Hebrew_CATEGORY.בישול_ואפייה)
+    //        return PO.CATEGORY.cookingAndBaking;
+    //    if (hebrewCategory == Hebrew_CATEGORY.פסיכולוגיה)
+    //        return PO.CATEGORY.psychology;
 
-        return PO.CATEGORY.kodesh;
-    }
+    //    return PO.CATEGORY.kodesh;
+    //}
 
-    public static Hebrew_CATEGORY EnglishToHebewCategory(this PO.CATEGORY? myCategory)
+    public static string EnglishToHebewStringCategory(this PO.CATEGORY myCategory)
     {
         if (myCategory == PO.CATEGORY.mystery)
-            return Hebrew_CATEGORY.מסתורין;
+            return "מסתורין";
         if (myCategory == PO.CATEGORY.fantasy)
-            return Hebrew_CATEGORY.פנטזיה;
+            return "פנטזיה";
         if (myCategory == PO.CATEGORY.history)
-            return Hebrew_CATEGORY.היסטוריה;
+            return "היסטוריה";
         if (myCategory == PO.CATEGORY.scinence)
-            return Hebrew_CATEGORY.מדע;
+            return "מדע";
         if (myCategory == PO.CATEGORY.children)
-            return Hebrew_CATEGORY.ילדים;
+            return "ילדים";
         if (myCategory == PO.CATEGORY.romans)
-            return Hebrew_CATEGORY.רומן;
+            return "רומן";
         if (myCategory == PO.CATEGORY.cookingAndBaking)
-            return Hebrew_CATEGORY.בישול_ואפייה;
+            return "בישול ואפייה";
         if (myCategory == PO.CATEGORY.psychology)
-            return Hebrew_CATEGORY.פסיכולוגיה;
+            return "פסיכולוגיה";
 
-        return Hebrew_CATEGORY.קודש;
+        return "קודש";
     }
 
     #endregion
@@ -310,7 +310,7 @@ static class Tools
             OrderID = boOrder.OrderID,
             CustomerName = boOrder.CustomerName,
             CustomerEmail = boOrder.CustomerEmail,
-            ShippingAddress = boOrder.ShippingAddress,
+            CustomerAddress = boOrder.CustomerAddress,
             DateOrder = boOrder.DateOrder,
             Status = (PO.OrderStatus)boOrder.Status,
             PaymentDate = boOrder.PaymentDate,
@@ -422,5 +422,14 @@ static class Tools
 
         target.Items = new(list.ToList());
         target.TotalPrice = sorce.TotalPrice;
+    }
+
+    public static void reboot(this PO.Cart cart)
+    {
+        cart.Items = null;
+        cart.CustomerName = null;
+        cart.CustomerEmail = null;
+        cart.CustomerAddress = null;
+        cart.TotalPrice = null;
     }
 }

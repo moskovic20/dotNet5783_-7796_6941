@@ -37,40 +37,22 @@ public partial class productList : Page
         DataContext = allBooks;
     }
 
-  
-    //private void AllBooks_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    //{
-    //    switch (e.Action)
-    //    {
-    //        case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
-    //            break;
-    //        case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
-    //            break;
-    //        case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
-    //            break;
-    //        case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
-    //            break;
-    //        case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
-    //            break;
-    //        default:
-    //            break;
-    //    }
-    //}
 
-    //private void categoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    //{
-    //    BO.CATEGORY? categ = cmbCategorySelector.SelectedItem as BO.CATEGORY?;
-
-    //    if (categ == BO.CATEGORY.all)
-    //        Products_DateGrid.ItemsSource = bl.BoProduct.GetListedProducts();
-    //    else
-    //        Products_DateGrid.ItemsSource = bl.BoProduct.GetListedProducts(BO.Filters.filterBYCategory, categ);
-    //}
-
-    #region אירוע-לחציה על כפתור הוסף ספר
+    #region אירוע-לחיצה על כפתור הוסף ספר
     private void addButton_Click(object sender, RoutedEventArgs e)
     {
-        Action<int> action = productId => allBooks.Add(bl.BoProduct.GetProductForList(productId).CopyBoPflToPoPfl());
+        Action<int> action = productID =>
+        {
+            ProductForList pToAdd = bl.BoProduct.GetProductForList(productID).CopyBoPflToPoPfl();
+            allBooks.Add(pToAdd);
+            if(DataContext==productSearch)
+            {
+                int myInt = 0;
+                int.TryParse(nameOrID.Text,out myInt);
+                if (pToAdd.NameOfBook.Contains(nameOrID.Text) || pToAdd.ID == myInt)
+                    productSearch.Add(pToAdd);
+            }
+        };
         new AddProductForM_Window(bl, action).ShowDialog();
     }
     #endregion
@@ -103,7 +85,7 @@ public partial class productList : Page
     }
     #endregion
 
-    #region אירוע- לחציה על כפתור מחק ספר
+    #region אירוע- לחיצה על כפתור מחק ספר
     private void deleteProductButton_Click(object sender, RoutedEventArgs e)
     {
         ProductForList pToD = (ProductForList)Products_DateGrid.SelectedItem;
@@ -121,7 +103,10 @@ public partial class productList : Page
                     allBooks.Remove(temp);
 
                     if (DataContext == productSearch)
-                        productSearch.Clear();
+                    {
+                        ProductForList pfl = productSearch.First(x => x.ID == pToD.ID);
+                        productSearch.Remove(pfl);
+                    }
 
                     MessageBox.Show("!הספר נמחק בהצלחה");
                     break;
@@ -166,22 +151,22 @@ public partial class productList : Page
     #endregion
 
     #region חיפוש מוצר לפי מספר/שם המוצר
-    private void search_Click(object sender, RoutedEventArgs e)
+    private void nameOrID_TextChanged(object sender, TextChangedEventArgs e)
     {
         try
         {
 
             string myString = nameOrID.Text;
 
-            if (iconSearch.Kind == MaterialDesignThemes.Wpf.PackIconKind.Close)
+
+            if (myString==""|| myString == null)
             {
-                nameOrID.Text = "";
-                iconSearch.Kind = MaterialDesignThemes.Wpf.PackIconKind.Search;
                 DataContext = allBooks;
                 GroupByCategory.IsEnabled = true;
             }
             else
             {
+               
                 ProductForList myProduct = new();
 
                 int id;
@@ -189,20 +174,24 @@ public partial class productList : Page
                 bool isID = int.TryParse(myString, out id);
                 if (isID)
                 {
-                    myProduct = bl.BoProduct.GetProductDetails_forM(id).CopyBoProductToPoPFL();
+                    var list = from p in bl.BoProduct.GetAllProductByNumber(id)
+                               select p.CopyBoPflToPoPfl();
+
                     remoteGroup();
                     productSearch.Clear();
-                    productSearch.Add(myProduct);
+                    productSearch = new(list);
                 }
                 else
                 {
-                    myProduct = bl.BoProduct.GetProductByName(myString).CopyBoProductToPoPFL();
+
+                    var list = from p in bl.BoProduct.GetProductsByName(myString)
+                               select p.CopyBoPflToPoPfl();
+
                     remoteGroup();
                     productSearch.Clear();
-                    productSearch.Add(myProduct);
+                    productSearch = new(list);
                 }
 
-                iconSearch.Kind = MaterialDesignThemes.Wpf.PackIconKind.Close;
                 DataContext = productSearch;
                 GroupByCategory.Content = "קבץ לפי קטגוריה";
                 GroupByCategory.IsEnabled = false;
@@ -213,8 +202,11 @@ public partial class productList : Page
             MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
               MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
         }
-
-
     }
     #endregion
+
+    //private void nameOrID_TextChanged(object sender, TextChangedEventArgs e)
+    //{
+    //    iconSearch.Kind = MaterialDesignThemes.Wpf.PackIconKind.Search;
+    //}
 }

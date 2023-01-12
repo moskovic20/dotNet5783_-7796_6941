@@ -79,6 +79,7 @@
                  Stroke="Yellow"
                  VerticalAlignment="Top"
                  Fill="#FF009BA6" />
+        
         <materialDesign:PackIcon x:Name="icon1" Kind="CartArrowRight" 
                                  Height="32" Width="51"
                                  RenderTransformOrigin="0.5,0.5"
@@ -101,6 +102,7 @@
                  Margin="432,302,0,0"
                  VerticalAlignment="Top" 
                  Fill="#FFC2C3C9" Stroke="#FF009BA6" />
+        
         <materialDesign:PackIcon Kind="TruckShipping" 
                                  x:Name="icon2"
                                  Height="41" Width="37"
@@ -123,6 +125,7 @@
                  Margin="434,419,0,0"
                  VerticalAlignment="Top"
                  Fill="#FFC2C3C9" Stroke="#FF009BA6" />
+        
         <materialDesign:PackIcon Kind="CheckUnderline" 
                                  Height="34" Width="42"
                                  x:Name="icon3"
@@ -211,6 +214,7 @@
                VerticalAlignment="Top"
                Height="48" Width="147"
                Visibility="Hidden"/>
+        
         <Button x:Name="orderDetails"
                 Visibility="Hidden"
             Content="צפייה בפרטי ההזמנה"

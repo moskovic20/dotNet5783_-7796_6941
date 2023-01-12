@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PL.PO;
+using PL.Catalog;
 
 namespace PL.PlEntity.Cart;
 
@@ -24,11 +25,14 @@ public partial class Cart : Page
 {
     private IBl bl;
     private PO.Cart myCart;
-    public Cart(IBl bl , PO.Cart newCart)
+    Frame myFrame;
+    public Cart(IBl bl , PO.Cart cart,Frame frame)
     {
         InitializeComponent();
         this.bl = bl;
-        this.myCart = newCart;
+        this.myFrame = frame;
+        this.myCart = cart;
+
         this.DataContext = myCart;
         this.OrderItems_DateGrid.DataContext = myCart.Items;
     }
@@ -49,8 +53,8 @@ public partial class Cart : Page
             
             MessageBox.Show("מספר הזמנתך הוא "+ OrderId + "!ההזמנה נקלטה במערכת");
 
-            myCart = new();
-            this.DataContext = myCart;//מקווה שככה אמורים
+            myCart.reboot();
+            myFrame.Content = new catalog(bl, myCart, this.myFrame);
         }
         catch (Exception ex)
         {
@@ -66,11 +70,11 @@ public partial class Cart : Page
     {
         try
         {
-            //OrderForList orderToD = (OrderForList)Orders_DateGrid.SelectedItem;
-            //PO.OrderItem toChangeP = (PO.OrderItem)sender;
             PO.OrderItem toChangeP = (PO.OrderItem)OrderItems_DateGrid.SelectedItem;
-            myCart = bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, toChangeP.AmountOfItems + 1).CastingFromBoToPoCart();
-            this.DataContext = myCart;//צריך?
+            bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, toChangeP.AmountOfItems + 1).putTo(myCart);
+            this.DataContext = myCart;
+            this.OrderItems_DateGrid.DataContext = myCart.Items;
+
         }
         catch (Exception ex)
         {
@@ -85,10 +89,11 @@ public partial class Cart : Page
     {
         try
         {
-            //PO.OrderItem toChangeP = (PO.OrderItem)sender;
             PO.OrderItem toChangeP = (PO.OrderItem)OrderItems_DateGrid.SelectedItem;
-            myCart =bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, toChangeP.AmountOfItems - 1).CastingFromBoToPoCart();
-            this.DataContext = myCart;//צריך?
+            bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, toChangeP.AmountOfItems -1).putTo(myCart);
+            this.DataContext = myCart;
+            this.OrderItems_DateGrid.DataContext = myCart.Items;
+
         }
         catch (Exception ex)
         {
@@ -103,9 +108,10 @@ public partial class Cart : Page
     {
         try
         {
-            PO.OrderItem toChangeP = (PO.OrderItem)sender;
-            bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, 0);
-            this.DataContext = myCart;//צריך?
+            PO.OrderItem toChangeP = (PO.OrderItem)OrderItems_DateGrid.SelectedItem;
+            bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), toChangeP.ProductID, 0).putTo(myCart);
+            this.DataContext = myCart;
+            this.OrderItems_DateGrid.DataContext = myCart.Items;
         }
         catch (Exception ex)
         {
@@ -114,4 +120,11 @@ public partial class Cart : Page
         }
     }
     #endregion
+
+    private void CancleOrder_Click(object sender, RoutedEventArgs e)
+    {
+        myCart.Items = null;
+        myCart.TotalPrice = null;
+        this.OrderItems_DateGrid.DataContext = myCart.Items;
+    }
 }

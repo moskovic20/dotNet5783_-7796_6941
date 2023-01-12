@@ -51,17 +51,17 @@ public class Order : MainPo
         }
     }
 
-    private string? _ShippingAddress;
-    public string? ShippingAddress
+    private string? _CustomerAddress;
+    public string? CustomerAddress
     {
         get
         {
-            return _ShippingAddress;
+            return _CustomerAddress;
         }
         set
         {
-            _ShippingAddress = value;
-            OnPropertyChanged("ShippingAddress");
+            _CustomerAddress = value;
+            OnPropertyChanged("CustomerAddress");
         }
     }
 

@@ -15,9 +15,6 @@
 
             <MenuItem x:Name="ordersInMenu"  Header="הזמנות" 
                       Click="ordersInMenu_Click" FontSize="16" FontFamily="Calibri" Height="29"/>
-
-            <MenuItem x:Name="goMainW"  Header="מסך הבית" 
-                      Click="goHome_Click" FontSize="16" FontFamily="Calibri" Height="29"/>
         </Menu>
      
     

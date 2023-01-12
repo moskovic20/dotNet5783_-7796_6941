@@ -73,7 +73,7 @@
             <Label Content="{Binding CustomerName, Mode=TwoWay}"
                    Width="147"  Height="29" FontWeight="Bold"/>
             <Label Content=":שם לקוח"
-                   Width="74" Height="27"/>
+                   Width="74" Height="27" FontWeight="Bold"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
@@ -82,16 +82,16 @@
             <Label Content="{Binding CustomerEmail, Mode=TwoWay}"
                      Height="30" Width="143" />
             <Label Content=":כתובת מייל"
-                   Width="94" Height="40"/>
+                   Width="94" Height="40" FontWeight="Bold"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
             Margin="167,164,-60,211" 
             Grid.Column="1">
-            <Label Content="{Binding ShippingAddress, Mode=TwoWay}"
+            <Label Content="{Binding CustomerAddress, Mode=TwoWay}"
                 Height="30" Width="143" />
             <Label Content=":כתובת לקוח"
-                Width="94" Height="40"/>
+                Width="94" Height="40" FontWeight="Bold"/>
         </StackPanel>
 
 
@@ -100,7 +100,7 @@
             <Label Content="{Binding DateOrder,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                      Height="30" Width="153"/>
             <Label Content=":תאריך ביצוע הזמנה "
-                   Width="116" Height="28"/>
+                   Width="116" Height="28" FontWeight="Bold"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
@@ -108,7 +108,7 @@
             <Label Content="{Binding PaymentDate,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                      Height="30" Width="153"/>
             <Label Content=":תאריך תשלום"
-                   Width="86" Height="25"/>
+                   Width="86" Height="25" FontWeight="Bold"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
@@ -117,7 +117,7 @@
             <Label Content="{Binding ShippingDate,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                      Height="30" Width="153"/>
             <Label Content=":תאריך יציאה ליעד"
-                   Width="102" Height="33"/>
+                   Width="102" Height="33" FontWeight="Bold"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
@@ -126,7 +126,7 @@
             <Label Content="{Binding DeliveryDate,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                       Height="30" Width="153" />
             <Label Content=":תאריך הגעה ליעד"
-                   Width="101" Height="39"/>
+                   Width="101" Height="39" FontWeight="Bold"/>
         </StackPanel>
 
 
@@ -144,7 +144,7 @@
             <Label Content="{Binding TotalPrice, Mode=TwoWay}"
                       Height="30" Width="153"/>
             <Label Content=":עלות הזמנה"
-                   Width="94" Height="33"/>
+                   Width="94" Height="33" FontWeight="Bold"/>
         </StackPanel>
 
         <!--עמוד לפרטי הספרים-->

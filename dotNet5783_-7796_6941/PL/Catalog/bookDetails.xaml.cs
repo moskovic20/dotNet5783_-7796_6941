@@ -34,6 +34,12 @@ namespace PL.Catalog
             myCart = Cart;
             myProduct = bl.BoProduct.GetProductDetails_forM(ID).copyProductToPo();
             DataContext = myProduct;
+            if (myProduct.InStock < 1)
+            {
+                gradeNumUpDown.Visibility = Visibility.Collapsed;
+                addToCart.Visibility = Visibility.Collapsed;
+                noInStock.Visibility = Visibility.Visible;
+            }
         }
 
         private void addToCart_Click(object sender, RoutedEventArgs e)

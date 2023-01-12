@@ -213,16 +213,18 @@ public static class Tools
     }
     #endregion
 
-    ////PLפונקציה ממש לא יפה וחסכונית בעקרון רק בשביל להעביד את ה
-    //public static OrderForList CastingOrToList(this BO.Order order)
-    //{
-    //    return new BO.OrderForList()
-    //    {
-    //        OrderID = order.orderID,
-    //        CustomerName = dal.Order.GetById(order.orderID).CustomerName,
-    //        Status = dal.Order.GetById(order.orderID).calculateStatus(),
-    //        AmountOfItems = dal.Order.GetById(order.orderID).CalculateAmountItems(),
-    //        TotalPrice = dal.Order.GetById(order.orderID).CalculatePriceOfAllItems()
-    //    };
-    //}
+    public static bool ContainsNumber(int a, int b)
+    {
+        string first = a.ToString();
+        string second = b.ToString();
+        if (second.Contains(first))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }

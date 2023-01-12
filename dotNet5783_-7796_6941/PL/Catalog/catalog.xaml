@@ -4,40 +4,60 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:local="clr-namespace:PL.Catalog"
+      xmlns:local="clr-namespace:PL.IvalueConvertor"
       mc:Ignorable="d" 
       d:DesignHeight="560" d:DesignWidth="1000"
       Title="catalog">
 
+    <Page.Resources>
+        <local:filterCategoryToFilterByPrice x:Key="FilterCategoryToFilterByPrice"/>
+    </Page.Resources>
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="163*"/>
+            <ColumnDefinition Width="37*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="19*"/>
             <RowDefinition Height="93*"/>
         </Grid.RowDefinitions>
-        <Rectangle HorizontalAlignment="Center" Height="95" VerticalAlignment="Center" Width="1000" Fill="#FFF6F6F6"/>
-        <TextBox x:Name="nameOrID"   
+        <Rectangle HorizontalAlignment="Left" Height="95" VerticalAlignment="Center" Width="1000" Fill="#FFF6F6F6" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="nameOfBook" 
+                 TextChanged="nameOfBook_TextChanged"
             materialDesign:HintAssist.Hint="איזה ספר את/ה מחפש/ת?"     
-            Style="{DynamicResource MaterialDesignFloatingHintTextBox }"
+            Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
             materialDesign:HintAssist.Foreground="Black"
-            materialDesign:TextFieldAssist.UnderlineBrush="Black"
+            
             HorizontalAlignment="Left"
-            Margin="686,26,0,0"
-            Width="210" Height="40" VerticalAlignment="Top"
-            RenderTransformOrigin="0.837,0.756" Text=""/>
+            Width="295" Height="40" VerticalAlignment="Center"
+            RenderTransformOrigin="0.837,0.756" Text="" Margin="665,0,0,0" Grid.ColumnSpan="2"/>
 
-        <ComboBox Name="TakenChargeSlotsComboBox"
-                          Margin="435,31,465,0"
+        <ComboBox Name="CategoryFilter"
+                          Margin="35,31,652,0"
+                          SelectionChanged="CategoryFilter_SelectionChanged"
+                          DropDownOpened="CategoryFilter_DropDownOpened"
                           materialDesign:HintAssist.Hint="(קטגוריה)"
-                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="37" VerticalAlignment="Top"/>
+                        Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="40" VerticalAlignment="Top">
+        </ComboBox>
 
-        <ComboBox x:Name="TakenChargeSlotsComboBox_Copy"
-            Margin="560,31,340,0"
-            materialDesign:HintAssist.Hint="(סדר לפי)"
-            Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="37" VerticalAlignment="Top"/>
+        <ComboBox x:Name="SortByPraic"
+            
+            Margin="190,34,465,0"
+            materialDesign:HintAssist.Hint="(סדר לפי)" 
+            Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                  Height="34" 
+                  Visibility="{Binding ElementName= CategoryFilter ,Path=SelectedItem,Converter={StaticResource FilterCategoryToFilterByPrice}}"
+                  SelectionChanged="SortByPrice_SelectionChanged"
+                  VerticalAlignment="Top">
+            <ComboBoxItem Content="מהמחיר הנמוך לגבוה" />
+            <ComboBoxItem Content="מהמחיר הגבוה לנמוך"/>
+            <ComboBoxItem Content=""/>
+        </ComboBox>
 
-        <ListView HorizontalAlignment="Center" Height="583" VerticalAlignment="Top" Width="1000"
+        <ListView HorizontalAlignment="Left" Height="583" VerticalAlignment="Top" Width="1000"
             x:Name="Catalog" 
-                      ItemsSource="{Binding}" Margin="0,5,0,0" MouseDoubleClick="Catalog_MouseDoubleClick" Grid.Row="1"  >
+                      ItemsSource="{Binding}" Margin="0,5,0,0" MouseDoubleClick="Catalog_MouseDoubleClick" Grid.Row="1" Grid.ColumnSpan="2"  >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
@@ -59,7 +79,7 @@
                             <materialDesign:PackIcon Kind="HeartOutline"
                                             Height="20" Width="20" 
                                             OpacityMask="Black" HorizontalAlignment="Center"  Foreground="Red"/>
-                            <Button x:Name="addToCart" Margin="5,5,5,5" Content="הוסף לסל" Click="addToCart_Click" Style="{StaticResource MaterialDesignOutlinedDarkButton}"/>
+                            <Button x:Name="addToCart" Margin="5,5,5,5" Content="הוסף לסל" Click="AddToCart_Click" Style="{StaticResource MaterialDesignOutlinedDarkButton}"/>
                         </StackPanel>
                     </StackPanel>
                 </DataTemplate>

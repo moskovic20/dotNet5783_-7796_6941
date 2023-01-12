@@ -45,46 +45,49 @@
                    Height="47"
                    VerticalAlignment="Top"
                    Width="1000" 
-                   Grid.ColumnSpan="2" Stroke="#FF673AB7" Fill="#FF673AB7" RenderTransformOrigin="0.533,0.405"/>
+                   Grid.ColumnSpan="2" Fill="#FFE7E8EC" RenderTransformOrigin="0.533,0.405"/>
 
         <Label x:Name="addProductL"
                Grid.Column="1"
                Content=":פרטי לקוח "
                Style="{StaticResource myTitel_1}"
-               Margin="361,4,-86,346"  />
+               Margin="361,4,21,495" Foreground="#FF673AB7"  />
 
         <Label
                Content=":פרטי הספרים בהזמנה"
                Style="{StaticResource myTitel_1}"
-               Margin="174,4,40,437"  />
+               Margin="397,4,397,495" Foreground="#FF673AB7" Grid.ColumnSpan="2"  />
 
         <StackPanel Orientation="Horizontal"
-            Margin="159,98,25,413" Grid.Column="1">
+            Margin="169,88,15,381" Grid.Column="1">
             <TextBox x:Name="NameC" Text="{Binding CustomerName, Mode=TwoWay}"
-                      Height="30" Width="201"/>
+                     Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                      Height="39" Width="201"/>
             <Label Content="  :שם לקוח"
-                Width="97"/>
+                Width="97" Height="92" VerticalContentAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-            Margin="159,152,25,359" Grid.Column="1">
+            Margin="169,169,15,311" Grid.Column="1">
             <TextBox x:Name="MailC" Text="{Binding CustomerEmail, Mode=TwoWay}"
-                Height="30" Width="201"/>
+                     Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                Height="39" Width="201"/>
             <Label Content="  :כתובת מייל"
-                Width="97"/>
+                Width="97" Height="57" VerticalContentAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
-            Margin="159,210,25,301" Grid.Column="1">
+            Margin="168,255,16,231" Grid.Column="1">
             <TextBox x:Name="AdressC" Text="{Binding CustomerAddress, Mode=TwoWay}"
-                Height="30" Width="177"/>
+                     Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
+                Height="35" Width="177"/>
             <Label Content=":כתובת לשליחת ההזמנה"
-                Width="141"/>
+                Width="141" Height="25" VerticalContentAlignment="Center"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
-            Margin="267,266,21,245" Grid.Column="1">
+            Margin="236,365,52,146" Grid.Column="1">
             <TextBlock Text="{Binding TotalPrice, Mode=TwoWay}"
-                Height="30" Width="93"/>
+                Height="30" Width="93" FontSize="16" FontWeight="Bold"/>
             <Label Content="  :מחיר לתשלום"
                 Width="97"/>
         </StackPanel>
@@ -107,7 +110,7 @@
                   IsReadOnly="True"
                   ItemsSource="{Binding}" 
                   HorizontalAlignment="Left"
-                  Margin="31,64,0,113"
+                  Margin="31,64,0,111"
                   Width="570"
                   Background="{x:Null}" Grid.ColumnSpan="2">
 
@@ -154,8 +157,10 @@
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Height="30" Width="30"
                                     HorizontalAlignment="Center"
+                                    Background="#FFF6F6F6"
+                                    
                                     Click="reduceNum_Click">
-                                <materialDesign:PackIcon Kind="ArrowBottomDropCircleOutline"/>
+                                <materialDesign:PackIcon  Foreground="Gray" Kind="ArrowBottomDropCircleOutline"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -168,8 +173,10 @@
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Height="30" Width="30"
                                     HorizontalAlignment="Center"
+                                    
+                                    Background="#FFF6F6F6"
                                     Click="incresNum_Click">
-                                <materialDesign:PackIcon Kind="ArrowUpDropCircleOutline"/>
+                                <materialDesign:PackIcon Foreground="Gray" Kind="ArrowUpDropCircleOutline"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -188,8 +195,8 @@
             </DataGrid.Columns>
         </DataGrid>
         <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="393" Margin="127,62,0,0" Stroke="#FF673AB7" VerticalAlignment="Top" Width="7"/>
-        <Button x:Name="MakeOrder" Content="בצע הזמנה" HorizontalAlignment="Left" Margin="104,479,0,0" VerticalAlignment="Top" Click="MakeOrder_Click"/>
-        <Button x:Name="CancleOrder" Content="בטל הזמנה" HorizontalAlignment="Left" Margin="263,479,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="MakeOrder" Content="בצע הזמנה" Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="276,475,0,0" VerticalAlignment="Top" Click="MakeOrder_Click" Grid.Column="1" Height="32" Width="132"/>
+        <Button x:Name="CancleOrder" Click="CancleOrder_Click" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Content="רוקן עגלה" HorizontalAlignment="Left" Margin="45,475,0,0" VerticalAlignment="Top"/>
         <Label Grid.Column="1"  Content="כל השדות הינם חובה*" HorizontalAlignment="Left" Margin="343,59,0,0" VerticalAlignment="Top" Width="124" Foreground="Red" Height="24"/>
     </Grid>
 </Page>

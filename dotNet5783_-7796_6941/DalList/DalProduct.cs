@@ -8,32 +8,12 @@ internal class DalProduct : IProduct
 
     DataSource _DS = DataSource.Instance!;
 
-
-    //public int Add(Product P)
-    //{
-    //    //P.IsDeleted = false;
-    //    Random random = new Random();
-    //    int indexOfMyP = _DS._Products.FindIndex(x => x?.OrderID == P.OrderID);
-
-    //    if (indexOfMyP == -1) //this product is not found in the data
-    //    {
-    //        while (!IdIsFound(P.OrderID)) //check if this id is not taken.
-    //        {
-    //            P.OrderID = random.Next(100000, 999999999);
-    //        }
-
-    //        _DS._Products.Add(P);
-    //        return P.OrderID;
-    //    }
-
-    //    if (_DS._Products[indexOfMyP].GetValueOrDefault().IsDeleted != true)
-    //        throw new AlreadyExistException("The product OrderID you entered already exists in the database");
-
-    //    _DS._Products.Add(P);
-    //    return P.OrderID;
-
-    //}
-
+    /// <summary>
+    /// הפונקציה מקבלת מוצר ומוסיפה אותו למערכת
+    /// </summary>
+    /// <param name="P"></param>
+    /// <returns></returns>
+    /// <exception cref="AlreadyExistException"></exception>
     public int Add(Product P)
     {
         List<Product?> listOfThisID = _DS._Products.FindAll(x => x?.ID == P.ID);
@@ -45,10 +25,15 @@ internal class DalProduct : IProduct
             return P.ID;
         }
         else
-            throw new AlreadyExistException("The product OrderID you entered already exists in the database");
+            throw new AlreadyExistException("מוצר זה כבר קיים במערכת");
 
     }
 
+    /// <summary>
+    /// הפונקציה מקבלת מספר מזהה של מוצר ומוחקת את המוצר
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DoesntExistException"></exception>
     public void Delete(int id)
     {
         int getIdOfProduct = _DS._Products.FindIndex(x => x?.ID == id && x?.IsDeleted != true);
@@ -56,7 +41,7 @@ internal class DalProduct : IProduct
         if (getIdOfProduct != -1)
         {
             if (_DS._Products[getIdOfProduct]?.IsDeleted == true)
-                throw new DoesntExistException("the product doesn't exist");
+                throw new DoesntExistException("המוצר כבר נחמק ");
             else
             {
                 Product ChangingStatusOfProductIsdeleted = _DS._Products[getIdOfProduct].GetValueOrDefault();
@@ -66,23 +51,27 @@ internal class DalProduct : IProduct
             }
         }
         else
-            throw new DoesntExistException("the product doesn't exist");
+            throw new DoesntExistException("המוצר לא נמצא");
     }
 
+    /// <summary>
+    /// הפונקציה מקבלת מספר מזהה של מוצר ומחזירה אמוצר זה
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="DoesntExistException"></exception>
     public Product GetById(int id)
     {
         Product? ProductById = _DS._Products.FirstOrDefault(x => x?.ID == id && x?.IsDeleted == false);
 
-        return ProductById ?? throw new DoesntExistException("the product is not found");
+        return ProductById ?? throw new DoesntExistException("המוצר לא נמצא");
     }
 
-    public Product GetByName(string name)
-    {
-        Product? ProductById = _DS._Products.FirstOrDefault(x => x?.NameOfBook==name && x?.IsDeleted == false);
-
-        return ProductById ?? throw new DoesntExistException("the product is not found");
-    }
-
+    /// <summary>
+    /// הפונקציה מקבלת מוצר ומעדכת את פרטי המוצר לפי המוצר שהתקבל
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DoesntExistException"></exception>
     public void Update(Product item)
     {
         try
@@ -91,22 +80,12 @@ internal class DalProduct : IProduct
         }
         catch
         {
-            throw new DoesntExistException("the product doesn't exist");
+            throw new DoesntExistException("המוצר לא קיים");
         }
         Delete(item.ID);
         Add(item);
     }
 
-    //private bool IdIsFound(int myID)
-    //{
-    //    int indexOfSameId = _DS._Products.FindIndex(x => x?.OrderID == myID);
-
-    //    if (indexOfSameId == -1)
-    //        return true;
-
-    //    else
-    //        return false;
-    //}
 
 
     /// <summary>
@@ -118,7 +97,7 @@ internal class DalProduct : IProduct
     => from item in _DS._Products
        where item != null
        where item?.IsDeleted == false
-       where filter != null ? filter(item) : true
+       where (filter != null) ? filter(item) : true
        select item;
 
 

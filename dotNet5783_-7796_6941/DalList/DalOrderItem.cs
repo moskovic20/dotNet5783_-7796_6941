@@ -7,6 +7,12 @@ internal class DalOrderItem : IOrderItem
 {
     DataSource _DS = DataSource.Instance!;
 
+    /// <summary>
+    /// הוספת פריט הזמנה
+    /// </summary>
+    /// <param name="myOrderItem"></param>
+    /// <returns></returns>
+    /// <exception cref="AlreadyExistException"></exception>
     public int Add(OrderItem myOrderItem)
     {
         int indexOfMyOrderItem = _DS._OrderItems.FindIndex(x => x?.ID == myOrderItem.ID);
@@ -19,38 +25,54 @@ internal class DalOrderItem : IOrderItem
         }
 
         if (_DS._OrderItems[indexOfMyOrderItem]?.IsDeleted == false)
-            throw new AlreadyExistException("The order item you wish to add is already exists");
+            throw new AlreadyExistException("פריט ההזמנה שרצית להוסיף כבר קיים");
 
         _DS._OrderItems.Add(myOrderItem);
         return myOrderItem.ID;
 
     }
 
+    /// <summary>
+    /// מחיקת פריט הזמנה 
+    /// </summary>
+    /// <param name="id"></param>
+    /// <exception cref="DoesntExistException"></exception>
     public void Delete(int id)
     {
         int indexOfOItemById = _DS._OrderItems.FindIndex(x => x?.ID == id && x?.IsDeleted != true);
 
         if (indexOfOItemById == -1)
-            throw new DoesntExistException("The order item you wanted to delete is not found");
+            throw new DoesntExistException("פריט ההזמנה שרצית למחוק לא נמצא במערכת");
 
 
         OrderItem myOItem = _DS._OrderItems[indexOfOItemById] ?? new();
 
         if (myOItem.IsDeleted == true)
-            throw new DoesntExistException("The order item you wanted to delete has already been deleted");
+            throw new DoesntExistException("פריט ההזמנה שרצית למחוק-כבר נמחק מהמערכת");
 
 
         myOItem.IsDeleted = true;
         _DS._OrderItems[indexOfOItemById] = myOItem;
     }
 
+    /// <summary>
+    /// הפונקציה מקבלת מספר מזהה של פריט הזמנה ומחזירה פריט זה
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    /// <exception cref="DoesntExistException"></exception>
     public OrderItem GetById(int id)
     {
         OrderItem? OItem = _DS._OrderItems.FirstOrDefault(x => x?.ID == id && x?.IsDeleted != true);
 
-        return OItem ?? throw new DoesntExistException("The order item is not found");
+        return OItem ?? throw new DoesntExistException("פריט ההזמנה שחיפשת לא נמצא במערכת");
     }
 
+    /// <summary>
+    /// עדכון של פריט בהזמנה
+    /// </summary>
+    /// <param name="item"></param>
+    /// <exception cref="DoesntExistException"></exception>
     public void Update(OrderItem item)
     {
         try
@@ -59,7 +81,7 @@ internal class DalOrderItem : IOrderItem
         }
         catch
         {
-            throw new DoesntExistException("the order item can't be update because he doesn't exist");
+            throw new DoesntExistException("אי אפשר לעדכן פריט  הזמנה זה מכיוון שהוא לא נמצא במערכת");
         }
         Delete(item.ID);
         Add(item);
@@ -75,14 +97,14 @@ internal class DalOrderItem : IOrderItem
     {
 
         if (OrderID < 100000)
-            throw new DoesntExistException("uncorect OrderID order");
+            throw new DoesntExistException("מספר הזמנה לא תקין");
 
         var list = from item in _DS._OrderItems
                    where item != null && item?.OrderID == OrderID
                    select item;
 
         if (list.Count() == 0)
-            throw new DoesntExistException("The order items are not found or this order is't exist");
+            throw new DoesntExistException("לא נמצאו פריטי הזמנה או שהזמנה זו לא קיימת");
 
         return (IEnumerable<OrderItem?>)list;
     }
@@ -100,11 +122,12 @@ internal class DalOrderItem : IOrderItem
                      x.GetValueOrDefault().IsDeleted != true && x.GetValueOrDefault().ProductID == ProductID);
 
         if (OItem == null)
-            throw new DoesntExistException("The order item is not found");
+            throw new DoesntExistException("פריט ההזמנה לא נמצא ");
 
         return (OrderItem)OItem;
 
     }
+
 
     /// <summary>
     /// הפונקציה מחזירה את כל רשימת הפריטים בהזמנות לפי פונקציית הסינון שמתקבלת

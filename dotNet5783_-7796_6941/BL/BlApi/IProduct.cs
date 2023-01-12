@@ -11,13 +11,12 @@ public interface IProduct
     IEnumerable<BO.ProductItem> GetAllProductItems_forC();
     int AddProduct_forM(BO.Product productToAdd);
     BO.Product GetProductDetails_forM(int id);
-    public BO.Product GetProductByName(string name);
+    public IEnumerable<ProductForList> GetProductsByName(string name);
     ProductItem GetProductDetails_forC(int id, Cart cart);
     void DeleteProductByID_forM(int id);
     void UpdateProductDetails_forM(BO.Product product);
     ProductForList GetProductForList(int productId);
-    IEnumerable<BO.ProductForList?> GetListedProducts(BO.Filters enumFilter = BO.Filters.None, Object? filterValue = null);
-   // public IEnumerable<ProductForList> GetPartOfProduct(Predicate<ProductForList> filter);
+    public IEnumerable<ProductForList> GetAllProductByNumber(int number);
 
-    // IEnumerable<ProductForList> GetProductDetails_forM();
+
 }

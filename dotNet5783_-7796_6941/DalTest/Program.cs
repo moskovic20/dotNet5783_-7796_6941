@@ -275,7 +275,7 @@ c: category");
 
                         ord.CustomerName = Console.ReadLine();
                         ord.CustomerEmail = Console.ReadLine();
-                        ord.ShippingAddress = Console.ReadLine();
+                        ord.CustomerAddress = Console.ReadLine();
 
                         if (!DateTime.TryParse(Console.ReadLine(), out dt))
                             throw new Exception("The conversion failed");
@@ -351,7 +351,7 @@ d: delivery date");
 
                                 case 'a':
                                     Console.WriteLine("enter the new shipping address:");
-                                    ord.ShippingAddress = Console.ReadLine();
+                                    ord.CustomerAddress = Console.ReadLine();
                                     break;
 
                                 case 'c':

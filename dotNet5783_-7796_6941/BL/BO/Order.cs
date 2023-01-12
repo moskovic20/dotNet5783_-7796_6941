@@ -21,7 +21,7 @@ public class Order
     /// <summary>
     /// כתובת הלקוח, אליה צריך לשלוח את ההזמנה
     /// </summary>
-    public string? ShippingAddress { get; set; }
+    public string? CustomerAddress { get; set; }
 
     /// <summary>
     /// תאריך יצירת הזמנה

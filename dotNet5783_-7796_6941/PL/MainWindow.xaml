@@ -13,27 +13,8 @@
                Width="1000"
                Height="560" Margin="-2,0,2,0"
                VerticalAlignment="Bottom"/>
+
         <Rectangle HorizontalAlignment="Center" Height="74" VerticalAlignment="Top" Width="1000" Fill="#FFF0F0F0"/>
-
-        <StackPanel Margin="906,11,19,565">
-            <Button x:Name="connectToSystem"
-            Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
-                BorderBrush="#007E8C7F"
-                Width="30" Height="30" 
-                Click="connectToSystem_Click"
-                Background="#FF009BA6" >
-                <materialDesign:PackIcon Kind="Person" 
-                                     Height="20" Width="20" 
-                                     OpacityMask="Black"
-                                     VerticalAlignment="Center" />
-            </Button>
-            <Label
-               Height="26" Width="76" 
-               Content="התחברות" 
-               FontSize="14"
-               FontWeight="Bold"/>
-        </StackPanel>
-
 
 
         <Button x:Name="GoToCart"
@@ -72,7 +53,9 @@
                 OpacityMask="Black" />
         </Button>
 
-        <Button x:Name="goToCatalog" Click="goToCatalog_Click" Content="חזרה לקטלוג"  Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="720,19,0,0" VerticalAlignment="Top" Height="34" Width="149"/>
+        <Button x:Name="goToCatalog" Click="goToCatalog_Click" Content="חזרה לקטלוג"  Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="730,19,0,0" VerticalAlignment="Top" Height="34" Width="149" BorderBrush="#FF009BA6" Foreground="#FF009BA6">
+
+        </Button>
 
         <Button x:Name="trakingOrder"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
@@ -86,40 +69,21 @@
                 Height="25" Width="25" 
                 OpacityMask="Black" HorizontalAlignment="Center" />
         </Button>
+        <Button x:Name="connectToSystem"
+            Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
+            BorderBrush="#007E8C7F" 
+                Click="connectToSystem_Click"
+                Background="#FF009BA6"
+            Width="50" Height="50"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" 
+            Margin="910,10,0,0"  >
+            <materialDesign:PackIcon Kind="Person" 
+                Height="25" Width="25" 
+                OpacityMask="Black" />
+        </Button>
 
 
-
-
-        <!--<ListView HorizontalAlignment="Center" Height="569" VerticalAlignment="Top" Width="1000"
-            x:Name="Catalog" 
-                      ItemsSource="{Binding}" Margin="0,79,0,0" MouseDoubleClick="Catalog_MouseDoubleClick"  >
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
-                              RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
-                              ItemWidth="{Binding (ListView.View).ItemWidth,
-                              RelativeSource={RelativeSource AncestorType=ListView}}"
-                              MinWidth="{Binding ItemWidth, RelativeSource={RelativeSource Self}}"
-                              ItemHeight="{Binding (ListView.View).ItemHeight, 
-                              RelativeSource={RelativeSource AncestorType=ListView}}"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate >
-                <DataTemplate >
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
-                        <Image Source="{Binding Image}" Width="100" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
-                        <TextBlock x:Name="bookName" Text="{Binding NameOfBook}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FF009BA6"/>
-                        <TextBlock HorizontalAlignment="Center"  Text="{Binding Price}"  VerticalAlignment="Bottom" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Margin="5,5,5,5">
-                            <materialDesign:PackIcon Kind="HeartOutline"
-                                            Height="20" Width="20" 
-                                            OpacityMask="Black" HorizontalAlignment="Center"  Foreground="Red"/>
-                            <Button x:Name="addToCart" Margin="5,5,5,5" Content="הוסף לסל" Click="addToCart_Click" Style="{StaticResource MaterialDesignOutlinedDarkButton}"/>
-                        </StackPanel>
-                    </StackPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
 
 
     </Grid>

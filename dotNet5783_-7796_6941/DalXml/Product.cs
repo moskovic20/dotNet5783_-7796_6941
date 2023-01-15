@@ -19,11 +19,13 @@ namespace Dal;
 
 internal class Product : IProduct
 {
-    DalXml _DXml = DalXml.Instance!;
+    //DalXml _DXml = DalXml.Instance!;
+    const string s_Product = "Product";
 
-    #region xmlConvertor יהודה
 
-    internal static XElement itemToXelement<Item>(Item item, string name)
+#region xmlConvertor יהודה
+
+internal static XElement itemToXelement<Item>(Item item, string name)
     {
         IEnumerable<PropertyInfo> items = item!.GetType().GetProperties();
 
@@ -111,9 +113,9 @@ internal class Product : IProduct
 
     public int Add(Do.Product item) // שלנו config לזכור לעדכן את
     {
-        XElement productsRootElem = XMLTools.LoadListFromXMLElement(_DXml.ProductPath);
+        XElement productsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
 
-        if (XMLTools.LoadListFromXMLElement(_DXml.ProductPath)?.Elements()
+        if (XMLTools.LoadListFromXMLElement(s_Product)?.Elements()
             .FirstOrDefault(st => st.ToIntNullable("ID") == item.ID && st.ToBool("IsDeleted") != true) is not null)
             throw new Do.AlreadyExistException("id already exist");
 
@@ -126,14 +128,14 @@ internal class Product : IProduct
         //}
 
         productsRootElem.Add(new XElement("Product", createProductElement(item)/*productsRootElem(item)*/));// מוריה תצילי אותי איך עושים פה מספר זהות לא רץ?
-        XMLTools.SaveListToXMLElement(productsRootElem, _DXml.ProductPath);
+        XMLTools.SaveListToXMLElement(productsRootElem, s_Product);
 
         return item.ID; ;
     }
 
     public void Delete(int id)//isdeleted | can it gat change by using()?
     {
-        XElement productsRootElem = XMLTools.LoadListFromXMLElement(_DXml.ProductPath);
+        XElement productsRootElem = XMLTools.LoadListFromXMLElement(s_Product);
 
         Do.Product pToUp = GetById(id);
 
@@ -144,24 +146,24 @@ internal class Product : IProduct
 
         pToUp.IsDeleted= true;
         productsRootElem.Add(new XElement("Product", createProductElement(pToUp)));
-        XMLTools.SaveListToXMLElement(productsRootElem, _DXml.ProductPath);//שמירה על הקובץ המעודכן עם המחוק
+        XMLTools.SaveListToXMLElement(productsRootElem, s_Product);//שמירה על הקובץ המעודכן עם המחוק
     }
 
 
     public IEnumerable<Do.Product?> GetAll(Func<Do.Product?, bool>? filter = null) =>//לשים לב לפילטר עם מחוקים
         filter is null 
-        ? XMLTools.LoadListFromXMLElement(_DXml.ProductPath).Elements().Select(s => GetProduct(s))
-        : XMLTools.LoadListFromXMLElement(_DXml.ProductPath).Elements().Select(s => GetProduct(s)).Where(filter);
+        ? XMLTools.LoadListFromXMLElement(s_Product).Elements().Select(s => GetProduct(s))
+        : XMLTools.LoadListFromXMLElement(s_Product).Elements().Select(s => GetProduct(s)).Where(filter);
 
 
     public Do.Product GetById(int id) =>
-        (Do.Product)GetProduct(XMLTools.LoadListFromXMLElement(_DXml.ProductPath)?.Elements()
+        (Do.Product)GetProduct(XMLTools.LoadListFromXMLElement(s_Product)?.Elements()
         .FirstOrDefault(st => st.ToIntNullable("ID") == id)
         ?? throw new Do.DoesntExistException("missing id"))!;
 
 
     public Do.Product GetByName(string name) =>
-        (Do.Product)GetProduct(XMLTools.LoadListFromXMLElement(_DXml.ProductPath)?.Elements()
+        (Do.Product)GetProduct(XMLTools.LoadListFromXMLElement(s_Product)?.Elements()
         .FirstOrDefault(st => (string?)st.Element("NameOfBook") == name)
         ?? throw new Do.DoesntExistException("missing name"))!;
 
@@ -173,7 +175,7 @@ internal class Product : IProduct
 
     public IEnumerable<Do.Product?> GetAlldeleted()
     {
-        var list=XMLTools.LoadListFromXMLElement(_DXml.ProductPath).Elements().Select(s => GetProduct(s));
+        var list=XMLTools.LoadListFromXMLElement(s_Product).Elements().Select(s => GetProduct(s));
         return from p in list
                where p?.IsDeleted == true
                select p;

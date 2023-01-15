@@ -32,8 +32,8 @@ internal class BoProduct : IProduct
     {
         var products = dal.Product.GetAll((Do.Product? p) => { return (p?.Price == null)? false : true; });
 
-        if (products.Count() == 0)
-            throw new BO.GetAllForList_Exception("There are no products");
+       // if (products.Count() == 0)
+       //     throw new BO.GetAllForList_Exception("There are no products");
 
 
         var ProductItems = from pI in products

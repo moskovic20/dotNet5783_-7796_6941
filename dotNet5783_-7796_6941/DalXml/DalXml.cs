@@ -5,10 +5,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Dal;
 
-internal class DalXml : IDal
+sealed internal class DalXml : IDal   //sealed?
 {
     #region singelton
 
@@ -29,9 +30,10 @@ internal class DalXml : IDal
 
             return instance;
         }
-      
-    } 
+
+    }
     static DalXml() { }
+    private DalXml() { }
 
     #endregion
 
@@ -41,13 +43,7 @@ internal class DalXml : IDal
         public string typeOfnumber { get; set; }
     }
 
-
-    private DalXml()
-    {
-    
-    
-    }
-
+        
     #region ממשקים לשימוש
     public IOrder Order { get; } = new Dal.Order();
     public IProduct Product { get; } = new Dal.Product();
@@ -55,10 +51,10 @@ internal class DalXml : IDal
     #endregion
 
     #region DS xml file
-
     internal string OrderPath = @"Order.xml"; // path to name of file..
     internal string OrderItemPath = @"OrderItem.xml";
     internal string ProductPath = @"Product.xml";
-
+    internal string configPath = @"config.xml";
     #endregion
+    
 }

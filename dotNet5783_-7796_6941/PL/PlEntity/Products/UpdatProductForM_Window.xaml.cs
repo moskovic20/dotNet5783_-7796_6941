@@ -66,7 +66,14 @@ namespace PL.Products
 
                     string suffix = sorce.Split(@".").Last();
                     string target = Environment.CurrentDirectory + "\\images\\productImages\\" + productToUpdate.Category + "\\" + productToUpdate.NameOfBook + "." + suffix;
-                   // File.Move(sorce, target);
+                   // FileStream fileStream = new FileStream(target, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
+                    //fileStream.Close();
+                    FileStream fileStream1    = new FileStream(sorce, FileMode.Open, FileAccess.Read, FileShare.None);
+                    fileStream1.Close();
+                    FileInfo fileInfo = new FileInfo(sorce);
+                   
+                    fileInfo.MoveTo(target);
+                    //File.Move(sorce, target);
                     productToUpdate.productImagePath = target;
                     productImage.Source = productToUpdate.Image;
                 }

@@ -3,12 +3,12 @@
 	
 	<configNumbers>
 		<numberSaved>100000</numberSaved>
-		<typeOfnumber>Minimum Num For Order ID</typeOfnumber>
+		<typeOfnumber>Num For Order ID</typeOfnumber>
 	</configNumbers>
 	
 	<configNumbers>
 		<numberSaved>100000</numberSaved>
-		<typeOfnumber>Minimum Num For OrderItem ID</typeOfnumber>
+		<typeOfnumber>Num For OrderItem ID</typeOfnumber>
 	</configNumbers>
 	
 </ArrayOfConfigtNumbers>

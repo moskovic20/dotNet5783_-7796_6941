@@ -114,7 +114,13 @@ namespace PL.PO
                 productImagePath = value;
 
                 //try { image = new BitmapImage(new System.Uri(Environment.CurrentDirectory + productImagePath)); }
-                try { image = new BitmapImage(new System.Uri(productImagePath ?? throw new Exception("problem"))); }
+                try { 
+                    //image = new BitmapImage();
+                    //image.BeginInit();
+                    //image.UriSource = new System.Uri(productImagePath ?? throw new Exception("problem"));
+                    //image.CacheOption = BitmapCacheOption.OnLoad;
+                    //image.EndInit();
+                }
                 catch { image = null; }
             }
         }

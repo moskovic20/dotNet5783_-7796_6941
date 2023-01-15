@@ -7,6 +7,8 @@ using DalApi;
 using System.Xml.Linq; //for XElement
 using Do;
 using System.Xml.XPath;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Dal;
 
@@ -19,17 +21,70 @@ internal class Product : IProduct
 {
     DalXml _DXml = DalXml.Instance!;
 
-    static Do.Product? GetProduct(XElement s) =>
+    #region xmlConvertor יהודה
+
+    internal static XElement itemToXelement<Item>(Item item, string name)
+    {
+        IEnumerable<PropertyInfo> items = item!.GetType().GetProperties();
+
+        IEnumerable<XElement> xElements = from propInfo in items
+                                          select new XElement(propInfo.Name, propInfo.GetValue(item)!.ToString());
+
+        return new XElement(name, xElements);
+    }
+
+    internal static Item xelementToItem<Item>(XElement xElement) where Item : new()
+    {
+        Item newItem = new Item();
+
+        IEnumerable<XElement> elements = xElement.Elements();
+
+        Dictionary<string, PropertyInfo> items = newItem.GetType().GetProperties().ToDictionary(k => k.Name, v => v);
+
+        foreach (var item in elements)
+        {
+            if (items.ContainsKey(item.Name.LocalName))
+            {
+                items[item.Name.LocalName].SetValue(Convert.ChangeType(item.Value,
+               items[item.Name.LocalName].PropertyType), item.Value);
+            }
+        }
+
+        return newItem;
+    }
+
+    internal static IEnumerable<Item> xelementToItems<Item>(XElement xElement) where Item : new()
+    {
+        return from element in xElement.Elements()
+               select xelementToItem<Item>(element);
+    }
+
+    static IEnumerable<string> GetEnumDescriptions<TEnum>() where TEnum : struct, Enum
+    {
+        var enumType = typeof(TEnum);
+
+        IEnumerable<TEnum> enumValues = Enum.GetValues(enumType).Cast<TEnum>();
+
+        IEnumerable<string> descriptions = from enumValue in enumValues
+                                           let fieldInfo = enumType.GetField(enumValue.ToString())
+                                           let attribute = Attribute.GetCustomAttribute(fieldInfo, typeof(DescriptionAttribute)) as DescriptionAttribute
+                                           select attribute?.Description ?? enumValue.ToString();
+
+        return descriptions;
+    }
+    #endregion
+
+    private Do.Product? GetProduct(XElement s) =>
      s.ToIntNullable("ID") is null ? null : new Do.Product()
      {
          ID = (int)s.Element("ID")!,
          NameOfBook = (string?)s.Element("NameOfBook"),
          AuthorName = (string?)s.Element("AuthorName"),
-         Category = s.ToEnumNullable<DO.CATEGORY?>("Category"),//null -___-
+         Category = s.ConvertEnum("Category"),//לבדוק שעובד
          Summary = (string?)s.Element("Summary"),
          Price = (double)s.ToDoubleNullable("Price")!,
          InStock = (int)s.Element("InStock")!,
-         IsDeleted= (bool)s.Element("IsDeleted")!, //ככה עושים עם טיפוס בוליאני??
+         IsDeleted= (bool)s.ToBool("IsDeleted")!, //לבדוק שעובד
          ProductImagePath = (string?)s.Element("ProductImagePath"), //s.ToXPathNavigable
      };
 
@@ -37,21 +92,21 @@ internal class Product : IProduct
     {
         yield return new XElement("ID", product.ID);
         if (product.NameOfBook is not null)
-            yield return new XElement("FirstName", product.NameOfBook);
+            yield return new XElement("NameOfBook", product.NameOfBook);
         if (product.AuthorName is not null)
-            yield return new XElement("LastName", product.AuthorName);
-        //if (product.Category is not null) //אצלינו הוא דווקא יכול להיות נל בשביל הקופיפרופטו
-        //    yield return new XElement("StudentStatus", product.Category);
+            yield return new XElement("AuthorName", product.AuthorName);
+        //if (product.Category is not null) //אצלינו הוא לא יכול להיות נל בשביל הקופיפרופטו
+            yield return new XElement("StudentStatus", product.Category);
         if (product.Summary is not null)
-            yield return new XElement("BirthDate", product.Summary);
+            yield return new XElement("Summary", product.Summary);
         if (product.Price is not null)
-            yield return new XElement("Grade", product.Price);
+            yield return new XElement("Price", product.Price);
         if (product.InStock is not null)
-            yield return new XElement("Grade", product.InStock);
-        //if (product.IsDeleted is not null) //גם יכול להיות נל
-        //    yield return new XElement("Grade", product.IsDeleted);
+            yield return new XElement("InStock", product.InStock);
+       // if (product.IsDeleted is not null) 
+           yield return new XElement("IsDeleted", product.IsDeleted);
         if (product.ProductImagePath is not null)
-            yield return new XElement("Grade", product.ProductImagePath);
+            yield return new XElement("ProductImagePath", product.ProductImagePath);
     }
 
     public int Add(Do.Product item) // שלנו config לזכור לעדכן את
@@ -59,29 +114,41 @@ internal class Product : IProduct
         XElement productsRootElem = XMLTools.LoadListFromXMLElement(_DXml.ProductPath);
 
         if (XMLTools.LoadListFromXMLElement(_DXml.ProductPath)?.Elements()
-            .FirstOrDefault(st => st.ToIntNullable("ID") == item.ID) is not null)
-            throw new Do.DoesntExistException("id already exist");
+            .FirstOrDefault(st => st.ToIntNullable("ID") == item.ID && st.ToBool("IsDeleted") != true) is not null)
+            throw new Do.AlreadyExistException("id already exist");
 
-        productsRootElem.Add(new XElement("Product", productsRootElem(item)));//מוריה תצילי אותי
+        ////Do.Product? pTemp = GetProduct(XMLTools.LoadListFromXMLElement(_DXml.ProductPath)?.Elements()
+        ////    .FirstOrDefault(st => st.ToIntNullable("ID") == item.ID && st.ToBool("IsDeleted") == true));
+
+        //if(pTemp != null)
+        //{
+        //    //קיים ומחוק אז רק לשנות ערך בלי להסתבך
+        //}
+
+        productsRootElem.Add(new XElement("Product", createProductElement(item)/*productsRootElem(item)*/));// מוריה תצילי אותי איך עושים פה מספר זהות לא רץ?
         XMLTools.SaveListToXMLElement(productsRootElem, _DXml.ProductPath);
 
         return item.ID; ;
     }
 
-    public void Delete(int id)
+    public void Delete(int id)//isdeleted | can it gat change by using()?
     {
         XElement productsRootElem = XMLTools.LoadListFromXMLElement(_DXml.ProductPath);
 
+        Do.Product pToUp = GetById(id);
+
         (productsRootElem.Elements()
-            .FirstOrDefault(st => (int?)st.Element("ID") == id) ??
-        throw new Do.DoesntExistException("missing id"))
+            .FirstOrDefault(st => (int?)st.Element("ID") == id && st.ToBool("IsDeleted") != true) ??
+                throw new Do.DoesntExistException("missing id"))
             .Remove();
 
-        XMLTools.SaveListToXMLElement(productsRootElem, _DXml.ProductPath);
+        pToUp.IsDeleted= true;
+        productsRootElem.Add(new XElement("Product", createProductElement(pToUp)));
+        XMLTools.SaveListToXMLElement(productsRootElem, _DXml.ProductPath);//שמירה על הקובץ המעודכן עם המחוק
     }
 
 
-    public IEnumerable<Do.Product?> GetAll(Func<Do.Product?, bool>? filter = null) =>
+    public IEnumerable<Do.Product?> GetAll(Func<Do.Product?, bool>? filter = null) =>//לשים לב לפילטר עם מחוקים
         filter is null 
         ? XMLTools.LoadListFromXMLElement(_DXml.ProductPath).Elements().Select(s => GetProduct(s))
         : XMLTools.LoadListFromXMLElement(_DXml.ProductPath).Elements().Select(s => GetProduct(s)).Where(filter);
@@ -98,7 +165,7 @@ internal class Product : IProduct
         .FirstOrDefault(st => (string?)st.Element("NameOfBook") == name)
         ?? throw new Do.DoesntExistException("missing name"))!;
 
-    public void Update(Do.Product item)
+    public void Update(Do.Product item)//try catch?
     {
         Delete(item.ID);
         Add(item);

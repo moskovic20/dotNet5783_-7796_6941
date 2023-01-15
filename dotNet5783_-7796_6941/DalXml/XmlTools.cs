@@ -1,6 +1,9 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -21,6 +24,13 @@ static internal class XMLTools {
     public static T? ToEnumNullable<T>(this XElement element, string name) where T : struct, Enum =>
         Enum.TryParse<T>((string?)element.Element(name), out var result) ? (T?)result : null;
 
+    public static DO.CATEGORY ConvertEnum( this XElement element, string caterory)//is working?
+    { 
+        DO.CATEGORY result;
+        Enum.TryParse((string?)element.Element(caterory), out result);
+        return result;
+    }
+
     public static DateTime? ToDateTimeNullable(this XElement element, string name) =>
         DateTime.TryParse((string?)element.Element(name), out var result) ? (DateTime?)result : null;
 
@@ -29,6 +39,9 @@ static internal class XMLTools {
 
     public static int? ToIntNullable(this XElement element, string name) =>
         int.TryParse((string?)element.Element(name), out var result) ? (int?)result : null;
+
+    public static bool? ToBool(this XElement element, string name) =>
+        bool.TryParse((string?)element.Element(name), out var result) ? (bool?) result : null;
     #endregion
 
     #region SaveLoadWithXElement
@@ -42,7 +55,7 @@ static internal class XMLTools {
         catch (Exception ex)
         {
             // DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {dir + filePath}", ex);
-            throw new Exception($"fail to create xml file: {filePath}", ex);
+            throw new Do.LoadingException($"fail to create xml file: {filePath}", ex);
         }
     }
 
@@ -60,7 +73,7 @@ static internal class XMLTools {
         catch (Exception ex)
         {
             //new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {dir + filePath}", ex);
-            throw new Exception($"fail to load xml file: {filePath}", ex);
+            throw new Do.LoadingException($"fail to load xml file: {filePath}", ex);
         }
     }
     #endregion
@@ -84,11 +97,11 @@ static internal class XMLTools {
         catch (Exception ex)
         {
             // DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {dir + filePath}", ex);            }
-            throw new Exception($"fail to create xml file: {filePath}", ex);
+            throw new Do.LoadingException($"fail to create xml file: {filePath}", ex);
         }
     }
 
-    public static List<T?> LoadListFromXMLSerializer<T>(string entity) where T : struct
+    public static List<T?> LoadListFromXMLSerializer<T>(string entity) 
     {
         string filePath = $"{s_dir + entity}.xml";
         try
@@ -101,7 +114,7 @@ static internal class XMLTools {
         catch (Exception ex)
         {
             // DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {dir + filePath}", ex);            }
-            throw new Exception($"fail to load xml file: {filePath}", ex);
+            throw new Do.LoadingException($"fail to load xml file: {filePath}", ex);
         }
     }
     #endregion

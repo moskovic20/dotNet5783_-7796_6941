@@ -11,6 +11,7 @@
     <Window.Resources>
         <local:CategoryToHebrew x:Key="categoryToHebrew"/>
         <local:NullToEmptyString x:Key="nullToEmptyString"/>
+        <local:ImageConverter x:Key="imageConverter"></local:ImageConverter>
     </Window.Resources>
 
     <Grid x:Name="MainGrid" ShowGridLines="False" Background="#FFF6F6F6" Margin="0,0,0,-6">
@@ -121,7 +122,7 @@
             HorizontalAlignment="Left" 
             Height="152" Margin="50,51,0,0" 
             Grid.Row="1" VerticalAlignment="Top"
-               Source="{Binding Image,Mode=TwoWay}"
+               Source="{Binding ProductImagePath,Mode=OneWay, Converter={StaticResource imageConverter}}"
             Width="234"/>
 
         <Button x:Name="AddTheStation"

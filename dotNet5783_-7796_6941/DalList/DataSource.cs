@@ -30,7 +30,6 @@ public class DataSource
 
     static DataSource() { }
 
-    //private DataSource() { }
     internal List<Order?> _Orders { get; } = new List<Order?> { };
     internal List<OrderItem?> _OrderItems { get; } = new List<OrderItem?> { };
     internal List<Product?> _Products { get; } = new List<Product?> { };
@@ -92,6 +91,7 @@ public class DataSource
                     ProductImagePath = Environment.CurrentDirectory+ $@"\images\productImages\{category.Item1.ToString()}\{name}"
                 };
                 i++;
+
                 #region Makes sure id is unique
                 int pWithTheSameId = _Products.FindIndex(x => x.GetValueOrDefault().ID == myP.ID);
 

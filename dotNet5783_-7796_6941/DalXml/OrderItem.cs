@@ -29,11 +29,12 @@ internal class OrderItem : IOrderItem
         {
 
             List<configNumbers?> runningList = XMLTools.LoadListFromXMLSerializer<configNumbers?>(_DXml.configPath);//המספרים הרצים לפני הוספת ההזמנה החדשה
-            //configNumbers runningNum = (from Number in runningList
-            //                            where Number.typeOfnumber == "Num For OrderItem ID"
-            //                            select Number).FirstOrDefault();
 
-            configNumbers runningNum = runningList.Select(num => num.typeOfnumber == "Num For OrderItem ID");
+            configNumbers runningNum = (configNumbers)(from Number in runningList
+                                                       where Number != null
+                                                       where (string)Number.GetValueOrDefault().typeOfnumber == "Num For OrderItem ID"
+                                                       select Number).FirstOrDefault()!;
+            ;
 
             runningList.Remove(runningNum);
             runningNum.numberSaved++;
@@ -70,6 +71,12 @@ internal class OrderItem : IOrderItem
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(_DXml.OrderItemPath)!;
         return filter == null ? listOrderItems.Where(OI =>OI.GetValueOrDefault().IsDeleted != true).OrderBy(OI => ((Do.OrderItem)OI!).ID)
                                :listOrderItems.Where(OI => OI.GetValueOrDefault().IsDeleted != true).Where(filter).OrderBy(OI => ((Do.OrderItem)OI!).ID);
+    }
+
+    public IEnumerable<Do.OrderItem?> GetAlldeleted()
+    {
+        var listLOrders = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(_DXml.OrderPath)!;
+        return listLOrders.Where(O => O.GetValueOrDefault().IsDeleted == true).OrderBy(O => ((Do.OrderItem)O!).ID);
     }
 
     public Do.OrderItem GetById(int id) =>

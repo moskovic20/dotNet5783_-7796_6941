@@ -28,11 +28,13 @@ internal class Order : IOrder
         {
 
             List<configNumbers?> runningList = XMLTools.LoadListFromXMLSerializer<configNumbers?>(_DXml.configPath);//המספרים הרצים לפני הוספת ההזמנה החדשה
-            configNumbers runningNum = (from Number in runningList
-                                        where Number.typeOfnumber == "Num For Order ID"
-                                        select Number).FirstOrDefault();
+            configNumbers runningNum = (configNumbers)(from Number in runningList
+                              where Number!=null
+                              where (string)Number.GetValueOrDefault().typeOfnumber == "Num For Order ID"
+                              select Number).FirstOrDefault()!;
 
             runningList.Remove(runningNum);
+            
             runningNum.numberSaved++;
             item.OrderID = (int)runningNum.numberSaved;//המספר הזמנה הרץ הבא
 
@@ -41,40 +43,40 @@ internal class Order : IOrder
         }
         //else
         //    item.OrderID = temp.GetValueOrDefault().OrderID;//שימוש במספר המשוייך בלי לשנות את הקונפיג
-        
+
 
         listOrders.Add(item);//שמירה בהתאם בקובץ הזמנה        
         XMLTools.SaveListToXMLSerializer(listOrders, _DXml.OrderPath);//הרשימה לאחר ההוספה
 
         return item.OrderID;
-    
-    /*  לדוג איך משתמשים במספרים הרצים תמר ורעות
-      #region CreateDrone
-        public int CreateDrone(Drone droneToCreate)
-        {
-            List<Drone> dronesList = GetDroneList().ToList();
-            List<ImportentNumbers> runningList = XmlTools.LoadListFromXMLSerializer<ImportentNumbers>(configPath);
 
-            ImportentNumbers runningNum = (from number in runningList
-                                           where (number.typeOfnumber == "Drone Running Number")
-                                           select number).FirstOrDefault();
+        /*  לדוג איך משתמשים במספרים הרצים תמר ורעות
+          #region CreateDrone
+            public int CreateDrone(Drone droneToCreate)
+            {
+                List<Drone> dronesList = GetDroneList().ToList();
+                List<ImportentNumbers> runningList = XmlTools.LoadListFromXMLSerializer<ImportentNumbers>(configPath);
 
-            runningList.Remove(runningNum);
+                ImportentNumbers runningNum = (from number in runningList
+                                               where (number.typeOfnumber == "Drone Running Number")
+                                               select number).FirstOrDefault();
 
-            runningNum.numberSaved++;
-            droneToCreate.ID = (int)runningNum.numberSaved;
+                runningList.Remove(runningNum);
 
-            runningList.Add(runningNum);
-            dronesList.Add(droneToCreate);
+                runningNum.numberSaved++;
+                droneToCreate.ID = (int)runningNum.numberSaved;
 
-            XmlTools.SaveListToXMLSerializer(runningList, configPath);
-            XmlTools.SaveListToXMLSerializer(dronesList, dronePath);
+                runningList.Add(runningNum);
+                dronesList.Add(droneToCreate);
 
-            return (int)runningNum.numberSaved;
-        }
-        #endregion
+                XmlTools.SaveListToXMLSerializer(runningList, configPath);
+                XmlTools.SaveListToXMLSerializer(dronesList, dronePath);
 
-     */
+                return (int)runningNum.numberSaved;
+            }
+            #endregion
+
+         */
     }
 
     public void Delete(int id)
@@ -95,7 +97,13 @@ internal class Order : IOrder
     {
         var listLOrders = XMLTools.LoadListFromXMLSerializer<Do.Order?>(_DXml.OrderPath)!;
         return filter == null ? listLOrders.Where(O => O.GetValueOrDefault().IsDeleted != true).OrderBy(O => ((Do.Order)O!).OrderID)
-                               :listLOrders.Where(O => O.GetValueOrDefault().IsDeleted != true).Where(filter).OrderBy(O => ((Do.Order)O!).OrderID);
+                               : listLOrders.Where(O => O.GetValueOrDefault().IsDeleted != true).Where(filter).OrderBy(O => ((Do.Order)O!).OrderID);
+    }
+
+    public IEnumerable<Do.Order?> GetAlldeleted()
+    {
+        var listLOrders = XMLTools.LoadListFromXMLSerializer<Do.Order?>(_DXml.OrderPath)!;
+        return listLOrders.Where(O => O.GetValueOrDefault().IsDeleted == true).OrderBy(O => ((Do.Order)O!).OrderID);
     }
 
     public Do.Order GetById(int id) =>

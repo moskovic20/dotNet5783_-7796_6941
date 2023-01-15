@@ -170,4 +170,13 @@ internal class Product : IProduct
         Delete(item.ID);
         Add(item);
     }
+
+    public IEnumerable<Do.Product?> GetAlldeleted()
+    {
+        var list=XMLTools.LoadListFromXMLElement(_DXml.ProductPath).Elements().Select(s => GetProduct(s));
+        return from p in list
+               where p?.IsDeleted == true
+               select p;
+
+    }
 }

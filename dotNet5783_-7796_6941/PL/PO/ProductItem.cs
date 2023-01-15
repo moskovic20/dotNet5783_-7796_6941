@@ -66,19 +66,19 @@ public class ProductItem : MainPo
         }
     }
 
-    private string? _Summary;
-    public string? Summary
-    {
-        get
-        {
-            return _Summary;
-        }
-        set
-        {
-            _Summary = value;
-            OnPropertyChanged("Summary");
-        }
-    }
+    //private string? _Summary;
+    //public string? Summary
+    //{
+    //    get
+    //    {
+    //        return _Summary;
+    //    }
+    //    set
+    //    {
+    //        _Summary = value;
+    //        OnPropertyChanged("Summary");
+    //    }
+    //}
 
     private int? _AmountInCart;
     public int? AmountInCart

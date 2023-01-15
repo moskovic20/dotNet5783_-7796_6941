@@ -1,0 +1,57 @@
+﻿<Page x:Class="PL.PlEntity.Order.DeletedOrderItems"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:PL.PlEntity.Order"
+      mc:Ignorable="d" 
+      d:DesignHeight="530" d:DesignWidth="1000"
+      Title="DeletedOrderItems">
+
+    <Grid>
+        <DataGrid x:Name="Orders_DateGrid"
+                  CanUserAddRows="False"
+                  materialDesign:DataGridAssist.CellPadding="10"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="30" 
+                  IsTextSearchEnabled="True" 
+                  GridLinesVisibility="Horizontal" 
+                  AreRowDetailsFrozen="False"
+                  AutoGenerateColumns="False"
+                  HorizontalGridLinesBrush="Transparent"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                  CanUserDeleteRows="False" 
+                  CanUserResizeRows="False"
+                  Foreground="Black"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding}" 
+                  HorizontalAlignment="Center"
+                  Width="980"
+                  Background="{x:Null}" Margin="0,10,0,35">
+
+
+            <DataGrid.Columns >
+
+
+                <DataGridTextColumn Header="מספר הזמנה"
+                                    Binding="{Binding OrderID }"
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="מספר מוצר"
+                                    Binding="{Binding ProductID }"
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="שם מוצר "
+                                    Binding="{Binding NameOfBook}"
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="מחיר פריט בודד"    
+                                    Binding="{Binding PriceOfOneItem}"
+                                    MinWidth="100"/>
+                <DataGridTextColumn Header="כמות פריטים"    
+                                    Binding="{Binding AmountOfItems}"
+                                    MinWidth="100"/>
+                <DataGridTextColumn Header="מחיר סופי"
+                                    Binding="{Binding TotalPrice}"
+                                    MinWidth="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

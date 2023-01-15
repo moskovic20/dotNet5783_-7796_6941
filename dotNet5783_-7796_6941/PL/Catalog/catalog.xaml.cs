@@ -30,10 +30,18 @@ namespace PL.Catalog
         Frame myFrame;
         Cart myCart;
 
-        private ObservableCollection<ProductItem>? BooksForShow;
         private ObservableCollection<ProductItem>? allBooks;
         private ObservableCollection<ProductItem>? oneGroupOfBooks;
         IOrderedEnumerable<IGrouping<string, ProductItem>>? allGroups;
+
+        public ObservableCollection<ProductItem>? BooksForShow
+        {
+            get { return (ObservableCollection<ProductItem>)GetValue(BooksForShowProperty); }
+            set { SetValue(BooksForShowProperty, value); }
+        }
+        public static readonly DependencyProperty BooksForShowProperty =
+            DependencyProperty.Register("BooksForShow", typeof(ObservableCollection<ProductItem>), typeof(catalog));
+
 
         public catalog(IBl bl, Cart cart, Frame frame)
         {
@@ -41,21 +49,25 @@ namespace PL.Catalog
             this.bl = bl;
             myFrame = frame;
             myCart = cart;
-            BooksForShow = new(bl.BoProduct.GetAllProductItems_forC().Select(p => p.CopyProductItemFromBoToPo()));
+
+            BooksForShow = new(bl.BoProduct.GetAllProductItems_forC().Select(p => p.CopyProductItemFromBoToPo())); //הבאת כל הספרים לקטלוג
             allBooks = new(BooksForShow);
-            DataContext = BooksForShow;
+            //DataContext = BooksForShow;
 
 
         }
 
+        #region לחיצה על ספר-מעבר לעמוד פרטי הספר המלאים
         private void Catalog_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
 
             ProductItem p = (ProductItem)((ListView)sender).SelectedItem;
-            this.myFrame.Content = new bookDetails(p.ID, bl,myCart);
+            this.myFrame.Content = new bookDetails(p.ID, bl, myCart);
 
         }
+        #endregion
 
+        #region לחיצה על הוסף לסל-מהקטלוג
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -65,7 +77,7 @@ namespace PL.Catalog
                 PO.ProductItem p = (button.DataContext as PO.ProductItem)!;
                 bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).putTo(myCart);//הוספת המוצר לשכבה מתחת 
                 MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
-                
+
             }
             catch (Exception ex)
             {
@@ -73,7 +85,9 @@ namespace PL.Catalog
                     MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
             }
         }
+        #endregion
 
+        #region סידור הפריטים לפי מחיר-לפי בחירת המשתמש
         private void SortByPrice_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -81,23 +95,25 @@ namespace PL.Catalog
             {
                 var list = BooksForShow?.OrderBy(ProductItem => ProductItem.Price);
                 BooksForShow = new(list!);
-                DataContext = BooksForShow;
+                //DataContext = BooksForShow;
             }
 
             if (((ComboBox)sender).SelectedIndex == 1)
             {
                 var list = BooksForShow?.OrderByDescending(ProductItem => ProductItem.Price);
                 BooksForShow = new(list!);
-                DataContext = BooksForShow;
+               // DataContext = BooksForShow;
             }
 
             if (((ComboBox)sender).SelectedIndex == 2)
             {
                 BooksForShow = new(oneGroupOfBooks!);
-                DataContext = BooksForShow;
+                //DataContext = BooksForShow;
             }
         }
+        #endregion
 
+        #region אירוע-פתיחת האפשרויות עבור סינון לפי קטגוריה
         private void CategoryFilter_DropDownOpened(object sender, EventArgs e)
         {
 
@@ -112,15 +128,17 @@ namespace PL.Catalog
 
                 foreach (var group in groupsList)
                     CategoryFilter.Items.Add(group.Key);
-       
+
                 CategoryFilter.Items.Add("");
 
             }
         }
+        #endregion
 
+        #region סינון לפי קטגוריה
         private void CategoryFilter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string selectedCategory =(string)((ComboBox)sender).SelectedItem;
+            string selectedCategory = (string)((ComboBox)sender).SelectedItem;
 
             if (selectedCategory != null)
             {
@@ -129,8 +147,8 @@ namespace PL.Catalog
                 if (selectedCategory == "")
                 {
                     BooksForShow = new(allBooks!);
-                    DataContext = BooksForShow;
-                   
+                    //DataContext = BooksForShow;
+
                 }
                 else
                 {
@@ -142,33 +160,36 @@ namespace PL.Catalog
                         }
 
                     }
-                    SortByPraic.SelectedItem = null;
+                    SortByPrice.SelectedItem = null;
                 }
 
                 oneGroupOfBooks = new(BooksForShow!);
-                DataContext = BooksForShow;
+                //DataContext = BooksForShow;
             }
 
         }
+        #endregion
 
+        #region הבאת הספרים לפי חיפוש המשתמש-לפי שם הספר
         private void nameOfBook_TextChanged(object sender, TextChangedEventArgs e)
         {
             string book = nameOfBook.Text;
 
-                if (book != "")
-                {
-                    var list = from b in bl.BoProduct.GetProductsByName(book)
-                               select b.CopyPropTo(new ProductItem());
+            if (book != "")
+            {
+                var list = from b in bl.BoProduct.GetProductsByName(book)
+                           select b.CopyPropTo(new ProductItem());
 
-                    BooksForShow = new(list);
-                    DataContext = BooksForShow;
-                    CategoryFilter.SelectedItem = null;
-                }
-                else
-                {
-                    BooksForShow = new(allBooks!);
-                    DataContext = BooksForShow;
-                }
+                BooksForShow = new(list);
+                //DataContext = BooksForShow;
+                CategoryFilter.SelectedItem = null;
+            }
+            else
+            {
+                BooksForShow = new(allBooks!);
+                //DataContext = BooksForShow;
+            }
         }
+        #endregion
     }
 }

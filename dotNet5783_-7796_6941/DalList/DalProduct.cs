@@ -19,7 +19,7 @@ internal class DalProduct : IProduct
         List<Product?> listOfThisID = _DS._Products.FindAll(x => x?.ID == P.ID);
         int indexOfExist = listOfThisID.FindIndex(x => x?.IsDeleted != true);
 
-        if (indexOfExist == -1)
+        if (indexOfExist == -1)//
         {
             _DS._Products.Add(P);
             return P.ID;
@@ -86,29 +86,6 @@ internal class DalProduct : IProduct
         Add(item);
     }
 
-    
-
-
-    //    int indexOfSameId = _DS._Products.FindIndex(x => x?.OrderID == myID);
-
-    //    if (indexOfSameId == -1)
-    //        return true;
-
-    //    else
-    //        return false;
-    //}
-
-
-    //    int indexOfSameId = _DS._Products.FindIndex(x => x?.OrderID == myID);
-
-    //    if (indexOfSameId == -1)
-    //        return true;
-
-    //    else
-    //        return false;
-    //}
-
-
     /// <summary>
     /// הפונקציה מחזירה את כל רשימת המוצרים לפי פונקציית הסינון שמתקבלת
     /// </summary>
@@ -121,15 +98,15 @@ internal class DalProduct : IProduct
        where (filter != null) ? filter(item) : true
        select item;
 
-
     /// <summary>
     ///  הפונקציה מחזירה את כל רשימת הפריטים (כולל אלו שנמחקו)-לפי פונקציית הסינון שמתקבלת
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Product?> GetAlldeletted(Func<Product?, bool>? filter = null)
+    public IEnumerable<Product?> GetAlldeleted(Func<Product?, bool>? filter = null)
     => from item in _DS._Products
        where item != null
+       where item?.IsDeleted == true
        where filter != null ? filter(item) : true
        select item;
 }

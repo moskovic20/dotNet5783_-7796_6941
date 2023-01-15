@@ -116,7 +116,7 @@ public static class Tools
     public static BO.OrderItem? ListFromDoToBo(this Do.OrderItem? orderItems)
     {
         BO.OrderItem oIHelp = orderItems.CopyPropTo(new BO.OrderItem());
-        oIHelp.NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook;//name of the product by his order OrderID
+       // oIHelp.NameOfBook = dal.Product.GetById(orderItems?.ProductID ?? 0).NameOfBook;//name of the product by his order OrderID
         oIHelp.TotalPrice = (orderItems?.PriceOfOneItem ?? 0) * (orderItems?.AmountOfItems ?? 0);
         return oIHelp;
     }
@@ -207,12 +207,21 @@ public static class Tools
     #region עדכון כמות מוצר לאחר מחיקת הזמנה
     public static void UpdateInStockAfterDeleteO(this OrderItem myOI)
     {
-        Product myP = dal.Product.GetById(myOI.ProductID).CopyPropTo(new Product());
-        myP.InStock += myOI.AmountOfItems;
-        dal.Product.Update(myP.CopyPropToStruct(new Do.Product()));
+        try
+        {
+            Product myP = dal.Product.GetById(myOI.ProductID).CopyPropTo(new Product());
+            myP.InStock += myOI.AmountOfItems;
+            dal.Product.Update(myP.CopyPropToStruct(new Do.Product()));
+            dal.OrderItem.Delete(myOI.ID);
+        }
+        catch(Exception)
+        {
+            //בכוונה אין פה כלום, אם מוצר לא נמצא, פשוט לא נשנה כלום
+        }
     }
     #endregion
 
+    #region פונקציה שמחזירה אמת אם  המספר a מוכל במספר b
     public static bool ContainsNumber(int a, int b)
     {
         string first = a.ToString();
@@ -226,5 +235,5 @@ public static class Tools
             return false;
         }
     }
-
+    #endregion
 }

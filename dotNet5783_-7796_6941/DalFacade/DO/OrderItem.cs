@@ -21,6 +21,13 @@ public struct OrderItem
     /// </summary>
     public int ProductID { get; set; }
 
+
+    /// <summary>
+    ///  Unique identifier for item
+    /// </summary>
+    public string? NameOfBook { get; set; }
+
+
     /// <summary>
     /// price of this current item on store
     /// </summary>

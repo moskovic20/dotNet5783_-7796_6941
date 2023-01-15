@@ -160,6 +160,7 @@ public class DataSource
                     ProductID = product?.ID ?? 0,
                     PriceOfOneItem = product?.Price ?? 0,
                     AmountOfItems = R.Next(1, 5),
+                    NameOfBook = product?.NameOfBook,
                     //Image = "",
                     IsDeleted = false
                 };

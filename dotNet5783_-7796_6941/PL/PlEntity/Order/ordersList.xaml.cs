@@ -34,7 +34,7 @@ namespace PL.PlEntity.Order
             InitializeComponent();
 
             this.bl = bl;
-            allOrders = allOrders!.ToObserCollection_O();
+            allOrders = new(PO.Tools.GetAllOrdersInPO());
             DataContext = allOrders;
         }
 
@@ -159,7 +159,7 @@ namespace PL.PlEntity.Order
             try
             {
 
-                OrderForList orderToD =(OrderForList)((DataGrid)sender).SelectedItem;
+                OrderForList orderToD =(OrderForList)Orders_DateGrid.SelectedItem;
                 if (orderToD.Status != OrderStatus.Completed)
                     throw new Exception("אי אפשר להעביר לארכיון הזמנה שאינה הושלמה ");
 
@@ -265,7 +265,7 @@ namespace PL.PlEntity.Order
                     }
                     else
                     {
-                        var list = from o in bl.BoOrder.getAllOrderOfClaient(myString)
+                        var list = from o in bl.BoOrder.GetAllOrderOfClaient(myString)
                                    select new OrderForList
                                    {
                                        CustomerName = o.CustomerName,

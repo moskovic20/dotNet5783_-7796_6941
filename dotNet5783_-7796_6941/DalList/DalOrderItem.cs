@@ -100,7 +100,8 @@ internal class DalOrderItem : IOrderItem
             throw new DoesntExistException("מספר הזמנה לא תקין");
 
         var list = from item in _DS._OrderItems
-                   where item != null && item?.OrderID == OrderID
+                   where item != null 
+                   where (item?.OrderID == OrderID)
                    select item;
 
         if (list.Count() == 0)
@@ -136,7 +137,9 @@ internal class DalOrderItem : IOrderItem
     /// <returns></returns>
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter = null)
     => from item in _DS._OrderItems
-       where filter is null ? true : item?.IsDeleted == null && filter(item)
+       where item != null
+       where item?.IsDeleted == false
+       where (filter != null) ? filter(item) : true
        select item;
 
     /// <summary>
@@ -144,10 +147,11 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<OrderItem?> GetAlldeletted(Func<OrderItem?, bool>? filter = null)
+    public IEnumerable<OrderItem?> GetAlldeleted(Func<OrderItem?, bool>? filter = null)
     => from item in _DS._OrderItems
-       where filter is null ? true : item.Value.IsDeleted == true && filter(item)
+       where item != null
+       where item?.IsDeleted == true
+       where (filter != null) ? filter(item) : true
        select item;
-
 }
 

@@ -53,7 +53,7 @@ public partial class Cart : Page
             
             MessageBox.Show("מספר הזמנתך הוא "+ OrderId + "!ההזמנה נקלטה במערכת");
 
-            myCart.reboot(); //לבדוק מה זה
+            myCart.reboot();
             myFrame.Content = new catalog(bl, myCart, this.myFrame);
         }
         catch (Exception ex)
@@ -121,10 +121,12 @@ public partial class Cart : Page
     }
     #endregion
 
+    #region רוקן הזמנה
     private void CancleOrder_Click(object sender, RoutedEventArgs e)
     {
         myCart.Items = null;
         myCart.TotalPrice = null;
         this.OrderItems_DateGrid.DataContext = myCart.Items;
     }
+#endregion
 }

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+       DataContext="{Binding BooksForShow, RelativeSource={ RelativeSource self}}"
       xmlns:local="clr-namespace:PL.IvalueConvertor"
       mc:Ignorable="d" 
       d:DesignHeight="560" d:DesignWidth="1000"
@@ -22,13 +23,19 @@
             <RowDefinition Height="19*"/>
             <RowDefinition Height="93*"/>
         </Grid.RowDefinitions>
-        <Rectangle HorizontalAlignment="Left" Height="95" VerticalAlignment="Center" Width="1000" Fill="#FFF6F6F6" Grid.ColumnSpan="2"/>
+        
+        <Rectangle HorizontalAlignment="Left"
+                   Height="95"
+                   VerticalAlignment="Center"
+                   Width="1000" Fill="#FFF6F6F6"
+                   Grid.ColumnSpan="2">
+        </Rectangle>
+        
         <TextBox x:Name="nameOfBook" 
                  TextChanged="nameOfBook_TextChanged"
             materialDesign:HintAssist.Hint="איזה ספר את/ה מחפש/ת?"     
             Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
             materialDesign:HintAssist.Foreground="Black"
-            
             HorizontalAlignment="Left"
             Width="295" Height="40" VerticalAlignment="Center"
             RenderTransformOrigin="0.837,0.756" Text="" Margin="665,0,0,0" Grid.ColumnSpan="2"/>
@@ -41,7 +48,7 @@
                         Style="{StaticResource MaterialDesignFloatingHintComboBox}" Height="40" VerticalAlignment="Top">
         </ComboBox>
 
-        <ComboBox x:Name="SortByPraic"
+        <ComboBox x:Name="SortByPrice"
             
             Margin="190,34,465,0"
             materialDesign:HintAssist.Hint="(סדר לפי)" 

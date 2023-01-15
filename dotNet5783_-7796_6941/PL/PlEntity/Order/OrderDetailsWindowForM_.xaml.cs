@@ -28,10 +28,18 @@ public partial class OrderDetailsWindowForM_ : Window
     {
         InitializeComponent();
         this.bl = bl;
-        this.orderToShow = bl.BoOrder.GetOrdertDetails(orderID).CopyBoOrderToPoOrder();
-        this.DataContext = orderToShow;
-        this.OrderItems_DateGrid.DataContext = orderToShow.Items;
 
+        try
+        {
+            this.orderToShow = bl.BoOrder.GetOrdertDetails(orderID).CopyBoOrderToPoOrder();
+            this.DataContext = orderToShow;
+            this.OrderItems_DateGrid.DataContext = orderToShow.Items;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+               MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
 
     }
 

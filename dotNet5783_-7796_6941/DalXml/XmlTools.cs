@@ -24,10 +24,17 @@ static internal class XMLTools {
     public static T? ToEnumNullable<T>(this XElement element, string name) where T : struct, Enum =>
         Enum.TryParse<T>((string?)element.Element(name), out var result) ? (T?)result : null;
 
-    public static DO.CATEGORY ConvertEnum( this XElement element, string caterory)//is working?
-    { 
+    //public static DO.CATEGORY ConvertEnum(this XElement element, string caterory)//is working?
+    //{ 
+    //    DO.CATEGORY result;
+    //    Enum.TryParse((string?)element.Element(caterory), out result);
+    //    return result;
+    //}
+
+    public static DO.CATEGORY ConvertEnum(this string? caterory)//iS working?
+    {
         DO.CATEGORY result;
-        Enum.TryParse((string?)element.Element(caterory), out result);
+        Enum.TryParse(caterory, out result);
         return result;
     }
 

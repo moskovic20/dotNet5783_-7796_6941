@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Products>
 	<Product>
-		<ID>11111111</ID>
+		<ID>111111</ID>
 		<NameOfBook>dddddd</NameOfBook>
 		<AuthorName>qqqqq</AuthorName>
 		<Category>mystery</Category>
@@ -12,7 +12,7 @@
 		<ProductImagePath>"C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\איה פלוטו.jpg"</ProductImagePath>
 	</Product>
 	<Product>
-		<ID>1234567</ID>
+		<ID>222222</ID>
 		<NameOfBook>djhiddd</NameOfBook>
 		<AuthorName>qqquuqq</AuthorName>
 		<Category>mystery</Category>

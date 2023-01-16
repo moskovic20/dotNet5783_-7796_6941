@@ -9,6 +9,7 @@ using Do;
 using System.Xml.XPath;
 using System.ComponentModel;
 using System.Reflection;
+using DO;
 
 namespace Dal;
 
@@ -82,11 +83,11 @@ internal static XElement itemToXelement<Item>(Item item, string name)
          ID = (int)s.Element("ID")!,
          NameOfBook = (string?)s.Element("NameOfBook"),
          AuthorName = (string?)s.Element("AuthorName"),
-         Category = s.ConvertEnum("Category"),//לבדוק שעובד
+         Category = (CATEGORY)((string?)s.Element("Category")).ConvertEnum(),//לבדוק שעובד
          Summary = (string?)s.Element("Summary"),
-         Price = (double)s.ToDoubleNullable("Price")!,
-         InStock = (int)s.Element("InStock")!,
-         IsDeleted= (bool)s.ToBool("IsDeleted")!, //לבדוק שעובד
+         Price = (double?)s.ToDoubleNullable("Price")!,
+         InStock = (int?)s.Element("InStock"),
+         IsDeleted= (bool)s.Element("IsDeleted")!, //לבדוק שעובד
          ProductImagePath = (string?)s.Element("ProductImagePath"), //s.ToXPathNavigable
      };
 

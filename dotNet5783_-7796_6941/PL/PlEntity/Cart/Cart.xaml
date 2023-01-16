@@ -62,7 +62,7 @@
             Margin="169,88,15,381" Grid.Column="1">
             <TextBox x:Name="NameC" Text="{Binding CustomerName, Mode=TwoWay}"
                      Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                      Height="39" Width="201"/>
+                      Height="39" Width="189"/>
             <Label Content="  :שם לקוח"
                 Width="97" Height="92" VerticalContentAlignment="Center"/>
         </StackPanel>
@@ -71,7 +71,7 @@
             Margin="169,169,15,311" Grid.Column="1">
             <TextBox x:Name="MailC" Text="{Binding CustomerEmail, Mode=TwoWay}"
                      Style="{DynamicResource MaterialDesignFloatingHintTextBox}"
-                Height="39" Width="201"/>
+                Height="38" Width="188"/>
             <Label Content="  :כתובת מייל"
                 Width="97" Height="57" VerticalContentAlignment="Center"/>
         </StackPanel>
@@ -85,7 +85,7 @@
                 Width="141" Height="25" VerticalContentAlignment="Center"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
-            Margin="236,365,52,146" Grid.Column="1">
+            Margin="250,365,38,146" Grid.Column="1">
             <TextBlock Text="{Binding TotalPrice, Mode=TwoWay}"
                 Height="30" Width="93" FontSize="16" FontWeight="Bold"/>
             <Label Content="  :מחיר לתשלום"
@@ -110,7 +110,7 @@
                   IsReadOnly="True"
                   ItemsSource="{Binding}" 
                   HorizontalAlignment="Left"
-                  Margin="31,64,0,111"
+                  Margin="31,68,0,107"
                   Width="570"
                   Background="{x:Null}" Grid.ColumnSpan="2">
 
@@ -194,7 +194,7 @@
                                     MinWidth="5"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="393" Margin="127,62,0,0" Stroke="#FF673AB7" VerticalAlignment="Top" Width="7"/>
+        <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="393" Margin="127,66,0,0" Stroke="#FF673AB7" VerticalAlignment="Top" Width="7"/>
         <Button x:Name="MakeOrder" Content="בצע הזמנה" Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="276,475,0,0" VerticalAlignment="Top" Click="MakeOrder_Click" Grid.Column="1" Height="32" Width="132"/>
         <Button x:Name="CancleOrder" Click="CancleOrder_Click" Style="{StaticResource MaterialDesignOutlinedDarkButton}" Content="רוקן עגלה" HorizontalAlignment="Left" Margin="45,475,0,0" VerticalAlignment="Top"/>
         <Label Grid.Column="1"  Content="כל השדות הינם חובה*" HorizontalAlignment="Left" Margin="343,59,0,0" VerticalAlignment="Top" Width="124" Foreground="Red" Height="24"/>

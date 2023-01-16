@@ -5,6 +5,11 @@ namespace BO;
 public class OrderItem
 {
     /// <summary>
+    /// מזהה יחודי לפריט בהזמנה
+    /// </summary>
+    public int ID { get; set; }
+
+    /// <summary>
     /// מזהה פריט ההזמנה
     /// </summary>
     public int OrderID { get; set; }

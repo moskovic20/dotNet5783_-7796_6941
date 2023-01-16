@@ -13,8 +13,10 @@ public interface IOrder
     void UpdateOrder(int id, int option);
     void CancleOrder_forM(int id);
     void DeleteOrder_forM(int orderID);
-    IEnumerable<BO.OrderForList> getAllOrderOfClaient(string name);
+    IEnumerable<BO.OrderForList> GetAllOrderOfClaient(string name);
     public IEnumerable<OrderForList> GetAllOrdersByNumber(int number);
+    public IEnumerable<BO.Order> GetAllDeletedOrders();
+    public IEnumerable<BO.OrderItem> GetAllDeletedOrderItems();
 
 
 

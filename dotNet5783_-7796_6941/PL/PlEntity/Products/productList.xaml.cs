@@ -205,8 +205,5 @@ public partial class productList : Page
     }
     #endregion
 
-    //private void nameOrID_TextChanged(object sender, TextChangedEventArgs e)
-    //{
-    //    iconSearch.Kind = MaterialDesignThemes.Wpf.PackIconKind.Search;
-    //}
+    
 }

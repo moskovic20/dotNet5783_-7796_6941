@@ -1,14 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Products>
 	<Product>
-		<ID> </ID>
-		<NameOfBook> </NameOfBook>
-		<AuthorName> </AuthorName>
-		<Category> </Category>
-		<Summary> </Summary>
-		<Price> </Price>
-		<InStock> </InStock>
-		<IsDeleted> </IsDeleted>
-		<ProductImagePath> </ProductImagePath>
+		<ID> 11111111</ID>
+		<NameOfBook>dddddd</NameOfBook>
+		<AuthorName>qqqqq</AuthorName>
+		<Category>mystery</Category>
+		<Summary>ff</Summary>
+		<Price>30</Price>
+		<InStock>3</InStock>
+		<IsDeleted>False</IsDeleted>
+		<ProductImagePath>"C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\איה פלוטו.jpg"</ProductImagePath>
+	</Product>
+	<Product>
+		<ID>1234567</ID>
+		<NameOfBook>djhiddd</NameOfBook>
+		<AuthorName>qqquuqq</AuthorName>
+		<Category>mystery</Category>
+		<Summary>ff</Summary>
+		<Price>78</Price>
+		<InStock>3</InStock>
+		<IsDeleted>False</IsDeleted>
+		<ProductImagePath>"C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\איה פלוטו.jpg"</ProductImagePath>
 	</Product>
 </Products>

@@ -17,6 +17,7 @@ public interface IProduct
     void UpdateProductDetails_forM(BO.Product product);
     ProductForList GetProductForList(int productId);
     public IEnumerable<ProductForList> GetAllProductByNumber(int number);
+    public IEnumerable<BO.Product> GetAllDeletedProducts();
 
 
 }

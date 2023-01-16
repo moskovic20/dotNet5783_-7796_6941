@@ -1,0 +1,28 @@
+﻿<Page x:Class="PL.Admin.ArchivesMenu"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PL.Admin"
+      mc:Ignorable="d" 
+      d:DesignHeight="590" d:DesignWidth="1000"
+      Title="ArchivesMenu">
+
+    <Grid>
+        <Frame x:Name="archivesMenu" Height="530" Margin="0,60,0,0"/>
+        <Rectangle HorizontalAlignment="Center" Height="60" Stroke="#FF673AB7" Fill="#FF673AB7" VerticalAlignment="Top" Width="1000" />
+        <Menu x:Name="AdminMenu" DockPanel.Dock="Top" VerticalAlignment="Top" HorizontalAlignment="Right" Height="32" Width="300" Margin="0,13,304,0">
+
+            <MenuItem x:Name="orderItemsArchives"  Header="פריטי הזמנה" 
+                      Click="orderItemsArchives_Click" FontSize="16" FontFamily="Calibri" Height="29" Foreground="#DDFFFFFF"/>
+
+            <MenuItem x:Name="productsArchives" Header="ספרים"
+                      Click="productsArchives_Click"  FontSize="16" FontFamily="Calibri" Height="29" Foreground="#DDFFFFFF"/>
+
+            <MenuItem x:Name="ordersArchives"  Header="הזמנות" 
+                      Click="ordersArchives_Click" FontSize="16" FontFamily="Calibri" Height="29" Foreground="#DDFFFFFF"/>
+        </Menu>
+        <Label Content=":ארכיון-סל אשפה" HorizontalAlignment="Left" Margin="840,17,0,0" VerticalAlignment="Top" Foreground="#FF673AB7" Background="White" Width="125" FontWeight="Bold" FontSize="14"/>
+
+    </Grid>
+</Page>

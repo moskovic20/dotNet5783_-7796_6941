@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Product>
+  <Product>
+    <ID>888888</ID>
+    <NameOfBook>jjjjjjjj</NameOfBook>
+    <AuthorName>jjjjjj</AuthorName>
+    <StudentStatus>history</StudentStatus>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\history\jjjjjjjj.jpeg</ProductImagePath>
+  </Product>
+</Product>

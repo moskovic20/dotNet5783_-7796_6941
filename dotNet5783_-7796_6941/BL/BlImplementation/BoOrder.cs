@@ -1,9 +1,11 @@
 ﻿using BlApi;
 using BO;
+using DalApi;
+//using Do;
 
 namespace BlImplementation;
 
-internal class BoOrder : IOrder
+internal class BoOrder : BlApi.IOrder
 {
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
@@ -33,9 +35,9 @@ internal class BoOrder : IOrder
         }
     }
 
-    public IEnumerable<BO.OrderForList> getAllOrderOfClaient(string name)
+    public IEnumerable<BO.OrderForList> GetAllOrderOfClaient(string name)
     {
-        return from o in dal.Order.GetAll(x => x?.CustomerName.Contains(name)?? false)
+        return from o in dal.Order.GetAll(x => x?.CustomerName?.Contains(name) ?? false)
                select GetOrderForList(o?.OrderID ?? throw new Exception("problem"));
     }
 
@@ -64,9 +66,9 @@ internal class BoOrder : IOrder
             BO.Order order = new BO.Order();
             order = myOrder.CopyPropTo(order);
             order.Status = myOrder.calculateStatus();
-            order.PaymentDate = myOrder.DateOrder;                                 
+            order.PaymentDate = myOrder.DateOrder;
             var tempItems = dal.OrderItem.GetListByOrderID(myOrder.OrderID);
-            order.Items = tempItems.Select(x => x.ListFromDoToBo()).ToList();//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
+            order.Items = tempItems?.Select(x => x.ListFromDoToBo()).ToList();//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
             return order;
         }
@@ -121,7 +123,7 @@ internal class BoOrder : IOrder
         {
             throw new BO.GetDetails_Exception("Can't update shipping date", ex);
         }
-        
+
     }
 
     /// <summary>
@@ -220,37 +222,92 @@ internal class BoOrder : IOrder
         throw new NotImplementedException("sorry, I'm not redy yet");
     }
 
+    /// <summary>
+    /// מחיקת הזמנה שהושלמה
+    /// </summary>
+    /// <param name="orderID"></param>
     public void DeleteOrder_forM(int orderID)
     {
+        Order myO = GetOrdertDetails(orderID);
+        myO?.Items?.ForEach(orderItem => dal.OrderItem.Delete(orderItem?.ID ?? 0));
         dal.Order.Delete(orderID);
     }
 
+    /// <summary>
+    /// ביטול הזמנה שהתקבלה
+    /// </summary>
+    /// <param name="orderID"></param>
     public void CancleOrder_forM(int orderID)
     {
         Order myO = GetOrdertDetails(orderID);
-     
-        if (myO.Items==null)
-        { 
-            dal.Order.Delete(orderID);
-            return;
-        }
+
 
         //myO.Items.Select(orderItem => orderItem.UpdateInStockAfterDeleteO());
-
-        foreach(OrderItem o in myO.Items)
+        if (myO.Items != null)
         {
-            o?.UpdateInStockAfterDeleteO();
+            foreach (OrderItem? o in myO.Items)
+                o?.UpdateInStockAfterDeleteO();
         }
+
+        dal.Order.Delete(orderID);
 
 
     }
 
+    /// <summary>
+    ///מביא את כל ההזמנות שהמספר שהתקבל מוכל במספר ההזמנה שלהן
+    /// </summary>
+    /// <param name="number"></param>
+    /// <returns></returns>
     public IEnumerable<OrderForList> GetAllOrdersByNumber(int number)
     {
         var query = (from order in GetAllOrderForList()
                      where BlApi.Tools.ContainsNumber(number, order.OrderID)
                      select order).ToList();
         return query;
+    }
+
+    /// <summary>
+    /// פונקציה שמחזירה את כל ההזמנות שנמחקו
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.Order> GetAllDeletedOrders()
+    {
+        return from order in dal.Order.GetAlldeleted()
+               select new BO.Order()
+               {
+                   OrderID = order?.OrderID ?? 0,
+                   CustomerAddress = order?.CustomerAddress,
+                   CustomerEmail = order?.CustomerEmail,
+                   CustomerName = order?.CustomerName,
+                   DateOrder = order?.DateOrder ?? new DateTime(),
+                   DeliveryDate = order?.DeliveryDate,
+                   ShippingDate = order?.ShippingDate,
+                   PaymentDate = order?.DateOrder ?? new DateTime(),
+                   TotalPrice = order?.CalculatePriceOfAllItems() ?? -1,
+                   Status = (BO.OrderStatus)order?.calculateStatus()!,
+               };
+    }
+
+    /// <summary>
+    /// פונקציה שמחזירה את כל פרטי ההזמנה שנמחקו.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.OrderItem> GetAllDeletedOrderItems()
+    {
+        var list= from orderItem in dal.OrderItem.GetAlldeleted()
+               select orderItem.CopyPropTo(new OrderItem());
+
+        Func<OrderItem, bool>? initializationTotalPrice = (OrderItem item) => 
+        {
+            item.TotalPrice = item.AmountOfItems * item.PriceOfOneItem;
+            return true;
+        };
+
+        return from item in list
+               where initializationTotalPrice(item)
+               select item;
+
     }
 
 }

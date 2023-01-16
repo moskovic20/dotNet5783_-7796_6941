@@ -61,7 +61,7 @@
 
         <StackPanel Orientation="Horizontal"
                     Margin="163,64,-98,326" Grid.Column="1" >
-            <Label Content="{Binding ID, Mode=TwoWay}"
+            <Label Content="{Binding orderID, Mode=TwoWay}"
                      Height="30" Width="147" />
             <Label Content=":מספר הזמנה"
                    Width="89" FontWeight="Bold" Height="33" Foreground='Black'/>
@@ -117,7 +117,7 @@
             <Label Content="{Binding ShippingDate,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                      Height="30" Width="153"/>
             <Label Content=":תאריך יציאה ליעד"
-                   Width="102" Height="33" FontWeight="Bold"/>
+                   Width="124" Height="33" FontWeight="Bold"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal"
@@ -126,7 +126,7 @@
             <Label Content="{Binding DeliveryDate,Converter={StaticResource DateTimeToString}, Mode=TwoWay}"
                       Height="30" Width="153" />
             <Label Content=":תאריך הגעה ליעד"
-                   Width="101" Height="39" FontWeight="Bold"/>
+                   Width="124" Height="39" FontWeight="Bold"/>
         </StackPanel>
 
 

@@ -184,7 +184,7 @@ static class Tools
             NameOfBook = pfl.NameOfBook,
             Price = pfl.Price,
             Category = (PO.CATEGORY)pfl.Category,
-            Summary = productBO.Summary,
+            //Summary = productBO.Summary,
             AmountInCart = productBO.InStock,
             //InStock=  productBO.InStock ?? 
             InStock = false //false לא עובד אז סתם שמתי שקר כמו טירונית (-___-)
@@ -264,7 +264,7 @@ static class Tools
             NameOfBook = pI.NameOfBook,
             Price = pI.Price,
             Category = (PO.CATEGORY)pI.Category,
-            Summary = pI.Summary,
+            //Summary = pI.Summary,
             AmountInCart = pI.AmountInCart,
             InStock = pI.InStock,
             ProductImagePath = pI.ProductImagePath
@@ -285,7 +285,7 @@ static class Tools
 
     // ___________________________________________orderTools__________________________________________________________
 
-    public static ObservableCollection<OrderForList> ToObserCollection_O(this ObservableCollection<OrderForList> allOrders)
+    public static List<OrderForList> GetAllOrdersInPO()
     {
         var list = from O in bl.BoOrder.GetAllOrderForList()
                    select new PO.OrderForList
@@ -297,9 +297,7 @@ static class Tools
                        TotalPrice = O.TotalPrice
                    };
 
-        allOrders = new ObservableCollection<PO.OrderForList>(list);
-
-        return allOrders;
+        return list.ToList();
     }
 
     #region convert fron BO.order to PO.order
@@ -319,18 +317,21 @@ static class Tools
             TotalPrice = boOrder.TotalPrice
         };
 
-        var list = from myOI in boOrder.Items
-                   select new OrderItem()
-                   {
-                       OrderID = myOI.OrderID,
-                       ProductID = myOI.ProductID,
-                       NameOfBook = myOI.NameOfBook,
-                       PriceOfOneItem = myOI.PriceOfOneItem,
-                       AmountOfItems = myOI.AmountOfItems,
-                       TotalPrice = myOI.TotalPrice
-                   };
+        if (boOrder.Items != null)
+        {
+            var list = from myOI in boOrder.Items
+                       select new OrderItem()
+                       {
+                           OrderID = myOI.OrderID,
+                           ProductID = myOI.ProductID,
+                           NameOfBook = myOI.NameOfBook,
+                           PriceOfOneItem = myOI.PriceOfOneItem,
+                           AmountOfItems = myOI.AmountOfItems,
+                           TotalPrice = myOI.TotalPrice
+                       };
 
-        myNewOrder.Items = new(list);
+            myNewOrder.Items = new(list);
+        }
         return myNewOrder;
     }
     #endregion

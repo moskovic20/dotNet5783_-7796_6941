@@ -1,4 +1,6 @@
-﻿namespace DalApi;
+﻿using Do;
+
+namespace DalApi;
 
 public interface ICrud<T> where T : struct
 {
@@ -9,4 +11,5 @@ public interface ICrud<T> where T : struct
     void Update(T item);
     void Delete(int id);
     IEnumerable<T?> GetAll(Func<T?, bool>? filter = null);
+    public IEnumerable<T?> GetAlldeleted();
 }

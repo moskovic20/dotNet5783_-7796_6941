@@ -10,6 +10,20 @@ namespace PL.PO;
 public class OrderItem : MainPo
 {
 
+    private int _ID;
+    public int ID
+    {
+        get
+        {
+            return _ID;
+        }
+        set
+        {
+            _ID = value;
+            OnPropertyChanged("ID");
+        }
+    }
+
     private int _OrderID;
     public int OrderID
     {

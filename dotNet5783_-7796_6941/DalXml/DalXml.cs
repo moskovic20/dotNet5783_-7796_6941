@@ -15,30 +15,32 @@ public struct configNumbers
     public string typeOfnumber { get; set; }
 }
 
-sealed internal class DalXml : IDal   //sealed?
+
+sealed class DalXml : IDal  
 {
     #region singelton
 
-    private static DalXml? instance;
-    private static readonly object key = new(); //Thread Safe
-    public static DalXml? Instance
-    {
-        get
-        {
-            if (instance == null) //Lazy Initialization
-            {
-                lock (key)
-                {
-                    if (instance == null)
-                        instance = new DalXml();
-                }
-            }
+    //private static DalXml? instance;
+    //private static readonly object key = new(); //Thread Safe
+    //public static DalXml? Instance
+    //{
+    //    get
+    //    {
+    //        if (instance == null) //Lazy Initialization
+    //        {
+    //            lock (key)
+    //            {
+    //                if (instance == null)
+    //                    instance = new DalXml();
+    //            }
+    //        }
 
-            return instance;
-        }
+    //        return instance;
+    //    }
 
-    }
-    static DalXml() { }
+    //}
+    //static DalXml() { }
+    public static IDal Instance { get; } = new DalXml();
     private DalXml() { }
 
     #endregion
@@ -50,11 +52,11 @@ sealed internal class DalXml : IDal   //sealed?
     public IOrderItem OrderItem { get; } = new Dal.OrderItem();
     #endregion
 
-    #region DS xml file
-    internal string OrderPath = @"Order.xml"; // path to name of file..
-    internal string OrderItemPath = @"OrderItem.xml";
-    internal string ProductPath = @"Product.xml";
-    internal string configPath = @"config.xml";
-    #endregion
+    //#region DS xml file
+    //internal string OrderPath = @"Order.xml"; // path to name of file..
+    //internal string OrderItemPath = @"OrderItem.xml";
+    //internal string ProductPath = @"Product.xml";
+    //internal string configPath = @"config.xml";
+    //#endregion
     
 }

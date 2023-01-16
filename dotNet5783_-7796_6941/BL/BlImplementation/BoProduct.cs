@@ -1,6 +1,6 @@
 ﻿using BlApi;
 using BO;
-using Do;
+//using Do;
 
 namespace BlImplementation;
 
@@ -18,7 +18,7 @@ internal class BoProduct : IProduct
         var products = dal.Product.GetAll();
 
         if (products.Count() == 0)
-            throw new BO.GetAllForList_Exception("There are no products");
+            throw new BO.GetAllForList_Exception("אין מוצרים");
 
         return products.CopyListTo<Do.Product?, BO.ProductForList>();
     }
@@ -32,8 +32,8 @@ internal class BoProduct : IProduct
     {
         var products = dal.Product.GetAll((Do.Product? p) => { return (p?.Price == null)? false : true; });
 
-        if (products.Count() == 0)
-            throw new BO.GetAllForList_Exception("There are no products");
+       // if (products.Count() == 0)
+       //     throw new BO.GetAllForList_Exception("There are no products");
 
 
         var ProductItems = from pI in products
@@ -78,19 +78,6 @@ internal class BoProduct : IProduct
             BO.Product BoMyP = new();
             BoMyP = myP.CopyPropTo(BoMyP);//העתקת הנתונים החופפים לישות הנתונים של מוצר בשכבת הלוגיקה
             return BoMyP;
-        }
-        catch (Do.DoesntExistException ex)
-        {
-            throw new BO.GetDetails_Exception("cant give details of this product", ex);
-        }
-    }
-
-    public IEnumerable<ProductForList> GetProductsByName(string name)
-    {
-        try
-        {
-            return from p in dal.Product.GetAll(x => x?.NameOfBook.Contains(name) ?? false)
-                   select GetProductForList(p?.ID ?? throw new Exception("problem"));
         }
         catch (Do.DoesntExistException ex)
         {
@@ -143,7 +130,7 @@ internal class BoProduct : IProduct
         try
         {
             if (productToAdd == null)
-                throw new ArgumentNullException("missing product to add");
+                throw new ArgumentNullException("לא התקבל מוצר שיש להוסיף");
 
             if (productToAdd.ID < 0)
                 throw new BO.Adding_Exception("מזהה הספר לא יכול להיות שלילי");
@@ -171,7 +158,7 @@ internal class BoProduct : IProduct
         }
         catch (Do.AlreadyExistException ex)
         {
-            throw new BO.Adding_Exception("Can't add this product", ex);
+            throw new BO.Adding_Exception("אי אפשר להוסיף מוצר זה", ex);
         }
     }
 
@@ -225,8 +212,25 @@ internal class BoProduct : IProduct
         return query;
     }
 
-    
+    public IEnumerable<ProductForList> GetProductsByName(string name)
+    {
+        try
+        {
+            return from p in dal.Product.GetAll(x => x?.NameOfBook?.Contains(name) ?? false)
+                       //select GetProductForList(p?.ID ?? throw new Exception("problem"));
+                   select p.CopyPropTo(new ProductForList());
+        }
+        catch (Do.DoesntExistException ex)
+        {
+            throw new BO.GetDetails_Exception("cant give details of this product", ex);
+        }
+    }
 
+    public IEnumerable<BO.Product> GetAllDeletedProducts()
+    {
+        return from p in dal.Product.GetAlldeleted()
+               select p.CopyPropTo(new Product());
+    }
 
 
 }

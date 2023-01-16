@@ -15,10 +15,11 @@ namespace Dal;
 
 internal class OrderItem : IOrderItem
 {
-    DalXml _DXml = DalXml.Instance!;
+    const string s_OrderItem = "OrderItem";
+  //  DalXml _DXml = DalXml.Instance!;
     public int Add(Do.OrderItem item)
     {
-        var listOrderItems = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(_DXml.OrderItemPath);
+        var listOrderItems = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem);
 
         if (listOrderItems.Exists(ord => ord?.ID == item.ID && ord?.IsDeleted != true)) 
             throw new Do.AlreadyExistException("OrderItem already exist");
@@ -28,32 +29,33 @@ internal class OrderItem : IOrderItem
         if (temp != null)//לא היה קיים
         {
 
-            List<configNumbers?> runningList = XMLTools.LoadListFromXMLSerializer<configNumbers?>(_DXml.configPath);//המספרים הרצים לפני הוספת ההזמנה החדשה
-            //configNumbers runningNum = (from Number in runningList
-            //                            where Number.typeOfnumber == "Num For OrderItem ID"
-            //                            select Number).FirstOrDefault();
+            List<configNumbers?> runningList = XMLTools.LoadListFromXMLSerializer<configNumbers?>(s_OrderItem);//המספרים הרצים לפני הוספת ההזמנה החדשה
 
-            configNumbers runningNum = runningList.Select(num => num.typeOfnumber == "Num For OrderItem ID");
+            configNumbers runningNum = (configNumbers)(from Number in runningList
+                                                       where Number != null
+                                                       where (string)Number.GetValueOrDefault().typeOfnumber == "Num For OrderItem ID"
+                                                       select Number).FirstOrDefault()!;
+            ;
 
             runningList.Remove(runningNum);
             runningNum.numberSaved++;
             item.ID = (int)runningNum.numberSaved;//המספר הזמנה הרץ הבא
 
             runningList.Add(runningNum);//שמירה בהתאם בקובץ קונפיג
-            XMLTools.SaveListToXMLSerializer(runningList, _DXml.configPath);//הרשימה לאחר ההוספה
+            XMLTools.SaveListToXMLSerializer(runningList, s_OrderItem);//הרשימה לאחר ההוספה
         }
         else
             item.ID = temp.GetValueOrDefault().ID;//שימוש במספר המשוייך בלי לשנות את הקונפיג
 
         listOrderItems.Add(item);//להוסיף שינוי בקונפיג?
-        XMLTools.SaveListToXMLSerializer(listOrderItems, _DXml.OrderItemPath);
+        XMLTools.SaveListToXMLSerializer(listOrderItems, s_OrderItem);
 
         return item.ID;
     }
 
     public void Delete(int id)
     {
-        var listOrderItems = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(_DXml.OrderItemPath);
+        var listOrderItems = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem);
         Do.OrderItem orderI= GetById(id);
         
         if (listOrderItems.RemoveAll(p => p?.ID == id && p?.IsDeleted != true) == 0)
@@ -62,18 +64,24 @@ internal class OrderItem : IOrderItem
         orderI.IsDeleted = true;
         listOrderItems.Add(orderI);
 
-        XMLTools.SaveListToXMLSerializer(listOrderItems, _DXml.OrderItemPath);//טעינה לקובץ עם המחוק לארכיון
+        XMLTools.SaveListToXMLSerializer(listOrderItems, s_OrderItem);//טעינה לקובץ עם המחוק לארכיון
     }
 
     public IEnumerable<Do.OrderItem?> GetAll(Func<Do.OrderItem?, bool>? filter = null) //להוסיף את הקטע עם המחוקים בפילטר
     {
-        var listOrderItems = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(_DXml.OrderItemPath)!;
+        var listOrderItems = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem)!;
         return filter == null ? listOrderItems.Where(OI =>OI.GetValueOrDefault().IsDeleted != true).OrderBy(OI => ((Do.OrderItem)OI!).ID)
                                :listOrderItems.Where(OI => OI.GetValueOrDefault().IsDeleted != true).Where(filter).OrderBy(OI => ((Do.OrderItem)OI!).ID);
     }
 
+    public IEnumerable<Do.OrderItem?> GetAlldeleted()
+    {
+        var listLOrders = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem)!;
+        return listLOrders.Where(O => O.GetValueOrDefault().IsDeleted == true).OrderBy(O => ((Do.OrderItem)O!).ID);
+    }
+
     public Do.OrderItem GetById(int id) =>
-        XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(_DXml.OrderItemPath).FirstOrDefault(p => p?.ID == id && p?.IsDeleted != true)
+        XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem).FirstOrDefault(p => p?.ID == id && p?.IsDeleted != true)
          ?? throw new Do.DoesntExistException("OrderItem is missing");
 
     /// <summary>

@@ -1,0 +1,69 @@
+﻿<Page x:Class="PL.PlEntity.Order.DeletedOrders"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:PL.IvalueConvertor"
+      mc:Ignorable="d" 
+      d:DesignHeight="530" d:DesignWidth="1000"
+      Title="DeletedOrders">
+
+    <!--<Page.Resources>
+         <local:StatusToHebrew x:Key="statusToHebrew"/>
+    </Page.Resources>-->
+
+       
+
+        <Grid>
+        <DataGrid x:Name="Orders_DateGrid"
+                  CanUserAddRows="False"
+                  materialDesign:DataGridAssist.CellPadding="10"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="30" 
+                  IsTextSearchEnabled="True" 
+                  GridLinesVisibility="Horizontal" 
+                  AreRowDetailsFrozen="False"
+                  AutoGenerateColumns="False"
+                  HorizontalGridLinesBrush="Transparent"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                  CanUserDeleteRows="False" 
+                  CanUserResizeRows="False"
+                  Foreground="Black"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding}" 
+                  HorizontalAlignment="Center"
+                  Width="980"
+                  Background="{x:Null}" Margin="0,10,0,35" >
+
+            
+            <DataGrid.Columns >
+                
+               
+                <DataGridTextColumn Header="תאריך הגעה"
+                                    Binding="{Binding ShippingDate }"
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="תאריך שילוח"
+                                    Binding="{Binding DeliveryDate }"
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="יצירת הזמנה"
+                                    Binding="{Binding DateOrder}"
+                                    MinWidth="100" />
+                <DataGridTextColumn Header="מחיר סופי"    
+                                    Binding="{Binding TotalPrice}"
+                                    MinWidth="100"/>
+                <DataGridTextColumn Header="כתובת לקוח"    
+                                    Binding="{Binding CustomerAddress}"
+                                    MinWidth="100"/>
+                <DataGridTextColumn Header="מייל לקוח"    
+                                    Binding="{Binding CustomerEmail}"
+                                    MinWidth="100"/>
+                <DataGridTextColumn Header="שם הלקוח"
+                                    Binding="{Binding CustomerName}"
+                                    MinWidth="100"/>
+                <DataGridTextColumn Header="מספר הזמנה "
+                                    Binding="{Binding OrderID}"
+                                    MinWidth="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>

@@ -39,5 +39,10 @@ namespace PL.Admin
         {
             this.adminFrame.Content = new ordersList(bl);
         }
+
+        private void archivesInMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.adminFrame.Content = new ArchivesMenu(bl);
+        }
     }
 }

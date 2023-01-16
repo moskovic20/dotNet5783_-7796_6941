@@ -9,6 +9,12 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace Dal;
 
+public struct configNumbers
+{
+    public double numberSaved { get; set; }
+    public string typeOfnumber { get; set; }
+}
+
 sealed internal class DalXml : IDal   //sealed?
 {
     #region singelton
@@ -36,12 +42,6 @@ sealed internal class DalXml : IDal   //sealed?
     private DalXml() { }
 
     #endregion
-
-    public struct configNumbers
-    {
-        public double numberSaved { get; set; }
-        public string typeOfnumber { get; set; }
-    }
 
         
     #region ממשקים לשימוש

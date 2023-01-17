@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Media.Imaging;
 
+
 namespace PL.PO
 {
 
@@ -112,18 +113,19 @@ namespace PL.PO
             set
             {
                 productImagePath = value;
-
-                //try { image = new BitmapImage(new System.Uri(Environment.CurrentDirectory + productImagePath)); }
-                try { 
-                    //image = new BitmapImage();
-                    //image.BeginInit();
-                    //image.UriSource = new System.Uri(productImagePath ?? throw new Exception("problem"));
-                    //image.CacheOption = BitmapCacheOption.OnLoad;
-                    //image.EndInit();
+                try
+                {
+                    
+                     image = new BitmapImage(new System.Uri(/*Environment.CurrentDirectory +*/ productImagePath ?? throw new Exception()));
+                       
                 }
-                catch { image = null; }
+                catch (Exception)
+                {
+                    image = null;
+                }
             }
         }
+ 
 
         private BitmapImage? image;
         public BitmapImage? Image

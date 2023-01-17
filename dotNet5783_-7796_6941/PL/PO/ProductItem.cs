@@ -117,7 +117,7 @@ public class ProductItem : MainPo
             productImagePath = value;
 
             //try { image = new BitmapImage(new System.Uri(Environment.CurrentDirectory + productImagePath)); }
-            try { image = new BitmapImage(new System.Uri(productImagePath ?? throw new Exception("problem"))); }
+            try { image =new BitmapImage(new System.Uri(productImagePath ?? throw new Exception("problem"))); }
             catch { image = null; }
         }
     }

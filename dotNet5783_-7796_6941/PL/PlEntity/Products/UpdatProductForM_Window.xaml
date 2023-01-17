@@ -122,7 +122,7 @@
             HorizontalAlignment="Left" 
             Height="152" Margin="50,51,0,0" 
             Grid.Row="1" VerticalAlignment="Top"
-               Source="{Binding ProductImagePath,Mode=OneWay, Converter={StaticResource imageConverter}}"
+              
             Width="234"/>
 
         <Button x:Name="AddTheStation"

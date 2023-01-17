@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Win32;
 using System.Linq;
 using System.IO;
+using System.Diagnostics;
 
 namespace PL.Products
 {
@@ -63,17 +64,9 @@ namespace PL.Products
 
                     productImage.Source = null;
                     string sorce = beforUpdate?.productImagePath!;
-
                     string suffix = sorce.Split(@".").Last();
                     string target = Environment.CurrentDirectory + "\\images\\productImages\\" + productToUpdate.Category + "\\" + productToUpdate.NameOfBook + "." + suffix;
-                   // FileStream fileStream = new FileStream(target, FileMode.Open, FileAccess.ReadWrite, FileShare.None);
-                    //fileStream.Close();
-                    FileStream fileStream1    = new FileStream(sorce, FileMode.Open, FileAccess.Read, FileShare.None);
-                    fileStream1.Close();
-                    FileInfo fileInfo = new FileInfo(sorce);
-                   
-                    fileInfo.MoveTo(target);
-                    //File.Move(sorce, target);
+                    File.Move(sorce, target);
                     productToUpdate.productImagePath = target;
                     productImage.Source = productToUpdate.Image;
                 }
@@ -87,7 +80,7 @@ namespace PL.Products
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message+ex.Data, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                     MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
             }
             

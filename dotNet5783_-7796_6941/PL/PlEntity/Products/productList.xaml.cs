@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PL.PO;
+using System.IO;
 
 namespace PL.PlEntity.Products;
 
@@ -96,7 +97,7 @@ public partial class productList : Page
             {
                 case MessageBoxResult.Yes:
 
-                    //File.Delete(bl.BoProduct.GetProductDetails_forM(pToD.ID).ProductImagePath!);
+                    File.Delete(bl.BoProduct.GetProductDetails_forM(pToD.ID).ProductImagePath!);
 
                     bl.BoProduct.DeleteProductByID_forM(pToD.ID);
                     ProductForList temp = allBooks.First(x => x.ID == pToD.ID);

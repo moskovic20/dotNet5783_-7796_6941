@@ -46,7 +46,7 @@ namespace PL.Catalog
         {
             try
             {
-                bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), myProduct.ID, (int)gradeNumUpDown.Value).putTo(myCart);
+                bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), myProduct.ID, (int?)gradeNumUpDown.Value?? throw new Exception()).putTo(myCart);
                 MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
             }
             catch (Exception ex)

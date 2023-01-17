@@ -2,14 +2,14 @@
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 	
 	<Order>
-		<OrderID> </OrderID>
-		<CustomerName> </CustomerName>
-		<CustomerEmail> </CustomerEmail>
-		<ShippingAddress> </ShippingAddress>
-		<DateOrder> </DateOrder>
-		<ShippingDate> </ShippingDate>
-		<DeliveryDate> </DeliveryDate>
-		<IsDeleted> </IsDeleted>
+		<OrderID>10000004 </OrderID>
+		<CustomerName>aa </CustomerName>
+		<CustomerEmail> a@gmail.com</CustomerEmail>
+		<ShippingAddress> aa</ShippingAddress>
+		<DateOrder>02/03/2022 </DateOrder>
+		<ShippingDate></ShippingDate>
+		<DeliveryDate></DeliveryDate>
+		<IsDeleted>False</IsDeleted>
 	</Order>
 	
 </ArrayOfOrder>

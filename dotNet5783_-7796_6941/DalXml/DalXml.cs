@@ -15,7 +15,8 @@ public struct configNumbers
     public string typeOfnumber { get; set; }
 }
 
-sealed class DalXml : IDal   //sealed?
+
+sealed class DalXml : IDal  
 {
     #region singelton
 
@@ -44,6 +45,7 @@ sealed class DalXml : IDal   //sealed?
 
     #endregion
 
+        
     #region ממשקים לשימוש
     public IOrder Order { get; } = new Dal.Order();
     public IProduct Product { get; } = new Dal.Product();

@@ -60,7 +60,7 @@
 
 
         <StackPanel Orientation="Horizontal"
-                    Margin="163,64,-98,326" Grid.Column="1" >
+                    Margin="163,64,0,326" Grid.Column="1" >
             <Label Content="{Binding orderID, Mode=TwoWay}"
                      Height="30" Width="147" />
             <Label Content=":מספר הזמנה"

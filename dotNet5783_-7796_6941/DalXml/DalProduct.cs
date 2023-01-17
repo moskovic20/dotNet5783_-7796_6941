@@ -18,7 +18,7 @@ namespace Dal;
 //implement IStudent with linq to XML
 ///////////////////////////////////////
 
-internal class Product : IProduct
+internal class DalProduct : IProduct
 {
     //DalXml _DXml = DalXml.Instance!;
     const string s_Product = "Product";
@@ -85,7 +85,7 @@ internal static XElement itemToXelement<Item>(Item item, string name)
          AuthorName = (string?)s.Element("AuthorName"),
          Category = (CATEGORY)((string?)s.Element("Category")).ConvertEnum(),//לבדוק שעובד
          Summary = (string?)s.Element("Summary"),
-         Price = (double?)s.ToDoubleNullable("Price")!,
+         Price = (double?)s.ToDoubleNullable("Price"),
          InStock = (int?)s.Element("InStock"),
          IsDeleted= (bool)s.Element("IsDeleted")!, //לבדוק שעובד
          ProductImagePath = (string?)s.Element("ProductImagePath"), //s.ToXPathNavigable

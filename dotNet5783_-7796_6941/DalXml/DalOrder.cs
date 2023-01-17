@@ -12,7 +12,7 @@ namespace Dal;
 //implement ILecturer with XML Serializer
 //////////////////////////////////////////
 
-internal class Order : IOrder
+internal class DalOrder : IOrder
 {
     const string s_Order = "Order";
    // DalXml _DXml = DalXml.Instance!;
@@ -28,7 +28,7 @@ internal class Order : IOrder
         if (temp == null)//לא היה קיים
         {
 
-            List<configNumbers?> runningList = XMLTools.LoadListFromXMLSerializer<configNumbers?>(s_Order);//המספרים הרצים לפני הוספת ההזמנה החדשה
+            List<configNumbers?> runningList = XMLTools.LoadListFromXMLSerializer<configNumbers?>("config");//המספרים הרצים לפני הוספת ההזמנה החדשה
             configNumbers runningNum = (configNumbers)(from Number in runningList
                               where Number!=null
                               where (string)Number.GetValueOrDefault().typeOfnumber == "Num For Order ID"
@@ -40,7 +40,7 @@ internal class Order : IOrder
             item.OrderID = (int)runningNum.numberSaved;//המספר הזמנה הרץ הבא
 
             runningList.Add(runningNum);//שמירה בהתאם בקובץ קונפיג
-            XMLTools.SaveListToXMLSerializer(runningList, s_Order);//הרשימה לאחר ההוספה
+            XMLTools.SaveListToXMLSerializer(runningList, "config");//הרשימה לאחר ההוספה
         }
         //else
         //    item.OrderID = temp.GetValueOrDefault().OrderID;//שימוש במספר המשוייך בלי לשנות את הקונפיג

@@ -20,36 +20,36 @@ sealed class DalXml : IDal
 {
     #region singelton
 
-    //private static DalXml? instance;
-    //private static readonly object key = new(); //Thread Safe
-    //public static DalXml? Instance
-    //{
-    //    get
-    //    {
-    //        if (instance == null) //Lazy Initialization
-    //        {
-    //            lock (key)
-    //            {
-    //                if (instance == null)
-    //                    instance = new DalXml();
-    //            }
-    //        }
+    private static DalXml? instance;
+    private static readonly object key = new(); //Thread Safe
+    public static DalXml? Instance
+    {
+        get
+        {
+            if (instance == null) //Lazy Initialization
+            {
+                lock (key)
+                {
+                    if (instance == null)
+                        instance = new DalXml();
+                }
+            }
 
-    //        return instance;
-    //    }
+            return instance;
+        }
 
-    //}
-    //static DalXml() { }
-    public static IDal Instance { get; } = new DalXml();
+    }
+    static DalXml() { }
+    //public static IDal Instance { get; } = new DalXml();
     private DalXml() { }
 
     #endregion
 
-        
+
     #region ממשקים לשימוש
-    public IOrder Order { get; } = new Dal.Order();
-    public IProduct Product { get; } = new Dal.Product();
-    public IOrderItem OrderItem { get; } = new Dal.OrderItem();
+    public IOrder Order { get; } = new Dal.DalOrder();
+    public IProduct Product { get; } = new Dal.DalProduct();
+    public IOrderItem OrderItem { get; } = new Dal.DalOrderItem();
     #endregion
 
     //#region DS xml file

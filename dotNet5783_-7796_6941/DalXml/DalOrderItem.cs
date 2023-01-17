@@ -13,7 +13,7 @@ namespace Dal;
 //implement ILecturer with XML Serializer
 //////////////////////////////////////////
 
-internal class OrderItem : IOrderItem
+internal class DalOrderItem : IOrderItem
 {
     const string s_OrderItem = "OrderItem";
   //  DalXml _DXml = DalXml.Instance!;
@@ -24,12 +24,12 @@ internal class OrderItem : IOrderItem
         if (listOrderItems.Exists(ord => ord?.ID == item.ID && ord?.IsDeleted != true)) 
             throw new Do.AlreadyExistException("OrderItem already exist");
 
-        Do.OrderItem? temp = listOrderItems.First(ord => ord?.ID == item.ID && ord?.IsDeleted == true);
+        Do.OrderItem? temp = listOrderItems.FirstOrDefault(ord => ord?.ID == item.ID && ord?.IsDeleted == true);
 
-        if (temp != null)//לא היה קיים
+        if (temp == null)//לא היה קיים
         {
 
-            List<configNumbers?> runningList = XMLTools.LoadListFromXMLSerializer<configNumbers?>(s_OrderItem);//המספרים הרצים לפני הוספת ההזמנה החדשה
+            List<configNumbers?> runningList = XMLTools.LoadListFromXMLSerializer<configNumbers?>("config");//המספרים הרצים לפני הוספת ההזמנה החדשה
 
             configNumbers runningNum = (configNumbers)(from Number in runningList
                                                        where Number != null
@@ -42,7 +42,7 @@ internal class OrderItem : IOrderItem
             item.ID = (int)runningNum.numberSaved;//המספר הזמנה הרץ הבא
 
             runningList.Add(runningNum);//שמירה בהתאם בקובץ קונפיג
-            XMLTools.SaveListToXMLSerializer(runningList, s_OrderItem);//הרשימה לאחר ההוספה
+            XMLTools.SaveListToXMLSerializer(runningList, "config");//הרשימה לאחר ההוספה
         }
         else
             item.ID = temp.GetValueOrDefault().ID;//שימוש במספר המשוייך בלי לשנות את הקונפיג

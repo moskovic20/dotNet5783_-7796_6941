@@ -1,4 +1,5 @@
 ﻿using BO;
+//using Do;
 using System.Collections;
 using System.Globalization;
 using System.Reflection;
@@ -87,9 +88,18 @@ public static class Tools
     public static double CalculatePriceOfAllItems(this Do.Order order)
     {
         double Price = 0;
+        if (order.IsDeleted == false)
+        {
+            IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.OrderID); //list of OrderItem in this current order from dal by his OrderID 
+            Price = listforAmount.Sum(o => (o?.AmountOfItems ?? 0) * (o?.PriceOfOneItem ?? 0));
+        }
+        else//הוספתי את זה כדי שיוכל לחשב מחיר גם עבור הזמנה שנמחקה
+        {
+            IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetAlldeleted(p => p?.OrderID == order.OrderID); //list of OrderItem in this current order from dal by his OrderID 
+            Price = listforAmount.Sum(o => (o?.AmountOfItems ?? 0) * (o?.PriceOfOneItem ?? 0));
+        }
 
-        IEnumerable<Do.OrderItem?> listforAmount = dal.OrderItem.GetListByOrderID(order.OrderID); //list of OrderItem in this current order from dal by his OrderID 
-        Price = listforAmount.Sum(o => (o?.AmountOfItems ?? 0) * (o?.PriceOfOneItem ?? 0));
+          int a= listforAmount.Count();
         return Price;
     }
     #endregion

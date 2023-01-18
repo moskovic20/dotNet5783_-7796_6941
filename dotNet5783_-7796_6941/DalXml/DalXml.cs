@@ -40,7 +40,6 @@ sealed class DalXml : IDal
 
     }
     static DalXml() { }
-    //public static IDal Instance { get; } = new DalXml();
     private DalXml() { }
 
     #endregion
@@ -51,12 +50,4 @@ sealed class DalXml : IDal
     public IProduct Product { get; } = new Dal.DalProduct();
     public IOrderItem OrderItem { get; } = new Dal.DalOrderItem();
     #endregion
-
-    //#region DS xml file
-    //internal string OrderPath = @"Order.xml"; // path to name of file..
-    //internal string OrderItemPath = @"OrderItem.xml";
-    //internal string ProductPath = @"Product.xml";
-    //internal string configPath = @"config.xml";
-    //#endregion
-    
 }

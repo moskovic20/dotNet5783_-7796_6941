@@ -19,28 +19,27 @@ static internal class XMLTools {
     {
 
         #region DSאתחול ראשוני לקבצים מה
-        //SaveListToXMLSerializer<Do.Product>(DataSource.Instance._Products, "Product");
-        //SaveListToXMLSerializer<Do.Order>(DataSource.Instance._Orders, "Order");
-        //SaveListToXMLSerializer<Do.OrderItem>(DataSource.Instance._OrderItems, "OrderItem");
+        SaveListToXMLSerializer<Do.Product>(DataSource.Instance._Products, "Product");
+        SaveListToXMLSerializer<Do.Order>(DataSource.Instance._Orders, "Order");
+        SaveListToXMLSerializer<Do.OrderItem>(DataSource.Instance._OrderItems, "OrderItem");
         #endregion
 
         #region אתחול ראשוני למספר רץ
-        //אתחול של המספרים הרצים לקובץ..
-        //configNumbers order = new()
-        //{
-        //    numberSaved = 100020,
-        //    typeOfnumber = "Num For Order ID"
-        //};
-        //configNumbers orderItem = new()
-        //{
-        //    numberSaved = 100052,
-        //    typeOfnumber = "Num For OrderItem ID"
-        //};
-        //List<configNumbers?> helpListCharge = new()
-        //{
-        //   order,
-        //   orderItem
-        //};
+        //אתחול של המספרים הרצים לקובץ..configNumbers order = new()
+        //      {
+        //          numberSaved = 100020,
+        //          typeOfnumber = "Num For Order ID"
+        //      };
+        //      configNumbers orderItem = new()
+        //      {
+        //          numberSaved = 100052,
+        //          typeOfnumber = "Num For OrderItem ID"
+        //      };
+        //      List<configNumbers?> helpListCharge = new()
+        //      {
+        //         order,
+        //         orderItem
+        //      };
         //XMLTools.SaveListToXMLSerializer<configNumbers>(helpListCharge, "config");
         #endregion
 

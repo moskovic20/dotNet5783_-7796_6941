@@ -147,9 +147,10 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<OrderItem?> GetAlldeleted()
+    public IEnumerable<OrderItem?> GetAlldeleted(Func<Do.OrderItem?, bool>? filter = null)
     => from item in _DS._OrderItems
        where item != null
+       where (filter==null)? true: filter(item)
        where item?.IsDeleted == true
        select item;
 }

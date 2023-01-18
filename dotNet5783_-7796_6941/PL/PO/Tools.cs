@@ -69,13 +69,13 @@ static class Tools
     }
     #endregion
 
-    public static bool IsImageNeedCare(PO.Product before, PO.Product after)
-    {
-        if (before.Category != after.Category || before.NameOfBook != after.NameOfBook
-            || before.ProductImagePath != after.ProductImagePath)
-            return true;
-        return false;
-    }
+    //public static bool IsImageNeedCare(PO.Product before, PO.Product after)
+    //{
+    //    if (before.Category != after.Category || before.NameOfBook != after.NameOfBook
+    //        || before.ProductImagePath != after.ProductImagePath)
+    //        return true;
+    //    return false;
+    //}
 
     //________________________________________productTools__________________________________________________________
 

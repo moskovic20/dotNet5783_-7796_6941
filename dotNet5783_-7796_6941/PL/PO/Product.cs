@@ -113,34 +113,10 @@ namespace PL.PO
             set
             {
                 productImagePath = value;
-                try
-                {
-                    
-                     image = new BitmapImage(new System.Uri(/*Environment.CurrentDirectory +*/ productImagePath ?? throw new Exception()));
-                       
-                }
-                catch (Exception)
-                {
-                    image = null;
-                }
+                OnPropertyChanged("ProductImagePath");
             }
         }
- 
 
-        private BitmapImage? image;
-        public BitmapImage? Image
-        {
-            get
-            {
-                return image;
-            }
-            set
-            {
-                image = value;
-                OnPropertyChanged("Image");
-
-            }
-        }
 
         public PO.Product GetCopy()
         {

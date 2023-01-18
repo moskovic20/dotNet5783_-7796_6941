@@ -11,7 +11,8 @@
     <Window.Resources>
         <local:CategoryToHebrew x:Key="categoryToHebrew"/>
         <local:NullToEmptyString x:Key="nullToEmptyString"/>
-        <local:ImageConverter x:Key="imageConverter"></local:ImageConverter>
+        <local:ImageConverter x:Key="imageConverter"/>
+        <local:filterCategoryToFilterByPrice x:Key="FilterCategory"/>
     </Window.Resources>
 
     <Grid x:Name="MainGrid" ShowGridLines="False" Background="#FFF6F6F6" Margin="0,0,0,-6">
@@ -122,7 +123,7 @@
             HorizontalAlignment="Left" 
             Height="152" Margin="50,51,0,0" 
             Grid.Row="1" VerticalAlignment="Top"
-              
+            Source="{Binding ProductImagePath,Mode=TwoWay, Converter={StaticResource imageConverter}}"
             Width="234"/>
 
         <Button x:Name="AddTheStation"
@@ -137,6 +138,15 @@
             Height="30" Width="30" 
             OpacityMask="Black" />
         </Button>
+
+
+        <Button x:Name="RemoteImage"
+                Visibility="{Binding ElementName= productImage,Path=Source,Converter={StaticResource FilterCategory}}"
+                Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+                HorizontalAlignment="Left" Margin="307,126,0,0" Grid.Row="1"
+                VerticalAlignment="Top" Height="30" Width="71"
+                Click="RemoteImage_Click"
+                Content="הסר" BorderBrush="#FF009BA6" Foreground="#FF009BA6"/>
 
     </Grid>
 </Window>

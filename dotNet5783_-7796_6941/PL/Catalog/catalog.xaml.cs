@@ -52,9 +52,6 @@ namespace PL.Catalog
 
             BooksForShow = new(bl.BoProduct.GetAllProductItems_forC().Select(p => p.CopyProductItemFromBoToPo())); //הבאת כל הספרים לקטלוג
             allBooks = new(BooksForShow);
-            //DataContext = BooksForShow;
-
-
         }
 
         #region לחיצה על ספר-מעבר לעמוד פרטי הספר המלאים
@@ -147,7 +144,6 @@ namespace PL.Catalog
                 if (selectedCategory == "")
                 {
                     BooksForShow = new(allBooks!);
-                    //DataContext = BooksForShow;
 
                 }
                 else
@@ -164,7 +160,6 @@ namespace PL.Catalog
                 }
 
                 oneGroupOfBooks = new(BooksForShow!);
-                //DataContext = BooksForShow;
             }
 
         }

@@ -31,11 +31,20 @@ public partial class productList : Page
 
     public productList(IBl bl)
     {
+        
         InitializeComponent();
         this.bl = bl;
+        try
+        {
+            allBooks = new ObservableCollection<PO.ProductForList>(PO.Tools.GetAllProductInPO());
+            DataContext = allBooks;
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+               MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
 
-        allBooks = new ObservableCollection<PO.ProductForList>(PO.Tools.GetAllProductInPO());
-        DataContext = allBooks;
     }
 
 
@@ -50,8 +59,12 @@ public partial class productList : Page
             {
                 int myInt = 0;
                 int.TryParse(nameOrID.Text,out myInt);
-                if (pToAdd.NameOfBook.Contains(nameOrID.Text) || pToAdd.ID == myInt)
+                if (pToAdd.NameOfBook!.Contains(nameOrID.Text) || pToAdd.ID == myInt)
                     productSearch.Add(pToAdd);
+            }
+            else
+            {
+                DataContext = allBooks;
             }
         };
         new AddProductForM_Window(bl, action).ShowDialog();
@@ -97,7 +110,7 @@ public partial class productList : Page
             {
                 case MessageBoxResult.Yes:
 
-                    File.Delete(bl.BoProduct.GetProductDetails_forM(pToD.ID).ProductImagePath!);
+                    //File.Delete(bl.BoProduct.GetProductDetails_forM(pToD.ID).ProductImagePath!);
 
                     bl.BoProduct.DeleteProductByID_forM(pToD.ID);
                     ProductForList temp = allBooks.First(x => x.ID == pToD.ID);

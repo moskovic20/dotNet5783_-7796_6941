@@ -63,7 +63,7 @@
             <ComboBoxItem Content=""/>
         </ComboBox>
 
-        <ListView HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="1000"
+        <ListView HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="990"
             x:Name="Catalog" 
                       ItemsSource="{Binding}" Margin="0,5,0,0" MouseDoubleClick="Catalog_MouseDoubleClick" Grid.Row="1" Grid.ColumnSpan="2"  >
             <ListView.ItemsPanel>
@@ -85,7 +85,7 @@
             HorizontalAlignment="Stretch" 
             Width="100" Height="150"
             Grid.Row="1" VerticalAlignment="Top"
-               Source="{Binding ProductImagePath,Mode=OneWay, Converter={StaticResource imageConverter}}"
+               Source="{Binding ProductImagePath,Mode=TwoWay, Converter={StaticResource imageConverter}}"
           />
                         <TextBlock x:Name="bookName" Text="{Binding NameOfBook}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FF009BA6"/>
                         <TextBlock HorizontalAlignment="Center"  Text="{Binding Price}"  VerticalAlignment="Bottom" />

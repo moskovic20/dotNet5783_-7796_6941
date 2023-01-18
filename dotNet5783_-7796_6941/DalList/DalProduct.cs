@@ -103,9 +103,10 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="filter"></param>
     /// <returns></returns>
-    public IEnumerable<Product?> GetAlldeleted()
+    public IEnumerable<Product?> GetAlldeleted(Func<Do.Product?, bool>? filter = null)
     => from item in _DS._Products
        where item != null
+       where (filter != null) ? filter(item) : true
        where item?.IsDeleted == true
        select item;
 }

@@ -13,6 +13,8 @@
     <Window.Resources>
         <local:CategoryToHebrew x:Key="categoryToHebrew"/>
         <local:NullToEmptyString x:Key="nullToEmptyString"/>
+        <local:filterCategoryToFilterByPrice x:Key="FilterCategory"/>
+        <local:ImageConverter x:Key="imageConverter"></local:ImageConverter>
     </Window.Resources>
 
     <Grid Name="MainGrid" ShowGridLines="False" Margin="0,0,0,-6" Background="#FFF6F6F6">
@@ -159,13 +161,14 @@
                      Width="322" Height="103"
                       TextAlignment="Right"/>
         </StackPanel>
-        <Button x:Name="AddTheStation"
+        <Button x:Name="AddImage"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
                 BorderBrush="#007E8C7F"
                 Width="50" Height="50"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
                 Click="choosePicture"
+                ToolTip="בחר תמונה עבור הספר"
             Background="#FF009BA6" Margin="312,221,0,0" >
             <materialDesign:PackIcon Kind="ImageAdd" 
                                          Height="30" Width="30" 
@@ -174,7 +177,7 @@
         <Image Name="productImage"
                HorizontalAlignment="Left" 
                Height="152" Margin="54,228,0,0" VerticalAlignment="Top"
-              
+              Source="{Binding ProductImagePath,Mode=TwoWay, Converter={StaticResource imageConverter}}"
                Width="234"/>
         <StackPanel Orientation="Horizontal"
             Grid.Column="1" 
@@ -214,5 +217,14 @@
             <Label Content="  :מחיר"
                 Width="87"/>
         </StackPanel>
+        <Button x:Name="RemoteImage"
+            Style="{StaticResource MaterialDesignOutlinedDarkButton}"
+            Visibility="{Binding ElementName= productImage,Path=Source,Converter={StaticResource FilterCategory}}"
+            HorizontalAlignment="Left"
+            Margin="303,281,0,0"
+            VerticalAlignment="Top"
+            Height="30" Width="71"
+            Click="RemoteImage_Click"
+            Content="הסר" BorderBrush="#FF009BA6" Foreground="#FF009BA6" />
     </Grid>
 </Window>

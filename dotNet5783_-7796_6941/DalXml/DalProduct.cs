@@ -118,7 +118,7 @@ internal static XElement itemToXelement<Item>(Item item, string name)
 
         if (XMLTools.LoadListFromXMLElement(s_Product)?.Elements()
             .FirstOrDefault(st => st.ToIntNullable("ID") == item.ID && st.ToBool("IsDeleted") != true) is not null)
-            throw new Do.AlreadyExistException("id already exist");
+            throw new Do.AlreadyExistException("מזהה מוצר כבר קיים");
 
         ////Do.Product? pTemp = GetProduct(XMLTools.LoadListFromXMLElement(_DXml.ProductPath)?.Elements()
         ////    .FirstOrDefault(st => st.ToIntNullable("ID") == item.ID && st.ToBool("IsDeleted") == true));
@@ -150,18 +150,31 @@ internal static XElement itemToXelement<Item>(Item item, string name)
         XMLTools.SaveListToXMLElement(productsRootElem, s_Product);//שמירה על הקובץ המעודכן עם המחוק
     }
 
+    public IEnumerable<Do.Product?> GetAll(Func<Do.Product?, bool>? filter = null)
+    {
+        if (filter is null)
+        {
+            return XMLTools.LoadListFromXMLElement(s_Product).Elements().Select(p => GetProduct(p)).Where(P=>P.GetValueOrDefault().IsDeleted==false);
+            //return from p in list
+            //       where p?.IsDeleted == false
+            //       select p;
+        }
+        else
+        {
+            return XMLTools.LoadListFromXMLElement(s_Product).Elements().Select(s => GetProduct(s)).Where(P=>filter(P)&& P?.IsDeleted == false);
+            //return from p in list
+            //       where p?.IsDeleted == false
+            //       where filter(p)
+            //       select p;
+        }
 
-    public IEnumerable<Do.Product?> GetAll(Func<Do.Product?, bool>? filter = null) =>//לשים לב לפילטר עם מחוקים
-        filter is null 
-        ? XMLTools.LoadListFromXMLElement(s_Product).Elements().Select(s => GetProduct(s))
-        : XMLTools.LoadListFromXMLElement(s_Product).Elements().Select(s => GetProduct(s)).Where(filter);
 
-
+    }
+   
     public Do.Product GetById(int id) =>
         (Do.Product)GetProduct(XMLTools.LoadListFromXMLElement(s_Product)?.Elements()
-        .FirstOrDefault(st => st.ToIntNullable("ID") == id)
+        .FirstOrDefault(st => st.ToIntNullable("ID") == id&& st.ToBool("IsDeleted")== false)
         ?? throw new Do.DoesntExistException("missing id"))!;
-
 
     public Do.Product GetByName(string name) =>
         (Do.Product)GetProduct(XMLTools.LoadListFromXMLElement(s_Product)?.Elements()
@@ -169,15 +182,23 @@ internal static XElement itemToXelement<Item>(Item item, string name)
         ?? throw new Do.DoesntExistException("missing name"))!;
 
     public void Update(Do.Product item)//try catch?
-    {
-        Delete(item.ID);
-        Add(item);
+    {   
+        try
+        {
+            Delete(item.ID);
+            Add(item);
+        }
+        catch(Exception ex)
+        {
+            throw new Exception(ex.Message);
+        }
     }
 
-    public IEnumerable<Do.Product?> GetAlldeleted()
+    public IEnumerable<Do.Product?> GetAlldeleted(Func<Do.Product?, bool>? filter = null)
     {
         var list=XMLTools.LoadListFromXMLElement(s_Product).Elements().Select(s => GetProduct(s));
         return from p in list
+               where (filter != null) ? filter(p) : true
                where p?.IsDeleted == true
                select p;
 

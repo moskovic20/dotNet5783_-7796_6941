@@ -59,16 +59,27 @@ namespace PL.Products
                 if (updateCateg_commbbox.SelectedItem == null)
                     throw new Exception("הכנס את קטגוריית הספר");
 
-                if(PO.Tools.IsImageNeedCare(beforUpdate!,productToUpdate))
+                if(beforUpdate!.productImagePath!=productToUpdate.productImagePath)//אם התמונה שונתה
                 {
+                    string source, suffix, target, lastName="";
 
-                    productImage.Source = null;
-                    string sorce = beforUpdate?.productImagePath!;
-                    string suffix = sorce.Split(@".").Last();
-                    string target = Environment.CurrentDirectory + "\\images\\productImages\\" + productToUpdate.Category + "\\" + productToUpdate.NameOfBook + "." + suffix;
-                    File.Move(sorce, target);
+                    if (!string.IsNullOrWhiteSpace(productToUpdate.productImagePath))//שינוי תמונה
+                    {
+                         source = productToUpdate.productImagePath!;
+                         suffix = "." + source.Split(@".").Last();
+                         var splitPhat = beforUpdate.productImagePath!.Split(@"\");
+                         lastName = splitPhat.Last().Split(".")[0];
+                         target = @"..\PL\ProductImages\" + lastName + "Copy" + suffix;
+                    }
+                    else //תמונת ברירת מחדל
+                    {
+                        source = @"..\PL\ProductImages\Default.jpeg";
+                        target = @"..\PL\ProductImages\" + lastName + "Defult" + "jpeg";
+                    }
+
+                    File.Copy(source, target);
                     productToUpdate.productImagePath = target;
-                    productImage.Source = productToUpdate.Image;
+                    
                 }
 
                 bl.BoProduct.UpdateProductDetails_forM(productToUpdate.CopyProductToBO());
@@ -96,6 +107,7 @@ namespace PL.Products
 
         #endregion
 
+        #region בחירת תמונה אחרת
         private void updateImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -106,18 +118,30 @@ namespace PL.Products
             if (op.ShowDialog() == true)
             {
                 productToUpdate.ProductImagePath = op.FileName;
-                productImage.Source = productToUpdate.Image;
             }
         }
+        #endregion
 
+        #region הגבלת טקסט למספרים בלבד
         private void PreviewTextInputToInt(object sender, TextCompositionEventArgs e)
         {
             e.limitInputToInt();
         }
+        #endregion
 
+        #region הגבלת טקסט למספרים-כולל שברים
         private void PreviewTextInputToDouble(object sender, TextCompositionEventArgs e)
         {
             e.limitInputToDouble();
         }
+        #endregion
+
+        #region הסרת התמונה
+        private void RemoteImage_Click(object sender, RoutedEventArgs e)
+        {
+            productImage.Source = null;
+            productToUpdate.productImagePath = null;
+        }
+        #endregion
     }
 }

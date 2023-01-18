@@ -101,10 +101,11 @@ internal class DalOrder : IOrder
                                : listLOrders.Where(O => O.GetValueOrDefault().IsDeleted != true).Where(filter).OrderBy(O => ((Do.Order)O!).OrderID);
     }
 
-    public IEnumerable<Do.Order?> GetAlldeleted()
+    public IEnumerable<Do.Order?> GetAlldeleted(Func<Do.Order?, bool>? filter = null)
     {
         var listLOrders = XMLTools.LoadListFromXMLSerializer<Do.Order?>(s_Order)!;
-        return listLOrders.Where(O => O.GetValueOrDefault().IsDeleted == true).OrderBy(O => ((Do.Order)O!).OrderID);
+        return (filter==null)? listLOrders.Where(O => O.GetValueOrDefault().IsDeleted == true).OrderBy(O => ((Do.Order)O!).OrderID)
+            : listLOrders.Where(O => O.GetValueOrDefault().IsDeleted == true).Where(x=>filter(x)).OrderBy(O => ((Do.Order)O!).OrderID);
     }
 
     public Do.Order GetById(int id) =>

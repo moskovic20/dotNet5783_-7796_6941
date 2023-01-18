@@ -211,26 +211,6 @@
     <IsDeleted>false</IsDeleted>
   </Order>
   <Order>
-    <OrderID>100021</OrderID>
-    <CustomerName>q</CustomerName>
-    <CustomerEmail>a@f.d</CustomerEmail>
-    <CustomerAddress>d</CustomerAddress>
-    <DateOrder>2023-01-17T12:25:38.7712829+02:00</DateOrder>
-    <ShippingDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
-    <IsDeleted>false</IsDeleted>
-  </Order>
-  <Order>
-    <OrderID>100021</OrderID>
-    <CustomerName>1</CustomerName>
-    <CustomerEmail>se@f.f</CustomerEmail>
-    <CustomerAddress>s</CustomerAddress>
-    <DateOrder>2023-01-17T15:35:21.7569366+02:00</DateOrder>
-    <ShippingDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
-    <IsDeleted>false</IsDeleted>
-  </Order>
-  <Order>
     <OrderID>100022</OrderID>
     <CustomerName>jjjjj</CustomerName>
     <CustomerEmail>gg@ss.ws</CustomerEmail>
@@ -279,5 +259,25 @@
     <ShippingDate>2023-01-07T19:35:31.037049+02:00</ShippingDate>
     <DeliveryDate>2023-01-12T05:58:46.0370824+02:00</DeliveryDate>
     <IsDeleted>true</IsDeleted>
+  </Order>
+  <Order>
+    <OrderID>100021</OrderID>
+    <CustomerName>q</CustomerName>
+    <CustomerEmail>a@f.d</CustomerEmail>
+    <CustomerAddress>d</CustomerAddress>
+    <DateOrder>2023-01-17T12:25:38.7712829+02:00</DateOrder>
+    <ShippingDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+    <IsDeleted>true</IsDeleted>
+  </Order>
+  <Order>
+    <OrderID>100021</OrderID>
+    <CustomerName>q</CustomerName>
+    <CustomerEmail>a@f.d</CustomerEmail>
+    <CustomerAddress>d</CustomerAddress>
+    <DateOrder>2023-01-17T12:25:38.7712829+02:00</DateOrder>
+    <ShippingDate>2023-01-18T12:54:32.8310343+02:00</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+    <IsDeleted>false</IsDeleted>
   </Order>
 </ArrayOfOrder>

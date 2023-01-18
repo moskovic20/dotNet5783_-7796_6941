@@ -26,13 +26,14 @@ public partial class Cart : Page
     private IBl bl;
     private PO.Cart myCart;
     Frame myFrame;
-    public Cart(IBl bl , PO.Cart cart,Frame frame)
+    private Action<ProductItem> ToLoveList;
+    public Cart(IBl bl , PO.Cart cart,Frame frame,Action<ProductItem> action )
     {
         InitializeComponent();
         this.bl = bl;
         this.myFrame = frame;
         this.myCart = cart;
-
+        this.ToLoveList = action;
         this.DataContext = myCart;
         this.OrderItems_DateGrid.DataContext = myCart.Items;
     }
@@ -54,7 +55,7 @@ public partial class Cart : Page
             MessageBox.Show("מספר הזמנתך הוא "+ OrderId + "!ההזמנה נקלטה במערכת");
 
             myCart.reboot();
-            myFrame.Content = new catalog(bl, myCart, this.myFrame);
+            myFrame.Content = new catalog(bl, myCart, this.myFrame, ToLoveList);
         }
         catch (Exception ex)
         {

@@ -408,9 +408,9 @@ static class Tools
         return newCart;
     }
 
-    public static void putTo(this BO.Cart sorce, PO.Cart target)
+    public static void putTo(this BO.Cart source, PO.Cart target)
     {
-        var list = from myOI in sorce.Items
+        var list = from myOI in source.Items
                    select new PO.OrderItem()
                    {
                        OrderID = myOI.OrderID,
@@ -422,7 +422,7 @@ static class Tools
                    };
 
         target.Items = new(list.ToList());
-        target.TotalPrice = sorce.TotalPrice;
+        target.TotalPrice = source.TotalPrice;
     }
 
     public static void reboot(this PO.Cart cart)

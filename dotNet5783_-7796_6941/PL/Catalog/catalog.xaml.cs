@@ -33,7 +33,7 @@ namespace PL.Catalog
         private ObservableCollection<ProductItem>? allBooks;
         private ObservableCollection<ProductItem>? oneGroupOfBooks;
         IOrderedEnumerable<IGrouping<string, ProductItem>>? allGroups;
-
+        private Action<ProductItem> ToLoveList;
         public ObservableCollection<ProductItem>? BooksForShow
         {
             get { return (ObservableCollection<ProductItem>)GetValue(BooksForShowProperty); }
@@ -43,17 +43,18 @@ namespace PL.Catalog
             DependencyProperty.Register("BooksForShow", typeof(ObservableCollection<ProductItem>), typeof(catalog));
 
 
-        public catalog(IBl bl, Cart cart, Frame frame)
+        public catalog(IBl bl, Cart cart, Frame frame, Action<ProductItem> action)
         {
             InitializeComponent();
             this.bl = bl;
             myFrame = frame;
             myCart = cart;
+            ToLoveList= action;
 
             BooksForShow = new(bl.BoProduct.GetAllProductItems_forC().Select(p => p.CopyProductItemFromBoToPo())); //הבאת כל הספרים לקטלוג
             allBooks = new(BooksForShow);
             //DataContext = BooksForShow;
-
+           
 
         }
 
@@ -72,10 +73,10 @@ namespace PL.Catalog
         {
             try
             {
-
                 Button button = (sender as Button)!;
                 PO.ProductItem p = (button.DataContext as PO.ProductItem)!;
                 bl.BoCart.AddProductToCart(myCart.CastingFromPoToBoCart(), p.ID).putTo(myCart);//הוספת המוצר לשכבה מתחת 
+                //ToCart(myCart, p.ID);
                 MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
 
             }
@@ -86,6 +87,18 @@ namespace PL.Catalog
             }
         }
         #endregion
+
+        #region לחיצה על הוסף לאהובים-מהקטלוג
+        private void FavoritedBook_Click(object sender, RoutedEventArgs e)
+        {
+            Button button= (sender as Button)!;
+            PO.ProductItem p = (button.DataContext as PO.ProductItem)!;
+            ToLoveList(p);
+
+
+        }
+        #endregion
+
 
         #region סידור הפריטים לפי מחיר-לפי בחירת המשתמש
         private void SortByPrice_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -192,4 +205,5 @@ namespace PL.Catalog
         }
         #endregion
     }
+
 }

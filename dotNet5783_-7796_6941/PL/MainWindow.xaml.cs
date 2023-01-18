@@ -30,13 +30,25 @@ public partial class MainWindow : Window
 
     //private ObservableCollection<ProductItem>? BooksForShow;
     private PL.PO.Cart myCart;
-
+    private ObservableCollection<ProductItem>? Loved;
+    private Action<ProductItem> ToLoveList;
     public MainWindow()
     {
         InitializeComponent();
         bl = BlApi.Factory.GetBl();
         myCart = new();
-        myFrame.Content = new catalog(bl, myCart, this.myFrame);
+        Loved= new ObservableCollection<ProductItem>();
+        ToLoveList= (p => 
+        {
+            var temp = Loved.IndexOf(p);
+            if (temp == -1)
+            { 
+                Loved.Add(p); 
+            }
+        
+        });
+
+        myFrame.Content = new catalog(bl, myCart, this.myFrame, ToLoveList);
 
     }
 
@@ -73,42 +85,23 @@ public partial class MainWindow : Window
     #region עמוד ההזמנה
     private void GoToCart_Click(object sender, RoutedEventArgs e)
     {
-        this.myFrame.Content = new PlEntity.Cart.Cart(bl,myCart,myFrame);
+        this.myFrame.Content = new PlEntity.Cart.Cart(bl,myCart,myFrame, ToLoveList);
     }
     #endregion
 
     #region כפתור-מעבר לקטלוג
     private void goToCatalog_Click(object sender, RoutedEventArgs e)
     {
-        this.myFrame.Content = new catalog(bl, myCart, this.myFrame);
+        this.myFrame.Content = new catalog(bl, myCart, this.myFrame, ToLoveList);
     }
     #endregion
+
+    #region כפתור-מעבר לקטלוג
+    private void seePrefered_Click(object sender, RoutedEventArgs e)
+    {
+        this.myFrame.Content = new Favorites(bl, this.myFrame, Loved, myCart);
+    }
+    #endregion
+
 }
-
-#region אופציה לספרים אהובים..
-/*
- אם נוסיף אופציה לאהובים..
-private ObservableCollection<Product> lovedBooks;
-lovedBooks = new();
-
- /// <summary>
-    /// שמירת ספרים כספרים אהובים
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-  private void addToLoved_Click(object sender, RoutedEventArgs e)
-    {
-        PO.ProductItem p = (PO.ProductItem)Catalog.SelectedItem;
-        lovedBooks.Add(p);
-    }
-
-    private void seePrefered_Click(object sender, RoutedEventArgs e) //window for marked as loved books, with optian to add to cart
-    {
-        Action<int> CartAction = productId => ToCart(productId); 
-        new FavouritesForC_Window(bl, lovedBooks, CartAction).ShowDialog();
-      
-    }
-
- */
-#endregion
 

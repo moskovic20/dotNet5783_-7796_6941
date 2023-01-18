@@ -41,7 +41,28 @@ sealed class DalXml : IDal
     }
     static DalXml() { }
     //public static IDal Instance { get; } = new DalXml();
-    private DalXml() { }
+    private DalXml() {
+
+        #region אתחול ראשוני למספר רץ
+        //// אתחול של המספרים הרצים לקובץ..
+        // configNumbers order = new()
+        // {
+        //     numberSaved = 100020,
+        //     typeOfnumber = "Num For Order ID"
+        // };
+        // configNumbers orderItem = new()
+        // {
+        //     numberSaved = 100052,
+        //     typeOfnumber = "Num For OrderItem ID"
+        // };
+        // List<configNumbers?> helpListCharge = new()
+        // {
+        //    order,
+        //    orderItem
+        // };
+        // XMLTools.SaveListToXMLSerializer<configNumbers>(helpListCharge, "config");
+        #endregion
+    }
 
     #endregion
 
@@ -52,11 +73,11 @@ sealed class DalXml : IDal
     public IOrderItem OrderItem { get; } = new Dal.DalOrderItem();
     #endregion
 
-    //#region DS xml file
+    #region DS xml file
     //internal string OrderPath = @"Order.xml"; // path to name of file..
     //internal string OrderItemPath = @"OrderItem.xml";
     //internal string ProductPath = @"Product.xml";
     //internal string configPath = @"config.xml";
-    //#endregion
+    #endregion
     
 }

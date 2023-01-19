@@ -131,7 +131,7 @@
                         <DataTemplate>
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Height="30" Width="30"
-                                    Background="#FFF6F6F6"
+                                    Background="White"
                                     HorizontalAlignment="Center"
                                     Click="UpdateDelivary_Click">
                                 <materialDesign:PackIcon Kind="Done" Foreground="Gray" />
@@ -147,7 +147,7 @@
                             <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
                                     Click="UpdateShip_Click"
                                     Height="30" Width="30"
-                                    Background="#FFF6F6F6"
+                                    Background="White"
                                     HorizontalAlignment="Center"
                                     >
                                 <materialDesign:PackIcon Kind="TruckShipping" Foreground="Gray"/>

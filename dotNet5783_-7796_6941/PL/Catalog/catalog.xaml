@@ -93,7 +93,7 @@
 
                             <Button x:Name="FavoritedBook"
                                     Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
-                                     Width="30" Height="30" Background="#FFF6F6F6"
+                                     Width="30" Height="30" Background="White"
                                      Click="FavoritedBook_Click">
                                 <materialDesign:PackIcon Kind="HeartOutline"
                                             Height="20" Width="20" 

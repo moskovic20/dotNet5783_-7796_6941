@@ -12,7 +12,7 @@
         <Frame x:Name="myFrame"
                Width="1000"
                Height="560" Margin="-2,0,2,0"
-               VerticalAlignment="Bottom"/>
+               VerticalAlignment="Bottom" />
 
         <Rectangle HorizontalAlignment="Center" Height="74" VerticalAlignment="Top" Width="1000" Fill="#FFF0F0F0"/>
 

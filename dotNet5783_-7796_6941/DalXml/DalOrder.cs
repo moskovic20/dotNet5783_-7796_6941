@@ -42,6 +42,8 @@ internal class DalOrder : IOrder
             runningList.Add(runningNum);//שמירה בהתאם בקובץ קונפיג
             XMLTools.SaveListToXMLSerializer(runningList, "config");//הרשימה לאחר ההוספה
         }
+        else
+            item.OrderID = temp.GetValueOrDefault().OrderID;//שימוש במספר המשוייך בלי לשנות את הקונפיג
 
         listOrders.Add(item);//שמירה בהתאם בקובץ הזמנה        
         XMLTools.SaveListToXMLSerializer(listOrders, s_Order);//הרשימה לאחר ההוספה

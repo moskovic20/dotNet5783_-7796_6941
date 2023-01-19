@@ -18,6 +18,7 @@ using System.Windows.Documents;
 using System.Collections;
 using Microsoft.VisualBasic;
 using PL.PlEntity.Products;
+using System.Net;
 
 namespace PL;
 
@@ -37,7 +38,6 @@ public partial class MainWindow : Window
         bl = BlApi.Factory.GetBl();
         myCart = new();
         myFrame.Content = new catalog(bl, myCart, this.myFrame);
-
     }
 
     #region טעינת תמונות | יש מה לעבוד עוד
@@ -85,30 +85,4 @@ public partial class MainWindow : Window
     #endregion
 }
 
-#region אופציה לספרים אהובים..
-/*
- אם נוסיף אופציה לאהובים..
-private ObservableCollection<Product> lovedBooks;
-lovedBooks = new();
-
- /// <summary>
-    /// שמירת ספרים כספרים אהובים
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-  private void addToLoved_Click(object sender, RoutedEventArgs e)
-    {
-        PO.ProductItem p = (PO.ProductItem)Catalog.SelectedItem;
-        lovedBooks.Add(p);
-    }
-
-    private void seePrefered_Click(object sender, RoutedEventArgs e) //window for marked as loved books, with optian to add to cart
-    {
-        Action<int> CartAction = productId => ToCart(productId); 
-        new FavouritesForC_Window(bl, lovedBooks, CartAction).ShowDialog();
-      
-    }
-
- */
-#endregion
 

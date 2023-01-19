@@ -31,6 +31,7 @@
         </Button>
 
         <Button x:Name="AddTheStation_Copy"
+                ToolTip="הספרים האהובים שלך"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
             BorderBrush="#007E8C7F"
             Width="50" Height="50"

@@ -1,183 +1,172 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>833377760</ID>
-    <NameOfBook>איה פלוטו</NameOfBook>
-    <AuthorName>gaie.g</AuthorName>
+    <ID>978197692</ID>
+    <NameOfBook>הבית של יעל</NameOfBook>
+    <AuthorName>noi.a</AuthorName>
     <Category>children</Category>
-    <Price>140</Price>
-    <InStock>0</InStock>
+    <Price>62</Price>
+    <InStock>69</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\איה פלוטו.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\הבית של יעל.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>116259722</ID>
-    <NameOfBook>דירה להשכיר</NameOfBook>
-    <AuthorName>rom.k</AuthorName>
+    <ID>551399595</ID>
+    <NameOfBook>הנסיך הקטן</NameOfBook>
+    <AuthorName>jeik.r</AuthorName>
     <Category>children</Category>
-    <Price>126</Price>
+    <Price>51</Price>
+    <InStock>81</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\הנסיך הקטן.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>107407396</ID>
+    <NameOfBook>מאסטר שף עונה 4 ספר המתכונים</NameOfBook>
+    <AuthorName>gaie.g</AuthorName>
+    <Category>cookingAndBaking</Category>
+    <Price>91</Price>
     <InStock>70</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\דירה להשכיר.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\cookingAndBaking\מאסטר שף עונה 4 ספר המתכונים.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>209766530</ID>
-    <NameOfBook>הבית של יעל</NameOfBook>
-    <AuthorName>doni.j</AuthorName>
-    <Category>children</Category>
-    <Price>43</Price>
-    <InStock>48</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\הבית של יעל.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>691574222</ID>
-    <NameOfBook>הנסיך הקטן</NameOfBook>
-    <AuthorName>gaie.g</AuthorName>
-    <Category>children</Category>
-    <Price>138</Price>
-    <InStock>33</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\הנסיך הקטן.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>659435545</ID>
-    <NameOfBook>מעשה בחמישה בלונים</NameOfBook>
-    <AuthorName>noaa.f</AuthorName>
-    <Category>children</Category>
-    <Price>45</Price>
-    <InStock>39</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\מעשה בחמישה בלונים.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>674354788</ID>
-    <NameOfBook>מאסטר שף עונה 4 ספר המתכונים</NameOfBook>
-    <AuthorName>rom.k</AuthorName>
-    <Category>cookingAndBaking</Category>
-    <Price>121</Price>
-    <InStock>85</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\cookingAndBaking\מאסטר שף עונה 4 ספר המתכונים.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>605390798</ID>
+    <ID>821628612</ID>
     <NameOfBook>ספר הבישול של חלי ממן</NameOfBook>
-    <AuthorName>jeik.r</AuthorName>
-    <Category>cookingAndBaking</Category>
-    <Price>85</Price>
-    <InStock>25</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\cookingAndBaking\ספר הבישול של חלי ממן.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>191241006</ID>
-    <NameOfBook>הארי פוטר</NameOfBook>
-    <AuthorName>gaie.g</AuthorName>
-    <Category>fantasy</Category>
-    <Price>72</Price>
-    <InStock>88</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\fantasy\הארי פוטר.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>153890619</ID>
-    <NameOfBook>המעניק</NameOfBook>
-    <AuthorName>noi.a</AuthorName>
-    <Category>fantasy</Category>
-    <Price>108</Price>
-    <InStock>41</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\fantasy\המעניק.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>301808494</ID>
-    <NameOfBook>איינשטיין והדת</NameOfBook>
-    <AuthorName>noi.a</AuthorName>
-    <Category>history</Category>
-    <Price>76</Price>
-    <InStock>74</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\history\איינשטיין והדת.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>368536659</ID>
-    <NameOfBook>היקום הקוונטי</NameOfBook>
-    <AuthorName>noaa.f</AuthorName>
-    <Category>history</Category>
-    <Price>145</Price>
-    <InStock>60</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\history\היקום הקוונטי.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>419925523</ID>
-    <NameOfBook>ועשו לי מקדש</NameOfBook>
     <AuthorName>rom.k</AuthorName>
-    <Category>history</Category>
-    <Price>42</Price>
+    <Category>cookingAndBaking</Category>
+    <Price>97</Price>
+    <InStock>28</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\cookingAndBaking\ספר הבישול של חלי ממן.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>67513415</ID>
+    <NameOfBook>Harry Potter</NameOfBook>
+    <AuthorName>noi.a</AuthorName>
+    <Category>fantasy</Category>
+    <Price>95</Price>
     <InStock>87</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\history\ועשו לי מקדש.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\fantasy\Harry Potter.jpeg</ProductImagePath>
   </Product>
   <Product>
-    <ID>871698285</ID>
-    <NameOfBook>סיירת מטכל</NameOfBook>
+    <ID>929745051</ID>
+    <NameOfBook>ניסוי</NameOfBook>
     <AuthorName>doni.j</AuthorName>
+    <Category>fantasy</Category>
+    <Price>115</Price>
+    <InStock>38</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\fantasy\ניסוי.jpeg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>100746171</ID>
+    <NameOfBook>ועשו לי מקדש</NameOfBook>
+    <AuthorName>jeik.r</AuthorName>
     <Category>history</Category>
-    <Price>77</Price>
-    <InStock>27</InStock>
+    <Price>115</Price>
+    <InStock>44</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\history\סיירת מטכל.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\history\ועשו לי מקדש.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>286570488</ID>
+    <ID>469453914</ID>
+    <NameOfBook>סיירת מטכל</NameOfBook>
+    <AuthorName>rom.k</AuthorName>
+    <Category>history</Category>
+    <Price>131</Price>
+    <InStock>63</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\history\סיירת מטכל.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>869265501</ID>
     <NameOfBook>Bible</NameOfBook>
-    <AuthorName>noaa.f</AuthorName>
+    <AuthorName>noi.a</AuthorName>
     <Category>kodesh</Category>
-    <Price>44</Price>
-    <InStock>93</InStock>
+    <Price>68</Price>
+    <InStock>73</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\kodesh\Bible.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\kodesh\Bible.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>715747808</ID>
-    <NameOfBook>ff</NameOfBook>
-    <AuthorName>noaa.f</AuthorName>
+    <ID>613367024</ID>
+    <NameOfBook>Anne of Green Gables</NameOfBook>
+    <AuthorName>gaie.g</AuthorName>
     <Category>mystery</Category>
-    <Price>137</Price>
-    <InStock>71</InStock>
+    <Price>71</Price>
+    <InStock>24</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\mystery\ff.jpeg</ProductImagePath>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\mystery\Anne of Green Gables.png</ProductImagePath>
   </Product>
   <Product>
-    <ID>335885819</ID>
-    <NameOfBook>ככככככככככ</NameOfBook>
-    <AuthorName>noi.a</AuthorName>
-    <Category>mystery</Category>
-    <Price>60</Price>
-    <InStock>90</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\mystery\ככככככככככ.jpeg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>685333594</ID>
-    <NameOfBook>עעעעע</NameOfBook>
-    <AuthorName>noaa.f</AuthorName>
-    <Category>mystery</Category>
-    <Price>143</Price>
-    <InStock>62</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\mystery\עעעעע.jpeg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>905588968</ID>
-    <NameOfBook>ggggg</NameOfBook>
-    <AuthorName>noi.a</AuthorName>
+    <ID>274970581</ID>
+    <NameOfBook>איינשטיין והדת</NameOfBook>
+    <AuthorName>gaie.g</AuthorName>
     <Category>scinence</Category>
-    <Price>128</Price>
-    <InStock>58</InStock>
+    <Price>60</Price>
+    <InStock>85</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\scinence\ggggg.jpeg</ProductImagePath>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\scinence\איינשטיין והדת.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>295163755</ID>
+    <NameOfBook>היקום הקוונטי</NameOfBook>
+    <AuthorName>jeik.r</AuthorName>
+    <Category>scinence</Category>
+    <Price>148</Price>
+    <InStock>34</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\scinence\היקום הקוונטי.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>494139103</ID>
+    <NameOfBook>דירה להשכיר</NameOfBook>
+    <AuthorName>mor.s</AuthorName>
+    <StudentStatus>children</StudentStatus>
+    <Price>66</Price>
+    <InStock>0</InStock>
+    <IsDeleted>true</IsDeleted>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\דירה להשכיר.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>494139103</ID>
+    <NameOfBook>דירה להשכיר</NameOfBook>
+    <AuthorName>mor.s</AuthorName>
+    <StudentStatus>mystery</StudentStatus>
+    <Price>50</Price>
+    <InStock>0</InStock>
+    <IsDeleted>true</IsDeleted>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\דירה להשכיר.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>494139103</ID>
+    <NameOfBook>דירה להשכיר</NameOfBook>
+    <AuthorName>mor.s</AuthorName>
+    <StudentStatus>mystery</StudentStatus>
+    <Price>50</Price>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\דירה להשכיר.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>787202312</ID>
+    <NameOfBook>מעשה בחמישה בלונים</NameOfBook>
+    <AuthorName>doni.j</AuthorName>
+    <StudentStatus>children</StudentStatus>
+    <Price>139</Price>
+    <InStock>91</InStock>
+    <IsDeleted>true</IsDeleted>
+    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\מעשה בחמישה בלונים.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>787202312</ID>
+    <NameOfBook>מעשה בחמישה בלונים</NameOfBook>
+    <AuthorName>doni.j</AuthorName>
+    <StudentStatus>children</StudentStatus>
+    <Price>139</Price>
+    <InStock>91</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\Defultjpeg</ProductImagePath>
   </Product>
 </ArrayOfProduct>

@@ -58,9 +58,12 @@ namespace PL.Catalog
         #region לחיצה על ספר-מעבר לעמוד פרטי הספר המלאים
         private void Catalog_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
-            ProductItem p = (ProductItem)((ListView)sender).SelectedItem;
-            this.myFrame.Content = new bookDetails(p.ID, bl, myCart);
+            try
+            {
+                ProductItem p = (ProductItem)((ListView)sender).SelectedItem;
+                this.myFrame.Content = new bookDetails(p.ID, bl, myCart);
+            }
+            catch(Exception ) { };
 
         }
         #endregion

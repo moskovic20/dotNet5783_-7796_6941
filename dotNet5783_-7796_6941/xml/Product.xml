@@ -1,153 +1,183 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>877228176</ID>
+    <ID>833377760</ID>
+    <NameOfBook>איה פלוטו</NameOfBook>
+    <AuthorName>gaie.g</AuthorName>
+    <Category>children</Category>
+    <Price>140</Price>
+    <InStock>0</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\איה פלוטו.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>116259722</ID>
+    <NameOfBook>דירה להשכיר</NameOfBook>
+    <AuthorName>rom.k</AuthorName>
+    <Category>children</Category>
+    <Price>126</Price>
+    <InStock>70</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\דירה להשכיר.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>209766530</ID>
     <NameOfBook>הבית של יעל</NameOfBook>
-    <AuthorName>mor.s</AuthorName>
+    <AuthorName>doni.j</AuthorName>
     <Category>children</Category>
-    <Price>74</Price>
-    <InStock>47</InStock>
+    <Price>43</Price>
+    <InStock>48</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\children\הבית של יעל.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\הבית של יעל.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>652665662</ID>
+    <ID>691574222</ID>
     <NameOfBook>הנסיך הקטן</NameOfBook>
-    <AuthorName>mor.s</AuthorName>
+    <AuthorName>gaie.g</AuthorName>
     <Category>children</Category>
-    <Price>89</Price>
-    <InStock>78</InStock>
+    <Price>138</Price>
+    <InStock>33</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\children\הנסיך הקטן.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\הנסיך הקטן.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>644712844</ID>
+    <ID>659435545</ID>
+    <NameOfBook>מעשה בחמישה בלונים</NameOfBook>
+    <AuthorName>noaa.f</AuthorName>
+    <Category>children</Category>
+    <Price>45</Price>
+    <InStock>39</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\children\מעשה בחמישה בלונים.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>674354788</ID>
     <NameOfBook>מאסטר שף עונה 4 ספר המתכונים</NameOfBook>
     <AuthorName>rom.k</AuthorName>
     <Category>cookingAndBaking</Category>
-    <Price>136</Price>
-    <InStock>72</InStock>
+    <Price>121</Price>
+    <InStock>85</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\cookingAndBaking\מאסטר שף עונה 4 ספר המתכונים.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\cookingAndBaking\מאסטר שף עונה 4 ספר המתכונים.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>82400091</ID>
+    <ID>605390798</ID>
     <NameOfBook>ספר הבישול של חלי ממן</NameOfBook>
-    <AuthorName>gaie.g</AuthorName>
+    <AuthorName>jeik.r</AuthorName>
     <Category>cookingAndBaking</Category>
-    <Price>133</Price>
-    <InStock>58</InStock>
+    <Price>85</Price>
+    <InStock>25</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\cookingAndBaking\ספר הבישול של חלי ממן.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\cookingAndBaking\ספר הבישול של חלי ממן.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>858631092</ID>
-    <NameOfBook>Harry Potter</NameOfBook>
+    <ID>191241006</ID>
+    <NameOfBook>הארי פוטר</NameOfBook>
     <AuthorName>gaie.g</AuthorName>
     <Category>fantasy</Category>
-    <Price>143</Price>
-    <InStock>39</InStock>
+    <Price>72</Price>
+    <InStock>88</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\fantasy\Harry Potter.jpeg</ProductImagePath>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\fantasy\הארי פוטר.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>406214474</ID>
+    <ID>153890619</ID>
+    <NameOfBook>המעניק</NameOfBook>
+    <AuthorName>noi.a</AuthorName>
+    <Category>fantasy</Category>
+    <Price>108</Price>
+    <InStock>41</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\fantasy\המעניק.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>301808494</ID>
+    <NameOfBook>איינשטיין והדת</NameOfBook>
+    <AuthorName>noi.a</AuthorName>
+    <Category>history</Category>
+    <Price>76</Price>
+    <InStock>74</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\history\איינשטיין והדת.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>368536659</ID>
+    <NameOfBook>היקום הקוונטי</NameOfBook>
+    <AuthorName>noaa.f</AuthorName>
+    <Category>history</Category>
+    <Price>145</Price>
+    <InStock>60</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\history\היקום הקוונטי.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>419925523</ID>
     <NameOfBook>ועשו לי מקדש</NameOfBook>
-    <AuthorName>noi.a</AuthorName>
+    <AuthorName>rom.k</AuthorName>
     <Category>history</Category>
-    <Price>139</Price>
-    <InStock>77</InStock>
+    <Price>42</Price>
+    <InStock>87</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\history\ועשו לי מקדש.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\history\ועשו לי מקדש.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>913241952</ID>
+    <ID>871698285</ID>
     <NameOfBook>סיירת מטכל</NameOfBook>
-    <AuthorName>noi.a</AuthorName>
-    <Category>history</Category>
-    <Price>129</Price>
-    <InStock>46</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\history\סיירת מטכל.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>48895072</ID>
-    <NameOfBook>Bible</NameOfBook>
     <AuthorName>doni.j</AuthorName>
-    <Category>kodesh</Category>
-    <Price>106</Price>
-    <InStock>79</InStock>
+    <Category>history</Category>
+    <Price>77</Price>
+    <InStock>27</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\kodesh\Bible.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\history\סיירת מטכל.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>827459873</ID>
-    <NameOfBook>Anne of Green Gables</NameOfBook>
+    <ID>286570488</ID>
+    <NameOfBook>Bible</NameOfBook>
+    <AuthorName>noaa.f</AuthorName>
+    <Category>kodesh</Category>
+    <Price>44</Price>
+    <InStock>93</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\kodesh\Bible.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>715747808</ID>
+    <NameOfBook>ff</NameOfBook>
     <AuthorName>noaa.f</AuthorName>
     <Category>mystery</Category>
-    <Price>93</Price>
-    <InStock>86</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\mystery\Anne of Green Gables.png</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>387831488</ID>
-    <NameOfBook>איינשטיין והדת</NameOfBook>
-    <AuthorName>jeik.r</AuthorName>
-    <Category>scinence</Category>
-    <Price>45</Price>
-    <InStock>42</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\scinence\איינשטיין והדת.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>220255687</ID>
-    <NameOfBook>היקום הקוונטי</NameOfBook>
-    <AuthorName>mor.s</AuthorName>
-    <Category>scinence</Category>
-    <Price>96</Price>
+    <Price>137</Price>
     <InStock>71</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\scinence\היקום הקוונטי.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\mystery\ff.jpeg</ProductImagePath>
   </Product>
   <Product>
-    <ID>985815714</ID>
-    <NameOfBook>דירה להשכיר</NameOfBook>
-    <AuthorName>gaie.g</AuthorName>
-    <StudentStatus>children</StudentStatus>
-    <Price>107</Price>
-    <InStock>0</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\children\דירה להשכיר.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>11111111</ID>
-    <NameOfBook>ניסוי</NameOfBook>
-    <AuthorName>ניסויגם</AuthorName>
-    <StudentStatus>fantasy</StudentStatus>
-    <Price>2</Price>
-    <InStock>0</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\fantasy\ניסוי.jpeg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>678315555</ID>
-    <NameOfBook>מעשה בחמישה בלונים</NameOfBook>
+    <ID>335885819</ID>
+    <NameOfBook>ככככככככככ</NameOfBook>
     <AuthorName>noi.a</AuthorName>
-    <StudentStatus>children</StudentStatus>
-    <Price>58</Price>
-    <InStock>74</InStock>
-    <IsDeleted>true</IsDeleted>
-    <ProductImagePath>images\productImages\children\מעשה בחמישה בלונים.jpg</ProductImagePath>
+    <Category>mystery</Category>
+    <Price>60</Price>
+    <InStock>90</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\mystery\ככככככככככ.jpeg</ProductImagePath>
   </Product>
   <Product>
-    <ID>678315555</ID>
-    <NameOfBook>מעשה בחמישה בלונים</NameOfBook>
-    <AuthorName>noi.a</AuthorName>
-    <StudentStatus>children</StudentStatus>
-    <Price>58</Price>
-    <InStock>73</InStock>
+    <ID>685333594</ID>
+    <NameOfBook>עעעעע</NameOfBook>
+    <AuthorName>noaa.f</AuthorName>
+    <Category>mystery</Category>
+    <Price>143</Price>
+    <InStock>62</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>images\productImages\children\מעשה בחמישה בלונים.jpg</ProductImagePath>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\mystery\עעעעע.jpeg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>905588968</ID>
+    <NameOfBook>ggggg</NameOfBook>
+    <AuthorName>noi.a</AuthorName>
+    <Category>scinence</Category>
+    <Price>128</Price>
+    <InStock>58</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\bin\images\productImages\scinence\ggggg.jpeg</ProductImagePath>
   </Product>
 </ArrayOfProduct>

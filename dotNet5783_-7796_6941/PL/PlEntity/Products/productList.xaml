@@ -157,6 +157,7 @@
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
                 Click="addButton_Click"
+                ToolTip="הוסף ספר"
                 Background="#FF009BA6" Margin="60,16,0,0" >
             <materialDesign:PackIcon Kind="BookAdd"
                                          Height="25" Width="25" 

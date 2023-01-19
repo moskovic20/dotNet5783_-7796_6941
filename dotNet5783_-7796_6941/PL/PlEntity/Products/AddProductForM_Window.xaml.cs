@@ -63,27 +63,25 @@ public partial class AddProductForM_Window : Window
                 throw new Exception("...הכנס את שם הסופר");
             if (AddP_categ_commbbox.SelectedItem == null)
                 throw new Exception("הכנס את קטגוריית הספר");
-            //if(inStock_TextBox.Text=="0")
-            //    throw new Exception("אין להזין 0 בכמות במלאי, ניתן להשאיר שדה זה ריק");
 
+            string sorce, suffix, target;
 
-            if (!string.IsNullOrWhiteSpace(productToAdd.productImagePath))//העברת התמונה לתיקייה הרצויה לפי הקטגוריה וכן שינוי שם התמונה לשם הספר
+            if (!string.IsNullOrWhiteSpace(productToAdd.productImagePath))
             {
 
-                string sorce = productToAdd.productImagePath;
-                string suffix = sorce.Split(@".").Last();
-                string target = Environment.CurrentDirectory + "\\images\\productImages\\" + productToAdd.Category + "\\" + productToAdd.NameOfBook + "." + suffix;
-                File.Copy(sorce, target);
-                productToAdd.productImagePath = target;
+                 sorce = productToAdd.productImagePath;
+                 suffix = "." + sorce.Split(@".").Last();
+                 target = @"..\PL\ProductImages\"+productToAdd.NameOfBook+suffix;
 
             }
             else //תמונת ברירת מחדל
             { 
-                string sorce = Environment.CurrentDirectory+ "\\images\\Default\\Default.jpeg";
-                string target = Environment.CurrentDirectory + "\\images\\productImages\\" + productToAdd.Category + "\\" + productToAdd.NameOfBook + ".jpeg";
-                File.Copy(sorce, target);
-                productToAdd.ProductImagePath = target;
+                 sorce = @"..\PL\ProductImages\Default.jpeg";
+                 target = @"..\PL\ProductImages\" + productToAdd.NameOfBook+ "jpeg";
             }
+
+            File.Copy(sorce, target);
+            productToAdd.ProductImagePath = target;
 
             int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
             action(newID);
@@ -147,6 +145,7 @@ public partial class AddProductForM_Window : Window
 
     #endregion
 
+    #region בחירת תמונה עבר ספר
     private void choosePicture(object sender, RoutedEventArgs e)
     {
 
@@ -158,8 +157,16 @@ public partial class AddProductForM_Window : Window
         if (op.ShowDialog() == true)
         {
             productToAdd.ProductImagePath = op.FileName;
-            productImage.Source = productToAdd.Image;
         }
 
     }
+    #endregion
+
+    #region הסרת תמונה
+    private void RemoteImage_Click(object sender, RoutedEventArgs e)
+    {
+        productImage.Source = null;
+        productToAdd.productImagePath = null;
+    }
+    #endregion
 }

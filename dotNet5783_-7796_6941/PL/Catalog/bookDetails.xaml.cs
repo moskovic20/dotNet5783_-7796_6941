@@ -2,6 +2,7 @@
 using PL.PO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,13 +41,26 @@ namespace PL.Catalog
                 addToCart.Visibility = Visibility.Collapsed;
                 noInStock.Visibility = Visibility.Visible;
             }
+
+            if (myProduct.productImagePath != null)
+            {
+                string path = myProduct.productImagePath!;
+                string fullPath = System.IO.Path.Combine(Environment.CurrentDirectory, path);
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.UriSource = new System.Uri(fullPath ?? throw new Exception("problem"));
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
+                productImage.Source = image;
+            }//טיפול בתמונה
         }
 
+        #region הוספת המוצר לסל הקניות
         private void addToCart_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), myProduct.ID, (int)gradeNumUpDown.Value).putTo(myCart);
+                bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), myProduct.ID, (int?)gradeNumUpDown.Value?? throw new Exception()).putTo(myCart);
                 MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
             }
             catch (Exception ex)
@@ -55,6 +69,7 @@ namespace PL.Catalog
                     MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
             }
         }
+        #endregion
 
 
     }

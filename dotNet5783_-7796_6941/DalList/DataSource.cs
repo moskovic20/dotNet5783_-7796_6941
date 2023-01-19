@@ -63,8 +63,6 @@ public class DataSource
         Dictionary<string, CATEGORY> categories = Enum.GetValues(typeof(CATEGORY)).Cast<CATEGORY>()
             .ToDictionary(name => name.ToString(), value => value);
 
-        //CATEGORY c = CATEGORY.fantasy;
-
         IEnumerable<(CATEGORY, IEnumerable<string>)> productNames = Directory.EnumerateDirectories(@"images\productImages\")
            .Select(folderName => (categories[folderName.Split(@"\").Last()],
            Directory.EnumerateFiles(folderName).Select(n => n.Split(@"\").Last())));

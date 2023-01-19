@@ -88,7 +88,7 @@ public class DataSource
                     AuthorName = NamesOfWriters[R.Next(0, 7)],
                     Category = category.Item1,
                     InStock = (i != 0) ? R.Next(20, 100) : 0,
-                    ProductImagePath = Environment.CurrentDirectory+ $@"\images\productImages\{category.Item1.ToString()}\{name}"
+                    ProductImagePath = Environment.CurrentDirectory+ $@"\images\productImages\{category.Item1}\{name}"
                 };
                 i++;
 

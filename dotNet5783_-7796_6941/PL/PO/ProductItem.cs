@@ -115,26 +115,23 @@ public class ProductItem : MainPo
         set
         {
             productImagePath = value;
-
-            //try { image = new BitmapImage(new System.Uri(Environment.CurrentDirectory + productImagePath)); }
-            try { image = new BitmapImage(new System.Uri(productImagePath ?? throw new Exception("problem"))); }
-            catch { image = null; }
+            OnPropertyChanged("ProductImagePath");
         }
     }
 
-    private BitmapImage? image;
-    public BitmapImage? Image
-    {
-        get
-        {
-            return image;
-        }
-        set
-        {
-            image = value;
-            OnPropertyChanged("Image");
-        }
-    }
+    //private BitmapImage? image;
+    //public BitmapImage? Image
+    //{
+    //    get
+    //    {
+    //        return image;
+    //    }
+    //    set
+    //    {
+    //        image = value;
+    //        OnPropertyChanged("Image");
+    //    }
+    //}
 
 
 }

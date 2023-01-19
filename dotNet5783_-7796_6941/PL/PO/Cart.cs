@@ -24,7 +24,6 @@ public class Cart : MainPo
         }
     }
 
-
     private string? _CustomerEmail;
     public string? CustomerEmail
     {
@@ -49,7 +48,6 @@ public class Cart : MainPo
         }
     }
 
-
     private ObservableCollection<OrderItem>? _Items;
     public ObservableCollection<OrderItem>? Items
     {
@@ -62,7 +60,6 @@ public class Cart : MainPo
             OnPropertyChanged("Items");
         }
     }
-
 
     private double? _TotalPrice;
     public double? TotalPrice

@@ -71,14 +71,18 @@ internal class DalOrderItem : IOrderItem
     {
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem)!;
         return filter == null ? listOrderItems.Where(OI =>OI.GetValueOrDefault().IsDeleted != true).OrderBy(OI => ((Do.OrderItem)OI!).ID)
-                               :listOrderItems.Where(OI => OI.GetValueOrDefault().IsDeleted != true).Where(filter).OrderBy(OI => ((Do.OrderItem)OI!).ID);
+                               :listOrderItems.Where(OI => OI.GetValueOrDefault().IsDeleted != true).Where(x=>filter(x)).OrderBy(OI => ((Do.OrderItem)OI!).ID);
     }
 
-    public IEnumerable<Do.OrderItem?> GetAlldeleted()
+    public IEnumerable<Do.OrderItem?> GetAlldeleted(Func<Do.OrderItem?, bool>? filter = null)
     {
+
         var listLOrders = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem)!;
-        return listLOrders.Where(O => O.GetValueOrDefault().IsDeleted == true).OrderBy(O => ((Do.OrderItem)O!).ID);
+        return filter == null ?  listLOrders.Where(O => O.GetValueOrDefault().IsDeleted == true).OrderBy(O => ((Do.OrderItem)O!).ID)
+            : listLOrders.Where(O => O.GetValueOrDefault().IsDeleted == true).Where(x => filter(x)).OrderBy(O => ((Do.OrderItem)O!).ID);
+
     }
+
 
     public Do.OrderItem GetById(int id) =>
         XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem).FirstOrDefault(p => p?.ID == id && p?.IsDeleted != true)

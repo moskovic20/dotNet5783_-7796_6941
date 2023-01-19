@@ -23,6 +23,7 @@
                 Width="50" Height="50"
                 HorizontalAlignment="Left" 
                 VerticalAlignment="Top" 
+                ToolTip="עבור לסל הקניות"
                 Margin="24,10,0,0" Click="GoToCart_Click" >
             <materialDesign:PackIcon Kind="Cart" 
                                          Height="25" Width="25" 
@@ -63,6 +64,7 @@
             Width="50" Height="50"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
+            ToolTip="בדוק מצב הזמנה"
             Margin="274,11,0,0" 
                 Click="trakingOrder_Click">
             <materialDesign:PackIcon Kind="ArchiveSearchOutline" 
@@ -73,6 +75,7 @@
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
             BorderBrush="#007E8C7F" 
                 Click="connectToSystem_Click"
+                ToolTip="כניסה עבור מנהל"
                 Background="#FF009BA6"
             Width="50" Height="50"
             HorizontalAlignment="Left" 

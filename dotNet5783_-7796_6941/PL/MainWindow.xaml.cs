@@ -31,13 +31,26 @@ public partial class MainWindow : Window
 
     //private ObservableCollection<ProductItem>? BooksForShow;
     private PL.PO.Cart myCart;
-
+    private ObservableCollection<ProductItem>? Loved;
+    private Action<ProductItem> ToLoveList;
     public MainWindow()
     {
         InitializeComponent();
         bl = BlApi.Factory.GetBl();
         myCart = new();
-        myFrame.Content = new catalog(bl, myCart, this.myFrame);
+        Loved= new ObservableCollection<ProductItem>();
+        ToLoveList= (p => 
+        {
+            var temp = Loved.IndexOf(p);
+            if (temp == -1)
+            { 
+                Loved.Add(p); 
+            }
+        
+        });
+
+        myFrame.Content = new catalog(bl, myCart, this.myFrame, ToLoveList);
+
     }
 
     #region טעינת תמונות | יש מה לעבוד עוד
@@ -73,16 +86,23 @@ public partial class MainWindow : Window
     #region עמוד ההזמנה
     private void GoToCart_Click(object sender, RoutedEventArgs e)
     {
-        this.myFrame.Content = new PlEntity.Cart.Cart(bl,myCart,myFrame);
+        this.myFrame.Content = new PlEntity.Cart.Cart(bl,myCart,myFrame, ToLoveList);
     }
     #endregion
 
     #region כפתור-מעבר לקטלוג
     private void goToCatalog_Click(object sender, RoutedEventArgs e)
     {
-        this.myFrame.Content = new catalog(bl, myCart, this.myFrame);
+        this.myFrame.Content = new catalog(bl, myCart, this.myFrame, ToLoveList);
     }
     #endregion
-}
 
+    #region כפתור-מעבר לקטלוג
+    private void seePrefered_Click(object sender, RoutedEventArgs e)
+    {
+        this.myFrame.Content = new Favorites(bl, this.myFrame, Loved, myCart);
+    }
+    #endregion
+
+}
 

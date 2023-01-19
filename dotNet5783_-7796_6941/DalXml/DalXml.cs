@@ -40,7 +40,29 @@ sealed class DalXml : IDal
 
     }
     static DalXml() { }
-    private DalXml() { }
+    //public static IDal Instance { get; } = new DalXml();
+    private DalXml() {
+
+        #region אתחול ראשוני למספר רץ
+        //// אתחול של המספרים הרצים לקובץ..
+        // configNumbers order = new()
+        // {
+        //     numberSaved = 100020,
+        //     typeOfnumber = "Num For Order ID"
+        // };
+        // configNumbers orderItem = new()
+        // {
+        //     numberSaved = 100052,
+        //     typeOfnumber = "Num For OrderItem ID"
+        // };
+        // List<configNumbers?> helpListCharge = new()
+        // {
+        //    order,
+        //    orderItem
+        // };
+        // XMLTools.SaveListToXMLSerializer<configNumbers>(helpListCharge, "config");
+        #endregion
+    }
 
     #endregion
 

@@ -37,7 +37,7 @@
             Width="50" Height="50"
             HorizontalAlignment="Left" 
             VerticalAlignment="Top" 
-            Margin="103,10,0,0"  >
+            Margin="103,10,0,0" Click="seePrefered_Click" >
             <materialDesign:PackIcon Kind="cardShearToutline" 
                 Height="25" Width="25" 
                 OpacityMask="Black" HorizontalAlignment="Center" />

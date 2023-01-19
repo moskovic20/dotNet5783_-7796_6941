@@ -24,24 +24,7 @@ static internal class XMLTools {
         SaveListToXMLSerializer<Do.OrderItem>(DataSource.Instance._OrderItems, "OrderItem");
         #endregion
 
-        #region אתחול ראשוני למספר רץ
-        //אתחול של המספרים הרצים לקובץ..configNumbers order = new()
-        //      {
-        //          numberSaved = 100020,
-        //          typeOfnumber = "Num For Order ID"
-        //      };
-        //      configNumbers orderItem = new()
-        //      {
-        //          numberSaved = 100052,
-        //          typeOfnumber = "Num For OrderItem ID"
-        //      };
-        //      List<configNumbers?> helpListCharge = new()
-        //      {
-        //         order,
-        //         orderItem
-        //      };
-        //XMLTools.SaveListToXMLSerializer<configNumbers>(helpListCharge, "config");
-        #endregion
+       
 
         if (!Directory.Exists(s_dir))
             Directory.CreateDirectory(s_dir);
@@ -50,13 +33,6 @@ static internal class XMLTools {
     #region Extension Fuctions
     public static T? ToEnumNullable<T>(this XElement element, string name) where T : struct, Enum =>
         Enum.TryParse<T>((string?)element.Element(name), out var result) ? (T?)result : null;
-
-    //public static DO.CATEGORY ConvertEnum(this XElement element, string caterory)//is working?
-    //{ 
-    //    DO.CATEGORY result;
-    //    Enum.TryParse((string?)element.Element(caterory), out result);
-    //    return result;
-    //}
 
     public static DO.CATEGORY ConvertEnum(this string? caterory)//iS working?
     {

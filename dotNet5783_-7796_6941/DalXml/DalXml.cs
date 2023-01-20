@@ -44,23 +44,22 @@ sealed class DalXml : IDal
     private DalXml() {
 
         #region אתחול ראשוני למספר רץ
-        //// אתחול של המספרים הרצים לקובץ..
-        // configNumbers order = new()
-        // {
-        //     numberSaved = 100020,
-        //     typeOfnumber = "Num For Order ID"
-        // };
-        // configNumbers orderItem = new()
-        // {
-        //     numberSaved = 100052,
-        //     typeOfnumber = "Num For OrderItem ID"
-        // };
-        // List<configNumbers?> helpListCharge = new()
+        //אתחול של המספרים הרצים לקובץ..configNumbers order = new()
+        //{
+        //    numberSaved = 100020,
+        //    typeOfnumber = "Num For Order ID"
+        //};
+        //configNumbers orderItem = new()
+        //{
+        //    numberSaved = 100052,
+        //    typeOfnumber = "Num For OrderItem ID"
+        //};
+        //List<configNumbers?> helpListCharge = new()
         // {
         //    order,
         //    orderItem
         // };
-        // XMLTools.SaveListToXMLSerializer<configNumbers>(helpListCharge, "config");
+        //XMLTools.SaveListToXMLSerializer<configNumbers>(helpListCharge, "config");
         #endregion
     }
 

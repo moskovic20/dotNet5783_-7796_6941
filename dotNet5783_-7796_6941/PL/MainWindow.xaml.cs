@@ -19,6 +19,8 @@ using System.Collections;
 using Microsoft.VisualBasic;
 using PL.PlEntity.Products;
 using System.Net;
+using System.Security.Cryptography;
+using System.ComponentModel;
 
 namespace PL;
 
@@ -28,18 +30,18 @@ namespace PL;
 public partial class MainWindow : Window
 {
     private IBl bl;
-
-    //private ObservableCollection<ProductItem>? BooksForShow;
     private PL.PO.Cart myCart;
+
     private ObservableCollection<ProductItem>? Loved;
     private Action<ProductItem> ToLoveList;
+
     public MainWindow()
     {
         InitializeComponent();
         bl = BlApi.Factory.GetBl();
         myCart = new();
         Loved= new ObservableCollection<ProductItem>();
-        ToLoveList= (p => 
+        ToLoveList= p => 
         {
             var temp = Loved.IndexOf(p);
             if (temp == -1)
@@ -47,19 +49,18 @@ public partial class MainWindow : Window
                 Loved.Add(p); 
             }
         
-        });
+        };
 
         myFrame.Content = new catalog(bl, myCart, this.myFrame, ToLoveList);
-
     }
 
-    #region טעינת תמונות | יש מה לעבוד עוד
-    // for this code image needs to be a project resource
-    private BitmapImage LoadImage(string filename)
-    {
-        return new BitmapImage(new Uri(@"Image\" + filename, UriKind.RelativeOrAbsolute));/*/*@"Image/"/"pack://application:,,,/Image/" + filename)*/
-    }
-    #endregion
+    //#region טעינת תמונות | יש מה לעבוד עוד
+    //// for this code image needs to be a project resource
+    //private BitmapImage LoadImage(string filename)
+    //{
+    //    return new BitmapImage(new Uri(@"Image\" + filename, UriKind.RelativeOrAbsolute));/*/*@"Image/"/"pack://application:,,,/Image/" + filename)*/
+    //}
+    //#endregion
 
     #region כפתור צור קשר | חסר לנו פונקציית מייל 
     private void conectUs_Click(object sender, RoutedEventArgs e)

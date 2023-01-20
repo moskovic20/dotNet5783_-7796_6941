@@ -11,7 +11,7 @@ public class DataSource
 
     private static readonly object key = new(); //Thread Safe
 
-    public static DataSource? Instance
+    public static DataSource Instance
     {
         get
         {

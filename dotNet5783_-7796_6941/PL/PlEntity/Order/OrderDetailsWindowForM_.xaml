@@ -62,7 +62,7 @@
         <StackPanel Orientation="Horizontal"
                     Margin="163,64,0,326" Grid.Column="1" >
             <Label Content="{Binding OrderID, Mode=TwoWay}"
-                     Height="30" Width="147" />
+                     Height="30" Width="147" FontWeight="Bold" />
             <Label Content=":מספר הזמנה"
                    Width="89" FontWeight="Bold" Height="33" Foreground='Black'/>
 

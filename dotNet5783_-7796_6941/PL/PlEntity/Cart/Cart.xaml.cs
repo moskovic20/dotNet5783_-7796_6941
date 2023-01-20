@@ -129,5 +129,16 @@ public partial class Cart : Page
         myCart.TotalPrice = null;
         this.OrderItems_DateGrid.DataContext = myCart.Items;
     }
-#endregion
+    #endregion
+
+    #region מעבר לפרטי ספר
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        OrderItem? o = (OrderItem?)OrderItems_DateGrid.SelectedItem;
+        if (o != null)
+            this.myFrame.Content = new bookDetails(o.ProductID, bl, myCart);
+    }
+    #endregion
+
+    
 }

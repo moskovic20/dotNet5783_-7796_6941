@@ -19,12 +19,12 @@ static internal class XMLTools {
     {
 
         #region DSאתחול ראשוני לקבצים מה
-        SaveListToXMLSerializer<Do.Product>(DataSource.Instance._Products, "Product");
-        SaveListToXMLSerializer<Do.Order>(DataSource.Instance._Orders, "Order");
-        SaveListToXMLSerializer<Do.OrderItem>(DataSource.Instance._OrderItems, "OrderItem");
+        //SaveListToXMLSerializer<Do.Product>(DataSource.Instance._Products, "Product");
+        //SaveListToXMLSerializer<Do.Order>(DataSource.Instance._Orders, "Order");
+        //SaveListToXMLSerializer<Do.OrderItem>(DataSource.Instance._OrderItems, "OrderItem");
         #endregion
 
-       
+
 
         if (!Directory.Exists(s_dir))
             Directory.CreateDirectory(s_dir);
@@ -124,5 +124,5 @@ static internal class XMLTools {
         }
     }
     #endregion
-
+ 
 }

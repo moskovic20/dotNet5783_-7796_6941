@@ -12,7 +12,7 @@
 
     <Page.Resources>
         <local:filterCategoryToFilterByPrice x:Key="FilterCategoryToFilterByPrice"/>
-        <local:ImageConverter x:Key="imageConverter"></local:ImageConverter>
+        <local:ImageConverter x:Key="imageConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -67,8 +67,8 @@
             x:Name="Catalog" 
                       ItemsSource="{Binding}" Margin="0,5,0,0" MouseDoubleClick="Catalog_MouseDoubleClick" Grid.Row="1" Grid.ColumnSpan="2"  >
             <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
+                <ItemsPanelTemplate >
+                    <WrapPanel Width="{Binding (FrameworkElement.ActualWidth),
                               RelativeSource={RelativeSource AncestorType=ScrollContentPresenter}}"
                               ItemWidth="{Binding (ListView.View).ItemWidth,
                               RelativeSource={RelativeSource AncestorType=ListView}}"
@@ -76,8 +76,8 @@
                               ItemHeight="{Binding (ListView.View).ItemHeight, 
                               RelativeSource={RelativeSource AncestorType=ListView}}"/>
                 </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemTemplate >
+            </ListView.ItemsPanel >
+            <ListView.ItemTemplate>
                 <DataTemplate >
                     <StackPanel Orientation="Vertical" VerticalAlignment="Top" HorizontalAlignment="Stretch" >
                         <!--<Image Source="{Binding Image}" Width="100" Height="150" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />-->
@@ -85,13 +85,13 @@
             HorizontalAlignment="Stretch" 
             Width="100" Height="150"
             Grid.Row="1" VerticalAlignment="Top"
-               Source="{Binding ProductImagePath,Mode=TwoWay, Converter={StaticResource imageConverter}}"
-          />
+               Source="{Binding ProductImagePath,Mode=TwoWay, Converter={StaticResource imageConverter}}"/>
                         <TextBlock x:Name="bookName" Text="{Binding NameOfBook}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Foreground="#FF009BA6"/>
                         <TextBlock HorizontalAlignment="Center"  Text="{Binding Price}"  VerticalAlignment="Bottom" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Margin="5,5,5,5">
 
                             <Button x:Name="FavoritedBook"
+                                    ToolTip="הוסף למוצרים אהובים"
                                     Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
                                      Width="30" Height="30" Background="#FFF6F6F6"
                                      Click="FavoritedBook_Click">

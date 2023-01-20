@@ -13,11 +13,11 @@
         <local:filterCategoryToFilterByPrice x:Key="FilterCategoryToFilterByPrice"/>
         <local:ImageConverter x:Key="imageConverter"></local:ImageConverter>
     </Page.Resources>
-    
+
     <Grid>
-        <ListView HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="1000"
+        <ListView HorizontalAlignment="Center" Height="545" VerticalAlignment="Top" Width="980"
             x:Name="Catalog" 
-                      ItemsSource="{Binding}" Margin="0,5,0,0" MouseDoubleClick="Catalog_MouseDoubleClick" Grid.Row="1" Grid.ColumnSpan="2"  >
+                      ItemsSource="{Binding}" Margin="0,5,0,0" MouseDoubleClick="Catalog_MouseDoubleClick"  >
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Width="{Binding (FrameworkElement.ActualWidth), 
@@ -43,9 +43,10 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"  Margin="5,5,5,5">
 
                             <Button x:Name="FavoritedBook"
+                                    ToolTip="הסר מרשימת האהובים"
                                     Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
                                     Width="30" Height="30" Background="#FFF6F6F6" Click="CancelFavoritedBook_Click">
-                                <materialDesign:PackIcon Kind="HeartOutline"
+                                <materialDesign:PackIcon Kind="Minus"
                                             Height="20" Width="20" 
                                             OpacityMask="Black" HorizontalAlignment="Center"  Foreground="#FF512DBC"/>
                             </Button>

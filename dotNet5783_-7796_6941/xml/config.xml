@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfConfigNumbers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <configNumbers>
-    <numberSaved>100020</numberSaved>
+    <numberSaved>100024</numberSaved>
     <typeOfnumber>Num For Order ID</typeOfnumber>
   </configNumbers>
   <configNumbers>
-    <numberSaved>100050</numberSaved>
+    <numberSaved>100052</numberSaved>
     <typeOfnumber>Num For OrderItem ID</typeOfnumber>
   </configNumbers>
 </ArrayOfConfigNumbers>

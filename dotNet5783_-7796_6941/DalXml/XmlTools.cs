@@ -12,16 +12,17 @@ using System.Xml.Serialization;
 
 namespace Dal;
 
-static internal class XMLTools {
+static internal class XMLTools
+{
 
     const string s_dir = @"..\xml\";
     static XMLTools()
     {
 
         #region DSאתחול ראשוני לקבצים מה
-        //SaveListToXMLSerializer<Do.Product>(DataSource.Instance._Products, "Product");
-        //SaveListToXMLSerializer<Do.Order>(DataSource.Instance._Orders, "Order");
-        //SaveListToXMLSerializer<Do.OrderItem>(DataSource.Instance._OrderItems, "OrderItem");
+        SaveListToXMLSerializer<Do.Product>(DataSource.Instance._Products, "Product");
+        SaveListToXMLSerializer<Do.Order>(DataSource.Instance._Orders, "Order");
+        SaveListToXMLSerializer<Do.OrderItem>(DataSource.Instance._OrderItems, "OrderItem");
         #endregion
 
 
@@ -51,7 +52,7 @@ static internal class XMLTools {
         int.TryParse((string?)element.Element(name), out var result) ? (int?)result : null;
 
     public static bool? ToBool(this XElement element, string name) =>
-        bool.TryParse((string?)element.Element(name), out var result) ? (bool?) result : null;
+        bool.TryParse((string?)element.Element(name), out var result) ? (bool?)result : null;
     #endregion
 
     #region SaveLoadWithXElement
@@ -108,15 +109,18 @@ static internal class XMLTools {
         }
     }
 
-    public static List<T?> LoadListFromXMLSerializer<T>(string entity) 
+    public static List<T?> LoadListFromXMLSerializer<T>(string entity)
     {
         string filePath = $"{s_dir + entity}.xml";
         try
         {
-            if (!File.Exists(filePath)) return new();
+
+            if (!File.Exists(filePath))
+                return new();
             using FileStream file = new(filePath, FileMode.Open);
             XmlSerializer x = new(typeof(List<T?>));
             return x.Deserialize(file) as List<T?> ?? new();
+
         }
         catch (Exception ex)
         {
@@ -124,5 +128,5 @@ static internal class XMLTools {
         }
     }
     #endregion
- 
+
 }

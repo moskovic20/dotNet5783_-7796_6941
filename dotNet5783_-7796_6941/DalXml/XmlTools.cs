@@ -25,7 +25,6 @@ static internal class XMLTools {
         #endregion
 
 
-
         if (!Directory.Exists(s_dir))
             Directory.CreateDirectory(s_dir);
     }

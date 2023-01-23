@@ -88,7 +88,7 @@ internal class BoOrder : BlApi.IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public BO.Order UpdateOrderShipping(int id)
+    public BO.Order UpdateOrderShipping(int id/*,DateTime? dt=null*/)
     {
         if (id < 0)
             throw new BO.Update_Exception("Negative OrderID");
@@ -123,6 +123,7 @@ internal class BoOrder : BlApi.IOrder
         {
             throw new BO.GetDetails_Exception("Can't update shipping date", ex);
         }
+
 
     }
 

@@ -74,11 +74,6 @@ public partial class SimulatorPage : Page
 
                 case OrderStatus.Processing:
                     bl.BoOrder.UpdateOrderDelivery(Item.OrderID);
-                //..SystemSounds.Beep.Play();
-                //SystemSounds.Exclamation.Play();
-
- 
-                //file = @"C:\Users\hanim\source\repos\Mini_project_2022\dotNet5783_-7796_6941\PL\Sounds\menu_done.wav";
                     path = @"..\PL\Sounds\menu_done.wav";
                     file = System.IO.Path.Combine(Environment.CurrentDirectory, path);
                     System.Media.SoundPlayer player = new System.Media.SoundPlayer(file);
@@ -112,7 +107,6 @@ public partial class SimulatorPage : Page
 
     }
 
-
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
         OrderForList? myOFL;
@@ -142,6 +136,7 @@ public partial class SimulatorPage : Page
 
         //int a = 0;
     }
+
     private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
         object result = e.Result;

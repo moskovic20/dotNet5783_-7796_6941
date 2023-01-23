@@ -73,7 +73,7 @@ public partial class SimulatorPage : Page
 
     private void orderTraking_Click(object sender, EventArgs e)
     {
-        BO.OrderForList or = (BO.OrderForList)((DataGrid)sender).SelectedItem;
+        PO.OrderForList or = (PO.OrderForList)((DataGrid)sender).SelectedItem;
         new orderTrakingForC_Window(bl, or.OrderID).Show();
     }
 

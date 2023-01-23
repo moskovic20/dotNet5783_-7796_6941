@@ -31,6 +31,11 @@ public partial class orderTrakingForC_Window : Window
     {
         InitializeComponent();
         this.bl = bl;
+        searchRec.Visibility = Visibility.Visible;
+        search.Visibility = Visibility.Visible;
+        //orderID.Visibility = Visibility.Visible;
+        orderID.Text = null;
+        //numO.Visibility = Visibility.Visible;
     }
 
     public orderTrakingForC_Window(IBl bl, int id)
@@ -40,8 +45,9 @@ public partial class orderTrakingForC_Window : Window
         this.id = id;
         searchRec.Visibility= Visibility.Hidden;
         search.Visibility = Visibility.Hidden;
-        orderID.Visibility= Visibility.Hidden;
-        numO.Visibility= Visibility.Hidden;
+        //orderID.Visibility= Visibility.Visible;
+        orderID.Text = id.ToString();
+        //numO.Visibility= Visibility.Visible;
         healpTraking(id);
     }
 
@@ -72,41 +78,41 @@ public partial class orderTrakingForC_Window : Window
             myOrder = bl.BoOrder.GetOrdertDetails(id).CopyBoOrderToPoOrder();
             DataContext = myOrder;
 
-            orderDate_label.Visibility = Visibility;
-            shippingDate_label.Visibility = Visibility;
-            deliveryDate_label.Visibility = Visibility;
+            orderDate_label.Visibility = Visibility.Visible;
+            shippingDate_label.Visibility = Visibility.Visible;
+            deliveryDate_label.Visibility = Visibility.Visible;
 
-            orderDate.Visibility = Visibility;
-            ShippingDate.Visibility = Visibility;
-            DeliveryDate.Visibility = Visibility;
+            orderDate.Visibility = Visibility.Visible;
+            ShippingDate.Visibility = Visibility.Visible;
+            DeliveryDate.Visibility = Visibility.Visible;
 
-            orderDetails.Visibility = Visibility;
+            orderDetails.Visibility = Visibility.Visible;
 
-            circle1.Visibility = Visibility;
+            circle1.Visibility = Visibility.Visible;
 
             if (myOrder.ShippingDate != null)
             {
                 circle2.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF009BA6")!;
                 circle2.Stroke = System.Windows.Media.Brushes.Yellow;
-                circle2.Visibility = Visibility;
+                circle2.Visibility = Visibility.Visible;
             }
             else
             {
                 circle2.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFC2C3C9")!;
                 circle2.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF009BA6")!;
-                circle2.Visibility = Visibility;
+                circle2.Visibility = Visibility.Visible;
             }
             if (myOrder.DeliveryDate != null)
             {
                 circle3.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF009BA6")!;
                 circle3.Stroke = System.Windows.Media.Brushes.Yellow;
-                circle3.Visibility = Visibility;
+                circle3.Visibility = Visibility.Visible;
             }
             else
             {
                 circle3.Fill = (SolidColorBrush)new BrushConverter().ConvertFromString("#FFC2C3C9")!;
                 circle3.Stroke = (SolidColorBrush)new BrushConverter().ConvertFromString("#FF009BA6")!;
-                circle3.Visibility = Visibility;
+                circle3.Visibility = Visibility.Visible;
             }
 
         }

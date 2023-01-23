@@ -63,7 +63,20 @@ public partial class AddProductForM_Window : Window
                 throw new Exception("...הכנס את שם הסופר");
             if (AddP_categ_commbbox.SelectedItem == null)
                 throw new Exception("הכנס את קטגוריית הספר");
+            if (priceText.Text == "" || inStock_TextBox.Text == "")
+            {
+                var mbResult = MessageBox.Show("ללא הכנסת ערך עבור מחיר מוצר או עבור כמות מוצר- הלקוח לא יכול לראות ולקנות מוצר זה.\nברצונך להמשיך את ההוספה?", "שים לב", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
+                switch (mbResult)
+                {
+                    case MessageBoxResult.Yes:
+                        break;
+                    case MessageBoxResult.No:
+                        return;
+                        //break;
+                }
 
+            }
+        
             string sorce, suffix, target;
 
             if (!string.IsNullOrWhiteSpace(productToAdd.productImagePath))
@@ -72,16 +85,17 @@ public partial class AddProductForM_Window : Window
                  sorce = productToAdd.productImagePath;
                  suffix = "." + sorce.Split(@".").Last();
                  target = @"..\PL\ProductImages\"+productToAdd.NameOfBook+suffix;
-
+                productToAdd.ProductImagePath = target;
             }
             else //תמונת ברירת מחדל
             { 
                  sorce = @"..\PL\ProductImages\Default.jpeg";
-                 target = @"..\PL\ProductImages\" + productToAdd.NameOfBook+ "jpeg";
+                 target = @"..\PL\ProductImages\" + productToAdd.NameOfBook+ ".jpeg";
+                productToAdd.ProductImagePath = target;
+                productImage.Source = null;
             }
 
             File.Copy(sorce, target);
-            productToAdd.ProductImagePath = target;
 
             int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
             action(newID);
@@ -89,7 +103,6 @@ public partial class AddProductForM_Window : Window
 
             productImage.Source = null;
             productToAdd = new PO.Product();
-            //this.DataContext = productToAdd;
             AddP_categ_commbbox.SelectedItem = null;
 
         }

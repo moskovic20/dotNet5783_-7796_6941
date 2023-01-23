@@ -24,7 +24,7 @@ static internal class XMLTools {
         //SaveListToXMLSerializer<Do.OrderItem>(DataSource.Instance._OrderItems, "OrderItem");
         #endregion
 
-       
+
 
         if (!Directory.Exists(s_dir))
             Directory.CreateDirectory(s_dir);
@@ -124,5 +124,5 @@ static internal class XMLTools {
         }
     }
     #endregion
-
+ 
 }

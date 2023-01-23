@@ -206,13 +206,13 @@
                FontWeight="Bold"/>
 
         <Label x:Name="errorOrderID"
-                Content="...מספר הזמנה שגוי,נסה שוב"
+                Content="מספר הזמנה שגוי\לא ניתן להביא פרטי הזמנה זו"
                Foreground="Red"
                FontSize="11"
                HorizontalAlignment="Left"
                Margin="138,117,0,0"
                VerticalAlignment="Top"
-               Height="48" Width="147"
+               Height="48" Width="242"
                Visibility="Hidden"/>
         
         <Button x:Name="orderDetails"

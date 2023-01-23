@@ -83,7 +83,6 @@ internal class DalOrder : IOrder
      XMLTools.LoadListFromXMLSerializer<Do.Order?>(s_Order).FirstOrDefault(p => p?.OrderID == id && p?.IsDeleted != true)
         ?? throw new Do.DoesntExistException("Order is missing");
 
-
     public void Update(Do.Order item)
     {
         Delete(item.OrderID);

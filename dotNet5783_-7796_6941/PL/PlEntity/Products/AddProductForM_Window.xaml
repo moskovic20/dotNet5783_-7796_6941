@@ -177,7 +177,7 @@
         <Image Name="productImage"
                HorizontalAlignment="Left" 
                Height="152" Margin="54,228,0,0" VerticalAlignment="Top"
-              Source="{Binding ProductImagePath,Mode=TwoWay, Converter={StaticResource imageConverter}}"
+              Source="{Binding ProductImagePath,Mode=OneWay, Converter={StaticResource imageConverter}}"
                Width="234"/>
         <StackPanel Orientation="Horizontal"
             Grid.Column="1" 
@@ -210,7 +210,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal"
             Margin="64,348,20,97" Grid.Column="1">
-            <TextBox Text="{Binding Price, Mode=TwoWay,Converter={StaticResource nullToEmptyString}}"
+            <TextBox x:Name="priceText" Text="{Binding Price, Mode=TwoWay,Converter={StaticResource nullToEmptyString}}"
                      PreviewTextInput="PreviewTextInputToDouble"
                      MaxLength="7"
                       Height="30" Width="215"/>

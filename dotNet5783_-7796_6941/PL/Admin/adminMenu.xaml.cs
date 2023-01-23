@@ -44,5 +44,10 @@ namespace PL.Admin
         {
             this.adminFrame.Content = new ArchivesMenu(bl);
         }
+
+        private void simulatorInMenu_Click(object sender, RoutedEventArgs e)
+        {
+            this.adminFrame.Content = new SimulatorPage(bl);
+        }
     }
 }

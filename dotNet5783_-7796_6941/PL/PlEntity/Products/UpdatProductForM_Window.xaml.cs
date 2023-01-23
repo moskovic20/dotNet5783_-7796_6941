@@ -59,26 +59,53 @@ namespace PL.Products
                 if (updateCateg_commbbox.SelectedItem == null)
                     throw new Exception("הכנס את קטגוריית הספר");
 
-                if(beforUpdate!.productImagePath!=productToUpdate.productImagePath)//אם התמונה שונתה
+                int price = 0;
+                bool find = int.TryParse(priceText.Text, out price);
+                if (find == true && price == 0)
+                    throw new Exception("מחיר לא יכול להיות אפס שקל");
+
+                if (priceText.Text == "" || inStock_TextBox.Text == "")
+                {
+                    var mbResult = MessageBox.Show("ללא הכנסת ערך עבור מחיר מוצר או עבור כמות מוצר- הלקוח לא יכול לראות ולקנות מוצר זה.\nברצונך להמשיך את ההוספה?", "שים לב", MessageBoxButton.YesNo, MessageBoxImage.Information, MessageBoxResult.No);
+                    switch (mbResult)
+                    {
+                        case MessageBoxResult.Yes:
+                            break;
+                        case MessageBoxResult.No:
+                            return;
+                            //break;
+                    }
+
+                }
+
+                if (beforUpdate!.productImagePath!=productToUpdate.productImagePath)//אם התמונה שונתה
                 {
                     string source, suffix, target, lastName="";
+                    var splitPhat = beforUpdate.productImagePath!.Split(@"\");
+                    lastName = splitPhat.Last().Split(".")[0];
 
                     if (!string.IsNullOrWhiteSpace(productToUpdate.productImagePath))//שינוי תמונה
                     {
-                         source = productToUpdate.productImagePath!;
-                         suffix = "." + source.Split(@".").Last();
-                         var splitPhat = beforUpdate.productImagePath!.Split(@"\");
-                         lastName = splitPhat.Last().Split(".")[0];
-                         target = @"..\PL\ProductImages\" + lastName + "Copy" + suffix;
+                        source = productToUpdate.productImagePath!;
+                        suffix = "." + source.Split(@".").Last();
+                        target = @"..\PL\ProductImages\" + lastName + "Copy" + suffix;
+                        File.Copy(source, target);
+                        productToUpdate.productImagePath = target;
                     }
                     else //תמונת ברירת מחדל
                     {
-                        source = @"..\PL\ProductImages\Default.jpeg";
-                        target = @"..\PL\ProductImages\" + lastName + "Defult" + "jpeg";
+                        if (beforUpdate.productImagePath != @"..\PL\ProductImages\" + beforUpdate.NameOfBook + ".jpeg")
+                        {
+                            source = @"..\PL\ProductImages\Default.jpeg";
+                            target = @"..\PL\ProductImages\" + lastName + "Defult" + ".jpeg";
+                            File.Copy(source, target);
+                            productToUpdate.productImagePath = target;
+                        }
+                        else
+                        {
+                            productToUpdate.productImagePath = beforUpdate.productImagePath;
+                        }
                     }
-
-                    File.Copy(source, target);
-                    productToUpdate.productImagePath = target;
                     
                 }
 

@@ -30,7 +30,7 @@ internal class BoProduct : IProduct
     /// <exception cref="BO.GetAllForList_Exception"></exception>
     public IEnumerable<BO.ProductItem> GetAllProductItems_forC()
     {
-        var products = dal.Product.GetAll((Do.Product? p) => { return (p?.Price == null)? false : true; });
+        var products = dal.Product.GetAll((Do.Product? p) => { return (p?.Price == null||p?.InStock==null)? false : true; });
 
        // if (products.Count() == 0)
        //     throw new BO.GetAllForList_Exception("There are no products");

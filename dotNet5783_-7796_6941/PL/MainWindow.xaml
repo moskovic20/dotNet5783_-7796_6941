@@ -44,6 +44,7 @@
         </Button>
 
         <Button x:Name="AddTheStation_Copy1"
+                ToolTip="צור קשר"
             Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}" 
             BorderBrush="#007E8C7F"
             Width="50" Height="50"
@@ -86,6 +87,7 @@
                 Height="25" Width="25" 
                 OpacityMask="Black" />
         </Button>
+       
 
 
 

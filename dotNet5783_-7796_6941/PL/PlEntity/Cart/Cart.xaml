@@ -192,6 +192,22 @@
                 <DataGridTextColumn Header="מספר מוצר "
                                     Binding="{Binding ProductID}"
                                     MinWidth="5"/>
+
+                <DataGridTemplateColumn Header="פרטי ספר"
+                                    MinWidth="10">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
+                                    Height="30" Width="30"
+                                    HorizontalAlignment="Center"
+                                    Background="#FFF6F6F6"
+                                    Click="Button_Click">
+                                <materialDesign:PackIcon Foreground="Gray" Kind="bookArrowLeft"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
         </DataGrid>
         <Rectangle Grid.Column="1" HorizontalAlignment="Left" Height="393" Margin="127,66,0,0" Stroke="#FF673AB7" VerticalAlignment="Top" Width="7"/>

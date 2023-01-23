@@ -12,7 +12,7 @@ internal class filterCategoryToFilterByPrice : IValueConverter//משתמשים �
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (value is BitmapSource)
+        if (value is BitmapImage)
             return Visibility.Visible;
 
         if (value == null||(string)value == "")

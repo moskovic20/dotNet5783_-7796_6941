@@ -40,10 +40,10 @@
                 
                
                 <DataGridTextColumn Header="תאריך הגעה"
-                                    Binding="{Binding ShippingDate }"
+                                    Binding="{Binding DeliveryDate }"
                                     MinWidth="100" />
                 <DataGridTextColumn Header="תאריך שילוח"
-                                    Binding="{Binding DeliveryDate }"
+                                    Binding="{Binding  ShippingDate}"
                                     MinWidth="100" />
                 <DataGridTextColumn Header="יצירת הזמנה"
                                     Binding="{Binding DateOrder}"

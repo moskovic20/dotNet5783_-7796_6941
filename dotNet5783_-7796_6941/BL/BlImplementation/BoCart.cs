@@ -34,7 +34,7 @@ internal class BoCart : ICart
                 TotalPrice = 0,
             };
 
-            if (item.AmountOfItems >= product.InStock)
+            if (item.AmountOfItems >= product.InStock|| product.InStock == null)
                 throw new BO.InvalidValue_Exception("הספר אזל מהמלאי");
 
             if (item.AmountOfItems == 0) cart.Items.Add(item);//הוספה ראשונה של מוצר זה לסל הקניות
@@ -87,6 +87,8 @@ internal class BoCart : ICart
                 };
 
                 cart.Items.Add(item); //הוספת המוצר לסל הקניות לפי הכמות שהתקבלה
+                cart.TotalPrice = cart.TotalPrice ?? 0;
+                cart.TotalPrice += NewAmount * product.Price;
                 return cart;
 
             }
@@ -147,7 +149,7 @@ internal class BoCart : ICart
 
             if (cart.CustomerEmail == null) throw new BO.InvalidValue_Exception("cant make this order without email");
             else if (!cart.CustomerEmail.IsValidEmail())
-                throw new BO.InvalidValue_Exception("Invalid email address");
+                throw new BO.InvalidValue_Exception("כתובת מייל לא תקינה");
 
             cart.Items.TrueForAll(x => x.ValidationChecks());//בדיקה שכל כמויות הפריטים בסל הקניות חיוביים וכן שיש מספיק במלאי 
 

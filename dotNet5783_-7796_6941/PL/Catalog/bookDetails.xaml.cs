@@ -42,6 +42,14 @@ namespace PL.Catalog
                 noInStock.Visibility = Visibility.Visible;
             }
 
+            //OrderItem? PI = Cart?.Items?.FirstOrDefault(x => x.ProductID == ID);//כשפותחים את המוצר, כתוב את המספר שיש בסל
+            //if (PI != null)
+            //{
+            //    gradeNumUpDown.Value = PI.AmountOfItems;
+            //}
+            //else
+            //    gradeNumUpDown.Value = 0;
+
             if (myProduct.productImagePath != null)
             {
                 string path = myProduct.productImagePath!;
@@ -60,6 +68,8 @@ namespace PL.Catalog
         {
             try
             {
+                if (gradeNumUpDown.Value == 0)
+                    throw new Exception("בחר את כמות המוצר שהנך רוצה להוסיף לסל הקניות");
                 bl.BoCart.UpdateProductAmountInCart(myCart.CastingFromPoToBoCart(), myProduct.ID, (int?)gradeNumUpDown.Value?? throw new Exception()).putTo(myCart);
                 MessageBox.Show("!הספר נוסף בהצלחה לסל הקניות");
             }

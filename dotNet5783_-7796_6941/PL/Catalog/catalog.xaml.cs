@@ -60,8 +60,10 @@ namespace PL.Catalog
         {
             try
             {
+                
                 ProductItem p = (ProductItem)((ListView)sender).SelectedItem;
-                this.myFrame.Content = new bookDetails(p.ID, bl, myCart);
+                if(p!=null)
+                    this.myFrame.Content = new bookDetails(p.ID, bl, myCart);
             }
             catch(Exception ) { };
 
@@ -94,10 +96,10 @@ namespace PL.Catalog
             PO.ProductItem p = (button.DataContext as PO.ProductItem)!;
             ToLoveList(p);
 
+            MessageBox.Show("הספר נוסף לרשימת האהובים שלך!", "ספרים אהובים");
 
         }
         #endregion
-
 
         #region סידור הפריטים לפי מחיר-לפי בחירת המשתמש
         private void SortByPrice_SelectionChanged(object sender, SelectionChangedEventArgs e)

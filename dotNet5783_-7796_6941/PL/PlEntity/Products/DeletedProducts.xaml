@@ -36,6 +36,9 @@
                   Background="{x:Null}">
 
             <DataGrid.Columns>
+                <!--<DataGridTextColumn Header="תמונה"    
+                                    Binding="{Binding ProductImagePath }"
+                                    MinWidth="250"/>-->
                 <DataGridTextColumn Header="תקציר"    
                                     Binding="{Binding Summary }"
                                     MinWidth="250"/>

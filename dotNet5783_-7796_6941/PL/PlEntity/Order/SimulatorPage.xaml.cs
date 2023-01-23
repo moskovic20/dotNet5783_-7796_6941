@@ -23,14 +23,29 @@ namespace PL.PlEntity.Order;
 /// </summary>
 public partial class SimulatorPage : Page
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+
     IBl bl;
     BackgroundWorker worker;
-    //bool toStop = false;
-    DateTime today;
     List<BO.OrderForList> orders;
 
+    private DateTime Today;
     
-    private ObservableCollection<BO.OrderForList> OrdersForShow = new();
+
+    private ObservableCollection<PO.OrderForList> _OrdersForShow;
+    public ObservableCollection<PO.OrderForList> OrdersForShow
+    {
+        get
+        { return _OrdersForShow; }
+        set
+        {
+            _OrdersForShow = value;
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("OrdersForShow"));
+            }
+        }
+    }
 
     //public static 
 
@@ -48,74 +63,84 @@ public partial class SimulatorPage : Page
         worker.WorkerSupportsCancellation = true;
         worker.WorkerReportsProgress = true;
 
-        OrdersForShow = new(bl.BoOrder.GetAllOrderForList());
-        DataContext = OrdersForShow;
+        OrdersForShow = new(PO.Tools.GetAllOrdersInPO());
+        Orders_DateGrid.DataContext = OrdersForShow;
 
+        Today = DateTime.Now;
+        Date.Content = Today.ToShortDateString();
     }
 
 
 
     private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
-        for (int i=0;i < 2; i++)
+        try
         {
             orders = bl.BoOrder.GetAllOrderForList().ToList();
 
-            if (worker.CancellationPending == true)
-            {
-                e.Cancel = true;
-                break;
-            }
-            else
-            {
-                Thread.Sleep(500);
-                if (worker.WorkerReportsProgress == true)
-                    worker.ReportProgress(1);
-               
-            }
 
-            today = today.AddHours(1);
+            for (int i = 0; i < 2; i++)
+            {
+
+                if (worker.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    break;
+                }
+                else
+                {
+                    PO.Order? myO;
+
+                    BO.OrderForList? myOFL;
+
+
+                    foreach (BO.OrderForList? Item in orders)
+                    {
+                        myO = bl.BoOrder.GetOrdertDetails(Item.OrderID).CopyBoOrderToPoOrder();
+
+                        switch (myO.Status)
+                        {
+                            case PO.OrderStatus.Accepted:
+                                if (Today.Subtract(myO.DateOrder) > new TimeSpan(3, 23, 59))
+                                    bl.BoOrder.UpdateOrderShipping(Item.OrderID, Today);
+                                break;
+
+                            case PO.OrderStatus.Processing:
+
+                                if (Today.Subtract(myO.ShippingDate ?? throw new Exception("בעיה,בדקו למה נוצרתי:)")) > new TimeSpan(3, 23, 59))
+                                    bl.BoOrder.UpdateOrderDelivery(Item.OrderID, Today);
+                                break;
+                        }
+
+                        Thread.Sleep(500);
+                        worker.ReportProgress(Item.OrderID);
+                    }
+
+                }
+
+                Today = Today.AddDays(1);
+                Date.Content = Today.ToShortDateString();
+                orders = bl.BoOrder.GetAllOrderForList().ToList();
+            }
         }
+        catch(Exception ex)
+        {
 
+        }
     }
 
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
-       
-        PO.Order? myO;
 
-        BO.OrderForList? myOFL;
+        int id = e.ProgressPercentage;
 
-       
-        foreach (BO.OrderForList? Item in orders)
-        {
-            myO = bl.BoOrder.GetOrdertDetails(Item.OrderID).CopyBoOrderToPoOrder();
-
-            switch (myO.Status)
-            {
-                case PO.OrderStatus.Accepted:
-                    if (today.Subtract(myO.DateOrder) > new TimeSpan(3, 23, 59))
-                        bl.BoOrder.UpdateOrderShipping(Item.OrderID, today);
-                    break;
-
-                case PO.OrderStatus.Processing:
-                   
-                    if (today.Subtract(myO.ShippingDate?? throw new Exception("בעיה,בדקו למה נוצרתי:)")) > new TimeSpan(3, 23, 59))
-                        bl.BoOrder.UpdateOrderDelivery(Item.OrderID,today);
-                    break;
-            }
-
-            myOFL = OrdersForShow.FirstOrDefault(x => x.OrderID == Item.OrderID);
+            var  myOFL = OrdersForShow.FirstOrDefault(x => x.OrderID == id);
             if (myOFL != null)
             {
-                myOFL.Status = bl.BoOrder.GetOrderForList(Item.OrderID).Status;
+                myOFL.Status = (PO.OrderStatus)bl.BoOrder.GetOrderForList(id).Status;
             }
 
-            System.Threading.Thread.Sleep(500);
-
-            OrdersForShow = new(bl.BoOrder.GetAllOrderForList());
-            DataContext = OrdersForShow;
-        }
+       // Date.Content = Today.ToShortDateString();
 
     }
 
@@ -144,7 +169,7 @@ public partial class SimulatorPage : Page
         {
             startSimulator.IsEnabled = false;
             stopSimulator.IsEnabled = true;
-            today = DateTime.Now;
+            Today = DateTime.Now;
             worker.RunWorkerAsync();
             
         }

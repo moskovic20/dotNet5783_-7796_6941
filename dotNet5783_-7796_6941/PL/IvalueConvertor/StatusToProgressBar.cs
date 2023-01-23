@@ -16,15 +16,15 @@ internal class StatusToProgressBar: IValueConverter
     {
         Random R = new Random();
 
-        if (!(value is BO.OrderStatus))
+        if (!(value is PO.OrderStatus))
             throw new Exception("בעיה,בואו לבדוק למה נוצרתי :)");
-        var myStatus = (BO.OrderStatus)value;
+        var myStatus = (PO.OrderStatus)value;
         switch(myStatus)
         {
-            case BO.OrderStatus.Accepted:
+            case PO.OrderStatus.Accepted:
                 return R.Next(34);
                 //break;
-            case BO.OrderStatus.Processing:
+            case PO.OrderStatus.Processing:
                 return R.Next(34,67);
                 //break;
            // case PO.OrderStatus.Completed:

@@ -7,19 +7,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.ComponentModel;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using PL.PO;
-using System.Media;
-//using System.Windows.Forms;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
+using BO;
+using System.Windows.Input;
+using System.Windows.Shapes;
 
 namespace PL.PlEntity.Order;
 
@@ -30,11 +25,14 @@ public partial class SimulatorPage : Page
 {
     IBl bl;
     BackgroundWorker worker;
-    bool isWork = false;
-    private ObservableCollection<PO.OrderForList> allOrders = new();
+    //bool toStop = false;
+    DateTime today;
+    List<BO.OrderForList> orders;
 
+    
+    private ObservableCollection<BO.OrderForList> OrdersForShow = new();
 
-    public  System.Media.SystemSound Beep { get; }
+    //public static 
 
     public SimulatorPage(IBl bl)
     {
@@ -42,15 +40,16 @@ public partial class SimulatorPage : Page
         this.bl = bl;
 
         InitializeComponent();
+
         worker = new BackgroundWorker();
         worker.DoWork += Worker_DoWork;
         worker.ProgressChanged += Worker_ProgressChanged;
         worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
-        worker.WorkerReportsProgress = true;
         worker.WorkerSupportsCancellation = true;
+        worker.WorkerReportsProgress = true;
 
-        allOrders = new(PO.Tools.GetAllOrdersInPO());
-        DataContext = allOrders;
+        OrdersForShow = new(bl.BoOrder.GetAllOrderForList());
+        DataContext = OrdersForShow;
 
     }
 
@@ -58,107 +57,105 @@ public partial class SimulatorPage : Page
 
     private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
-        var Worker = sender as BackgroundWorker;
-        string file, path;
-
-        OrderForList? myOFL;
-
-        var orders = bl.BoOrder.GetAllOrderForList().Select(x => bl.BoOrder.GetOrdertDetails((int)x?.OrderID!)).OrderBy(x => x.DateOrder).Select(x => x.CopyBoOrderToPoOrder());
-        foreach (PO.Order? Item in orders)
+        for (int i=0;i < 2; i++)
         {
-            switch (Item.Status)
-            {
-                case OrderStatus.Accepted:
-                    bl.BoOrder.UpdateOrderShipping(Item.OrderID);
-                    break;
+            orders = bl.BoOrder.GetAllOrderForList().ToList();
 
-                case OrderStatus.Processing:
-                    bl.BoOrder.UpdateOrderDelivery(Item.OrderID);
-                    path = @"..\PL\Sounds\menu_done.wav";
-                    file = System.IO.Path.Combine(Environment.CurrentDirectory, path);
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(file);
-                    player.Play();
-                    break;
+            if (worker.CancellationPending == true)
+            {
+                e.Cancel = true;
+                break;
+            }
+            else
+            {
+                Thread.Sleep(500);
+                if (worker.WorkerReportsProgress == true)
+                    worker.ReportProgress(1);
+               
             }
 
-            myOFL = allOrders.FirstOrDefault(x => x.OrderID == Item.OrderID);
-            if (myOFL != null)
-            {
-                myOFL.Status = (PO.OrderStatus)bl.BoOrder.GetOrderForList(Item.OrderID).Status;
-            }
-
-            System.Threading.Thread.Sleep(500);
+            today = today.AddHours(1);
         }
-
-
-        //object obj = e.Argument;
-
-        //worker.ReportProgress(1);
-
-        //e.Result = "result";
-
-        //while (worker.CancellationPending == false)
-        //  {
-        // Perform a time consuming operation and report progress.
-        //   System.Threading.Thread.Sleep(500);
-        //  worker.ReportProgress(1);
-        // }
-        //   e.Cancel = true;
 
     }
 
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
-        OrderForList? myOFL;
+       
+        PO.Order? myO;
 
-        var orders = bl.BoOrder.GetAllOrderForList().Select(x => bl.BoOrder.GetOrdertDetails((int)x?.OrderID!)).OrderBy(x => x.DateOrder).Select(x => x.CopyBoOrderToPoOrder());
-        foreach (PO.Order? Item in orders)
+        BO.OrderForList? myOFL;
+
+       
+        foreach (BO.OrderForList? Item in orders)
         {
-            switch (Item.Status)
+            myO = bl.BoOrder.GetOrdertDetails(Item.OrderID).CopyBoOrderToPoOrder();
+
+            switch (myO.Status)
             {
-                case OrderStatus.Accepted:
-                    bl.BoOrder.UpdateOrderShipping(Item.OrderID);
+                case PO.OrderStatus.Accepted:
+                    if (today.Subtract(myO.DateOrder) > new TimeSpan(3, 23, 59))
+                        bl.BoOrder.UpdateOrderShipping(Item.OrderID, today);
                     break;
 
-                case OrderStatus.Processing:
-                    bl.BoOrder.UpdateOrderDelivery(Item.OrderID);
+                case PO.OrderStatus.Processing:
+                   
+                    if (today.Subtract(myO.ShippingDate?? throw new Exception("בעיה,בדקו למה נוצרתי:)")) > new TimeSpan(3, 23, 59))
+                        bl.BoOrder.UpdateOrderDelivery(Item.OrderID,today);
                     break;
             }
 
-            myOFL = allOrders.FirstOrDefault(x => x.OrderID == Item.OrderID);
+            myOFL = OrdersForShow.FirstOrDefault(x => x.OrderID == Item.OrderID);
             if (myOFL != null)
             {
-                myOFL.Status = (PO.OrderStatus)bl.BoOrder.GetOrderForList(Item.OrderID).Status;
+                myOFL.Status = bl.BoOrder.GetOrderForList(Item.OrderID).Status;
             }
 
             System.Threading.Thread.Sleep(500);
+
+            OrdersForShow = new(bl.BoOrder.GetAllOrderForList());
+            DataContext = OrdersForShow;
         }
 
-        //int a = 0;
     }
 
     private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
     {
-        object result = e.Result;
+        string file, path;
+
+        if (e.Cancelled == true)
+        {
+            MessageBox.Show("הסימולטור הופסק באמצע");
+        }
+        else
+        {
+            MessageBox.Show("עשינו זאת! כל ההזמנות בוצעו בהצלחה!");
+            path = @"..\PL\Sounds\menu_done.wav";
+            file = System.IO.Path.Combine(Environment.CurrentDirectory, path);
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(file);
+            player.Play();
+        }
+        this.Cursor = Cursors.Arrow;
     }
 
     private void startSimulator_Click(object sender, RoutedEventArgs e)
     {
-        if (isWork == false)
+        if (worker.IsBusy == false)
         {
-            isWork = true;
             startSimulator.IsEnabled = false;
             stopSimulator.IsEnabled = true;
-            worker.RunWorkerAsync("argument");
+            today = DateTime.Now;
+            worker.RunWorkerAsync();
+            
         }
     }
 
     private void stopSimulator_Click(object sender, RoutedEventArgs e)
     {
-        if (isWork == true)
+        //if (worker.IsBusy == true)
         {
-            isWork = false;
             startSimulator.IsEnabled = true;
+            stopSimulator.IsEnabled = false;
             worker.CancelAsync();
         }
     }

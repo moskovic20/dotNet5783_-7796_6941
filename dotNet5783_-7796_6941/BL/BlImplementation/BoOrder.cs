@@ -88,7 +88,7 @@ internal class BoOrder : BlApi.IOrder
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public BO.Order UpdateOrderShipping(int id/*,DateTime? dt=null*/)
+    public BO.Order UpdateOrderShipping(int id,DateTime? dt=null)
     {
         if (id < 0)
             throw new BO.Update_Exception("Negative OrderID");
@@ -110,7 +110,7 @@ internal class BoOrder : BlApi.IOrder
                     throw new BO.InvalidValue_Exception("wrong information,cant be possible that DateOrder > ShippingDate");
                 else
                 {
-                    UpOrd.ShippingDate = DateTime.Now;//עדכון תאריך שליחה
+                    UpOrd.ShippingDate = (dt == null) ? DateTime.Now : dt;
                     Do.Order myOrder = new();
                     dal.Order.Update(UpOrd.CopyPropToStruct(myOrder));
                     return GetOrdertDetails(id);
@@ -133,7 +133,7 @@ internal class BoOrder : BlApi.IOrder
     /// <param name="id"></param>
     /// <returns></returns>
     /// <exception cref="BO.GetDetailsProblemException"></exception>
-    public BO.Order UpdateOrderDelivery(int id)
+    public BO.Order UpdateOrderDelivery(int id, DateTime? dt = null)
     {
 
         if (id < 0)
@@ -154,7 +154,8 @@ internal class BoOrder : BlApi.IOrder
                     throw new BO.InvalidValue_Exception("Wrong information,cant be possible that ShippingDate > DeliveryDate");
                 else
                 {
-                    UpOrd.DeliveryDate = DateTime.Now;
+                    UpOrd.DeliveryDate = (dt == null) ? DateTime.Now : dt;
+                    //UpOrd.DeliveryDate = DateTime.Now;
                     Do.Order myOrder = new();
                     dal.Order.Update(UpOrd.CopyPropToStruct(myOrder));
                     return GetOrdertDetails(id);

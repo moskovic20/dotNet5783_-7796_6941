@@ -56,7 +56,7 @@ internal class DalOrder : IOrder
     }
 
     /// <summary>
-    /// הפונקציה מקבלת מספר מוצר ומחזירה אותו
+    /// הפונקציה מקבלת מספר הזמנה ומחזירה אותו
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

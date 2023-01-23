@@ -12,6 +12,7 @@
     <Page.Resources>
         <local:StatusToHebrew x:Key="statusToHebrew"/>
         <local:StatusToProgressBar x:Key="statusToProgressBar"/>
+        <local:DateTimeToString x:Key="dateTimeToString"/>
     </Page.Resources>
 
     <Grid>
@@ -88,6 +89,7 @@
                 Height="29" Width="146"
                 Foreground="White" BorderBrush="White"/>
         <Label Content=":סימולטור" HorizontalAlignment="Left" Margin="824,13,0,0" VerticalAlignment="Top" Background="White" Width="125" FontWeight="Bold" FontSize="14" HorizontalContentAlignment="Center" Foreground="#FF009BA6"/>
+        <Label x:Name="Date"  HorizontalAlignment="Left" Margin="35,13,0,0" VerticalAlignment="Top" Width="110" Background="#FFF6E192" Height="27"/>
 
     </Grid>
 </Page>

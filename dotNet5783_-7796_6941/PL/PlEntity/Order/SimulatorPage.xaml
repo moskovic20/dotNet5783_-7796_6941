@@ -69,7 +69,7 @@
 
         <Button x:Name="startSimulator"
                 Content="התחל סימולטור"
-                Click="startSimulator_Click"
+                Click="StartSimulator_Click"
                 Style="{StaticResource MaterialDesignOutlinedDarkButton}"
                 HorizontalAlignment="Left"
                 Margin="520,13,0,0"
@@ -80,7 +80,7 @@
 
         <Button x:Name="stopSimulator"
                 Content="עצור סימולטור"
-                Click="stopSimulator_Click"
+                Click="StopSimulator_Click"
                 IsEnabled="False"
                 Style="{StaticResource MaterialDesignOutlinedDarkButton}"
                 HorizontalAlignment="Left"
@@ -89,7 +89,6 @@
                 Height="29" Width="146"
                 Foreground="White" BorderBrush="White"/>
         <Label Content=":סימולטור" HorizontalAlignment="Left" Margin="824,13,0,0" VerticalAlignment="Top" Background="White" Width="125" FontWeight="Bold" FontSize="14" HorizontalContentAlignment="Center" Foreground="#FF009BA6"/>
-        <Label x:Name="Date"  HorizontalAlignment="Left" Margin="35,13,0,0" VerticalAlignment="Top" Width="110" Background="#FFF6E192" Height="27"/>
-
+        <Label x:Name="Date"  HorizontalAlignment="Left" Margin="35,13,0,0" VerticalAlignment="Top" Width="110" Background="#FFF6E192" Height="27" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="#FF3B4F81"/>
     </Grid>
 </Page>

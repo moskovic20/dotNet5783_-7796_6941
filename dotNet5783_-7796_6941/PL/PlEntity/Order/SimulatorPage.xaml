@@ -32,6 +32,7 @@
                   ItemsSource="{Binding}" 
                   HorizontalAlignment="Left"
                   Width="840"
+                  MouseDoubleClick="orderTraking_Click"
                   Background="{x:Null}" Margin="109,55,0,0" >
 
             <DataGrid.Columns >

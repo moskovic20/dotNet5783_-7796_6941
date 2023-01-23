@@ -33,6 +33,18 @@ public partial class orderTrakingForC_Window : Window
         this.bl = bl;
     }
 
+    public orderTrakingForC_Window(IBl bl, int id)
+    {
+        InitializeComponent();
+        this.bl = bl;
+        this.id = id;
+        searchRec.Visibility= Visibility.Hidden;
+        search.Visibility = Visibility.Hidden;
+        orderID.Visibility= Visibility.Hidden;
+        numO.Visibility= Visibility.Hidden;
+        healpTraking(id);
+    }
+
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -41,6 +53,22 @@ public partial class orderTrakingForC_Window : Window
             if (!isFine)
                 throw new Exception("לא יכול להמיר מספר זה");
 
+            healpTraking(id);
+            
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+                   MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
+        }
+
+
+    }
+
+    private void healpTraking(int id)
+    {
+        try
+        {
             myOrder = bl.BoOrder.GetOrdertDetails(id).CopyBoOrderToPoOrder();
             DataContext = myOrder;
 
@@ -82,7 +110,7 @@ public partial class orderTrakingForC_Window : Window
             }
 
         }
-        catch (BO.GetDetails_Exception )
+        catch (BO.GetDetails_Exception)
         {
             errorOrderID.Visibility = Visibility.Visible;
 
@@ -104,13 +132,6 @@ public partial class orderTrakingForC_Window : Window
             }
 
         }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
-                   MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
-        }
-
-
     }
 
     private void orderID_PreviewTextInput(object sender, TextCompositionEventArgs e)

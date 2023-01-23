@@ -15,6 +15,7 @@ using System.Threading;
 using BO;
 using System.Windows.Input;
 using System.Windows.Shapes;
+using System.Security.Cryptography;
 
 namespace PL.PlEntity.Order;
 
@@ -53,7 +54,11 @@ public partial class SimulatorPage : Page
 
     }
 
-
+    private void orderTraking_Click(object sender, EventArgs e)
+    {
+        BO.OrderForList or = (BO.OrderForList)((DataGrid)sender).SelectedItem;
+        new orderTrakingForC_Window(bl, or.OrderID).Show();
+    }
 
     private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {

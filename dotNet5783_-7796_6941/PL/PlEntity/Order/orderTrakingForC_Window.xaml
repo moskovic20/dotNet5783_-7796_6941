@@ -21,7 +21,7 @@
                    VerticalAlignment="Top"
                    Fill="#FF673AB7" Stroke="#FF673AB7"/>
 
-        <Rectangle HorizontalAlignment="Center"
+        <Rectangle x:Name="searchRec" HorizontalAlignment="Center"
                    Height="104" Width="780"
                    VerticalAlignment="Top" 
                    Fill="#FFF6F6F6"  Margin="0,45,0,0"/>
@@ -44,7 +44,7 @@
             </Label.RenderTransform>
         </Label>
 
-        <Label
+        <Label x:Name="numO"
             Content="הכנס מספר הזמנה"
             HorizontalAlignment="Left"
             Margin="367,82,0,0"
@@ -176,7 +176,7 @@
                Foreground="#FF009BA6" 
                FontWeight="Bold"/>
 
-        <Button Content="חפש"
+        <Button x:Name="search" Content="חפש"
                 HorizontalAlignment="Left"
                 Margin="55,83,0,0"
                 VerticalAlignment="Top"

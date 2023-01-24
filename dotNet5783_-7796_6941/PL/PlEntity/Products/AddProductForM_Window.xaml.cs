@@ -44,7 +44,6 @@ public partial class AddProductForM_Window : Window
         this.action = action;
 
         productToAdd = new PO.Product();
-        //this.DataContext = productToAdd;
 
         this.AddP_categ_commbbox.ItemsSource = Enum.GetValues(typeof(PO.Hebrew_CATEGORY));
     }

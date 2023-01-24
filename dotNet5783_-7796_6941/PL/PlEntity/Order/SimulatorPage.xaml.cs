@@ -114,26 +114,19 @@ public partial class SimulatorPage : Page
                 AllIsDone = orders.TrueForAll(x => x?.Status == PO.OrderStatus.Completed);
             }
         }
-            if (worker.CancellationPending == true)
-            {
-                e.Cancel = true;
-                return;
-            }
-            worker.ReportProgress(-1);
-        }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
         }
-        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).OrderBy(x => x?.OrderID).ToList();//לקיחת הרשימה המעודכת
+    }
 
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
 
         int id = e.ProgressPercentage;
 
-        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).ToList();//לקיחת הרשימה המעודכת
+        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).OrderBy(x => x?.OrderID).ToList();//לקיחת הרשימה המעודכת
         OrdersForShow = new(orders);
 
         Date.Content = Today.ToShortDateString();
@@ -179,14 +172,9 @@ public partial class SimulatorPage : Page
 
     private void StopSimulator_Click(object sender, RoutedEventArgs e)
     {
-        //if (worker.IsBusy == true)
-        {
-            startSimulator.IsEnabled = true;
-            stopSimulator.IsEnabled = false;
-            worker.CancelAsync();
-
-            //MessageBox.Show("הסימולטור הופסק באמצע");
-        }
+        startSimulator.IsEnabled = true;
+        stopSimulator.IsEnabled = false;
+        worker.CancelAsync();
     }
 
     private void orderTraking_Click(object sender, EventArgs e)

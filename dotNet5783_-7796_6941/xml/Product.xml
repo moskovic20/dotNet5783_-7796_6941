@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
     <ID>398188944</ID>
@@ -139,5 +139,49 @@
     <InStock>56</InStock>
     <IsDeleted>false</IsDeleted>
     <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\scinence\היקום הקוונטי.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>111111111</ID>
+    <NameOfBook>היי</NameOfBook>
+    <AuthorName>שלום</AuthorName>
+    <StudentStatus>mystery</StudentStatus>
+    <Summary>אין פזמון תרקדו</Summary>
+    <Price>80</Price>
+    <InStock>3</InStock>
+    <IsDeleted>true</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\היי.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>111111111</ID>
+    <NameOfBook>היי</NameOfBook>
+    <AuthorName>שלום שלום</AuthorName>
+    <StudentStatus>mystery</StudentStatus>
+    <Summary>אין פזמון תרקדו</Summary>
+    <Price>80</Price>
+    <InStock>3</InStock>
+    <IsDeleted>true</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\היי.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>111111111</ID>
+    <NameOfBook>היי</NameOfBook>
+    <AuthorName>שלום שלום</AuthorName>
+    <StudentStatus>mystery</StudentStatus>
+    <Summary>אין פזמון תרקדו</Summary>
+    <Price>80</Price>
+    <InStock>3</InStock>
+    <IsDeleted>true</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\הייDefult.jpeg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>111111111</ID>
+    <NameOfBook>היי</NameOfBook>
+    <AuthorName>שלום שלום</AuthorName>
+    <StudentStatus>mystery</StudentStatus>
+    <Summary>אין פזמון תרקדו</Summary>
+    <Price>80</Price>
+    <InStock>3</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\הייDefultCopy.jpg</ProductImagePath>
   </Product>
 </ArrayOfProduct>

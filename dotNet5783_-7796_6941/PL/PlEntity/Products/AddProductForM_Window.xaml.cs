@@ -100,6 +100,7 @@ public partial class AddProductForM_Window : Window
             int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
             action(newID);
             MessageBox.Show("!הספר נוסף בהצלחה");
+            this.Close();
 
             productImage.Source = null;
             productToAdd = new PO.Product();

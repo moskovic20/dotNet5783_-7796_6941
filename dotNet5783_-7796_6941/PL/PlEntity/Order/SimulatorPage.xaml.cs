@@ -31,7 +31,7 @@
 //    List<BO.OrderForList> orders;
 
 //    private DateTime Today;
-    
+
 
 //    private ObservableCollection<PO.OrderForList> _OrdersForShow;
 //    public ObservableCollection<PO.OrderForList> OrdersForShow
@@ -176,7 +176,7 @@
 //            stopSimulator.IsEnabled = true;
 //            Today = DateTime.Now;
 //            worker.RunWorkerAsync();
-            
+
 //        }
 //    }
 
@@ -191,25 +191,17 @@
 //    }
 //}
 
-
-
 using BlApi;
+using PL.PO;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.ComponentModel;
-using PL.PO;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Threading;
-using BO;
 using System.Windows.Input;
-using System.Windows.Shapes;
 
 namespace PL.PlEntity.Order;
 
@@ -259,7 +251,7 @@ public partial class SimulatorPage : Page
         worker.WorkerReportsProgress = true;
 
         OrdersForShow = new(PO.Tools.GetAllOrdersInPO());
-        Orders_DateGrid.DataContext = OrdersForShow;
+        DataContext = OrdersForShow;
 
         Today = DateTime.Now;
         Date.Content = Today.ToShortDateString();
@@ -298,13 +290,13 @@ public partial class SimulatorPage : Page
                     switch (myO.Status)
                     {
                         case PO.OrderStatus.Accepted:
-                            if (Today.Subtract(myO.DateOrder) > new TimeSpan(10, 0, 0))
+                            if (Today.Subtract(myO.DateOrder) > new TimeSpan(5, 0, 0, 0))
                                 bl.BoOrder.UpdateOrderShipping(Item.OrderID, Today);
                             break;
 
                         case PO.OrderStatus.Processing:
 
-                            if (Today.Subtract(myO.ShippingDate ?? throw new Exception("בעיה,בדקו למה נוצרתי:)")) > new TimeSpan(10, 0, 0))
+                            if (Today.Subtract(myO.ShippingDate ?? throw new Exception("בעיה,בדקו למה נוצרתי:)")) > new TimeSpan(10, 0, 0, 0))
                                 bl.BoOrder.UpdateOrderDelivery(Item.OrderID, Today);
                             break;
                     }
@@ -320,6 +312,7 @@ public partial class SimulatorPage : Page
                 //Date.Content = Today.ToShortDateString();
                 orders = bl.BoOrder.GetAllOrderForList().ToList();
                 AllIsDone = orders.TrueForAll(x => x?.Status == BO.OrderStatus.Completed);
+                OrdersForShow = new(PO.Tools.GetAllOrdersInPO());
             }
         }
         catch (Exception ex)
@@ -330,6 +323,7 @@ public partial class SimulatorPage : Page
 
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
+        
         int id = e.ProgressPercentage;
 
         var myOFL = OrdersForShow.FirstOrDefault(x => x.OrderID == id);
@@ -338,6 +332,8 @@ public partial class SimulatorPage : Page
             myOFL.Status = (PO.OrderStatus)bl.BoOrder.GetOrderForList(id).Status;
         }
 
+      //  OrdersForShow = new(PO.Tools.GetAllOrdersInPO());
+        
         Date.Content = Today.ToShortDateString();
 
     }

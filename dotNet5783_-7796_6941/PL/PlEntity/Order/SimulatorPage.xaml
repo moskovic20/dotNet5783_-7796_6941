@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL.IvalueConvertor"
+      DataContext="{Binding OrdersForShow, RelativeSource={ RelativeSource self}}"
       mc:Ignorable="d" 
       d:DesignHeight="580" d:DesignWidth="1000"
       Title="SimulatorPage">

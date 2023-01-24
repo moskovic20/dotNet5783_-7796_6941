@@ -87,19 +87,13 @@ static internal class XMLTools
     #endregion
 
     #region SaveLoadWithXMLSerializer
-    //static readonly bool s_writing = false;
     public static void SaveListToXMLSerializer<T>(List<T?> list, string entity) where T : struct
     {
         string filePath = $"{s_dir + entity}.xml";
         try
         {
             using FileStream file = new(filePath, FileMode.Create, FileAccess.Write, FileShare.None);
-            //using XmlWriter writer = XmlWriter.Create(file, new XmlWriterSettings() { Indent = true });
-
             XmlSerializer serializer = new(typeof(List<T?>));
-            //if (s_writing)
-            //    serializer.Serialize(writer, list);
-            //else
             serializer.Serialize(file, list);
         }
         catch (Exception ex)

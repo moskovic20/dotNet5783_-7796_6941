@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
-using static Dal.DalXml;
+//using static Dal.DalXml;
 
 namespace Dal;
 

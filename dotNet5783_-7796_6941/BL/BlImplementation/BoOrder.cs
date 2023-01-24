@@ -1,7 +1,6 @@
 ﻿using BlApi;
 using BO;
-using DalApi;
-//using Do;
+
 
 namespace BlImplementation;
 
@@ -10,7 +9,7 @@ internal class BoOrder : BlApi.IOrder
     private DalApi.IDal dal = DalApi.Factory.Get() ?? throw new NullReferenceException("Missing Dal");
 
     /// <summary>
-    /// הכנסת כל ההזמנות הלא ריקות לרשימה
+    /// רשימה של כל ההזמנות הקיימות
     /// </summary>
     /// <returns></returns>
     public IEnumerable<BO.OrderForList> GetAllOrderForList()
@@ -35,12 +34,11 @@ internal class BoOrder : BlApi.IOrder
         }
     }
 
-    public IEnumerable<BO.OrderForList> GetAllOrderOfClaient(string name)
-    {
-        return from o in dal.Order.GetAll(x => x?.CustomerName?.Contains(name) ?? false)
-               select GetOrderForList(o?.OrderID ?? throw new Exception("problem"));
-    }
-
+    /// <summary>
+    /// מחזיר אודרליסט לפי תז אחרי המרות כנדרש
+    /// </summary>
+    /// <param name="orderID"></param>
+    /// <returns></returns>
     public OrderForList GetOrderForList(int orderID)
     {
         BO.Order order = GetOrdertDetails(orderID);
@@ -68,7 +66,7 @@ internal class BoOrder : BlApi.IOrder
             order.Status = myOrder.calculateStatus();
             order.PaymentDate = myOrder.DateOrder;
             var tempItems = dal.OrderItem.GetListByOrderID(myOrder.OrderID);
-            order.Items = tempItems?.Select(x => x.ListFromDoToBo()).ToList();//casting from list<do.ordetitem> to list<bo.orderitem> _________watch it in Tools__________
+            order.Items = tempItems?.Select(x => x.ListFromDoToBo()).ToList();
             order.TotalPrice = myOrder.CalculatePriceOfAllItems();
             return order;
         }
@@ -97,13 +95,13 @@ internal class BoOrder : BlApi.IOrder
             BO.Order UpOrd = new();
             UpOrd = dal.Order.GetById(id).CopyPropTo(UpOrd);
 
-            if (UpOrd.DeliveryDate != null)//evrything allready got heandeled
+            if (UpOrd.DeliveryDate != null)
                 throw new BO.InvalidValue_Exception("לא יכול לעדכן הזמנה זו, מאחר והיא כבר בוצעה");
 
-            if (UpOrd.ShippingDate != null)//evrything allready got heandeled
+            if (UpOrd.ShippingDate != null)
                 throw new BO.InvalidValue_Exception("לא יכול לעדכן הזמנה זו, מאחר והיא כבר נשלחה");
 
-            if (UpOrd.ShippingDate == null && UpOrd.DeliveryDate == null) //____we can update like we was asked for____
+            if (UpOrd.ShippingDate == null && UpOrd.DeliveryDate == null) //we can update date like we was asked for
             {
 
                 if (UpOrd.DateOrder > DateTime.Now)
@@ -140,14 +138,13 @@ internal class BoOrder : BlApi.IOrder
             throw new BO.GetDetails_Exception("Negative OrderID");
         try
         {
-            // Do.Order myOrder = dal.Order.GetById(id);//בדיקות אם קיים בכלל...
             BO.Order UpOrd = new();
             UpOrd = dal.Order.GetById(id).CopyPropTo(UpOrd);
 
-            if (UpOrd.DeliveryDate != null)//evrything allready got heandeled
+            if (UpOrd.DeliveryDate != null)
                 throw new BO.InvalidValue_Exception("לא יכול לעדכן הזמנה זו, מאחר והיא כבר נשלחה");
 
-            if (UpOrd.ShippingDate != null && UpOrd.DeliveryDate == null) //____we can update like we was asked for____
+            if (UpOrd.ShippingDate != null && UpOrd.DeliveryDate == null) //we can update like we was asked for
             {
 
                 if (UpOrd.ShippingDate > DateTime.Now)
@@ -155,7 +152,6 @@ internal class BoOrder : BlApi.IOrder
                 else
                 {
                     UpOrd.DeliveryDate = (dt == null) ? DateTime.Now : dt;
-                    //UpOrd.DeliveryDate = DateTime.Now;
                     Do.Order myOrder = new();
                     dal.Order.Update(UpOrd.CopyPropToStruct(myOrder));
                     return GetOrdertDetails(id);
@@ -192,7 +188,7 @@ internal class BoOrder : BlApi.IOrder
             return new BO.OrderTracking()
             {
                 OrderID = myOrder.OrderID,
-                Status = myOrder.calculateStatus(),///------אופציה להוסיף כבונוס תאריך משוער למה שלא קיים לו ערך-------
+                Status = myOrder.calculateStatus(),
                 Tracking = myOrder.TrackingHealper()
             };
         }
@@ -200,28 +196,6 @@ internal class BoOrder : BlApi.IOrder
         {
             throw new BO.GetDetails_Exception("לא יכול להגיע להזמנה זו", ex);
         }
-    }
-
-    /* 
-     לבונוס - עדכון הזמנה (עבור מסך מנהל)
-יאפשר הוספה \ הורדה \ שינוי כמות של מוצר בהזמנה ע"י 
-    המנהל (שימו לב מתי מותר לעשות את זה!)
-אין יותר פירוט (כי זה לבונוס) - אך 
-    ניקוד הבונוס יינתן (בפרויקט הסופי) רק במקרה של 
-    השלמת כל הפונקציונליות (כולל בשכבת התצוגה) בצורה מלאה.
- //throw new NotImplementedException("sorry, I'm not redy yet");
-    */
-
-    public void UpdateOrder(int id, int option)
-    {
-        //BO.Order ordToUp = new();
-        //ordToUp=GetOrdertDetails(id);
-        //switch(option){
-        //    case 0:
-
-        //}
-
-        throw new NotImplementedException("sorry, I'm not redy yet");
     }
 
     /// <summary>
@@ -254,6 +228,18 @@ internal class BoOrder : BlApi.IOrder
         dal.Order.Delete(orderID);
 
 
+    }
+
+    /// <summary>
+    /// החזרת כל ההזמנות של לקוח לפי שם
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    public IEnumerable<BO.OrderForList> GetAllOrderOfClaient(string name)
+    {
+        return from o in dal.Order.GetAll(x => x?.CustomerName?.Contains(name) ?? false)
+               select GetOrderForList(o?.OrderID ?? throw new Exception("problem"));
     }
 
     /// <summary>

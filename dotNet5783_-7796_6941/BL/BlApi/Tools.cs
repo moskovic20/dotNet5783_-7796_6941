@@ -112,8 +112,6 @@ public static class Tools
     #endregion
 
     #region  תחזור רשימה עם 3 איברים Tupleחישוב מסע ההזמנה ותיעוד ב
-
-
     public static List<Tuple<DateTime, string>?>? TrackingHealper(this Do.Order or)
     {
         List<Tuple<DateTime, string>?> list = new List<Tuple<DateTime, string>?>();

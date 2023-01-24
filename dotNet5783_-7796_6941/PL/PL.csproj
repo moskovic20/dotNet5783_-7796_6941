@@ -10,7 +10,7 @@
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	  <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
-	  <ApplicationIcon>WhatsApp Image 2023-01-24 at 18.04.14.ico</ApplicationIcon>
+	  <ApplicationIcon>StoreIcon.ico</ApplicationIcon>
 
   </PropertyGroup>
 
@@ -22,7 +22,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="WhatsApp Image 2023-01-24 at 18.04.14.ico" />
+    <None Remove="Admin\background.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="StoreIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +39,10 @@
 
   <ItemGroup>
     <Folder Include="ProductImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Admin\background.jpeg" />
   </ItemGroup>
 
 </Project>

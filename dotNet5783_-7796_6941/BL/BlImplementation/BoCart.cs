@@ -47,7 +47,10 @@ internal class BoCart : ICart
 
             return cart;
         }
-        catch (Do.DoesntExistException ex) { throw new BO.Adding_Exception("אי אפשר להוסיף מוצר זה לסל הקניות", ex); }
+        catch (Do.DoesntExistException ex) 
+        {
+            throw new BO.Adding_Exception("אי אפשר להוסיף מוצר זה לסל הקניות", ex); 
+        }
     }
 
     /// <summary>

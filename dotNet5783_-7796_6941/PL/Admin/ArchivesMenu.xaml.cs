@@ -31,7 +31,8 @@ namespace PL.Admin
             InitializeComponent();
 
             this.bl = bl;
-           
+            this.archivesMenu.Content = new backGround();
+
         }
 
         private void orderItemsArchives_Click(object sender, RoutedEventArgs e)

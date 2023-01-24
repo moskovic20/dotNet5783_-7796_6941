@@ -4,10 +4,8 @@ namespace DO;
 
 public static class Tools
 {
-
     /// <summary>
-    /// extension method for
-    ///for ToString
+    /// extension method for for ToString
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="t"></param>

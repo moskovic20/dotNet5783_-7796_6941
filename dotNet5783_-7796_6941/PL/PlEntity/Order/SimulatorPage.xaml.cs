@@ -60,7 +60,7 @@ public partial class SimulatorPage : Page
         worker.WorkerReportsProgress = true;
 
         OrdersForShow = new(PO.Tools.GetAllOrdersInPO());
-       // DataContext = OrdersForShow;
+        // DataContext = OrdersForShow;
 
         Today = DateTime.Now;
         Date.Content = Today.ToShortDateString();
@@ -114,19 +114,26 @@ public partial class SimulatorPage : Page
                 AllIsDone = orders.TrueForAll(x => x?.Status == PO.OrderStatus.Completed);
             }
         }
+            if (worker.CancellationPending == true)
+            {
+                e.Cancel = true;
+                return;
+            }
+            worker.ReportProgress(-1);
+        }
         catch (Exception ex)
         {
             MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
         }
-    }
+        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).OrderBy(x => x?.OrderID).ToList();//לקיחת הרשימה המעודכת
 
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
-        
+
         int id = e.ProgressPercentage;
 
-        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).OrderBy(x=>x?.OrderID).ToList();//לקיחת הרשימה המעודכת
+        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).ToList();//לקיחת הרשימה המעודכת
         OrdersForShow = new(orders);
 
         Date.Content = Today.ToShortDateString();
@@ -140,11 +147,15 @@ public partial class SimulatorPage : Page
         if (e.Cancelled == true)
         {
             MessageBox.Show("הסימולטור הופסק באמצע");
+            path = @"..\PL\Sounds\menu_done.wav";
+            file = System.IO.Path.Combine(Environment.CurrentDirectory, path);
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(file);
+            player.Play();
         }
         else
         {
             MessageBox.Show("עשינו זאת! כל ההזמנות בוצעו בהצלחה!");
-            path = @"..\PL\Sounds\menu_done.wav";
+            path = @"..\PL\Sounds\sfx-victory1.wav";
             file = System.IO.Path.Combine(Environment.CurrentDirectory, path);
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(file);
             player.Play();

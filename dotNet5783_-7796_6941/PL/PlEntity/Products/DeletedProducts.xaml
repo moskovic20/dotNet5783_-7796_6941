@@ -39,9 +39,9 @@
                 <!--<DataGridTextColumn Header="תמונה"    
                                     Binding="{Binding ProductImagePath }"
                                     MinWidth="250"/>-->
-                <DataGridTextColumn Header="תקציר"    
+                <!--<DataGridTextColumn Header="תקציר"    
                                     Binding="{Binding Summary }"
-                                    MinWidth="250"/>
+                                    MinWidth="250"/>-->
                 <DataGridTextColumn Header="כמות במלאי"    
                                     Binding="{Binding InStock }"
                                     MinWidth="100"/>
@@ -56,7 +56,7 @@
                                     MinWidth="100" />
                 <DataGridTextColumn Header="שם הספר"
                                     Binding="{Binding NameOfBook}"
-                                    MinWidth="100"/>
+                                    MinWidth="150"/>
                 <DataGridTextColumn Header="מספר מזהה "
                                     Binding="{Binding ID}"
                                     MinWidth="100"/>

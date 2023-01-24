@@ -2,32 +2,22 @@
 <ArrayOfOrder xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Order>
     <OrderID>100001</OrderID>
-    <CustomerName>44</CustomerName>
-    <CustomerEmail>44@gg.gg</CustomerEmail>
-    <CustomerAddress>fff</CustomerAddress>
-    <DateOrder>2023-01-24T18:52:43.3248659+02:00</DateOrder>
+    <CustomerName>אמא</CustomerName>
+    <CustomerEmail>rac@h.d</CustomerEmail>
+    <CustomerAddress>הברון הירש 14</CustomerAddress>
+    <DateOrder>2023-01-24T14:51:20.0035273+02:00</DateOrder>
     <ShippingDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
     <IsDeleted>true</IsDeleted>
   </Order>
   <Order>
     <OrderID>100001</OrderID>
-    <CustomerName>44</CustomerName>
-    <CustomerEmail>44@gg.gg</CustomerEmail>
-    <CustomerAddress>fff</CustomerAddress>
-    <DateOrder>2023-01-24T18:52:43.3248659+02:00</DateOrder>
-    <ShippingDate>2023-01-24T18:53:11.6844957+02:00</ShippingDate>
+    <CustomerName>אמא</CustomerName>
+    <CustomerEmail>rac@h.d</CustomerEmail>
+    <CustomerAddress>הברון הירש 14</CustomerAddress>
+    <DateOrder>2023-01-24T14:51:20.0035273+02:00</DateOrder>
+    <ShippingDate>2023-01-24T14:52:09.6653068+02:00</ShippingDate>
     <DeliveryDate xsi:nil="true" />
-    <IsDeleted>true</IsDeleted>
-  </Order>
-  <Order>
-    <OrderID>100001</OrderID>
-    <CustomerName>44</CustomerName>
-    <CustomerEmail>44@gg.gg</CustomerEmail>
-    <CustomerAddress>fff</CustomerAddress>
-    <DateOrder>2023-01-24T18:52:43.3248659+02:00</DateOrder>
-    <ShippingDate>2023-01-24T18:53:11.6844957+02:00</ShippingDate>
-    <DeliveryDate>2023-01-24T18:53:13.7926958+02:00</DeliveryDate>
     <IsDeleted>false</IsDeleted>
   </Order>
 </ArrayOfOrder>

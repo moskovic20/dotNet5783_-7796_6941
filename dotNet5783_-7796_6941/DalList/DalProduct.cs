@@ -55,7 +55,7 @@ internal class DalProduct : IProduct
     }
 
     /// <summary>
-    /// הפונקציה מקבלת מספר מזהה של מוצר ומחזירה אמוצר זה
+    /// הפונקציה מקבלת מספר מזהה של מוצר ומחזירה מוצר זה
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>

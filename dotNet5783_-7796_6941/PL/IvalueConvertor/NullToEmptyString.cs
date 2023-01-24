@@ -39,6 +39,7 @@ internal class NullToEmptyString: IValueConverter
 
     public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
+
         double tempDouble;
         int tempInt;
 

@@ -2,8 +2,9 @@
 namespace Do;
 
 
-//חריגה עבור ישות שלא נמצאה או מזהה חסר עבור עדכון, מחיקה או בקשה)
-
+/// <summary>
+/// חריגה עבור ישות שלא נמצאה או מזהה חסר עבור עדכון, מחיקה או בקשה
+/// </summary>
 [Serializable]
 public class DoesntExistException : Exception
 {
@@ -14,6 +15,9 @@ public class DoesntExistException : Exception
 
 }
 
+/// <summary>
+/// חריגה עבור כפל בקשה למשהו שכבר קיים
+/// </summary>
 public class AlreadyExistException : Exception
 {
     public AlreadyExistException() : base() { }
@@ -30,9 +34,10 @@ public class DalConfigException : Exception
     public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }
 
-//LoadingException
 
-
+/// <summary>
+/// LoadingException
+/// </summary>
 public class LoadingException : Exception
 {
     string? filePath;

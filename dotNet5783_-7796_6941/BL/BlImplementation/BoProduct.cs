@@ -1,6 +1,5 @@
 ﻿using BlApi;
 using BO;
-//using Do;
 
 namespace BlImplementation;
 

@@ -37,7 +37,7 @@ namespace PL.Admin
 
         private void EnterPassword()
         {
-            if (PasswordBox.Password == "1")
+            if (PasswordBox.Password == "giveus100")
             {
                 adminMenu adminHome = new(bl);
                 PasswordBox.Password = "";

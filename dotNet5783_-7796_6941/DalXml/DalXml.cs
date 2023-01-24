@@ -9,6 +9,9 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace Dal;
 
+/// <summary>
+/// running numbers for counting items
+/// </summary>
 public struct configNumbers
 {
     public double numberSaved { get; set; }
@@ -40,7 +43,6 @@ sealed class DalXml : IDal
 
     }
     static DalXml() { }
-    //public static IDal Instance { get; } = new DalXml();
     private DalXml() {
 
         #region אתחול ראשוני למספר רץ

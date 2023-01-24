@@ -100,6 +100,7 @@ public partial class AddProductForM_Window : Window
             int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
             action(newID);
             MessageBox.Show("!הספר נוסף בהצלחה");
+            this.Close();
 
             productImage.Source = null;
             productToAdd = new PO.Product();
@@ -111,6 +112,7 @@ public partial class AddProductForM_Window : Window
             MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                 MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
         }
+
     }
     #endregion
 

@@ -10,6 +10,7 @@
 	  <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	  <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 	  <UseCommonOutputDirectory>true</UseCommonOutputDirectory>
+	  <ApplicationIcon>StoreIcon.ico</ApplicationIcon>
 
   </PropertyGroup>
 
@@ -18,6 +19,14 @@
     <EmbeddedResource Remove="Image\**" />
     <None Remove="Image\**" />
     <Page Remove="Image\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Admin\background.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="StoreIcon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +39,10 @@
 
   <ItemGroup>
     <Folder Include="ProductImages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Admin\background.jpeg" />
   </ItemGroup>
 
 </Project>

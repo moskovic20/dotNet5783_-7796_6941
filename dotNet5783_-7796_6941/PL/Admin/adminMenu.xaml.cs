@@ -28,6 +28,7 @@ namespace PL.Admin
         {
             InitializeComponent();
             this.bl = bl;
+            this.adminFrame.Content = new backGround();
         }
 
         private void productInMenu_Click(object sender, RoutedEventArgs e)

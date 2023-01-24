@@ -1,13 +1,18 @@
 ﻿using BlApi;
-using PL.PO;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Threading;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.ComponentModel;
+using PL.PO;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.IO;
+using System.Threading;
+using BO;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using PL.Catalog;
@@ -55,17 +60,12 @@ public partial class SimulatorPage : Page
         worker.WorkerReportsProgress = true;
 
         OrdersForShow = new(PO.Tools.GetAllOrdersInPO());
-       // DataContext = OrdersForShow;
+        // DataContext = OrdersForShow;
 
         Today = DateTime.Now;
         Date.Content = Today.ToShortDateString();
     }
 
-    private void orderTraking_Click(object sender, EventArgs e)
-    {
-        PO.OrderForList or = (PO.OrderForList)((DataGrid)sender).SelectedItem;
-        new orderTrakingForC_Window(bl, or.OrderID).Show();
-    }
 
     private void Worker_DoWork(object sender, DoWorkEventArgs e)
     {
@@ -109,17 +109,10 @@ public partial class SimulatorPage : Page
                     worker.ReportProgress(Item.OrderID);
                 }
 
-                Thread.Sleep(50);
-                Today = Today.AddDays(1);
+                //Thread.Sleep(50);
+                Today = Today.AddDays(3);
                 AllIsDone = orders.TrueForAll(x => x?.Status == PO.OrderStatus.Completed);
             }
-
-            if (worker.CancellationPending == true)
-            {
-                e.Cancel = true;
-                return;
-            }
-            worker.ReportProgress(-1);
         }
         catch (Exception ex)
         {
@@ -130,10 +123,10 @@ public partial class SimulatorPage : Page
 
     private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
     {
-        
+
         int id = e.ProgressPercentage;
 
-        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).ToList();//לקיחת הרשימה המעודכת
+        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).OrderBy(x => x?.OrderID).ToList();//לקיחת הרשימה המעודכת
         OrdersForShow = new(orders);
 
         Date.Content = Today.ToShortDateString();
@@ -147,12 +140,15 @@ public partial class SimulatorPage : Page
         if (e.Cancelled == true)
         {
             MessageBox.Show("הסימולטור הופסק באמצע");
+            path = @"..\PL\Sounds\menu_done.wav";
+            file = System.IO.Path.Combine(Environment.CurrentDirectory, path);
+            System.Media.SoundPlayer player = new System.Media.SoundPlayer(file);
+            player.Play();
         }
         else
         {
-
             MessageBox.Show("עשינו זאת! כל ההזמנות בוצעו בהצלחה!");
-            path = @"..\PL\Sounds\menu_done.wav";
+            path = @"..\PL\Sounds\sfx-victory1.wav";
             file = System.IO.Path.Combine(Environment.CurrentDirectory, path);
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(file);
             player.Play();
@@ -186,5 +182,9 @@ public partial class SimulatorPage : Page
         }
     }
 
- 
+    private void orderTraking_Click(object sender, EventArgs e)
+    {
+        PO.OrderForList or = (PO.OrderForList)((DataGrid)sender).SelectedItem;
+        new orderTrakingForC_Window(bl, or.OrderID).Show();
+    }
 }

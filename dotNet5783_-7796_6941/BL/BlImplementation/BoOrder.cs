@@ -104,9 +104,9 @@ internal class BoOrder : BlApi.IOrder
             if (UpOrd.ShippingDate == null && UpOrd.DeliveryDate == null) //we can update date like we was asked for
             {
 
-                if (UpOrd.DateOrder > DateTime.Now)
-                    throw new BO.InvalidValue_Exception("wrong information,cant be possible that DateOrder > ShippingDate");
-                else
+                //if (UpOrd.DateOrder > DateTime.Now)
+                //    throw new BO.InvalidValue_Exception("wrong information,cant be possible that DateOrder > ShippingDate");
+                //else
                 {
                     UpOrd.ShippingDate = (dt == null) ? DateTime.Now : dt;
                     Do.Order myOrder = new();
@@ -147,9 +147,9 @@ internal class BoOrder : BlApi.IOrder
             if (UpOrd.ShippingDate != null && UpOrd.DeliveryDate == null) //we can update like we was asked for
             {
 
-                if (UpOrd.ShippingDate > DateTime.Now)
-                    throw new BO.InvalidValue_Exception("Wrong information,cant be possible that ShippingDate > DeliveryDate");
-                else
+                //if (UpOrd.ShippingDate > DateTime.Now)
+                //    throw new BO.InvalidValue_Exception("Wrong information,cant be possible that ShippingDate > DeliveryDate");
+                //else
                 {
                     UpOrd.DeliveryDate = (dt == null) ? DateTime.Now : dt;
                     Do.Order myOrder = new();

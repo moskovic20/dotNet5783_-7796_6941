@@ -40,12 +40,23 @@ internal class NullToEmptyString: IValueConverter
     public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
 
+        double tempDouble;
+        int tempInt;
+
         string myString = (string)value;
 
         if (myString == "")
             return null;
         else
-            return (kind=="int")? int.Parse(myString):double.Parse(myString);
+        {
+            if (double.TryParse(myString, out tempDouble))
+                return tempDouble;
+
+            if (int.TryParse(myString, out tempInt))
+                return tempInt;
+        }
+
+        return null;
 
     }
 }

@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrderItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  
+  <OrderItem>
+    <ID>100001</ID>
+    <OrderID>100001</OrderID>
+    <ProductID>160000</ProductID>
+    <NameOfBook>יופי של אמא</NameOfBook>
+    <PriceOfOneItem>50</PriceOfOneItem>
+    <AmountOfItems>1</AmountOfItems>
+    <IsDeleted>false</IsDeleted>
+  </OrderItem>
+  <OrderItem>
+    <ID>100002</ID>
+    <OrderID>100001</OrderID>
+    <ProductID>120011</ProductID>
+    <NameOfBook>בסוד התפילה-להתפלל-באמת</NameOfBook>
+    <PriceOfOneItem>59</PriceOfOneItem>
+    <AmountOfItems>2</AmountOfItems>
+    <IsDeleted>false</IsDeleted>
+  </OrderItem>
+  <OrderItem>
+    <ID>100003</ID>
+    <OrderID>100001</OrderID>
+    <ProductID>120007</ProductID>
+    <NameOfBook>יש לך כנפי רוח מהדורת כיס</NameOfBook>
+    <PriceOfOneItem>40</PriceOfOneItem>
+    <AmountOfItems>1</AmountOfItems>
+    <IsDeleted>false</IsDeleted>
+  </OrderItem>
 </ArrayOfOrderItem>

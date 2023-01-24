@@ -155,6 +155,7 @@ public partial class SimulatorPage : Page
         }
         else
         {
+
             MessageBox.Show("עשינו זאת! כל ההזמנות בוצעו בהצלחה!");
             path = @"..\PL\Sounds\menu_done.wav";
             file = System.IO.Path.Combine(Environment.CurrentDirectory, path);

@@ -95,9 +95,10 @@ public partial class AddProductForM_Window : Window
                 productImage.Source = null;
             }
 
-            File.Copy(sorce, target);
+           
 
             int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
+            File.Copy(sorce, target);
             action(newID);
             MessageBox.Show("!הספר נוסף בהצלחה");
             this.Close();

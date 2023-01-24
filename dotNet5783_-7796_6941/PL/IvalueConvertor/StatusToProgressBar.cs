@@ -22,7 +22,7 @@ internal class StatusToProgressBar: IValueConverter
         switch(myStatus)
         {
             case PO.OrderStatus.Accepted:
-                return R.Next(34);
+                return R.Next(10,34);
                 //break;
             case PO.OrderStatus.Processing:
                 return R.Next(34,67);

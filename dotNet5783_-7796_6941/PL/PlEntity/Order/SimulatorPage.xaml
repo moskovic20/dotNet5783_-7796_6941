@@ -43,7 +43,7 @@
                                     MinWidth="10">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ProgressBar x:Name="progressBarStatus" Height="12" Value="{Binding Status,Converter={StaticResource statusToProgressBar}}" Style="{DynamicResource MaterialDesignLinearProgressBar}">
+                            <ProgressBar x:Name="progressBarStatus" Height="12" Value="{Binding Status,Converter={StaticResource statusToProgressBar}}" Style="{DynamicResource MaterialDesignCircularProgressBar}">
                             </ProgressBar>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

@@ -9,6 +9,9 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Shapes;
+using PL.Catalog;
+using System.Windows.Navigation;
 
 namespace PL.PlEntity.Order;
 
@@ -17,29 +20,23 @@ namespace PL.PlEntity.Order;
 /// </summary>
 public partial class SimulatorPage : Page
 {
-    //public event PropertyChangedEventHandler PropertyChanged;
+    public event PropertyChangedEventHandler PropertyChanged;
 
     IBl bl;
+    bool AllIsDone = false;
     BackgroundWorker worker;
     List<PO.OrderForList> orders;
 
     private DateTime Today;
 
 
-  //  private ObservableCollection<PO.OrderForList> _OrdersForShow;
-    public ObservableCollection<PO.OrderForList> OrdersForShow;
-    //{
-    //    get
-    //    { return _OrdersForShow; }
-    //    set
-    //    {
-    //        _OrdersForShow = value;
-    //        if (PropertyChanged != null)
-    //        {
-    //            PropertyChanged(this, new PropertyChangedEventArgs("OrdersForShow"));
-    //        }
-    //    }
-    //}
+    public ObservableCollection<PO.OrderForList>? OrdersForShow
+    {
+        get { return (ObservableCollection<PO.OrderForList>)GetValue(OrdersForShowProperty); }
+        set { SetValue(OrdersForShowProperty, value); }
+    }
+    public static readonly DependencyProperty OrdersForShowProperty =
+        DependencyProperty.Register("OrdersForShow", typeof(ObservableCollection<PO.OrderForList>), typeof(SimulatorPage));
 
     //public static 
 
@@ -58,7 +55,7 @@ public partial class SimulatorPage : Page
         worker.WorkerReportsProgress = true;
 
         OrdersForShow = new(PO.Tools.GetAllOrdersInPO());
-        DataContext = OrdersForShow;
+       // DataContext = OrdersForShow;
 
         Today = DateTime.Now;
         Date.Content = Today.ToShortDateString();
@@ -75,7 +72,7 @@ public partial class SimulatorPage : Page
         try
         {
             orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).ToList();
-            bool AllIsDone = false;
+            AllIsDone = orders.TrueForAll(x => x?.Status == PO.OrderStatus.Completed);
 
             while (!AllIsDone || worker.CancellationPending == true)
             {
@@ -91,7 +88,7 @@ public partial class SimulatorPage : Page
                     if (worker.CancellationPending == true)
                     {
                         e.Cancel = true;
-                        break;
+                        return;
                     }
 
                     switch (myO.Status)
@@ -112,16 +109,17 @@ public partial class SimulatorPage : Page
                     worker.ReportProgress(Item.OrderID);
                 }
 
-
-
                 Thread.Sleep(50);
                 Today = Today.AddDays(1);
-                //Date.Content = Today.ToShortDateString();
-                orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).ToList();
-                //AllIsDone = orders.TrueForAll(x => x?.Status == PO.OrderStatus.Completed);
-                OrdersForShow = new(orders);
-                //DataContext = OrdersForShow;
+                AllIsDone = orders.TrueForAll(x => x?.Status == PO.OrderStatus.Completed);
             }
+
+            if (worker.CancellationPending == true)
+            {
+                e.Cancel = true;
+                return;
+            }
+            worker.ReportProgress(-1);
         }
         catch (Exception ex)
         {
@@ -135,11 +133,8 @@ public partial class SimulatorPage : Page
         
         int id = e.ProgressPercentage;
 
-        var myOFL = OrdersForShow.FirstOrDefault(x => x.OrderID == id);
-        if (myOFL != null)
-        {
-            myOFL.Status = (PO.OrderStatus)bl.BoOrder.GetOrderForList(id).Status;
-        }
+        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).ToList();//לקיחת הרשימה המעודכת
+        OrdersForShow = new(orders);
 
         Date.Content = Today.ToShortDateString();
 
@@ -161,6 +156,8 @@ public partial class SimulatorPage : Page
             file = System.IO.Path.Combine(Environment.CurrentDirectory, path);
             System.Media.SoundPlayer player = new System.Media.SoundPlayer(file);
             player.Play();
+            startSimulator.IsEnabled = true;
+            stopSimulator.IsEnabled = false;
         }
         this.Cursor = Cursors.Arrow;
     }
@@ -185,6 +182,7 @@ public partial class SimulatorPage : Page
             stopSimulator.IsEnabled = false;
             worker.CancelAsync();
 
+            //MessageBox.Show("הסימולטור הופסק באמצע");
         }
     }
 

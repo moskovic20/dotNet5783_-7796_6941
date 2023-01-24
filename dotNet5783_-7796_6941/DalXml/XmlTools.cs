@@ -34,7 +34,7 @@ static internal class XMLTools
     public static T? ToEnumNullable<T>(this XElement element, string name) where T : struct, Enum =>
         Enum.TryParse<T>((string?)element.Element(name), out var result) ? (T?)result : null;
 
-    public static DO.CATEGORY ConvertEnum(this string? caterory)//iS working?
+    public static DO.CATEGORY ConvertEnum(this string? caterory)
     {
         DO.CATEGORY result;
         Enum.TryParse(caterory, out result);

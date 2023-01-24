@@ -109,7 +109,6 @@ public partial class SimulatorPage : Page
                     worker.ReportProgress(Item.OrderID);
                 }
 
-                //Thread.Sleep(50);
                 Today = Today.AddDays(3);
                 AllIsDone = orders.TrueForAll(x => x?.Status == PO.OrderStatus.Completed);
             }
@@ -172,9 +171,11 @@ public partial class SimulatorPage : Page
 
     private void StopSimulator_Click(object sender, RoutedEventArgs e)
     {
+
         startSimulator.IsEnabled = true;
         stopSimulator.IsEnabled = false;
         worker.CancelAsync();
+
     }
 
     private void orderTraking_Click(object sender, EventArgs e)

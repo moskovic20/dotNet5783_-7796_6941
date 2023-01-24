@@ -14,7 +14,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="79,181,0,0" TextWrapping="Wrap" Text="{Binding Summary}" VerticalAlignment="Top" Height="318" Width="554" Foreground="Black" TextAlignment="Right"/>
         <local:NumericUpDownControl x:Name="gradeNumUpDown" MaxValue="{Binding InStock}" MinValue="0" Margin="755,415,105,0" Height="35" VerticalAlignment="Top" />
         <Label Content="{Binding NameOfBook}" Margin="338,38,0,0" VerticalAlignment="Top" Height="65" Width="296" HorizontalContentAlignment="Right" HorizontalAlignment="Left" FontSize="24" FontWeight="Bold"/>
-        <Label Content="{Binding AuthorName}" HorizontalAlignment="Left" Margin="332,87,0,0" VerticalAlignment="Top" Height="50" Width="296" HorizontalContentAlignment="Right" FontSize="18" Foreground="#FF6D1DB6"/>
+        <Label Content="{Binding AuthorName}" HorizontalAlignment="Left" Margin="40,87,0,0" VerticalAlignment="Top" Height="50" Width="588" HorizontalContentAlignment="Right" FontSize="18" Foreground="#FF6D1DB6"/>
         <Label Content=".........................................." HorizontalAlignment="Left" Margin="332,122,0,0" VerticalAlignment="Top" Height="50" Width="296" HorizontalContentAlignment="Right" FontSize="20" Foreground="#FF6D1DB6"/>
         <Button x:Name="addToCart" Click="addToCart_Click" Content="הוסף לסל"  Style="{StaticResource MaterialDesignOutlinedDarkButton}" HorizontalAlignment="Left" Margin="752,466,0,0" VerticalAlignment="Top" Height="33" Width="149"/>
         <Label x:Name="noInStock" Visibility="Collapsed"  Content="אזל במלאי!" HorizontalAlignment="Left" Margin="746,424,0,0" VerticalAlignment="Top" Width="149" Height="50" FontWeight="Bold" Foreground="#DDF10000" HorizontalContentAlignment="Center" FontSize="22"/>

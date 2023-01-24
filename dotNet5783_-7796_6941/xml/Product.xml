@@ -1,144 +1,297 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>398188944</ID>
-    <NameOfBook>דירה להשכיר</NameOfBook>
-    <AuthorName>rom.k</AuthorName>
-    <Category>children</Category>
-    <Price>75</Price>
-    <InStock>0</InStock>
+    <ID>111111</ID>
+    <NameOfBook>הארי פוטר 1 ואבן החכמים</NameOfBook>
+    <AuthorName>ג'יי קיי רולינג</AuthorName>
+    <Category>fantasy</Category>
+    <Summary>הארי פוטר מעולם לא היה כוכב של נבחרת קווידיץ’ שמזכה את קבוצתו בנקודות תוך כדי רכיבה על מטאטא גבוה מעל האדמה. הוא לא מכיר לחשי קסם, מעולם לא גידל דרקון מביצה, ומעולם לא עטה גלימת העלמות. הוא מכיר רק את חייו האומללים עם משפחת דרקסלי - דודו ודודתו האיומים ובנם הדוחה דאדלי, בריון מפונק, מגודל ושמן.
+
+החדר של הארי הוא ארון פצפון בתחתית המדרגות, והוריו המאמצים מעולם לא חגגו את יום הולדתו. אך כל זה עומד להשתנות כשמכתב מסתורי מגיע אליו בדואר ינשופים: מכתב עם הזמנה למקום מופלא שהארי - וכל מי שיקרא עליו - לא יוכל לשכוח לעולם. כי כאן הארי מגלה לא רק חברים, ספורט אווירי וקסמים
+בכל דבר, החל בשיעורים וכלה בארוחות, אלא גם גורל גדול שמחכה לו... בתנאי שיצליח לשרוד!
+
+ג’יי. קיי. רולינג היתה אם חד הורית קשת יום כשהתחילה לכתוב את הארי פוטר ואבן החכמים על שאריות נייר בבית קפה מקומי. עד מהרה המאמץ התחיל להשתלם, והיא זכתה בפרס כספי חסר תקדים ממועצת האומנויות הסקוטית שאיפשר לה לסיים את הספר.
+
+ספרה הראשון הפך לתופעה בינלאומית וזכה לביקורות נלהבות ולפרסים חשובים. לאחריו הגיעו השני והשלישי, והצליחו עוד יותר. רולינג מתגוררת באדינבורו עם בתה.</Summary>
+    <Price>85</Price>
+    <InStock>54</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\דירה להשכיר.jpg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\הארי פוטר 1 ואבן החכמים.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>937149274</ID>
-    <NameOfBook>הבית של יעל</NameOfBook>
-    <AuthorName>noaa.f</AuthorName>
-    <Category>children</Category>
-    <Price>68</Price>
-    <InStock>36</InStock>
+    <ID>123456</ID>
+    <NameOfBook>המעניק</NameOfBook>
+    <AuthorName>לויס לורי</AuthorName>
+    <Category>fantasy</Category>
+    <Summary>לג´וֹנַס אין תפקיד," הודיעה לקהל, ולבו של ג´וֹנַס נפל.והיא המשיכה. "ג´וֹנַס נבחר. "הוא מצמץ בעיניו. לְמה היא מתכוונת? הוא חש בגל של סימני שאלה הגואה בקהל. גם הם, כמוהו, היו מבולבלים. היא הכריזה בקול תקיף ומצווה, "ג´וֹנַס נבחר להיות מקבל הזיכרון הבא שלנו. "ואז שמע את ההתנשמות  -את שאיפת האוויר הפתאומית, החדה מרוב תדהמה, בקרב כל האזרחים שישבו באולם. הוא ראה את פניהם; את העיניים המתרחבות ביראת כבוד.ועדיין לא הבין. ג´ונס מחכה בדריכות לטקס ה-12. זה הטקס שבו יודיעו לו ולכל הנערים בשכבה שלו מה התפקיד שהקהילה בחרה בשבילם. אבל כשתורו מגיע, הוא מקבל תפקיד שלא שמע עליו מעולם. מסבירים לו שזה תפקיד מיוחד במינו, ושהוא צריך להיות גאה שזכה בו. ג´ונס הגאה הולך לפגוש את "המעניק", האיש הזקן שימסור לו את הזיכרונות. תחילה את זיכרון הקור והרטיבות של השלג, אחריהם את זיכרון הצבעים המדהימים של הקשת בענן. אחר כך מגיע זיכרון הכאב, הצער, המשפחה, האהבה.  ג´ונס מרגיש לראשונה את טעם החיים, ויודע שהוא בסכנת מוות. המעניק נמכר במיליוני עותקים ברחבי העולם, נתן השראה לעשרות ספרים אחרים שנכתבו אחריו, ועתה גם עובד לסרט. כתר גאה להוציא לאור מחדש את הספר הראשון בסדרה נפלאה ומטלטלת, שבה העולם נראה במבט ראשון מאורגן למופת, אך מתחת לפני השטח שלו רוחשת מערכת חוקים מענישה ורצחנית.</Summary>
+    <Price>79</Price>
+    <InStock>104</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\הבית של יעל.jpg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\המעניק.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>915787038</ID>
-    <NameOfBook>הנסיך הקטן</NameOfBook>
-    <AuthorName>mor.s</AuthorName>
-    <Category>children</Category>
-    <Price>140</Price>
-    <InStock>29</InStock>
+    <ID>311111</ID>
+    <NameOfBook>הארי פוטר 3 – האסיר מאזקבאן</NameOfBook>
+    <AuthorName>ג'יי קיי רולינג</AuthorName>
+    <Category>fantasy</Category>
+    <Summary>הארי פוטר 3 - והאסיר מאזקבאן זכה לאחרונה בפרס יקיר הילדים של ערוץ הכבלים לילדים בארה"ב. בספר השלישי בסדרה חייו של הארי נתונים בסכנה. אפילו בין חומות הוגורסט, ואפילו כשהוא מוקף בחבריו. ייתכן שיש בשורותיהם בוגד. במשך 12 שנים ארוכות, הוחזק אסיר בשם סיריוס בלק במאסר במבצר אזקבאן המצמרר, כלא הקסמים. סיפרו שהאיש, שהורשע ברצח שלושה-עשר אנשים בקללה אחת, הוא גם היורש הנבחר של אדון האופל, הלורד וולדמורט. כעת בלק ברח מכלאו, והותיר אחריו רק שני רמזים למקום הימצאו.
+נבחר למצעד הספרים של משרד החינוך.</Summary>
+    <Price>90</Price>
+    <InStock>86</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\הנסיך הקטן.jpg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\הארי פוטר 3 – האסיר מאזקבאן.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>13915675</ID>
-    <NameOfBook>מעשה בחמישה בלונים</NameOfBook>
-    <AuthorName>doni.j</AuthorName>
-    <Category>children</Category>
-    <Price>134</Price>
-    <InStock>33</InStock>
+    <ID>411111</ID>
+    <NameOfBook>הארי פוטר 4 – גביע האש</NameOfBook>
+    <AuthorName>ג'יי קיי רולינג</AuthorName>
+    <Category>fantasy</Category>
+    <Summary>בפרק הרביעי בסדרה: הארי פוטר 4 - וגביע האש, הארי בן ה-14 מנסה לתמרן בין לימודים, חברים, ואהבה ראשונה. המצב יותר מסובך כשאתה קוסם מתלמד שקרוביו מתנכלים לו, אויביו אורבים לו מאחורי כל פינה, וכל צעד שהוא עושה מדווח מיד בעיתונים. שנתו הרביעית של הארי פוטר בבית-הספר הוגוורטס לכישוף ולקוסמות תהיה שנה יוצאת-דופן, גם בשביל מישהו כמו הארי. לראשונה מזה מאות שנים יתקיים השנה אירוע בעל חשיבות בינלאומית - אך איש אינו משער איזה תפקיד ישחק בו הארי.  
+ראו גם: הארי פוטר 5 - ומסדר עוף החול.</Summary>
+    <Price>135</Price>
+    <InStock>90</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\children\מעשה בחמישה בלונים.jpg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\הארי פוטר 4 – גביע האש.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>501009483</ID>
-    <NameOfBook>מאסטר שף עונה 4 ספר המתכונים</NameOfBook>
-    <AuthorName>mor.s</AuthorName>
-    <Category>cookingAndBaking</Category>
-    <Price>67</Price>
-    <InStock>37</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\cookingAndBaking\מאסטר שף עונה 4 ספר המתכונים.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>797200081</ID>
-    <NameOfBook>ספר הבישול של חלי ממן</NameOfBook>
-    <AuthorName>gaie.g</AuthorName>
-    <Category>cookingAndBaking</Category>
-    <Price>47</Price>
+    <ID>511111</ID>
+    <NameOfBook>הארי פוטר 5 – ומסדר עוף החול</NameOfBook>
+    <AuthorName>ג'יי קיי רולינג</AuthorName>
+    <Category>fantasy</Category>
+    <Summary>בפרק החמישי בסדרה: הארי פוטר 5 - ומסדר עוף החול, הארי מוצא בחבריו עומקים שלא הכיר עד כה, וזוכה לקבל מהם כוח, נאמנות והקרבה קשה מנשוא.
+ולצד כל הקשיים וההרפתקאות, הארי בן ה - 15 טועם את טעמה של נשיקה ראשונה ואהבת נעורים. הנה רק כמה מהדברים שמטרידים את הארי השנה: מורָה להתגוננות מפני כוחות האופל, בעלת אישיות של דבש מורעל, גמדון-בית ממורמר ונוטף ארס, רון בתפקיד השומר בקבוצת הקווידיץ' של גריפינדור, האימה של בחינות הבגרות בסוף שנה וגם דלת מסתורית.</Summary>
+    <Price>99</Price>
     <InStock>78</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\cookingAndBaking\ספר הבישול של חלי ממן.jpg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\הארי פוטר 5 – ומסדר עוף החול.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>53165403</ID>
-    <NameOfBook>Harry Potter</NameOfBook>
-    <AuthorName>jeik.r</AuthorName>
+    <ID>211111</ID>
+    <NameOfBook>הארי פוטר 2 - חדר הסודות</NameOfBook>
+    <AuthorName>ג'יי קיי רולינג</AuthorName>
     <Category>fantasy</Category>
-    <Price>55</Price>
-    <InStock>49</InStock>
+    <Summary>משפחת דרסלי היו כה אכזריים וגועליים, עד כדי כך שבאותו הקיץ, הארי ממש השתוקק לחזור לבית-הספר בהוגוורטס. אלא שעוד לפני שהוא מספיק לארוז את המזוודות שלו, הארי מקבל אזהרה מיצור מוזר וקסום בשם דובי, שאומר שאם הארי פוטר יחזור להוגוורטס, יתרחש אסון. אך זה מתגמד לעומת הצרות האמיתיות, שמתחילות כשמישהו מתחיל להפוך את תלמידי הוגוורטס לאבן. הייתכן שדארקו מאלפוי, אויבו בנפש, צבר כל-כך הרבה כוח? האם יש סיכוי שהאשם הוא דווקא האגריד, אשר עברו המסתורי נחשף סוף סוף? או שמא האשם הוא האדם שכל התלמידים בהוגוורטס חושדים בו מעל כולם… הארי פוטר 2 וחדר הסודות הוא השני בסדרת הפולחן, עטורת הפרסים שפשוט חייבים לקרוא, מאת ג'יי קיי רולינג. </Summary>
+    <Price>120</Price>
+    <InStock>79</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\fantasy\Harry Potter.jpeg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\הארי פוטר 2 - חדר הסודות.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>823078694</ID>
-    <NameOfBook>ניסוי</NameOfBook>
-    <AuthorName>gaie.g</AuthorName>
+    <ID>611111</ID>
+    <NameOfBook>ארי פוטר 6 – והנסיך חצוי הדם</NameOfBook>
+    <AuthorName>גיי קיי רולינג</AuthorName>
     <Category>fantasy</Category>
-    <Price>108</Price>
-    <InStock>42</InStock>
+    <Summary>בפרק השישי בסדרה: הארי פוטר 6 - והנסיך חצוי הדם, הארי, רון והֶרמַיוני הם מתבגרים בני 16. כצפוי, מחכות לנו כאן הפתעות, אבל גם אכזבות ואפילו אובדן. המלחמה נגד ווֹלְדֶמוֹרְט איננה קלה. מִסדר עוף החול כבר ספג אבדות. ויחד עם זאת...כמו בכל מלחמה, החיים נמשכים. תלמידי השנה השישית לומדים להִתעתֵק, התאומים לבית וויזְלי מרחיבים את עסקיהם, ובני העשרה מתאהבים ומתאכזבים ורבים ומתפייסים. השיעורים לא קלים, אבל השנה זוכה הארי לעזרה בלתי צפויה מנסיך מסתורי, הנסיך חצוי-הדם...</Summary>
+    <Price>89</Price>
+    <InStock>140</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\fantasy\ניסוי.jpeg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\ארי פוטר 6 – והנסיך חצוי הדם.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>534337539</ID>
-    <NameOfBook>ועשו לי מקדש</NameOfBook>
-    <AuthorName>doni.j</AuthorName>
-    <Category>history</Category>
+    <ID>711111</ID>
+    <NameOfBook>הארי פוטר 7 – ואוצרות המוות </NameOfBook>
+    <AuthorName>גיי קיי רולינג</AuthorName>
+    <Category>fantasy</Category>
+    <Summary>בפרק השביעי בסדרה: הארי פוטר 7 - ואוצרות המוות, נטל עצום מונח על כתפיו של הארי פוטר. המשימה שמוטלת עליו נראית בלתי אפשרית, אפלה ומסוכנת יותר מכל מה שקדם לה: למצוא ולהשמיד את כל ההורקרוקסים של וולדמורט ששרדו עד כה. הארי מעולם לא הרגיש כה בודד; מעולם לא נראה לו העתיד כה אפל ומלא צללים. האם יצליח לקיים את ההבטחה שנתן למורהו האהוב פרופסור דמבלדור? האם ימצא בתוך עצמו את הכוחות הדרושים למילוי המשימה שנראית בלתי אפשרית?</Summary>
     <Price>135</Price>
-    <InStock>25</InStock>
+    <InStock>70</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\history\ועשו לי מקדש.jpg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\הארי פוטר 7 – ואוצרות המוות .jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>339151480</ID>
-    <NameOfBook>סיירת מטכל</NameOfBook>
-    <AuthorName>noaa.f</AuthorName>
-    <Category>history</Category>
-    <Price>124</Price>
+    <ID>121111</ID>
+    <NameOfBook>מעשה בחמישה בלונים</NameOfBook>
+    <AuthorName>מרים רות</AuthorName>
+    <Category>children</Category>
+    <Summary>מעשה בחמישה בלונים וחמישה ילדים, "ופתאום... בום! טרך! הבלון התפוצץ. זה סופו של כל בלון." חמישה ילדים, חמישה בלונים וחתול, בסיפור שליווה את ילדותנו, ולימד אותנו להתמודד עם סופם של בלונים ועם סופים אחרים, בליווי איוריה המקסימים של אורה אייל.</Summary>
+    <Price>36</Price>
+    <InStock>88</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\מעשה בחמישה בלונים.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>1221111</ID>
+    <NameOfBook>הבית של יעל</NameOfBook>
+    <AuthorName>מרים רות</AuthorName>
+    <Category>children</Category>
+    <Summary>סיפורה של יעל שרצתה למצוא לעצמה בית משלה. הבית של יעל - קלאסיקה נהדרת על יעל שיש לה רצון עז לבית משלה - האם תצליח למצוא את מבוקשה?
+יעל מחפשת לעצמה מקום חמים ונעים שבו היא תוכל לגור ואז מוצאת ארגז. היא מסדרת אותו ומבלה בו עם חברה הטוב. יום אחד מגיע טרקטוריסט עם עגלה ואוסף את כל הגרוטאות שבחצר כולל את הארגז של יעל, מבלי להבחין כי היא נמצאת בתוכו. מה עלה בגורלה של יעל והבית החדש שלה?
+הספר הכתוב בחרוזים, יצא לאור לראשונה ב1977 ונמצא כמעט בכל בית בישראל. על עצמאות ורצונות אישיים, המאפשרים לפתח את דמיונם של הקוראים ולעודד בחירות אישיות. </Summary>
+    <Price>38</Price>
+    <InStock>5</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\הבית של יעל.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>131111</ID>
+    <NameOfBook>בוקר בהיר אחד</NameOfBook>
+    <AuthorName>אורה אייל</AuthorName>
+    <Category>children</Category>
+    <Summary>סיפור מחורז שבנוי נהדר: בוקר בהיר אחד הולך ילד לבקר את סבתו ובדרך מצטרפים אליו עוברי דרך סקרנים. ילד, שאת שמו לא מגלים, הולך לבקר את סבתו יחד עם כל המצטרפים.  האיורים חושפים כל פעם את קצה הדמות הבאה שמצטרפת ובכך יוצרים משחק של ניחושים, שמצליחים לעורר את סקרנות הילדים להפעיל את דמיונם. נבחר למצעד הספרים של משרד החינוך.</Summary>
+    <Price>45</Price>
+    <InStock>15</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\בוקר בהיר אחד.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>3433111</ID>
+    <NameOfBook>לילה חשוך אחד</NameOfBook>
+    <AuthorName>אורה אייל</AuthorName>
+    <Category>children</Category>
+    <Summary>ספר נהדר שעוסק בנושא הפחדים מנקודת המבט של ילדה בעלת דמיון מפותח, שכמו ילדים רבים בחושך, נדמה לה שערימת הבגדים היא דמות מפחידה. לילה חשוך אחד - מלווה באיורים בשחור לבן שנבחרו בקפידה כדי להעביר את המסר של הסיפור בצורה ויזואלית, טקסט קצרצר בחריזה והרבה חזרתיות יוצרים מקצב נעים לסיפור שהילדים מדקלמים ורוצים לקרוא שוב ושוב. </Summary>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\לילה חשוך אחד.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>12134321</ID>
+    <NameOfBook>הארנב הקשיב</NameOfBook>
+    <AuthorName>קורי דורפלד</AuthorName>
+    <Category>children</Category>
+    <Summary>הארנב הקשיב - לפעמים כל מה שאנו צריכים זה חיבוק ואוזן קשבת...סיפור קטן על חברות והתמודדות עם אכזבות  ספר מחמם לב ומרפא לב. טיילור היה עצוב. הדבר היפה שבנה - נהרס. כל החיות רצו לעזור לטיילור, אבל אף אחת לא ממש הצליחה לגרום לו לשפר את הרגשתו. ואז הגיע הארנב. והארנב ידע בדיוק מה לעשות. הארנב הקשיב, רב המכר עטור השבחים של קורי דורפלד, הוא ספר מחמם לב ומרפא לב. "מצויר להפליא, ומציע את מה שטיילור, כמו כולנו, זקוקים לו: הנחמה שיש במישהו שפשוט מקשיב לנו, צוחק, ומחבק אותנו" - New York Times</Summary>
+    <Price>55</Price>
+    <InStock>78</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\הארנב הקשיב.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>543216</ID>
+    <NameOfBook>ספר השטוזים של דתיה</NameOfBook>
+    <AuthorName>דליה בן דור</AuthorName>
+    <Category>children</Category>
+    <Summary>ספר השטוזים של דתיה - שטויות בחרוזים עם המון הומור, ואיורים. דתיה בן דור חורזת בהומור נהדר ובשטויות חכמות. קוראי השטוזים לומדים להמציא מה שכאילו לא יכול להיות, ולהגיד את זה בחרוזים משובחים! ולמי שאומר: ``שטויות, שטויות, זה לא יכול להיות!`` נאמר: ``אז מה?! זאת כל החכמה!`` שטוזיאדה מרהיבה!</Summary>
+    <Price>46</Price>
+    <InStock>30</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\ספר השטוזים של דתיה.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>977867</ID>
+    <NameOfBook>חנן הגנן</NameOfBook>
+    <AuthorName>רינת הופ</AuthorName>
+    <Category>children</Category>
+    <Summary>חנן הגנן נותן לילדים פירות ומבטיח שחבוי בהם מטמון, אבל הילדים מוצאים בתוכם רק חרצנים. מה יקרה כשישתלו את החרצנים באדמה?
+ספרה עטור הפרסים של רינת הופר, שהפך לקלאסיקה בזכות האיורים הנפלאים והחריזה המקסימה. לגילאי 3-6 שנים. נבחר למצעד הספרים של משרד החינוך.</Summary>
+    <Price>39</Price>
+    <InStock>0</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\חנן הגנן.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>6676543</ID>
+    <NameOfBook>איילת מטיילת</NameOfBook>
+    <AuthorName>רינת הופר</AuthorName>
+    <Category>children</Category>
+    <Summary>הצטרפו לאיילת מטיילת לחוויה נהדרת של טיול בטבע וסקרנות. בדרך אולי תמצאו עוד חברים שירצו להמשיך יחד את המסע. </Summary>
+    <Price>36</Price>
+    <InStock>24</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\איילת מטיילת.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>8842569</ID>
+    <NameOfBook>מר מצחיק</NameOfBook>
+    <AuthorName>רוג'ר הרגריבס</AuthorName>
+    <Category>children</Category>
+    <Summary>מר מצחיק - ספר נוסף בסדרת ספרי "מר" ו"גברת" מלאת ההומור. בתרגום עדכני של עטרה אופק. הפעם על מר מצחיק תושב קרחוניה.
+זוהי סדרת ספרי ילדים מופלאה מאת הסופר הבריטי רוג'ר הרגריבס. הסיפורים והאיורים הפשוטים ומלאי ההומור הפכו את הסדרה לפופולרית במיוחד. כאשר לאורך השנים נמכרו מעל למאה מיליון עותקים של הספרים ב-28 מדינות שונות. כל ספר בסדרה מתמקד בהרפתקאותיה ההומוריסטיות של דמות שונה המוצגת באופן מוגזם במטרה להעביר שיעור מוסרי פשוט.</Summary>
+    <Price>25</Price>
+    <InStock>18</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\מר מצחיק.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>9945312</ID>
+    <NameOfBook>משהו אחר</NameOfBook>
+    <AuthorName>קתרין קייב</AuthorName>
+    <Category>children</Category>
+    <Summary>משהו אחר (גיבור הסיפור) מנסה להיות כמו כולם. אבל כל דבר שהוא עושה רק מראה עד כמה הכול אצלו שונה. סיפור רגיש  על קבלת השונה. גלו מה קורה כשמישהו אחר (הדמות המשנית) ומנסה להיות חבר שלו. אבל משהו אחר לא רוצה להיות חבר שלו, הוא חושב שמישהו שונה ממנו מידי ולכן שולח אותו לדרכו. סיפורה הרגיש והפשוט של קתרין קייב על חברות, וקבלת השונה, קורם עור וגידים בעזרת איוריו המקסימים של כריס רידל.</Summary>
+    <Price>29</Price>
+    <InStock>30</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\משהו אחר.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>7341233</ID>
+    <NameOfBook>נדיבות</NameOfBook>
+    <AuthorName>אליסון גרין</AuthorName>
+    <Category>children</Category>
+    <Summary>ספר על נדיבות הלב עם הקדמה מאת אקסל שפלר ואיורים של 38 מאיירות ומאיירים נדיבים. 
+דמיינו לעצמכם עולם שבו כולם נדיבים. איך הופכים דמיון למציאות?
+ זהו ספר שופע רעיונות חיוביים ומלאי תקווה כמו צנצנת נדיבות וחיבוקים אמיצים – רעיונות שמדגימים לכולנו, ילדים ומבוגרים כאחד, איך אפשר להפוך את העולם למקום טוב יותר, נדיב יותר.
+
+ זהו ספר יוצא דופן – הוא לא מספר סיפור, אלא עושה שימוש בנימה פיוטית ועדינה כדי לטפח ערכים של חמלה ונדיבות לאחר.
+
+הספר מלווה באיורים של 38 מאיירות ומאיירים נדיבים מהטובים בעולם, הפרשנות שלהם לפתרונות היצירתיים והיפים המופיעים בספר הופכת אותו</Summary>
+    <Price>41</Price>
     <InStock>22</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\history\סיירת מטכל.jpg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\נדיבות.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>540716139</ID>
-    <NameOfBook>Bible</NameOfBook>
-    <AuthorName>mor.s</AuthorName>
-    <Category>kodesh</Category>
+    <ID>94665765</ID>
+    <NameOfBook>כנפיים</NameOfBook>
+    <AuthorName>מאיה חנוך</AuthorName>
+    <Category>children</Category>
+    <Summary>כנפיים - סיפור על יצירה, על השראה, ועל רגע מיוחד, שבו מתגשם חלום. ספרה הראשון של מאיה חנוך, על ליאה שמבקשת שיציירו לה את החלום.
+עכשיו ציירי לי כנפיים. 
+כנפיים? אימא חזרה על המילה כמו הד. כן, ציירי לי כנפיים. אימא של ליאה היא מאיירת שמציירת חלומות של אחרים.
+ יום אחד ליאה מבקשת ממנה שתצייר לה את החלום שלה. 
+אז אמא מנסה, ומנסה, ומנסה.</Summary>
+    <Price>38</Price>
+    <InStock>57</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\כנפיים.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>487678751</ID>
+    <NameOfBook>מיץ פטל</NameOfBook>
+    <AuthorName>חיה שנהב</AuthorName>
+    <Category>children</Category>
+    <Summary>"הבית של מיץ פטל עמד בקצה החורשה: היו לו וילונות צהובים, חלונות ירוקים ותריסים אדומים. החיות בחורשה שאלו: 'מי הוא מיץ פטל?' אבל אף חיה לא ידעה"
+סיפורם של של ג'ירפה ואריה אשר מנסים לברר את זהותו של מיץ פטל המסתורי. האם יצליחו לגלות מיהו? בעזרת שיתוף פעולה, התגברות על מגבלות ואינספור תחבולות, השמועה אומרת שהם הצליחו במשימה! אז מיהו מיץ פטל, זאת השאלה...
+נבחר למצעד הספרים של משרד החינוך.</Summary>
+    <Price>37</Price>
+    <InStock>3</InStock>
+    <IsDeleted>false</IsDeleted>
+    <ProductImagePath>..\PL\ProductImages\מיץ פטל.jpg</ProductImagePath>
+  </Product>
+  <Product>
+    <ID>32114329</ID>
+    <NameOfBook>הביצה שהתחפשה</NameOfBook>
+    <AuthorName>דן פגיס</AuthorName>
+    <Category>children</Category>
+    <Summary>סיפורה של הביצה שהתחפשה כי שלא רצתה להיות ביצה. היא מתגלגלת בעולם, פוגשת בכדור פינג פונג ובלון, מתהפכת, מתלבטת, מחפשת ומתחפשת לכל מה שעולה על רוחה, עד שלבסוף מוצאת אותה התרנגולת שהטילה אותה ומעניקה לה את מה שכנראה חיפשה: חום ואהבה.
+סיפור על משבר זהות, קבלה עצמית והיכולת של נפש (האדם או הביצה) להאמין בעצמה ולצמוח מכל מצב בו היא נמצאת. הספר אשר ראה אור לראשונה ב-1973, כתוב בכתב יד ומוקדש לשני ילדיו של דן פגיס, כותב ומאייר הספר.</Summary>
     <Price>43</Price>
-    <InStock>66</InStock>
+    <InStock>7</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\kodesh\Bible.jpg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\הביצה שהתחפשה.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>696986838</ID>
-    <NameOfBook>Anne of Green Gables</NameOfBook>
-    <AuthorName>noi.a</AuthorName>
-    <Category>mystery</Category>
-    <Price>73</Price>
-    <InStock>73</InStock>
+    <ID>34443562</ID>
+    <NameOfBook>גיבורים אמיתיים 1 – תומס ואני</NameOfBook>
+    <AuthorName>שירלי יובל-יאיר, ד"ר טל בן-שחר</AuthorName>
+    <Category>children</Category>
+    <Summary>יבורים אמיתיים 1 תומס ואני - סיפור דמותו של תומס אדיסון המשמשת השראה לגיבור הסיפור יוני ולכל מי שרוצה להצליח אבל חושש לטעות בדרך. 
+סיפור חייו וילדותו של תומס אדיסון, שנתקל בלא מעט קשיים וכישלונות לפני שהצליח בהמצאתו.  
+ספרי הסדרה גיבורים אמיתיים מציגים סוגיות המעסיקות ילדים, ודמויות היסטוריות שסיפור חייהן ומנגנוני ההתמודדות שלהן מעוררות השראה. לגילאי 6-8 שנים. נבחר למצעד הספרים של משרד החינוך.</Summary>
+    <Price>25</Price>
+    <InStock>22</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\mystery\Anne of Green Gables.png</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\גיבורים אמיתיים 1 – תומס ואני.jpg</ProductImagePath>
   </Product>
   <Product>
-    <ID>886830880</ID>
-    <NameOfBook>איינשטיין והדת</NameOfBook>
-    <AuthorName>noi.a</AuthorName>
-    <Category>scinence</Category>
-    <Price>136</Price>
-    <InStock>56</InStock>
+    <ID>94476523</ID>
+    <NameOfBook>גיבורים אמיתיים 2 – הלן ואני</NameOfBook>
+    <AuthorName>שירלי יובל-יאיר, ד"ר טל בן-שחר</AuthorName>
+    <Category>children</Category>
+    <Summary>סיפורה הלא ייאמן של הלן קלר שבמרכזו השקפת עולמה הייחודית על הכרת תודה והערכת ה"יש". גיבורים אמיתיים 2 - הלן ואני השני בסדרה המצליחה. 
+בגיבורים אמיתיים מוצגת משפחה ישראלית טיפוסית, כאשר בכל ספר בסדרה נתקל אחד מבני המשפחה בבעיה מוכרת מחיי היומיום ולומד כיצד להתמודד איתה באמצעות סיפורה של הדמות ההיסטורית. כתוב בשפה פשוטה וחריזה קלילה. 
+הלן ואני הוא השני בסדרת ‬גיבורים‭ ‬אמתיים‭ ‬המציגה‭ ‬דמויות‭ ‬היסטוריות‭ ‬שסיפור‭ ‬חייהן‭ ‬ומנגנוני‭ ‬ההתמודדות‭ ‬שלהן‭ ‬יכולים‭ ‬לשמש‮ ‬השראה‭ ‬לכולנו.</Summary>
+    <Price>34</Price>
+    <InStock>0</InStock>
     <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\scinence\איינשטיין והדת.jpg</ProductImagePath>
-  </Product>
-  <Product>
-    <ID>869289817</ID>
-    <NameOfBook>היקום הקוונטי</NameOfBook>
-    <AuthorName>noaa.f</AuthorName>
-    <Category>scinence</Category>
-    <Price>67</Price>
-    <InStock>56</InStock>
-    <IsDeleted>false</IsDeleted>
-    <ProductImagePath>C:\Users\hila\source\repos\Minip2022\dotNet5783_-7796_6941\bin\images\productImages\scinence\היקום הקוונטי.jpg</ProductImagePath>
+    <ProductImagePath>..\PL\ProductImages\גיבורים אמיתיים 2 – הלן ואני.jpg</ProductImagePath>
   </Product>
   <Product>
     <ID>111111111</ID>

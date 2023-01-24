@@ -112,6 +112,7 @@ public partial class AddProductForM_Window : Window
             MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
                 MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
         }
+
     }
     #endregion
 

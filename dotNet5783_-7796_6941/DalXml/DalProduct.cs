@@ -99,7 +99,7 @@ internal static XElement itemToXelement<Item>(Item item, string name)
         if (product.AuthorName is not null)
             yield return new XElement("AuthorName", product.AuthorName);
         //if (product.Category is not null) //אצלינו הוא לא יכול להיות נל בשביל הקופיפרופטו
-            yield return new XElement("StudentStatus", product.Category);
+            yield return new XElement("Category", product.Category);
         if (product.Summary is not null)
             yield return new XElement("Summary", product.Summary);
         if (product.Price is not null)

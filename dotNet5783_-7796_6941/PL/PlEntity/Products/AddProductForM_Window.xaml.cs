@@ -52,6 +52,8 @@ public partial class AddProductForM_Window : Window
     #region אירוע-לחיצה על כפתור הוסף
     private void addProductButton_Click(object sender, RoutedEventArgs e)
     {
+        string fullPath = productToAdd.productImagePath!;
+
         try
         {
 
@@ -85,26 +87,34 @@ public partial class AddProductForM_Window : Window
                  sorce = productToAdd.productImagePath;
                  suffix = "." + sorce.Split(@".").Last();
                  target = @"..\PL\ProductImages\"+productToAdd.NameOfBook+suffix;
-                productToAdd.ProductImagePath = target;
+                //productToAdd.ProductImagePath = target;
             }
             else //תמונת ברירת מחדל
             { 
                  sorce = @"..\PL\ProductImages\Default.jpeg";
                  target = @"..\PL\ProductImages\" + productToAdd.NameOfBook+ ".jpeg";
-                productToAdd.ProductImagePath = target;
+               // productToAdd.ProductImagePath = target;
                 productImage.Source = null;
             }
 
-            File.Copy(sorce, target);
-
+            productToAdd.ProductImagePath = target;
             int newID = bl.BoProduct.AddProduct_forM(productToAdd.CopyProductToBO());
+            productToAdd.ProductImagePath = fullPath;
+            File.Copy(sorce, target);
             action(newID);
             MessageBox.Show("!הספר נוסף בהצלחה");
-            this.Close();
+            //this.Close();
 
-            productImage.Source = null;
+            //productImage.Source = null;
             productToAdd = new PO.Product();
             AddP_categ_commbbox.SelectedItem = null;
+
+        }
+        catch(BO.Adding_Exception ex)
+        {
+            productToAdd.ProductImagePath = fullPath;
+            MessageBox.Show(ex.Message + "\n" + ex.InnerException?.Message, "שגיאה", MessageBoxButton.OK, MessageBoxImage.Error, MessageBoxResult.OK,
+               MessageBoxOptions.RightAlign | MessageBoxOptions.RtlReading);
 
         }
         catch (Exception ex)

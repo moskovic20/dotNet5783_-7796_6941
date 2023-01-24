@@ -109,17 +109,10 @@ public partial class SimulatorPage : Page
                     worker.ReportProgress(Item.OrderID);
                 }
 
-                Thread.Sleep(50);
-                Today = Today.AddDays(1);
+                //Thread.Sleep(50);
+                Today = Today.AddDays(3);
                 AllIsDone = orders.TrueForAll(x => x?.Status == PO.OrderStatus.Completed);
             }
-
-            if (worker.CancellationPending == true)
-            {
-                e.Cancel = true;
-                return;
-            }
-            worker.ReportProgress(-1);
         }
         catch (Exception ex)
         {
@@ -133,7 +126,7 @@ public partial class SimulatorPage : Page
         
         int id = e.ProgressPercentage;
 
-        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).ToList();//לקיחת הרשימה המעודכת
+        orders = bl.BoOrder.GetAllOrderForList().Select(x => x.CopyPropTo(new PO.OrderForList())).OrderBy(x=>x?.OrderID).ToList();//לקיחת הרשימה המעודכת
         OrdersForShow = new(orders);
 
         Date.Content = Today.ToShortDateString();

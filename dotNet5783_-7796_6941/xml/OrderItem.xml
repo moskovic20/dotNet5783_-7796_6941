@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfOrderItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  
+  <OrderItem>
+    <ID>100001</ID>
+    <OrderID>100001</OrderID>
+    <ProductID>453444311</ProductID>
+    <NameOfBook>tt</NameOfBook>
+    <PriceOfOneItem>55.5</PriceOfOneItem>
+    <AmountOfItems>3</AmountOfItems>
+    <IsDeleted>false</IsDeleted>
+  </OrderItem>
 </ArrayOfOrderItem>

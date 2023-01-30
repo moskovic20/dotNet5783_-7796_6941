@@ -281,16 +281,6 @@
     <IsDeleted>false</IsDeleted>
   </Order>
   <Order>
-    <OrderID>100024</OrderID>
-    <CustomerName>כנרת זמיר</CustomerName>
-    <CustomerEmail>sefertov@gmail.com</CustomerEmail>
-    <CustomerAddress>יפו 8 תל אביב</CustomerAddress>
-    <DateOrder>2023-01-24T21:59:54.1905157+02:00</DateOrder>
-    <ShippingDate xsi:nil="true" />
-    <DeliveryDate xsi:nil="true" />
-    <IsDeleted>false</IsDeleted>
-  </Order>
-  <Order>
     <OrderID>100012</OrderID>
     <CustomerName>עמית ברוכי</CustomerName>
     <CustomerEmail>amit@gmail.com</CustomerEmail>
@@ -299,5 +289,25 @@
     <ShippingDate xsi:nil="true" />
     <DeliveryDate xsi:nil="true" />
     <IsDeleted>true</IsDeleted>
+  </Order>
+  <Order>
+    <OrderID>100024</OrderID>
+    <CustomerName>כנרת זמיר</CustomerName>
+    <CustomerEmail>sefertov@gmail.com</CustomerEmail>
+    <CustomerAddress>יפו 8 תל אביב</CustomerAddress>
+    <DateOrder>2023-01-24T21:59:54.1905157+02:00</DateOrder>
+    <ShippingDate xsi:nil="true" />
+    <DeliveryDate xsi:nil="true" />
+    <IsDeleted>true</IsDeleted>
+  </Order>
+  <Order>
+    <OrderID>100024</OrderID>
+    <CustomerName>כנרת זמיר</CustomerName>
+    <CustomerEmail>sefertov@gmail.com</CustomerEmail>
+    <CustomerAddress>יפו 8 תל אביב</CustomerAddress>
+    <DateOrder>2023-01-24T21:59:54.1905157+02:00</DateOrder>
+    <ShippingDate>2023-01-25T20:12:05.6194206+02:00</ShippingDate>
+    <DeliveryDate xsi:nil="true" />
+    <IsDeleted>false</IsDeleted>
   </Order>
 </ArrayOfOrder>

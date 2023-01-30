@@ -10,13 +10,13 @@ using DalApi;
 namespace Dal;
 
 ///////////////////////////////////////////
-//implement ILecturer with XML Serializer
+//implement IOrderItem with XML Serializer
 //////////////////////////////////////////
 
 internal class DalOrderItem : IOrderItem
 {
     const string s_OrderItem = "OrderItem";
-  //  DalXml _DXml = DalXml.Instance!;
+ 
     public int Add(Do.OrderItem item)
     {
         var listOrderItems = XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem);
@@ -26,7 +26,7 @@ internal class DalOrderItem : IOrderItem
 
         Do.OrderItem? temp = listOrderItems.FirstOrDefault(ord => ord?.ID == item.ID && ord?.IsDeleted == true);
 
-        if (temp == null)//לא היה קיים
+        if (temp == null)
         {
 
             List<configNumbers?> runningList = XMLTools.LoadListFromXMLSerializer<configNumbers?>("config");//המספרים הרצים לפני הוספת ההזמנה החדשה
@@ -47,7 +47,7 @@ internal class DalOrderItem : IOrderItem
         else
             item.ID = temp.GetValueOrDefault().ID;//שימוש במספר המשוייך בלי לשנות את הקונפיג
 
-        listOrderItems.Add(item);//להוסיף שינוי בקונפיג?
+        listOrderItems.Add(item);
         XMLTools.SaveListToXMLSerializer(listOrderItems, s_OrderItem);
 
         return item.ID;
@@ -83,7 +83,6 @@ internal class DalOrderItem : IOrderItem
 
     }
 
-
     public Do.OrderItem GetById(int id) =>
         XMLTools.LoadListFromXMLSerializer<Do.OrderItem?>(s_OrderItem).FirstOrDefault(p => p?.ID == id && p?.IsDeleted != true)
          ?? throw new Do.DoesntExistException("OrderItem is missing");
@@ -101,7 +100,6 @@ internal class DalOrderItem : IOrderItem
 
     public IEnumerable<Do.OrderItem?> GetListByOrderID(int OrderID)=>
         GetAll(p => p?.OrderID == OrderID) ?? throw new Do.DoesntExistException("OrderItem is missing");
-
 
     public void Update(Do.OrderItem item)
     {

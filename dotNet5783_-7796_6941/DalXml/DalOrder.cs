@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DalApi;
-//using static Dal.DalXml;
 
 namespace Dal;
 
 ///////////////////////////////////////////
-//implement ILecturer with XML Serializer
+//implement IOrder with XML Serializer
 //////////////////////////////////////////
 
 internal class DalOrder : IOrder
 {
     const string s_Order = "Order";
-   // DalXml _DXml = DalXml.Instance!;
+  
     public int Add(Do.Order item)
     {
         var listOrders = XMLTools.LoadListFromXMLSerializer<Do.Order?>(s_Order);//הרשימה לפני ההוספה

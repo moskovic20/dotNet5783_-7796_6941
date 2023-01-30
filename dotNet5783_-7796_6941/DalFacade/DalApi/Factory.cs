@@ -21,7 +21,7 @@ public static class Factory
             throw new Do.DalConfigException("Failed to load {dal}.dll package");
         }
 
-        Type? type = Type.GetType($"Dal.{dal}, {dal}") //מכאן לא הבנתי :)// הבאת מטא דטא של הטיפוס דלליסט מתוך הקובץ דלל שביקשנו קודם, יעני עוד מידע שלא יובא בשורה הקודמת ולא הבנתי למה 
+        Type? type = Type.GetType($"Dal.{dal}, {dal}")
             ?? throw new Do.DalConfigException($"Class Dal.{dal} was not found in {dal}.dll");
 
         return type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)?
